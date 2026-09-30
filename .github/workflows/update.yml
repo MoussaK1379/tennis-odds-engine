@@ -1,7 +1,8 @@
 name: refresh-data
 
 # 06:20 UTC every day (and on demand from the Actions tab):
-#   1. players.json + recent_results.json — ATP/WTA ELO, serve/return stats, results (update_data.py)
+#   1. players.json + recent_results.json — ATP/WTA ELO, serve/return stats, results (update_data.py,
+#      from api-tennis.com; match history cached in data/api_tennis_matches.csv)
 #   2. matches.json + history/predictions.csv — upcoming matches, odds, model picks,
 #      logged predictions settled against results, track record (update_matches.py)
 #   3. commits and publishes the site to GitHub Pages.
@@ -37,6 +38,9 @@ jobs:
 
       - name: Regenerate players.json + recent_results.json
         if: github.event.schedule != '20 16 * * *'
+        timeout-minutes: 30          # the first run backfills ~2 years from api-tennis.com
+        env:
+          TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
         run: python update_data.py --out players.json --results-out recent_results.json
 
       - name: Regenerate matches.json + prediction log
@@ -50,7 +54,7 @@ jobs:
         run: |
           git config user.name  "data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in players.json matches.json recent_results.json history; do
+          for f in players.json matches.json recent_results.json history data; do
             if [ -e "$f" ]; then git add "$f"; fi
           done
           if git diff --staged --quiet; then

@@ -91,15 +91,24 @@
     </div>
 
     <h2>Daily data updates</h2>
-    <p>The app reads <code>players.json</code> on every load (uncached), so it always shows the
-      latest data. A static page can't refresh itself, though — something has to regenerate that
-      file on a schedule. That's what <code>update_data.py</code> and the included GitHub Action do.</p>
-    <p><code>update_data.py</code> pulls recent ATP results from Sackmann's dataset, computes current
-      surface ELO and serve/return rates per player, and rewrites <code>players.json</code>. Run it
-      yourself any time:</p>
+    <p>The app reads <code>players.json</code> on every load (uncached). <code>update_data.py</code>
+      rebuilds it each morning, trying these sources in order for each tour:</p>
+    <ol>
+      <li><strong>Jeff Sackmann's match files</strong> on GitHub: results plus serve/return stats.</li>
+      <li><strong>tennis-data.co.uk</strong> yearly spreadsheets: results only. Elo stays current;
+        serve/return stats are carried over from the previous day (new players get the tour average).</li>
+      <li><strong>Neither reachable:</strong> yesterday's file is kept and the Predictor's date stamp
+        turns orange ("not updating"), so the site keeps working.</li>
+    </ol>
+    <p>How the stats are built: a player is listed if they played in the last 12 months. Elo ignores
+      walkovers and retirements. Serve/return rates count every point, weight recent matches more
+      (a match a year old counts half), and are adjusted for opponent strength (points won against
+      strong opponents count for more).</p>
     <pre><code>python update_data.py            # last 3 seasons
-python update_data.py --top 60   # more players
-python update_data.py --local atp_matches_2025.csv   # offline test</code></pre>
+python update_data.py --top 60   # cap players per tour
+python update_data.py --local atp_matches_2025.csv   # offline test, Sackmann format
+python update_data.py --local-xlsx 2025.xlsx         # offline test, tennis-data format</code></pre>
+
     <h2>Today's matches &amp; live odds</h2>
     <p><code>update_matches.py</code> pulls upcoming ATP and WTA matches (next 36 hours) with
       bookmaker odds from <a href="https://the-odds-api.com">The Odds API</a>, runs each one through
@@ -114,16 +123,27 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       not in the table counts as hard court and shows a “?” on the site. Only men's Grand Slams are best of 5. Players not in <code>players.json</code> — usually
       qualifiers — are listed under <code>unmatched</code> and skipped.</p>
 
+    <h2>Track record</h2>
+    <p>Every match in the daily list is logged to <code>history/predictions.csv</code> with the
+      model's number, the market's number (margin removed) and the best price, updated with the
+      last price seen before the start. Once a result appears in <code>recent_results.json</code>
+      it's settled (walkovers are voided, as is anything with no result after 30 days). The
+      Predictor's <strong>Track record</strong> panel shows how often the model picked the winner
+      versus the bookmakers' favourite, an accuracy score (Brier; lower is better; if the market's is
+      lower, the market is sharper than the model), and the profit from betting 1 unit on every
+      value flag. Results arrive when the stats source publishes them, so settling can lag by days.</p>
+
     <h2>Automatic daily run (one-time setup)</h2>
     <p><code>.github/workflows/update.yml</code> runs every day at 06:20 UTC. It rebuilds
-      <code>players.json</code> and <code>matches.json</code>, commits them, and publishes the site
-      to GitHub Pages. You can also run it by hand from the repo's <strong>Actions</strong> tab
+      the player stats, the match list and the track record, commits them, and publishes the site
+      to GitHub Pages. A second run at 16:20 UTC refreshes only the odds, for later matches, and
+      skips them if fewer than 60 requests are left in the month. You can also run it by hand from the repo's <strong>Actions</strong> tab
       (<em>refresh-data → Run workflow</em>).</p>
     <ol>
       <li><strong>Turn on Pages:</strong> repo <em>Settings → Pages → Build and deployment → Source:
         GitHub Actions</em>. The site appears at <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code>.</li>
       <li><strong>Add the odds key:</strong> sign up free at the-odds-api.com (500 requests a
-        month; the daily run uses roughly one per active tournament), then add it under
+        month; each run uses about one per active tournament, so around 300 a month), then add it under
         <em>Settings → Secrets and variables → Actions → New repository secret</em>, named
         <code>ODDS_API_KEY</code>. Without it everything else still updates and the match panel
         says the feed isn't connected.</li>
@@ -131,8 +151,8 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
         permissions → Read and write permissions</em>.</li>
     </ol>
     <div class="callout">
-      <p><strong>Odds move.</strong> The prices are a morning snapshot — check the live price
-        before acting on any "value" flag.</p>
+      <p><strong>Odds move.</strong> Prices are snapshots from 06:20 and 16:20 UTC — check the live
+        price before acting on any "value" flag.</p>
       <p>The date stamps on the Predictor show when each file was last rebuilt.</p>
     </div>
 

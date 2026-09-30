@@ -296,8 +296,8 @@ def compute_tour(matches, tour_label, top_n, prev_players=None):
         return round(v[0] / v[1], 4) if v and v[1] > 0 else None
 
     # --- who gets listed ---
-    candidates = [p for p in elo_all if last_seen.get(p, date.min) >= recent_cut] or list(elo_all)
-    candidates.sort(key=lambda p: elo_all[p], reverse=True)
+    candidates = [p for p in last_seen if last_seen[p] >= recent_cut] or list(last_seen)
+    candidates.sort(key=lambda p: elo_all.get(p, DEFAULT_ELO), reverse=True)
     chosen = candidates if top_n <= 0 else candidates[:top_n]
 
     prev_by_loose = {}
@@ -307,7 +307,7 @@ def compute_tour(matches, tour_label, top_n, prev_players=None):
 
     players = {}
     for name in chosen:
-        elo = {"overall": round(elo_all[name])}
+        elo = {"overall": round(elo_all.get(name, DEFAULT_ELO))}
         for s in SURFACES:
             if (name, s) in elo_surf:
                 elo[s] = round(elo_surf[(name, s)])

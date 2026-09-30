@@ -1,13 +1,16 @@
 name: refresh-data
 
-# Every day at 06:20 UTC (and on demand from the Actions tab):
-#   1. players.json  — ATP/WTA ELO + serve/return stats (update_data.py)
-#   2. matches.json  — upcoming matches, bookmaker odds, model picks (update_matches.py)
-#   3. commits both and publishes the site to GitHub Pages.
-# A push to main also republishes the site.
+# 06:20 UTC every day (and on demand from the Actions tab):
+#   1. players.json + recent_results.json — ATP/WTA ELO, serve/return stats, results (update_data.py)
+#   2. matches.json + history/predictions.csv — upcoming matches, odds, model picks,
+#      logged predictions settled against results, track record (update_matches.py)
+#   3. commits and publishes the site to GitHub Pages.
+# 16:20 UTC: odds-only refresh for later matches (skips odds if the month's
+# Odds API allowance is running low). A push to main also republishes the site.
 on:
   schedule:
     - cron: "20 6 * * *"
+    - cron: "20 16 * * *"
   workflow_dispatch: {}
   push:
     branches: [main]
@@ -32,21 +35,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Regenerate players.json
-        run: python update_data.py --out players.json
+      - name: Regenerate players.json + recent_results.json
+        if: github.event.schedule != '20 16 * * *'
+        run: python update_data.py --out players.json --results-out recent_results.json
 
-      - name: Regenerate matches.json (matches + odds)
+      - name: Regenerate matches.json + prediction log
         # Odds are a bonus: if the odds service is down, still ship the player stats.
         continue-on-error: true
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
-        run: python update_matches.py --players players.json --out matches.json
+        run: python update_matches.py --players players.json --out matches.json --min-remaining 60
 
       - name: Commit if changed
         run: |
           git config user.name  "data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add players.json matches.json
+          for f in players.json matches.json recent_results.json history; do
+            if [ -e "$f" ]; then git add "$f"; fi
+          done
           if git diff --staged --quiet; then
             echo "No data changes today."
           else

@@ -17,7 +17,7 @@ Usage:
     ODDS_API_KEY=... python update_matches.py --hours 48 --regions eu,uk
 """
 
-import argparse, json, os, re, statistics, sys, unicodedata
+import argparse, csv, json, os, re, statistics, sys, unicodedata
 import urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 from functools import lru_cache
@@ -266,28 +266,150 @@ def side(model_p, market_p, price, book):
             "ev": round(ev, 4), "kelly": round(kelly_fraction(model_p, price), 4)}
 
 
+# ---------- prediction log + track record ------------------------------------
+HIST_FIELDS = ["id", "tour", "tournament", "start", "surface", "best_of", "player_a", "player_b",
+               "model_a", "market_a", "odds_a", "odds_b", "books", "logged", "result", "settled"]
+SETTLE_AFTER_H = 3        # try to settle once a match started this long ago
+GIVE_UP_DAYS = 30         # after this, a match with no result found is voided
+
+def loose_key(name):
+    parts = slugify(name).split("-")
+    return parts[0][:1] + "-" + "-".join(parts[1:]) if len(parts) >= 2 else slugify(name)
+
+def name_keys(name):
+    """Match keys for a name, including reversed order ('Qinwen Zheng' / 'Zheng Qinwen')."""
+    parts = slugify(name).split("-")
+    return {loose_key(name), loose_key(" ".join(parts[::-1]))} if len(parts) >= 2 else {loose_key(name)}
+
+def parse_iso(s):
+    try:
+        return datetime.strptime(s[:19], "%Y-%m-%dT%H:%M:%S").replace(tzinfo=timezone.utc)
+    except (TypeError, ValueError):
+        return None
+
+def load_history(path):
+    try:
+        with open(path, encoding="utf-8", newline="") as fh:
+            return {r["id"]: r for r in csv.DictReader(fh)}
+    except OSError:
+        return {}
+
+def save_history(path, hist):
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=HIST_FIELDS)
+        w.writeheader()
+        for r in sorted(hist.values(), key=lambda r: (r["start"], r["id"])):
+            w.writerow({k: r.get(k, "") for k in HIST_FIELDS})
+
+def log_predictions(hist, matches, now):
+    """Upsert each not-yet-started match, so the log keeps the last price seen before the start."""
+    for m in matches:
+        st = parse_iso(m["start"])
+        if not st or st <= now:
+            continue
+        old = hist.get(m["id"], {})
+        if old.get("result"):
+            continue
+        hist[m["id"]] = {"id": m["id"], "tour": m["tour"], "tournament": m["tournament"], "start": m["start"],
+                         "surface": m["surface"], "best_of": m["best_of"],
+                         "player_a": m["a"]["name"], "player_b": m["b"]["name"],
+                         "model_a": m["a"]["model"], "market_a": m["a"]["market"],
+                         "odds_a": m["a"]["best_odds"], "odds_b": m["b"]["best_odds"],
+                         "books": m.get("books", ""), "logged": iso(now), "result": "", "settled": ""}
+
+def settle(hist, results, now):
+    """Fill in winners from recent_results.json. result: 'a', 'b' or 'void'."""
+    by_pair = {}
+    for r in results:
+        key = (r["tour"], frozenset((loose_key(r["winner"]), loose_key(r["loser"]))))
+        by_pair.setdefault(key, []).append(r)
+    n = 0
+    for h in hist.values():
+        if h.get("result"):
+            continue
+        st = parse_iso(h["start"])
+        if not st or now - st < timedelta(hours=SETTLE_AFTER_H):
+            continue
+        ka, kb = name_keys(h["player_a"]), name_keys(h["player_b"])
+        cands = [r for x in ka for y in kb for r in by_pair.get((h["tour"], frozenset((x, y))), [])]
+        # Sackmann dates each match by the tournament's start, so allow two weeks before the start time.
+        lo, hi = (st - timedelta(days=15)).date().isoformat(), (st + timedelta(days=3)).date().isoformat()
+        cands = [r for r in cands if lo <= r["date"] <= hi]
+        if cands:
+            r = cands[-1]
+            h["result"] = "void" if r["status"] == "wo" else ("a" if loose_key(r["winner"]) in ka else "b")
+            h["settled"] = iso(now)
+            n += 1
+        elif now - st > timedelta(days=GIVE_UP_DAYS):
+            h["result"], h["settled"] = "void", iso(now)
+    return n
+
+def track_record(hist):
+    rows = [h for h in hist.values() if h.get("result") in ("a", "b")]
+    rec = {"settled": len(rows), "pending": sum(1 for h in hist.values() if not h.get("result"))}
+    if not rows:
+        return rec
+    f = lambda h, k: float(h[k])
+    won_a = lambda h: 1.0 if h["result"] == "a" else 0.0
+    rec["model_right"] = round(sum((f(h, "model_a") > 0.5) == (h["result"] == "a") for h in rows) / len(rows), 4)
+    rec["market_right"] = round(sum((f(h, "market_a") > 0.5) == (h["result"] == "a") for h in rows) / len(rows), 4)
+    rec["brier_model"] = round(statistics.mean((f(h, "model_a") - won_a(h)) ** 2 for h in rows), 4)
+    rec["brier_market"] = round(statistics.mean((f(h, "market_a") - won_a(h)) ** 2 for h in rows), 4)
+    # flat 1-unit bet on the better +EV side of each match, at the logged best price
+    bets = profit = wins = 0
+    for h in rows:
+        pa, oa, ob = f(h, "model_a"), f(h, "odds_a"), f(h, "odds_b")
+        ev_a, ev_b = pa * oa - 1, (1 - pa) * ob - 1
+        if max(ev_a, ev_b) <= 0:
+            continue
+        pick_a = ev_a >= ev_b
+        bets += 1
+        if pick_a == (h["result"] == "a"):
+            wins += 1; profit += (oa if pick_a else ob) - 1
+        else:
+            profit -= 1
+    rec.update(value_bets=bets, value_wins=wins, profit_units=round(profit, 2),
+               roi=round(profit / bets, 4) if bets else None)
+    return rec
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--players", default="players.json")
     ap.add_argument("--out", default="matches.json")
+    ap.add_argument("--results", default="recent_results.json")
+    ap.add_argument("--history", default="history/predictions.csv")
     ap.add_argument("--hours", type=int, default=36, help="look this far ahead")
     ap.add_argument("--regions", default="eu", help="bookmaker regions: us, uk, eu, au (each costs 1 request)")
+    ap.add_argument("--min-remaining", type=int, default=0,
+                    help="skip fetching odds if the monthly allowance left is below this")
     args = ap.parse_args()
 
     now = datetime.now(timezone.utc)
     out = {"updated": iso(now), "window_hours": args.hours, "status": "ok",
            "requests_remaining": None, "matches": [], "unmatched": []}
+    hist = load_history(args.history)
+    try:
+        with open(args.results, encoding="utf-8") as fh:
+            results = json.load(fh).get("results", [])
+    except (OSError, ValueError):
+        results = []
 
-    def write():
+    def finish():
+        n_settled = settle(hist, results, now)
+        log_predictions(hist, out["matches"], now)
+        out["record"] = track_record(hist)
+        save_history(args.history, hist)
         with open(args.out, "w", encoding="utf-8") as fh:
             json.dump(out, fh, ensure_ascii=False, indent=2)
+        print(f"History: {len(hist)} logged, {n_settled} newly settled; record {out['record']}", file=sys.stderr)
 
     key = os.environ.get("ODDS_API_KEY", "").strip()
     if not key:
         out["status"] = "no_api_key"
-        write()
-        print("ODDS_API_KEY not set — wrote an empty matches.json.", file=sys.stderr)
-        return
+        print("ODDS_API_KEY not set — no odds fetched.", file=sys.stderr)
+        return finish()
 
     with open(args.players, encoding="utf-8") as fh:
         data = json.load(fh)
@@ -297,7 +419,18 @@ def main():
 
     sports, remaining = get_json("/sports", {"apiKey": key})       # this call is free
     tennis = [s for s in sports if s.get("active") and re.match(r"tennis_(atp|wta)_", s.get("key", ""))]
-    print(f"{len(tennis)} active ATP/WTA events", file=sys.stderr)
+    print(f"{len(tennis)} active ATP/WTA events, requests remaining: {remaining}", file=sys.stderr)
+    if remaining is not None and args.min_remaining and int(float(remaining)) < args.min_remaining:
+        # Keep the morning's list rather than spend the last of the allowance.
+        try:
+            with open(args.out, encoding="utf-8") as fh:
+                prev = json.load(fh)
+            out["matches"], out["unmatched"], out["updated"] = prev.get("matches", []), prev.get("unmatched", []), prev.get("updated")
+        except (OSError, ValueError):
+            pass
+        out["status"], out["requests_remaining"] = "quota_low", remaining
+        print(f"Only {remaining} requests left this month — skipped the odds refresh.", file=sys.stderr)
+        return finish()
 
     for sp in tennis:
         tour = "ATP" if sp["key"].startswith("tennis_atp") else "WTA"
@@ -340,10 +473,10 @@ def main():
     out["matches"].sort(key=lambda r: r["start"] or "")
     out["unmatched"].sort(key=lambda r: r["start"] or "")
     out["requests_remaining"] = remaining
-    write()
     n_val = sum(1 for m in out["matches"] if m["a"]["ev"] > 0 or m["b"]["ev"] > 0)
-    print(f"Wrote {args.out}: {len(out['matches'])} matches ({n_val} with a +EV side), "
+    print(f"{len(out['matches'])} matches ({n_val} with a +EV side), "
           f"{len(out['unmatched'])} unmatched, requests remaining: {remaining}", file=sys.stderr)
+    finish()
 
 
 if __name__ == "__main__":

@@ -1,0 +1,38 @@
+{
+  "updated": "2026-06-16",
+  "source": "seed (approximate, hand-set) — overwritten by update_data.py on the first scheduled run",
+  "tours": {
+    "atp": {"tour_avg_spw": 0.64},
+    "wta": {"tour_avg_spw": 0.56}
+  },
+  "tour_avg_spw": 0.64,
+  "players": {
+    "sinner":    {"name":"Jannik Sinner","tour":"ATP","elo":{"hard":2150,"clay":2080,"grass":2040,"overall":2120},"serve":{"hard":0.68,"clay":0.66,"grass":0.70,"overall":0.68},"return":{"hard":0.42,"clay":0.44,"grass":0.40,"overall":0.42}},
+    "alcaraz":   {"name":"Carlos Alcaraz","tour":"ATP","elo":{"hard":2090,"clay":2130,"grass":2100,"overall":2110},"serve":{"hard":0.66,"clay":0.65,"grass":0.69,"overall":0.66},"return":{"hard":0.43,"clay":0.45,"grass":0.41,"overall":0.43}},
+    "djokovic":  {"name":"Novak Djokovic","tour":"ATP","elo":{"hard":2090,"clay":2080,"grass":2090,"overall":2090},"serve":{"hard":0.66,"clay":0.65,"grass":0.68,"overall":0.66},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},
+    "zverev":    {"name":"Alexander Zverev","tour":"ATP","elo":{"hard":2010,"clay":2030,"grass":1980,"overall":2010},"serve":{"hard":0.68,"clay":0.66,"grass":0.70,"overall":0.68},"return":{"hard":0.40,"clay":0.41,"grass":0.38,"overall":0.40}},
+    "medvedev":  {"name":"Daniil Medvedev","tour":"ATP","elo":{"hard":2000,"clay":1900,"grass":1950,"overall":1980},"serve":{"hard":0.65,"clay":0.63,"grass":0.67,"overall":0.65},"return":{"hard":0.42,"clay":0.42,"grass":0.39,"overall":0.42}},
+    "fritz":     {"name":"Taylor Fritz","tour":"ATP","elo":{"hard":1970,"clay":1850,"grass":1990,"overall":1950},"serve":{"hard":0.69,"clay":0.66,"grass":0.71,"overall":0.69},"return":{"hard":0.37,"clay":0.37,"grass":0.35,"overall":0.37}},
+    "rune":      {"name":"Holger Rune","tour":"ATP","elo":{"hard":1930,"clay":1950,"grass":1900,"overall":1930},"serve":{"hard":0.65,"clay":0.64,"grass":0.67,"overall":0.65},"return":{"hard":0.40,"clay":0.41,"grass":0.38,"overall":0.40}},
+    "tsitsipas": {"name":"Stefanos Tsitsipas","tour":"ATP","elo":{"hard":1920,"clay":1980,"grass":1900,"overall":1930},"serve":{"hard":0.67,"clay":0.66,"grass":0.68,"overall":0.67},"return":{"hard":0.39,"clay":0.41,"grass":0.37,"overall":0.39}},
+    "rublev":    {"name":"Andrey Rublev","tour":"ATP","elo":{"hard":1930,"clay":1940,"grass":1900,"overall":1930},"serve":{"hard":0.66,"clay":0.65,"grass":0.67,"overall":0.66},"return":{"hard":0.39,"clay":0.40,"grass":0.37,"overall":0.39}},
+    "deminaur":  {"name":"Alex de Minaur","tour":"ATP","elo":{"hard":1910,"clay":1860,"grass":1920,"overall":1900},"serve":{"hard":0.62,"clay":0.60,"grass":0.64,"overall":0.62},"return":{"hard":0.41,"clay":0.41,"grass":0.39,"overall":0.41}},
+    "hurkacz":   {"name":"Hubert Hurkacz","tour":"ATP","elo":{"hard":1910,"clay":1840,"grass":1970,"overall":1910},"serve":{"hard":0.70,"clay":0.67,"grass":0.72,"overall":0.70},"return":{"hard":0.35,"clay":0.35,"grass":0.33,"overall":0.35}},
+    "draper":    {"name":"Jack Draper","tour":"ATP","elo":{"hard":1920,"clay":1870,"grass":1930,"overall":1910},"serve":{"hard":0.67,"clay":0.65,"grass":0.69,"overall":0.67},"return":{"hard":0.39,"clay":0.39,"grass":0.37,"overall":0.39}},
+    "musetti":   {"name":"Lorenzo Musetti","tour":"ATP","elo":{"hard":1880,"clay":1950,"grass":1860,"overall":1900},"serve":{"hard":0.64,"clay":0.64,"grass":0.65,"overall":0.64},"return":{"hard":0.39,"clay":0.41,"grass":0.37,"overall":0.39}},
+    "shelton":   {"name":"Ben Shelton","tour":"ATP","elo":{"hard":1890,"clay":1830,"grass":1930,"overall":1890},"serve":{"hard":0.69,"clay":0.66,"grass":0.71,"overall":0.69},"return":{"hard":0.36,"clay":0.36,"grass":0.34,"overall":0.36}},
+    "dimitrov":  {"name":"Grigor Dimitrov","tour":"ATP","elo":{"hard":1880,"clay":1850,"grass":1900,"overall":1880},"serve":{"hard":0.67,"clay":0.65,"grass":0.69,"overall":0.67},"return":{"hard":0.38,"clay":0.38,"grass":0.36,"overall":0.38}},
+    "tiafoe":    {"name":"Frances Tiafoe","tour":"ATP","elo":{"hard":1870,"clay":1830,"grass":1890,"overall":1870},"serve":{"hard":0.66,"clay":0.64,"grass":0.68,"overall":0.66},"return":{"hard":0.38,"clay":0.38,"grass":0.36,"overall":0.38}},
+    "atptour":   {"name":"ATP tour average","tour":"ATP","elo":{"hard":1750,"clay":1750,"grass":1750,"overall":1750},"serve":{"hard":0.635,"clay":0.62,"grass":0.66,"overall":0.635},"return":{"hard":0.37,"clay":0.38,"grass":0.35,"overall":0.37}},
+
+    "sabalenka": {"name":"Aryna Sabalenka","tour":"WTA","elo":{"hard":2050,"clay":1980,"grass":2000,"overall":2030},"serve":{"hard":0.60,"clay":0.58,"grass":0.61,"overall":0.60},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},
+    "swiatek":   {"name":"Iga Swiatek","tour":"WTA","elo":{"hard":2010,"clay":2120,"grass":1960,"overall":2030},"serve":{"hard":0.57,"clay":0.58,"grass":0.57,"overall":0.57},"return":{"hard":0.47,"clay":0.49,"grass":0.44,"overall":0.47}},
+    "gauff":     {"name":"Coco Gauff","tour":"WTA","elo":{"hard":1980,"clay":1970,"grass":1960,"overall":1980},"serve":{"hard":0.57,"clay":0.56,"grass":0.58,"overall":0.57},"return":{"hard":0.47,"clay":0.47,"grass":0.45,"overall":0.47}},
+    "rybakina":  {"name":"Elena Rybakina","tour":"WTA","elo":{"hard":1980,"clay":1950,"grass":1990,"overall":1980},"serve":{"hard":0.61,"clay":0.59,"grass":0.62,"overall":0.61},"return":{"hard":0.43,"clay":0.43,"grass":0.41,"overall":0.43}},
+    "pegula":    {"name":"Jessica Pegula","tour":"WTA","elo":{"hard":1930,"clay":1880,"grass":1930,"overall":1920},"serve":{"hard":0.58,"clay":0.56,"grass":0.59,"overall":0.58},"return":{"hard":0.44,"clay":0.43,"grass":0.42,"overall":0.44}},
+    "paolini":   {"name":"Jasmine Paolini","tour":"WTA","elo":{"hard":1900,"clay":1960,"grass":1890,"overall":1910},"serve":{"hard":0.55,"clay":0.56,"grass":0.55,"overall":0.55},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},
+    "zheng":     {"name":"Zheng Qinwen","tour":"WTA","elo":{"hard":1910,"clay":1880,"grass":1900,"overall":1910},"serve":{"hard":0.59,"clay":0.57,"grass":0.60,"overall":0.59},"return":{"hard":0.43,"clay":0.43,"grass":0.41,"overall":0.43}},
+    "andreeva":  {"name":"Mirra Andreeva","tour":"WTA","elo":{"hard":1910,"clay":1940,"grass":1880,"overall":1910},"serve":{"hard":0.56,"clay":0.57,"grass":0.56,"overall":0.56},"return":{"hard":0.46,"clay":0.47,"grass":0.44,"overall":0.46}},
+    "wtatour":   {"name":"WTA tour average","tour":"WTA","elo":{"hard":1650,"clay":1650,"grass":1650,"overall":1650},"serve":{"hard":0.555,"clay":0.56,"grass":0.555,"overall":0.555},"return":{"hard":0.445,"clay":0.45,"grass":0.43,"overall":0.445}}
+  }
+}

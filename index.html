@@ -107,14 +107,44 @@
   .evtable .side-a{ color:var(--A); } .evtable .side-b{ color:var(--B); }
   .evtable input{ width:82px; font-family:var(--mono); font-size:.92rem; color:var(--chalk);
     background:var(--ink-3); border:1px solid var(--ink-4); border-radius:7px; padding:.36rem .5rem; text-align:right; }
+  .chip--warn{ color:var(--clay); border-color:var(--clay); }
+  .record{ margin-top:14px; background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r); padding:18px clamp(14px,2.4vw,22px); }
+  .record h3{ font-family:var(--display); font-weight:600; font-size:.95rem; margin:0 0 4px; }
+  .record__lede{ color:var(--mute); font-size:.86rem; margin:0 0 14px; }
+  .record__grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .record__note{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:12px; }
+  .ev__margin{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; min-height:1em; }
   .ev-pos{ color:var(--pos); font-weight:600; } .ev-neg{ color:var(--neg); }
   .badge{ font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; padding:.1rem .4rem; border-radius:4px; margin-left:.4rem; }
   .badge--ev{ background:var(--pos); color:var(--ink); }
 
+  .today{ margin-top:22px; background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r); padding:18px clamp(14px,2.4vw,22px); }
+  .today h3{ font-family:var(--display); font-weight:600; font-size:.95rem; margin:0 0 4px; }
+  .today h3 .hint{ font-family:var(--mono); font-weight:400; font-size:.68rem; color:var(--faint); text-transform:uppercase; letter-spacing:.12em; float:right; }
+  .today__lede{ color:var(--mute); font-size:.86rem; margin:0 0 12px; }
+  .today__list{ display:flex; flex-direction:column; }
+  .match{ display:grid; grid-template-columns:140px 1fr auto; gap:6px 14px; align-items:center; padding:.6rem 0; border-top:1px solid var(--ink-3); }
+  .match__when{ font-family:var(--mono); font-size:.72rem; color:var(--faint); line-height:1.35; }
+  .match__who{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .match__p{ display:flex; justify-content:space-between; gap:10px; font-family:var(--mono); font-size:.84rem; font-variant-numeric:tabular-nums; }
+  .match__p .n{ font-family:var(--display); font-weight:600; font-size:.95rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .match__p--a .n{ color:var(--A); } .match__p--b .n{ color:var(--B); }
+  .match__p .nums{ color:var(--mute); white-space:nowrap; }
+  .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+    color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:7px; padding:.4rem .6rem; }
+  .match__go:hover{ background:var(--ball); color:var(--ink); }
+  .today__empty{ font-family:var(--mono); font-size:.82rem; color:var(--faint); padding:.4rem 0; }
+
   @media (max-width:760px){
+    .match{ grid-template-columns:1fr auto; }
+    .match__when{ grid-column:1 / -1; }
+    .match__p{ flex-direction:column; gap:0; }
+    .match__who{ gap:8px; }
+    .today h3 .hint{ float:none; display:block; margin-top:4px; }
     .controls{ grid-template-columns:1fr; }
     .vs{ flex-direction:row; padding:0; }
     .readouts{ grid-template-columns:1fr; }
+    .record__grid{ grid-template-columns:1fr 1fr; }
     .panels{ grid-template-columns:1fr; }
     .evtable th:nth-child(3), .evtable td:nth-child(3){ display:none; }
   }
@@ -133,7 +163,7 @@
 
 <main class="wrap">
   <header class="hero">
-    <div class="eyebrow">Markov serve model · surface ELO · calibrated</div>
+    <div class="eyebrow">Markov serve model · surface ELO · tracked daily</div>
     <h1>Who wins, and <span class="accent">is it priced wrong?</span></h1>
     <p class="hero__lede">Pick two players and a surface. The engine returns a match probability
       from a hierarchical Markov serve model blended with surface ELO — then tells you the fair
@@ -143,6 +173,13 @@
       <span class="chip" id="countChip"></span>
     </div>
   </header>
+
+  <section class="today" id="today">
+    <h3>Today's matches <span class="hint" id="todayStamp"></span></h3>
+    <p class="today__lede">Upcoming ATP &amp; WTA matches with the best bookmaker price, refreshed every
+      morning. Model win chance · best odds · EV. Press <b>Analyse</b> to load a match into the predictor below.</p>
+    <div class="today__list" id="todayList"><div class="today__empty">Loading…</div></div>
+  </section>
 
   <section class="controls">
     <div class="field field--a">
@@ -235,10 +272,11 @@
 
   <section class="ev">
     <h3>Value check</h3>
-    <p class="ev__lede">Enter the book's decimal odds for each player. The engine de-vigs the market,
-      compares it to the model, and sizes a quarter-Kelly stake on any positive-EV side.</p>
+    <p class="ev__lede">Enter the book's decimal odds for each player. The engine strips the bookmaker's
+      margin to show the market's own view, compares it with the model, and sizes a quarter-Kelly stake
+      on any positive-EV side. EV is worked out at the price you'd actually get.</p>
     <table class="evtable">
-      <thead><tr><th>Side</th><th>Book odds</th><th>Implied</th><th>Model</th><th>Fair odds</th><th>EV</th><th>¼-Kelly</th></tr></thead>
+      <thead><tr><th>Side</th><th>Book odds</th><th>Market (no margin)</th><th>Model</th><th>Fair odds</th><th>EV</th><th>¼-Kelly</th></tr></thead>
       <tbody>
         <tr><td class="side-a" id="evNameA">A</td>
           <td><input id="oddsA" type="number" inputmode="decimal" min="1.01" step="0.01" value="1.80" aria-label="Player A decimal odds"></td>
@@ -248,13 +286,22 @@
           <td id="impB">—</td><td id="modB">—</td><td id="fairB">—</td><td id="evB">—</td><td id="kelB">—</td></tr>
       </tbody>
     </table>
+    <div class="ev__margin" id="margin"></div>
+  </section>
+
+  <section class="record" id="record">
+    <h3>Track record</h3>
+    <p class="record__lede">Every match in the daily list is logged with the model's number and the best price,
+      then settled when the result comes in. This is how you find out whether the model is any good.</p>
+    <div class="record__grid" id="recordGrid"></div>
+    <div class="record__note" id="recordNote"></div>
   </section>
 
   <footer class="foot">
     <p><strong>Data &amp; honesty.</strong> Player ratings refresh from the daily updater (see
       <a href="readme.html">Docs</a>); the stamp above shows when. The probability shown is the raw
       model ensemble — calibrate it against your own logged results before trusting the EV
-      (see <a href="model-math.html">The Math</a>). Pick "Custom player" to enter your own serve/return numbers.</p>
+      (see <a href="model-math.html">The Math</a>). Pick “Custom player” to enter your own serve/return numbers.</p>
     <p style="margin-top:.6rem;"><strong>If you bet:</strong> a real market is sharper than any home
       model, edges are thin and decay, and no calibration holds forever. Set deposit and loss limits
       and treat them as part of the system.</p>
@@ -361,7 +408,12 @@ function populateSelects(){
   $("customB").classList.toggle("show", state.b==="custom");
   $("countChip").textContent = keys.length + " " + state.tour + " players";
 }
-function stampDate(){ $("stamp").textContent = "data: " + (DATA.updated || "unknown"); }
+function stampDate(){
+  const stale = (DATA.stale || []).map(t => t.toUpperCase());
+  $("stamp").textContent = "data: " + (DATA.updated || "unknown") + (stale.length ? " · " + stale.join(" + ") + " not updating" : "");
+  $("stamp").classList.toggle("chip--warn", stale.length > 0);
+  if(stale.length) $("stamp").title = "The stats source couldn't be reached on the last run, so these ratings are from " + DATA.updated + ".";
+}
 
 /* ===================== compute + render ================================== */
 function compute(){
@@ -419,21 +471,26 @@ function render(d){
 
   renderEV(pEns);
 }
-function evRow(model, oddsEl, ids){
+function evRow(model, d, fairImplied, ids){
   $(ids.mod).textContent = pct(model);
   $(ids.fair).textContent = (1/model).toFixed(2);
-  const d = parseFloat(oddsEl.value);
   if(!(d > 1)){ $(ids.imp).textContent="—"; $(ids.ev).textContent="—"; $(ids.ev).className=""; $(ids.kel).textContent="—"; return; }
-  const implied = 1/d, ev = model*d - 1, kel = kellyFraction(model, d);
-  $(ids.imp).textContent = pct(implied);
+  const ev = model*d - 1, kel = kellyFraction(model, d);
+  $(ids.imp).textContent = pct(fairImplied);
   const evEl = $(ids.ev);
   evEl.innerHTML = (ev>=0?"+":"") + (ev*100).toFixed(1) + "%" + (ev>0?'<span class="badge badge--ev">value</span>':"");
   evEl.className = ev > 0 ? "ev-pos" : "ev-neg";
   $(ids.kel).textContent = ev > 0 ? (kel*100).toFixed(1) + "%" : "—";
 }
 function renderEV(pEns){
-  evRow(pEns,   $("oddsA"), {imp:"impA",mod:"modA",fair:"fairA",ev:"evA",kel:"kelA"});
-  evRow(1-pEns, $("oddsB"), {imp:"impB",mod:"modB",fair:"fairB",ev:"evB",kel:"kelB"});
+  const dA = parseFloat($("oddsA").value), dB = parseFloat($("oddsB").value);
+  // De-vig: scale the two raw implied chances so they add up to 100%.
+  // With only one price entered, fall back to that price's raw implied chance.
+  const qA = dA > 1 ? 1/dA : null, qB = dB > 1 ? 1/dB : null;
+  const both = qA !== null && qB !== null, tot = both ? qA + qB : 1;
+  evRow(pEns,   dA, both ? qA/tot : qA, {imp:"impA",mod:"modA",fair:"fairA",ev:"evA",kel:"kelA"});
+  evRow(1-pEns, dB, both ? qB/tot : qB, {imp:"impB",mod:"modB",fair:"fairB",ev:"evB",kel:"kelB"});
+  $("margin").textContent = both ? "Bookmaker margin: " + ((tot-1)*100).toFixed(1) + "%" : "";
 }
 
 /* ===================== wiring ============================================ */
@@ -536,6 +593,69 @@ async function loadData(){
   populateSelects(); stampDate(); compute();
 }
 
+/* ===================== today's matches (matches.json) ==================== */
+function setSeg(id, v){
+  $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === String(v) ? "true" : "false"));
+}
+function loadMatch(m){
+  state.tour = m.tour; setSeg("segTour", m.tour);
+  state.surface = m.surface; setSeg("segSurface", m.surface);
+  state.bestOf = m.best_of; setSeg("segFormat", m.best_of);
+  populateSelects();
+  state.a = m.a.key; state.b = m.b.key;
+  $("inA").value = nameFromKey(state.a); $("inB").value = nameFromKey(state.b);
+  $("customA").classList.remove("show"); $("customB").classList.remove("show");
+  $("oddsA").value = m.a.best_odds; $("oddsB").value = m.b.best_odds;
+  renderEV(compute());
+  document.querySelector(".controls").scrollIntoView({ behavior:"smooth", block:"start" });
+}
+function matchSide(cls, p){
+  const ev = (p.ev>=0?"+":"") + (p.ev*100).toFixed(1) + "%";
+  return `<div class="match__p match__p--${cls}"><span class="n">${esc(p.name)}</span>
+    <span class="nums">${pct(p.model)} · ${p.best_odds.toFixed(2)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}">${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
+}
+function renderToday(j){
+  const list = $("todayList");
+  if(!j){ list.innerHTML = '<div class="today__empty">No match list yet — it appears after the first daily run.</div>'; return; }
+  $("todayStamp").textContent = "updated " + (j.updated || "").replace("T"," ").replace(/:\d\dZ$/," UTC");
+  if(j.status === "quota_low") $("todayStamp").textContent += " · odds allowance low";
+  if(j.status === "no_api_key"){ list.innerHTML = '<div class="today__empty">Odds feed not connected yet — add the ODDS_API_KEY secret (see Docs).</div>'; return; }
+  const ms = (j.matches || []).filter(m => !m.start || new Date(m.start) > Date.now() - 3*3600e3);
+  if(!ms.length){ list.innerHTML = '<div class="today__empty">No priced ATP/WTA matches in the next day and a half.</div>'; return; }
+  const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
+  list.innerHTML = ms.map((m,i) => `<div class="match">
+      <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
+      <div class="match__who">${matchSide("a", m.a)}${matchSide("b", m.b)}</div>
+      <button class="match__go" type="button" data-i="${i}">Analyse</button></div>`).join("");
+  list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () => loadMatch(ms[+b.dataset.i])));
+}
+function renderRecord(r){
+  const grid = $("recordGrid"), note = $("recordNote");
+  if(!r || !r.settled){
+    grid.innerHTML = "";
+    note.textContent = r && r.pending ? r.pending + " predictions logged, waiting for results." : "Nothing settled yet — the record starts with the first daily run.";
+    return;
+  }
+  const signed = x => (x>=0?"+":"") + x.toFixed(1);
+  const tile = (k, v, sub, cls="") => `<div class="stat"><div class="stat__k">${k}</div><div class="stat__v ${cls}">${v}</div><div class="stat__sub">${sub}</div></div>`;
+  const beat = r.brier_model < r.brier_market;
+  grid.innerHTML =
+    tile("Matches settled", r.settled, r.pending + " pending") +
+    tile("Picked the winner", pct(r.model_right), "bookmakers' favourite: " + pct(r.market_right)) +
+    tile("Accuracy score", r.brier_model.toFixed(3), "market " + r.brier_market.toFixed(3) + " · lower is better", beat ? "ev-pos" : "ev-neg") +
+    tile("Value bets", r.value_bets ? signed(r.profit_units) + "u" : "—",
+         r.value_bets ? r.value_bets + " bets · " + r.value_wins + " won · ROI " + signed(r.roi*100) + "%" : "no value flags settled", r.profit_units > 0 ? "ev-pos" : (r.value_bets ? "ev-neg" : ""));
+  note.textContent = "Value bets = 1 unit on each flagged side at the logged best price. " +
+    (r.value_bets < 300 ? "Under ~300 bets, luck dominates — don't read much into the profit yet." : "");
+}
+async function loadMatches(){
+  try{
+    const r = await fetch("matches.json", { cache:"no-store" });
+    const j = r.ok ? await r.json() : null;
+    renderToday(j); renderRecord(j && j.record);
+  }catch(e){ renderToday(null); renderRecord(null); }
+}
+
 bindSeg("segSurface", "surface");
 bindSeg("segFormat", "bestOf", v => parseInt(v,10));
 $("segTour").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
@@ -549,7 +669,7 @@ $("swap").addEventListener("click", swapSides);
 ["aSpw","aRpw","bSpw","bRpw"].forEach(i => $(i).addEventListener("input", compute));
 ["oddsA","oddsB"].forEach(i => $(i).addEventListener("input", () => renderEV(compute())));
 
-loadData();
+loadData().then(loadMatches);
 </script>
 </body>
 </html>

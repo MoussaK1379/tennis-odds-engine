@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tennis Odds Engine — Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .doc{ max-width:760px; margin:0 auto; padding:0 clamp(16px,4vw,40px) 40px; }
+  .doc h2{ font-family:var(--display); font-weight:700; font-size:1.5rem; letter-spacing:-0.01em;
+    margin:2.6rem 0 1rem; padding-top:1.3rem; border-top:1px solid var(--ink-3); }
+  .doc p{ color:#cdd9d1; margin:.85rem 0; }
+  .doc strong{ color:var(--chalk); }
+  .doc em{ color:var(--ball); font-style:normal; }
+  .doc a{ color:var(--ball); }
+  .doc ul,.doc ol{ color:#cdd9d1; padding-left:1.3rem; }
+  .doc li{ margin:.45rem 0; }
+  .doc li code{ color:var(--ball); }
+  .doc code{ font-family:var(--mono); font-size:.86em; background:var(--ink-2);
+    border:1px solid var(--ink-3); border-radius:5px; padding:.08em .4em; color:var(--ball); }
+  .doc pre{ background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r);
+    padding:14px 16px; overflow-x:auto; margin:1rem 0; }
+  .doc pre code{ background:none; border:0; padding:0; color:#cdd9d1; }
+  .doc-lede{ font-size:1.12rem; color:var(--mute); max-width:60ch; }
+  .filemap{ display:grid; gap:8px; margin:1rem 0; }
+  .filemap div{ display:grid; grid-template-columns:160px 1fr; gap:14px; align-items:baseline;
+    background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r-sm); padding:10px 14px; }
+  .filemap .fn{ font-family:var(--mono); font-size:.86rem; color:var(--ball); }
+  .filemap .fd{ color:var(--mute); font-size:.92rem; }
+  .callout{ border:1px solid var(--ink-3); border-left:3px solid var(--ball);
+    border-radius:var(--r); padding:14px 20px; margin:1.4rem 0; background:rgba(205,232,63,.04); }
+  .callout p{ margin:.3rem 0; color:#d7e2da; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__brand"><span class="nav__dot"></span>tennis odds engine</div>
+  <div class="nav__links">
+    <a href="index.html">Predictor</a>
+    <a href="model-math.html">The Math</a>
+    <a href="readme.html" aria-current="page">Docs</a>
+  </div>
+</nav>
+
+<main>
+  <header class="hero wrap">
+    <div class="eyebrow">Project docs · static site + Python engine</div>
+    <h1>The <span class="accent">engine</span>, end to end</h1>
+    <p class="doc-lede">Two parts: a static web app (this site) that predicts matches live in the
+      browser, and a Python pipeline that trains, calibrates, and backtests the model. The app's
+      player data refreshes daily; the pipeline is where you prove the edge.</p>
+  </header>
+
+  <article class="doc">
+
+    <h2>Run the web app</h2>
+    <p>The app is fully static — no build step. Serve the folder and open it:</p>
+    <ol>
+      <li>Keep <code>index.html</code>, <code>model-math.html</code>, <code>readme.html</code>,
+        <code>styles.css</code>, and <code>players.json</code> in one folder.</li>
+      <li>On Replit, use a static/HTML Repl and press <strong>Run</strong>; locally, any static
+        server works (e.g. <code>python -m http.server</code>).</li>
+      <li>Serving matters: the app fetches <code>players.json</code>, which browsers block over a
+        bare <code>file://</code> path. Opened as a file it still runs — it just falls back to the
+        built-in seed data.</li>
+    </ol>
+
+    <h2>Files</h2>
+    <p style="color:var(--mute); margin-bottom:.4rem;">The site</p>
+    <div class="filemap">
+      <div><span class="fn">index.html</span><span class="fd">The predictor — engine ported to JS, net-split bar, value check</span></div>
+      <div><span class="fn">model-math.html</span><span class="fd">The math reference, formulas rendered with MathJax</span></div>
+      <div><span class="fn">styles.css</span><span class="fd">Shared design tokens for all three pages</span></div>
+      <div><span class="fn">players.json</span><span class="fd">Player ratings the app reads on load — rebuilt daily</span></div>
+      <div><span class="fn">update_data.py</span><span class="fd">Regenerates players.json from live ATP results</span></div>
+      <div><span class="fn">update_matches.py</span><span class="fd">Builds matches.json: upcoming matches, odds and model picks</span></div>
+      <div><span class="fn">.github/workflows/update.yml</span><span class="fd">Daily cron: refreshes both data files, commits, publishes to Pages</span></div>
+    </div>
+    <p style="color:var(--mute); margin:1.2rem 0 .4rem;">The analysis pipeline (separate, optional)</p>
+    <div class="filemap">
+      <div><span class="fn">elo.py</span><span class="fd">Surface-weighted ELO, dynamic K-factor</span></div>
+      <div><span class="fn">markov.py</span><span class="fd">Point → game → set → tiebreak → match</span></div>
+      <div><span class="fn">betting.py</span><span class="fd">De-vig, expected value, fractional Kelly</span></div>
+      <div><span class="fn">calibration.py</span><span class="fd">ECE / Brier / log loss, Platt + isotonic, reliability</span></div>
+      <div><span class="fn">data.py</span><span class="fd">Synthetic generator + Sackmann loader</span></div>
+      <div><span class="fn">main.py</span><span class="fd">Train → ensemble → calibrate → backtest → bet (<code>python main.py</code>)</span></div>
+    </div>
+
+    <h2>Daily data updates</h2>
+    <p>The app reads <code>players.json</code> on every load (uncached). <code>update_data.py</code>
+      rebuilds it each morning, trying these sources in order for each tour:</p>
+    <ol>
+      <li><strong>Jeff Sackmann's match files</strong> on GitHub: results plus serve/return stats.</li>
+      <li><strong>tennis-data.co.uk</strong> yearly spreadsheets: results only. Elo stays current;
+        serve/return stats are carried over from the previous day (new players get the tour average).</li>
+      <li><strong>Neither reachable:</strong> yesterday's file is kept and the Predictor's date stamp
+        turns orange ("not updating"), so the site keeps working.</li>
+    </ol>
+    <p>How the stats are built: a player is listed if they played in the last 12 months. Elo ignores
+      walkovers and retirements. Serve/return rates count every point, weight recent matches more
+      (a match a year old counts half), and are adjusted for opponent strength (points won against
+      strong opponents count for more).</p>
+    <pre><code>python update_data.py            # last 3 seasons
+python update_data.py --top 60   # cap players per tour
+python update_data.py --local atp_matches_2025.csv   # offline test, Sackmann format
+python update_data.py --local-xlsx 2025.xlsx         # offline test, tennis-data format</code></pre>
+
+    <h2>Today's matches &amp; live odds</h2>
+    <p><code>update_matches.py</code> pulls upcoming ATP and WTA matches (next 36 hours) with
+      bookmaker odds from <a href="https://the-odds-api.com">The Odds API</a>, runs each one through
+      the same model as the Predictor, and writes <code>matches.json</code>: model win chance, best
+      price and which book has it, EV and a quarter-Kelly stake. The Predictor shows it as
+      <strong>Today's matches</strong>; <em>Analyse</em> loads a match, its surface, format and odds.</p>
+    <pre><code>ODDS_API_KEY=your-key python update_matches.py
+ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code></pre>
+    <p>Surface comes from a built-in table of every ATP tournament: Grand Slams, Masters 1000, 500s,
+      250s and team events, plus the main WTA-only stops. Stuttgart is grass for ATP and clay for WTA.
+      Indoor events are labelled but the model treats them as ordinary hard courts. A tournament
+      not in the table counts as hard court and shows a “?” on the site. Only men's Grand Slams are best of 5. Players not in <code>players.json</code> — usually
+      qualifiers — are listed under <code>unmatched</code> and skipped.</p>
+
+    <h2>Track record</h2>
+    <p>Every match in the daily list is logged to <code>history/predictions.csv</code> with the
+      model's number, the market's number (margin removed) and the best price, updated with the
+      last price seen before the start. Once a result appears in <code>recent_results.json</code>
+      it's settled (walkovers are voided, as is anything with no result after 30 days). The
+      Predictor's <strong>Track record</strong> panel shows how often the model picked the winner
+      versus the bookmakers' favourite, an accuracy score (Brier; lower is better; if the market's is
+      lower, the market is sharper than the model), and the profit from betting 1 unit on every
+      value flag. Results arrive when the stats source publishes them, so settling can lag by days.</p>
+
+    <h2>Automatic daily run (one-time setup)</h2>
+    <p><code>.github/workflows/update.yml</code> runs every day at 06:20 UTC. It rebuilds
+      the player stats, the match list and the track record, commits them, and publishes the site
+      to GitHub Pages. A second run at 16:20 UTC refreshes only the odds, for later matches, and
+      skips them if fewer than 60 requests are left in the month. You can also run it by hand from the repo's <strong>Actions</strong> tab
+      (<em>refresh-data → Run workflow</em>).</p>
+    <ol>
+      <li><strong>Turn on Pages:</strong> repo <em>Settings → Pages → Build and deployment → Source:
+        GitHub Actions</em>. The site appears at <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code>.</li>
+      <li><strong>Add the odds key:</strong> sign up free at the-odds-api.com (500 requests a
+        month; each run uses about one per active tournament, so around 300 a month), then add it under
+        <em>Settings → Secrets and variables → Actions → New repository secret</em>, named
+        <code>ODDS_API_KEY</code>. Without it everything else still updates and the match panel
+        says the feed isn't connected.</li>
+      <li><strong>Let Actions push:</strong> <em>Settings → Actions → General → Workflow
+        permissions → Read and write permissions</em>.</li>
+    </ol>
+    <div class="callout">
+      <p><strong>Odds move.</strong> Prices are snapshots from 06:20 and 16:20 UTC — check the live
+        price before acting on any "value" flag.</p>
+      <p>The date stamps on the Predictor show when each file was last rebuilt.</p>
+    </div>
+
+    <h2>Feed real data to the analysis pipeline</h2>
+    <p>That's the app's data. The separate analysis pipeline (where you backtest and calibrate)
+      ships running on synthetic data. To point it at real matches, grab Jeff Sackmann's ATP files
+      (<code>atp_matches_YYYY.csv</code>) from
+      <a href="https://github.com/JeffSackmann/tennis_atp">github.com/JeffSackmann/tennis_atp</a>,
+      then in <code>main.py</code> replace:</p>
+    <pre><code>df = generate_synthetic_matches()</code></pre>
+    <p>with:</p>
+    <pre><code>from data import load_sackmann_csv
+df = load_sackmann_csv("atp_matches_2024.csv")  # or concat several years, sorted by date</code></pre>
+    <p>Two things to fix for real data:</p>
+    <ul>
+      <li><strong>Sort chronologically</strong> before the walk — ELO must update in match order.</li>
+      <li>The loader sets player A = winner every row, so labels are all <code>True</code>. Shuffle
+        each match's A/B assignment (and flip <code>a_won</code>) so the model trains on balanced
+        outcomes.</li>
+    </ul>
+
+    <h2>Build order, if extending</h2>
+    <p>ELO → logistic baseline → Markov → ensemble → <strong>calibrate &amp; verify
+      per-segment</strong> → backtest against closing lines with vig → de-vig live odds →
+      fractional Kelly. A calibrated simple model beats an uncalibrated sophisticated one every
+      time.</p>
+
+    <div class="callout">
+      <p>For real-money use: a real market is sharper than this simulation, edges are thin and
+        decay, and no calibration holds forever — re-fit on a rolling window and treat
+        responsible-gambling limits as core features.</p>
+    </div>
+
+  </article>
+
+  <footer class="foot wrap">
+    <p>See the formulas in <a href="model-math.html">The Math</a> or try the
+      <a href="index.html">Predictor</a>.</p>
+  </footer>
+</main>
+</body>
+</html>

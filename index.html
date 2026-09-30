@@ -582,7 +582,9 @@ function swapSides(){
   $("customB").classList.toggle("show", state.b==="custom");
   const av=[$("aSpw").value,$("aRpw").value]; $("aSpw").value=$("bSpw").value; $("aRpw").value=$("bRpw").value;
   $("bSpw").value=av[0]; $("bRpw").value=av[1];
-  compute();
+  // the book prices belong to the players, so they swap sides too
+  const odds=$("oddsA").value; $("oddsA").value=$("oddsB").value; $("oddsB").value=odds;
+  renderEV(compute());
 }
 
 async function loadData(){

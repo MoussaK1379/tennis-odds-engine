@@ -1,0 +1,31 @@
+name: probe-api-tennis
+
+# Temporary: fetch sample responses from api-tennis.com (key redacted) so the
+# importer can be built against real data. Removed once the importer exists.
+on:
+  push:
+    branches: [claude/zealous-cori-no9743]
+    paths: [tools/probe_api_tennis.py, .github/workflows/probe-api-tennis.yml]
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch samples
+        env:
+          TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
+        run: python tools/probe_api_tennis.py --out samples/api_tennis
+      - name: Commit samples
+        run: |
+          git config user.name  "data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add samples
+          git commit -m "probe: api-tennis.com samples (key redacted)" || echo "nothing to commit"
+          git push

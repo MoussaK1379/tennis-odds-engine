@@ -1,0 +1,7 @@
+# Netlify config — plain static site, no build step.
+# Netlify serves these files; the daily players.json refresh is handled by the
+# GitHub Action (.github/workflows/update.yml), and Netlify auto-redeploys when
+# that data commit lands.
+[build]
+  command = ""
+  publish = "."

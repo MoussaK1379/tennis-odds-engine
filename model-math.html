@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tennis Odds Engine — The Math</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .doc{ max-width:760px; margin:0 auto; padding:0 clamp(16px,4vw,40px) 40px; }
+  .doc h2{ font-family:var(--display); font-weight:700; font-size:1.7rem; letter-spacing:-0.01em;
+    margin:3rem 0 1rem; padding-top:1.4rem; border-top:1px solid var(--ink-3);
+    display:flex; align-items:baseline; gap:.7rem; }
+  .doc h2 .num{ font-family:var(--mono); font-size:.9rem; font-weight:500; }
+  .doc h3{ font-family:var(--display); font-weight:600; font-size:1.12rem; margin:1.8rem 0 .6rem; color:var(--chalk); }
+  .doc p{ color:#cdd9d1; margin:.85rem 0; }
+  .doc strong{ color:var(--chalk); }
+  .doc em{ color:var(--ball); font-style:normal; }
+  .doc ul,.doc ol{ color:#cdd9d1; padding-left:1.3rem; }
+  .doc li{ margin:.4rem 0; }
+  .doc code{ font-family:var(--mono); font-size:.86em; background:var(--ink-2);
+    border:1px solid var(--ink-3); border-radius:5px; padding:.08em .4em; color:var(--ball); }
+  .doc pre{ background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r);
+    padding:14px 16px; overflow-x:auto; }
+  .doc pre code{ background:none; border:0; padding:0; color:#cdd9d1; }
+  mjx-container{ overflow-x:auto; overflow-y:hidden; max-width:100%; }
+  /* color the numbered eyebrow per section, cycling surface colors */
+  .doc section:nth-of-type(1) .num{ color:var(--hard); }
+  .doc section:nth-of-type(2) .num{ color:var(--clay); }
+  .doc section:nth-of-type(3) .num{ color:var(--grass); }
+  .doc section:nth-of-type(4) .num{ color:var(--ball); }
+  .doc section:nth-of-type(5) .num{ color:var(--A); }
+  .callout{ background:linear-gradient(180deg, rgba(205,232,63,.06), rgba(205,232,63,.02));
+    border:1px solid var(--ink-3); border-left:3px solid var(--ball);
+    border-radius:var(--r); padding:16px 20px; margin:1.6rem 0; }
+  .callout p{ margin:.4rem 0; color:#d7e2da; }
+  .doc-lede{ font-size:1.12rem; color:var(--mute); max-width:60ch; }
+</style>
+<script>
+  window.MathJax = {
+    tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__brand"><span class="nav__dot"></span>tennis odds engine</div>
+  <div class="nav__links">
+    <a href="index.html">Predictor</a>
+    <a href="model-math.html" aria-current="page">The Math</a>
+    <a href="readme.html">Docs</a>
+  </div>
+</nav>
+
+<main>
+  <header class="hero wrap">
+    <div class="eyebrow">Reference · coded directly into the engine</div>
+    <h1>The <span class="accent">Math</span></h1>
+    <p class="doc-lede">Pipeline order: ratings → serve-point probability → Markov match
+      probability → calibration → EV. Calibration sits last because it decides whether the
+      rest is worth anything.</p>
+  </header>
+
+  <article class="doc">
+
+    <section>
+      <h2><span class="num">01</span> Surface-weighted ELO</h2>
+      <h3>Expected result</h3>
+      <p>Player A's expected score against B (1 = win, 0 = loss):</p>
+      $$ E_A = \frac{1}{1 + 10^{(R_B - R_A)/400}} $$
+      <p>This is also a usable match win probability on its own.</p>
+
+      <h3>Update after a match</h3>
+      $$ R_A' = R_A + K\,(S_A - E_A) $$
+      <p>where \(S_A = 1\) if A won, \(0\) if A lost. B updates symmetrically
+        (\(S_B = 1 - S_A\), \(E_B = 1 - E_A\)).</p>
+
+      <h3>Dynamic K-factor</h3>
+      <p>Don't use a fixed K. New players' ratings should move fast, veterans' slowly
+        (FiveThirtyEight tennis form):</p>
+      $$ K_i = \frac{250}{(m_i + 5)^{0.4}} $$
+      <p>\(m_i\) = matches player \(i\) has played. Each player uses their own K.</p>
+
+      <h3>Surface weighting</h3>
+      <p>Keep an overall ELO and a surface-specific ELO (separate clay/grass/hard chains).
+        The rating you feed the prediction is a blend:</p>
+      $$ R_{\text{eff}} = w\, R_{\text{surface}} + (1 - w)\, R_{\text{overall}} $$
+      <p>Tune \(w\) per surface — clay and grass are more specialized, so they take a higher
+        \(w\), roughly \(0.5\text{–}0.6\). Tune on your own backtest; don't trust round numbers.
+        Update both chains after every match.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">02</span> Serve-point probability</h2>
+      <p>The Markov model needs one number per player: the probability of winning a point
+        <strong>on their own serve</strong> in this matchup. Decompose each player into serve
+        skill and return skill (Barnett–Clarke).</p>
+      <ul>
+        <li>\(f_t\) = tour-average fraction of points won on serve (≈ 0.62–0.65 on hard; lower on clay, higher on grass)</li>
+        <li>\(f_A\) = A's fraction of points won on serve</li>
+        <li>\(g_B\) = B's fraction of points won on return; tour-average return rate is \(1 - f_t\)</li>
+      </ul>
+      <p>A's probability of winning a point while serving against B:</p>
+      $$ p_A = f_t + (f_A - f_t) - \bigl(g_B - (1 - f_t)\bigr) $$
+      <p>Start from tour average, add A's serving edge, subtract B's returning edge. Compute
+        \(p_B\) with the roles flipped. Use surface-specific stats, or a surface multiplier if
+        you're short on samples.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">03</span> Markov match model</h2>
+      <p>Turn \(p_A\) and \(p_B\) into a match probability. It nests: point → game → set → match.</p>
+
+      <h3>Game — server holds</h3>
+      <p>Let \(p\) be the server's point-win probability. Win 4 points, win by 2:</p>
+      $$ P_{\text{game}}(p) = p^4 + 4p^4(1-p) + 10p^4(1-p)^2 + 20p^3(1-p)^3 \cdot \frac{p^2}{p^2 + (1-p)^2} $$
+      <p>The terms are: win to love (4–0), to 15 (4–1), to 30 (4–2), and reach deuce (3–3) then
+        win it. The deuce factor comes from \(P_{\text{deuce}} = p^2 + 2p(1-p)P_{\text{deuce}}\),
+        which solves to \(\frac{p^2}{p^2 + (1-p)^2}\). So \(g_A = P_{\text{game}}(p_A)\) is A's
+        hold probability and \(1 - P_{\text{game}}(p_B)\) is A's break probability.</p>
+
+      <h3>Set — first to 6, win by 2, tiebreak at 6–6</h3>
+      <p>No clean closed form, because serve alternates each game. Use a small dynamic program
+        over (A games, B games, who serves):</p>
+      $$ F(a, b, \text{server}) = \text{P(A wins the set from here)} $$
+      <p>Transition on the current server's hold/break probability; the server flips each game.
+        Terminals: A reaches 6 with a 2-game lead → 1; B does → 0; at (6,6) → the tiebreak value.
+        Memoize — the state space is tiny.</p>
+
+      <h3>Tiebreak — first to 7, win by 2</h3>
+      <p>Same idea, separate DP over (A points, B points, server) with the 1–2–2 rotation. Once
+        tied at 6–6 it becomes a deuce-style race whose value depends only on the two per-point
+        win probabilities, which bounds the recursion cleanly. Call the resulting set probability
+        \(s\).</p>
+
+      <h3>Match</h3>
+      <p>Treating sets as independent (a good approximation — carryover and fatigue are second
+        order):</p>
+      $$ \text{Best of 3:}\quad P_{\text{match}} = s^2(3 - 2s) $$
+      $$ \text{Best of 5:}\quad P_{\text{match}} = s^3\,(6s^2 - 15s + 10) $$
+      <p>Scoreline probabilities fall out of the same expansion — the bonus of a mechanistic
+        model: Bo3 gives \(P(2\text{–}0)=s^2\) and \(P(2\text{–}1)=2s^2(1-s)\); Bo5 gives
+        \(P(3\text{–}0)=s^3\), \(P(3\text{–}1)=3s^3(1-s)\), \(P(3\text{–}2)=6s^3(1-s)^2\).</p>
+      <p>You now have two probabilities — ELO and Markov. They make different errors, so ensemble
+        them. Calibrate the <strong>final</strong> output, not the pieces.</p>
+    </section>
+
+    <section>
+      <h2><span class="num">04</span> Turning probability into a bet</h2>
+      <h3>Strip the vig first</h3>
+      <p>Decimal odds \(d_A, d_B\) give raw implied probabilities \(q_A = 1/d_A\), \(q_B = 1/d_B\)
+        that sum to more than 1 — the excess is the bookmaker's margin. Remove it (proportional
+        baseline):</p>
+      $$ q_A^* = \frac{q_A}{q_A + q_B}, \qquad q_B^* = \frac{q_B}{q_A + q_B} $$
+      <p>Shin and logarithmic de-vigging are better upgrades later.</p>
+      <h3>Expected value</h3>
+      <p>For a 1-unit bet on A at odds \(d_A\) given your <strong>calibrated</strong> probability \(p_A\):</p>
+      $$ \text{EV} = p_A\, d_A - 1 $$
+      <p>Bet only when \(\text{EV} > 0\), i.e. \(p_A > 1/d_A\). Your edge is that value.</p>
+      <h3>Stake sizing — fractional Kelly</h3>
+      $$ f^* = \frac{p\,d - 1}{d - 1} = \frac{bp - q}{b}, \quad b = d - 1,\; q = 1 - p $$
+      <p>Full Kelly assumes your probabilities are exactly right — they aren't, so scale down by
+        \(\lambda\):</p>
+      $$ \text{stake} = \lambda \, f^* \cdot (\text{bankroll}), \qquad \lambda \in [0.25,\, 0.5] $$
+    </section>
+
+    <section>
+      <h2><span class="num">05</span> Calibration — the part that has to be right</h2>
+      <div class="callout">
+        <p>You cannot make calibration <em>permanently</em> right and forget it. A model is
+          calibrated on a dataset, at a moment, for a segment. It drifts as the tour changes,
+          players age, and surfaces play differently year to year. "Always right" means
+          continuously measured and re-fit.</p>
+      </div>
+      <p>For betting this matters more than accuracy. A model that's 70% accurate but says "90%"
+        when it means "70%" hands you positive-EV signals that are actually negative-EV, and Kelly
+        sizes into them hard. Calibration is what makes the EV math trustworthy.</p>
+
+      <h3>Step 1 — measure it</h3>
+      <p><strong>Reliability diagram:</strong> bin predictions (10 bins of 0.1), plot mean
+        predicted probability against observed win frequency. Perfect calibration sits on the
+        diagonal; points below it mean overconfident. <strong>Expected Calibration Error</strong>
+        summarizes the diagram:</p>
+      $$ \text{ECE} = \sum_{b=1}^{B} \frac{n_b}{N}\,\bigl|\,\text{acc}(b) - \text{conf}(b)\,\bigr| $$
+      <p><strong>Brier score</strong> (overall probabilistic accuracy, lower is better):</p>
+      $$ \text{BS} = \frac{1}{N}\sum_{i=1}^{N}(p_i - o_i)^2, \qquad o_i \in \{0,1\} $$
+      <p><strong>Log loss</strong> punishes confident-and-wrong hardest — exactly the betting
+        failure mode:</p>
+      $$ \text{LogLoss} = -\frac{1}{N}\sum_{i=1}^{N}\bigl[\,o_i \log p_i + (1 - o_i)\log(1 - p_i)\,\bigr] $$
+
+      <h3>Step 2 — fix it</h3>
+      <p>Fit the calibration map on a <strong>held-out set</strong> — not training, not test.
+        <strong>Platt scaling</strong> (the robust default) fits two scalars on the model's
+        log-odds \(z = \log\frac{p}{1-p}\):</p>
+      $$ p_{\text{cal}} = \frac{1}{1 + \exp(-(A z + B))} $$
+      <p><strong>Isotonic regression</strong> fits any non-decreasing map — more flexible, needs
+        more data, overfits small sets. <strong>Beta calibration</strong> works on \([0,1]\)
+        directly and handles the typical S-shaped miscalibration better; a good later upgrade.</p>
+
+      <h3>Step 3 — keep it right</h3>
+      <ol>
+        <li><strong>Three-way split.</strong> Train, calibrate, test stay separate. Calibrating on training data gives a fake-perfect diagram.</li>
+        <li><strong>Calibrate per segment.</strong> A model can be calibrated overall and badly off on clay, on Bo5, or on big underdogs. Slice by surface, tour, tier, and favorite/underdog.</li>
+        <li><strong>Watch the tails.</strong> Heavy favorites (\(p > 0.9\)) and big dogs break first and hide longshot value. Bin them finely.</li>
+        <li><strong>Re-fit on a rolling window.</strong> Recompute periodically; a rising ECE is your signal to re-fit.</li>
+        <li><strong>Calibrate the final ensemble</strong>, after blending — not the components.</li>
+      </ol>
+
+      <h3>Backtesting guards</h3>
+      <ul>
+        <li><strong>No look-ahead.</strong> All ratings/stats strictly as-of pre-match. The most common way to fool yourself.</li>
+        <li><strong>Test against the closing line</strong>, not opening odds — it's the sharpest market estimate, and beating it is the real proof of edge.</li>
+        <li><strong>Apply vig and realistic fills</strong>, not theoretical fair odds.</li>
+        <li><strong>Check ROI stability</strong>, not just total profit — a backtest carried by three longshots isn't an edge.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2><span class="num">→</span> Build order</h2>
+      <ol>
+        <li>Surface-weighted ELO + dynamic K</li>
+        <li>Logistic regression on features (ELO diff, serve/return, form, fatigue) as a benchmark</li>
+        <li>Markov serve model for mechanistic probabilities + scorelines</li>
+        <li>Ensemble the two</li>
+        <li><strong>Calibrate the output and verify per-segment</strong> before risking a cent</li>
+        <li>Backtest against closing lines with vig applied</li>
+        <li>De-vig live odds → EV → fractional Kelly</li>
+      </ol>
+      <p>Get steps 1, 2, and 5 working end to end before anything fancy. A calibrated simple model
+        beats an uncalibrated sophisticated one every time.</p>
+      <div class="callout">
+        <p>For real-money use: a real market is sharper than a home model, edges are thin and
+          decay, and no calibration holds forever. Treat responsible-gambling tooling — limits,
+          loss alerts, self-exclusion — as core features, not afterthoughts.</p>
+      </div>
+    </section>
+
+  </article>
+
+  <footer class="foot wrap">
+    <p>This reference is mirrored exactly by the code in <a href="readme.html">Docs</a> and the
+      live <a href="index.html">Predictor</a>.</p>
+  </footer>
+</main>
+</body>
+</html>

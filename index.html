@@ -111,7 +111,29 @@
   .badge{ font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; padding:.1rem .4rem; border-radius:4px; margin-left:.4rem; }
   .badge--ev{ background:var(--pos); color:var(--ink); }
 
+  .today{ margin-top:22px; background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r); padding:18px clamp(14px,2.4vw,22px); }
+  .today h3{ font-family:var(--display); font-weight:600; font-size:.95rem; margin:0 0 4px; }
+  .today h3 .hint{ font-family:var(--mono); font-weight:400; font-size:.68rem; color:var(--faint); text-transform:uppercase; letter-spacing:.12em; float:right; }
+  .today__lede{ color:var(--mute); font-size:.86rem; margin:0 0 12px; }
+  .today__list{ display:flex; flex-direction:column; }
+  .match{ display:grid; grid-template-columns:140px 1fr auto; gap:6px 14px; align-items:center; padding:.6rem 0; border-top:1px solid var(--ink-3); }
+  .match__when{ font-family:var(--mono); font-size:.72rem; color:var(--faint); line-height:1.35; }
+  .match__who{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .match__p{ display:flex; justify-content:space-between; gap:10px; font-family:var(--mono); font-size:.84rem; font-variant-numeric:tabular-nums; }
+  .match__p .n{ font-family:var(--display); font-weight:600; font-size:.95rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .match__p--a .n{ color:var(--A); } .match__p--b .n{ color:var(--B); }
+  .match__p .nums{ color:var(--mute); white-space:nowrap; }
+  .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+    color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:7px; padding:.4rem .6rem; }
+  .match__go:hover{ background:var(--ball); color:var(--ink); }
+  .today__empty{ font-family:var(--mono); font-size:.82rem; color:var(--faint); padding:.4rem 0; }
+
   @media (max-width:760px){
+    .match{ grid-template-columns:1fr auto; }
+    .match__when{ grid-column:1 / -1; }
+    .match__p{ flex-direction:column; gap:0; }
+    .match__who{ gap:8px; }
+    .today h3 .hint{ float:none; display:block; margin-top:4px; }
     .controls{ grid-template-columns:1fr; }
     .vs{ flex-direction:row; padding:0; }
     .readouts{ grid-template-columns:1fr; }
@@ -143,6 +165,13 @@
       <span class="chip" id="countChip"></span>
     </div>
   </header>
+
+  <section class="today" id="today">
+    <h3>Today's matches <span class="hint" id="todayStamp"></span></h3>
+    <p class="today__lede">Upcoming ATP &amp; WTA matches with the best bookmaker price, refreshed every
+      morning. Model win chance · best odds · EV. Press <b>Analyse</b> to load a match into the predictor below.</p>
+    <div class="today__list" id="todayList"><div class="today__empty">Loading…</div></div>
+  </section>
 
   <section class="controls">
     <div class="field field--a">
@@ -254,7 +283,7 @@
     <p><strong>Data &amp; honesty.</strong> Player ratings refresh from the daily updater (see
       <a href="readme.html">Docs</a>); the stamp above shows when. The probability shown is the raw
       model ensemble — calibrate it against your own logged results before trusting the EV
-      (see <a href="model-math.html">The Math</a>). Pick "Custom player" to enter your own serve/return numbers.</p>
+      (see <a href="model-math.html">The Math</a>). Pick “Custom player” to enter your own serve/return numbers.</p>
     <p style="margin-top:.6rem;"><strong>If you bet:</strong> a real market is sharper than any home
       model, edges are thin and decay, and no calibration holds forever. Set deposit and loss limits
       and treat them as part of the system.</p>
@@ -536,6 +565,48 @@ async function loadData(){
   populateSelects(); stampDate(); compute();
 }
 
+/* ===================== today's matches (matches.json) ==================== */
+function setSeg(id, v){
+  $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === String(v) ? "true" : "false"));
+}
+function loadMatch(m){
+  state.tour = m.tour; setSeg("segTour", m.tour);
+  state.surface = m.surface; setSeg("segSurface", m.surface);
+  state.bestOf = m.best_of; setSeg("segFormat", m.best_of);
+  populateSelects();
+  state.a = m.a.key; state.b = m.b.key;
+  $("inA").value = nameFromKey(state.a); $("inB").value = nameFromKey(state.b);
+  $("customA").classList.remove("show"); $("customB").classList.remove("show");
+  $("oddsA").value = m.a.best_odds; $("oddsB").value = m.b.best_odds;
+  renderEV(compute());
+  document.querySelector(".controls").scrollIntoView({ behavior:"smooth", block:"start" });
+}
+function matchSide(cls, p){
+  const ev = (p.ev>=0?"+":"") + (p.ev*100).toFixed(1) + "%";
+  return `<div class="match__p match__p--${cls}"><span class="n">${esc(p.name)}</span>
+    <span class="nums">${pct(p.model)} · ${p.best_odds.toFixed(2)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}">${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
+}
+function renderToday(j){
+  const list = $("todayList");
+  if(!j){ list.innerHTML = '<div class="today__empty">No match list yet — it appears after the first daily run.</div>'; return; }
+  $("todayStamp").textContent = "updated " + (j.updated || "").replace("T"," ").replace(/:\d\dZ$/," UTC");
+  if(j.status === "no_api_key"){ list.innerHTML = '<div class="today__empty">Odds feed not connected yet — add the ODDS_API_KEY secret (see Docs).</div>'; return; }
+  const ms = (j.matches || []).filter(m => !m.start || new Date(m.start) > Date.now() - 3*3600e3);
+  if(!ms.length){ list.innerHTML = '<div class="today__empty">No priced ATP/WTA matches in the next day and a half.</div>'; return; }
+  const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
+  list.innerHTML = ms.map((m,i) => `<div class="match">
+      <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface} · Bo${m.best_of}</div>
+      <div class="match__who">${matchSide("a", m.a)}${matchSide("b", m.b)}</div>
+      <button class="match__go" type="button" data-i="${i}">Analyse</button></div>`).join("");
+  list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () => loadMatch(ms[+b.dataset.i])));
+}
+async function loadMatches(){
+  try{
+    const r = await fetch("matches.json", { cache:"no-store" });
+    renderToday(r.ok ? await r.json() : null);
+  }catch(e){ renderToday(null); }
+}
+
 bindSeg("segSurface", "surface");
 bindSeg("segFormat", "bestOf", v => parseInt(v,10));
 $("segTour").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
@@ -549,7 +620,7 @@ $("swap").addEventListener("click", swapSides);
 ["aSpw","aRpw","bSpw","bRpw"].forEach(i => $(i).addEventListener("input", compute));
 ["oddsA","oddsB"].forEach(i => $(i).addEventListener("input", () => renderEV(compute())));
 
-loadData();
+loadData().then(loadMatches);
 </script>
 </body>
 </html>

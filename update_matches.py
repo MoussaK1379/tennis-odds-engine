@@ -185,31 +185,51 @@ def slugify(name):
     n = unicodedata.normalize("NFKD", name or "").encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9]+", "-", n.lower()).strip("-")
 
+def name_tiers(name):
+    """Keys an odds-feed name could appear under in the stats feed, strictest first.
+
+    The stats feed writes 'J. Sinner', 'T. M. Etcheverry', 'C. Osorio', 'Y. Bu';
+    the odds feed writes full names in either order ('Bu Yunchaokete',
+    'Maria Camila Osorio Serrano')."""
+    t = [w for w in slugify(name).split("-") if w]
+    if len(t) < 2:
+        return [{"-".join(t)}]
+    last = t[-1]
+    # Western order is tried before surname-first order at each step, so
+    # 'Maria Timofeeva' finds M. Timofeeva before T. Maria (Tatjana Maria).
+    return [
+        {"-".join(t)},                                                   # exact
+        {"-".join(t[1:] + t[:1])},                                       # exact, reversed
+        {t[0][0] + "-" + "-".join(t[1:])},                               # J. Sinner
+        {"-".join(w[0] for w in t[:-1]) + "-" + last},                   # T. M. Etcheverry
+        {t[-1][0] + "-" + "-".join(t[:-1])},                             # Y. Bu for 'Bu Yunchaokete'
+        {t[i][0] + "-" + t[j] for i in range(len(t)) for j in range(i + 1, len(t))},  # C. Osorio, G. Ruse
+        {t[i][0] + "-" + t[j] for i in range(len(t)) for j in range(i)},              # surname-first pairs
+    ]
+
+def _player_keys(name):
+    parts = [w for w in slugify(name).split("-") if w]
+    return {"-".join(parts), parts[0][0] + "-" + "-".join(parts[1:])} if len(parts) >= 2 else {"-".join(parts)}
+
 def build_name_index(players):
-    """slug -> key, plus 'first-initial + surname' -> key when that's unambiguous."""
-    exact, loose, clashes = {}, {}, set()
-    for key, p in players.items():
-        s = slugify(p["name"])
-        exact[s] = key
-        parts = s.split("-")
-        if len(parts) >= 2:
-            lk = parts[0][0] + "-" + "-".join(parts[1:])
-            if lk in loose and loose[lk] != key: clashes.add(lk)
-            loose[lk] = key
-    for lk in clashes: loose.pop(lk, None)
-    return exact, loose
+    """tour -> {name key -> set of player ids}."""
+    idx = {}
+    for pid, p in players.items():
+        m = idx.setdefault(p.get("tour", "ATP"), {})
+        for k in _player_keys(p["name"]):
+            m.setdefault(k, set()).add(pid)
+    return idx
 
 def resolve(name, tour, players, idx):
-    exact, loose = idx
-    s = slugify(name)
-    cands = [exact.get(s)]
-    parts = s.split("-")
-    if len(parts) >= 2:
-        cands.append(loose.get(parts[0][0] + "-" + "-".join(parts[1:])))
-        cands.append(exact.get("-".join(parts[1:] + parts[:1])))    # "Zheng Qinwen" vs "Qinwen Zheng"
-    for k in cands:
-        if k and players[k].get("tour", "ATP") == tour:
-            return k
+    """Player id for an odds-feed name, or None. A looser tier is used only if
+    the stricter ones found nobody, and only when it points at exactly one player."""
+    m = idx.get(tour, {})
+    for tier in name_tiers(name):
+        hits = set().union(*(m.get(k, set()) for k in tier))
+        if len(hits) == 1:
+            return hits.pop()
+        if len(hits) > 1:
+            return None          # ambiguous: better unmatched than wrong
     return None
 
 def _words(title):
@@ -277,9 +297,8 @@ def loose_key(name):
     return parts[0][:1] + "-" + "-".join(parts[1:]) if len(parts) >= 2 else slugify(name)
 
 def name_keys(name):
-    """Match keys for a name, including reversed order ('Qinwen Zheng' / 'Zheng Qinwen')."""
-    parts = slugify(name).split("-")
-    return {loose_key(name), loose_key(" ".join(parts[::-1]))} if len(parts) >= 2 else {loose_key(name)}
+    """Every key a name could match under (both feeds' styles, either order)."""
+    return set().union(*name_tiers(name))
 
 def parse_iso(s):
     try:

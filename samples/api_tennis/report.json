@@ -1,0 +1,975 @@
+{
+ "get_events": {
+  "http": 200,
+  "success": 1,
+  "error": null
+ },
+ "get_fixtures_past": {
+  "http": 200,
+  "success": 1,
+  "error": null,
+  "window": [
+   "2026-09-27",
+   "2026-09-29"
+  ],
+  "count": 613,
+  "event_type_type": [
+   [
+    "Challenger Men Singles",
+    192
+   ],
+   [
+    "Itf Men Singles",
+    85
+   ],
+   [
+    "Itf Women Singles",
+    69
+   ],
+   [
+    "Itf Men Doubles",
+    58
+   ],
+   [
+    "Itf Women Doubles",
+    45
+   ],
+   [
+    "Challenger Women Singles",
+    45
+   ],
+   [
+    "Atp Singles",
+    42
+   ],
+   [
+    "Wta Singles",
+    41
+   ],
+   [
+    "Atp Doubles",
+    15
+   ],
+   [
+    "Challenger Women Doubles",
+    11
+   ],
+   [
+    "Challenger Men Doubles",
+    6
+   ],
+   [
+    "Wta Doubles",
+    3
+   ],
+   [
+    "Teams Women",
+    1
+   ]
+  ],
+  "event_status": [
+   [
+    "Finished",
+    577
+   ],
+   [
+    "Cancelled",
+    19
+   ],
+   [
+    "Retired",
+    15
+   ],
+   [
+    "Walk Over",
+    2
+   ]
+  ],
+  "keys": [
+   "event_date",
+   "event_final_result",
+   "event_first_player",
+   "event_first_player_logo",
+   "event_game_result",
+   "event_key",
+   "event_live",
+   "event_qualification",
+   "event_second_player",
+   "event_second_player_logo",
+   "event_serve",
+   "event_status",
+   "event_time",
+   "event_type_type",
+   "event_winner",
+   "first_player_dp1_key",
+   "first_player_dp2_key",
+   "first_player_key",
+   "pointbypoint",
+   "scores",
+   "second_player_dp1_key",
+   "second_player_dp2_key",
+   "second_player_key",
+   "statistics",
+   "tournament_key",
+   "tournament_name",
+   "tournament_round",
+   "tournament_season"
+  ],
+  "with_statistics": 336,
+  "with_pointbypoint": 523,
+  "statistics_names": [
+   [
+    "match",
+    "Service",
+    "Aces",
+    672
+   ],
+   [
+    "match",
+    "Service",
+    "Double Faults",
+    672
+   ],
+   [
+    "match",
+    "Service",
+    "1st serve percentage",
+    672
+   ],
+   [
+    "match",
+    "Service",
+    "1st serve points won",
+    672
+   ],
+   [
+    "match",
+    "Service",
+    "2nd serve points won",
+    672
+   ],
+   [
+    "match",
+    "Service",
+    "Break Points Saved",
+    672
+   ],
+   [
+    "match",
+    "Return",
+    "1st return points won",
+    672
+   ],
+   [
+    "match",
+    "Return",
+    "2nd return points won",
+    672
+   ],
+   [
+    "match",
+    "Return",
+    "Break Points Converted",
+    672
+   ],
+   [
+    "match",
+    "Points",
+    "Service Points Won",
+    672
+   ],
+   [
+    "match",
+    "Points",
+    "Return Points Won",
+    672
+   ],
+   [
+    "match",
+    "Points",
+    "Total Points Won",
+    672
+   ],
+   [
+    "match",
+    "Points",
+    "Last 10 balls",
+    672
+   ],
+   [
+    "match",
+    "Points",
+    "Match points saved",
+    672
+   ],
+   [
+    "match",
+    "Games",
+    "Service games won",
+    672
+   ],
+   [
+    "match",
+    "Games",
+    "Return games won",
+    672
+   ],
+   [
+    "match",
+    "Games",
+    "Total games won",
+    672
+   ],
+   [
+    "set1",
+    "Service",
+    "Aces",
+    672
+   ],
+   [
+    "set1",
+    "Service",
+    "Double Faults",
+    672
+   ],
+   [
+    "set1",
+    "Service",
+    "1st serve percentage",
+    672
+   ],
+   [
+    "set1",
+    "Service",
+    "1st serve points won",
+    672
+   ],
+   [
+    "set1",
+    "Service",
+    "2nd serve points won",
+    672
+   ],
+   [
+    "set1",
+    "Service",
+    "Break Points Saved",
+    672
+   ],
+   [
+    "set1",
+    "Return",
+    "1st return points won",
+    672
+   ],
+   [
+    "set1",
+    "Return",
+    "2nd return points won",
+    672
+   ],
+   [
+    "set1",
+    "Return",
+    "Break Points Converted",
+    672
+   ],
+   [
+    "set1",
+    "Points",
+    "Service Points Won",
+    672
+   ],
+   [
+    "set1",
+    "Points",
+    "Return Points Won",
+    672
+   ],
+   [
+    "set1",
+    "Points",
+    "Total Points Won",
+    672
+   ],
+   [
+    "set1",
+    "Points",
+    "Match points saved",
+    672
+   ],
+   [
+    "set1",
+    "Games",
+    "Service games won",
+    672
+   ],
+   [
+    "set1",
+    "Games",
+    "Return games won",
+    672
+   ],
+   [
+    "set1",
+    "Games",
+    "Total games won",
+    672
+   ],
+   [
+    "set2",
+    "Service",
+    "Aces",
+    670
+   ],
+   [
+    "set2",
+    "Service",
+    "Double Faults",
+    670
+   ],
+   [
+    "set2",
+    "Service",
+    "1st serve percentage",
+    670
+   ],
+   [
+    "set2",
+    "Service",
+    "1st serve points won",
+    670
+   ],
+   [
+    "set2",
+    "Service",
+    "2nd serve points won",
+    670
+   ],
+   [
+    "set2",
+    "Service",
+    "Break Points Saved",
+    670
+   ],
+   [
+    "set2",
+    "Return",
+    "1st return points won",
+    670
+   ],
+   [
+    "set2",
+    "Return",
+    "2nd return points won",
+    670
+   ],
+   [
+    "set2",
+    "Return",
+    "Break Points Converted",
+    670
+   ],
+   [
+    "set2",
+    "Points",
+    "Service Points Won",
+    670
+   ],
+   [
+    "set2",
+    "Points",
+    "Return Points Won",
+    670
+   ],
+   [
+    "set2",
+    "Points",
+    "Total Points Won",
+    670
+   ],
+   [
+    "set2",
+    "Points",
+    "Match points saved",
+    670
+   ],
+   [
+    "set2",
+    "Games",
+    "Service games won",
+    670
+   ],
+   [
+    "set2",
+    "Games",
+    "Return games won",
+    670
+   ],
+   [
+    "set2",
+    "Games",
+    "Total games won",
+    670
+   ],
+   [
+    "set3",
+    "Service",
+    "Aces",
+    202
+   ],
+   [
+    "set3",
+    "Service",
+    "Double Faults",
+    202
+   ],
+   [
+    "set3",
+    "Service",
+    "1st serve percentage",
+    202
+   ],
+   [
+    "set3",
+    "Service",
+    "1st serve points won",
+    202
+   ],
+   [
+    "set3",
+    "Service",
+    "2nd serve points won",
+    202
+   ],
+   [
+    "set3",
+    "Service",
+    "Break Points Saved",
+    202
+   ],
+   [
+    "set3",
+    "Return",
+    "1st return points won",
+    202
+   ],
+   [
+    "set3",
+    "Return",
+    "2nd return points won",
+    202
+   ],
+   [
+    "set3",
+    "Return",
+    "Break Points Converted",
+    202
+   ],
+   [
+    "set3",
+    "Points",
+    "Service Points Won",
+    202
+   ],
+   [
+    "set3",
+    "Points",
+    "Return Points Won",
+    202
+   ]
+  ]
+ },
+ "get_fixtures_upcoming": {
+  "http": 200,
+  "success": 1,
+  "error": null,
+  "window": [
+   "2026-09-30",
+   "2026-10-01"
+  ],
+  "count": 771,
+  "event_type_type": [
+   [
+    "Itf Men Singles",
+    201
+   ],
+   [
+    "Itf Women Singles",
+    177
+   ],
+   [
+    "Challenger Men Singles",
+    76
+   ],
+   [
+    "Itf Men Doubles",
+    75
+   ],
+   [
+    "Challenger Men Doubles",
+    67
+   ],
+   [
+    "Itf Women Doubles",
+    67
+   ],
+   [
+    "Wta Singles",
+    35
+   ],
+   [
+    "Atp Singles",
+    32
+   ],
+   [
+    "Challenger Women Singles",
+    17
+   ],
+   [
+    "Challenger Women Doubles",
+    14
+   ],
+   [
+    "Atp Doubles",
+    10
+   ]
+  ],
+  "event_status": [
+   [
+    "Finished",
+    421
+   ],
+   [
+    "1",
+    296
+   ],
+   [
+    "Retired",
+    18
+   ],
+   [
+    "Cancelled",
+    10
+   ],
+   [
+    "",
+    10
+   ],
+   [
+    "Set 2",
+    7
+   ],
+   [
+    "Walk Over",
+    6
+   ],
+   [
+    "Set 3",
+    1
+   ],
+   [
+    "Set 1",
+    1
+   ],
+   [
+    "Interrupted",
+    1
+   ]
+  ],
+  "keys": [
+   "event_date",
+   "event_final_result",
+   "event_first_player",
+   "event_first_player_logo",
+   "event_game_result",
+   "event_key",
+   "event_live",
+   "event_qualification",
+   "event_second_player",
+   "event_second_player_logo",
+   "event_serve",
+   "event_status",
+   "event_time",
+   "event_type_type",
+   "event_winner",
+   "first_player_dp1_key",
+   "first_player_dp2_key",
+   "first_player_key",
+   "pointbypoint",
+   "scores",
+   "second_player_dp1_key",
+   "second_player_dp2_key",
+   "second_player_key",
+   "statistics",
+   "tournament_key",
+   "tournament_name",
+   "tournament_round",
+   "tournament_season"
+  ],
+  "with_statistics": 131,
+  "with_pointbypoint": 409,
+  "statistics_names": [
+   [
+    "match",
+    "Service",
+    "Aces",
+    262
+   ],
+   [
+    "match",
+    "Service",
+    "Double Faults",
+    262
+   ],
+   [
+    "match",
+    "Service",
+    "1st serve percentage",
+    262
+   ],
+   [
+    "match",
+    "Service",
+    "1st serve points won",
+    262
+   ],
+   [
+    "match",
+    "Service",
+    "2nd serve points won",
+    262
+   ],
+   [
+    "match",
+    "Service",
+    "Break Points Saved",
+    262
+   ],
+   [
+    "match",
+    "Return",
+    "1st return points won",
+    262
+   ],
+   [
+    "match",
+    "Return",
+    "2nd return points won",
+    262
+   ],
+   [
+    "match",
+    "Return",
+    "Break Points Converted",
+    262
+   ],
+   [
+    "match",
+    "Points",
+    "Service Points Won",
+    262
+   ],
+   [
+    "match",
+    "Points",
+    "Return Points Won",
+    262
+   ],
+   [
+    "match",
+    "Points",
+    "Total Points Won",
+    262
+   ],
+   [
+    "match",
+    "Points",
+    "Last 10 balls",
+    262
+   ],
+   [
+    "match",
+    "Points",
+    "Match points saved",
+    262
+   ],
+   [
+    "match",
+    "Games",
+    "Service games won",
+    262
+   ],
+   [
+    "match",
+    "Games",
+    "Return games won",
+    262
+   ],
+   [
+    "match",
+    "Games",
+    "Total games won",
+    262
+   ],
+   [
+    "set1",
+    "Service",
+    "Aces",
+    262
+   ],
+   [
+    "set1",
+    "Service",
+    "1st serve percentage",
+    262
+   ],
+   [
+    "set1",
+    "Service",
+    "1st serve points won",
+    262
+   ],
+   [
+    "set1",
+    "Service",
+    "2nd serve points won",
+    262
+   ],
+   [
+    "set1",
+    "Service",
+    "Break Points Saved",
+    262
+   ],
+   [
+    "set1",
+    "Return",
+    "1st return points won",
+    262
+   ],
+   [
+    "set1",
+    "Return",
+    "2nd return points won",
+    262
+   ],
+   [
+    "set1",
+    "Return",
+    "Break Points Converted",
+    262
+   ],
+   [
+    "set1",
+    "Points",
+    "Service Points Won",
+    262
+   ],
+   [
+    "set1",
+    "Points",
+    "Return Points Won",
+    262
+   ],
+   [
+    "set1",
+    "Points",
+    "Total Points Won",
+    262
+   ],
+   [
+    "set1",
+    "Points",
+    "Match points saved",
+    262
+   ],
+   [
+    "set1",
+    "Games",
+    "Service games won",
+    262
+   ],
+   [
+    "set1",
+    "Games",
+    "Return games won",
+    262
+   ],
+   [
+    "set1",
+    "Games",
+    "Total games won",
+    262
+   ],
+   [
+    "set1",
+    "Service",
+    "Double Faults",
+    260
+   ],
+   [
+    "set2",
+    "Service",
+    "Aces",
+    258
+   ],
+   [
+    "set2",
+    "Service",
+    "Double Faults",
+    258
+   ],
+   [
+    "set2",
+    "Service",
+    "1st serve percentage",
+    258
+   ],
+   [
+    "set2",
+    "Service",
+    "1st serve points won",
+    258
+   ],
+   [
+    "set2",
+    "Service",
+    "2nd serve points won",
+    258
+   ],
+   [
+    "set2",
+    "Service",
+    "Break Points Saved",
+    258
+   ],
+   [
+    "set2",
+    "Return",
+    "1st return points won",
+    258
+   ],
+   [
+    "set2",
+    "Return",
+    "2nd return points won",
+    258
+   ],
+   [
+    "set2",
+    "Return",
+    "Break Points Converted",
+    258
+   ],
+   [
+    "set2",
+    "Points",
+    "Service Points Won",
+    258
+   ],
+   [
+    "set2",
+    "Points",
+    "Return Points Won",
+    258
+   ],
+   [
+    "set2",
+    "Points",
+    "Total Points Won",
+    258
+   ],
+   [
+    "set2",
+    "Points",
+    "Match points saved",
+    258
+   ],
+   [
+    "set2",
+    "Games",
+    "Service games won",
+    258
+   ],
+   [
+    "set2",
+    "Games",
+    "Return games won",
+    258
+   ],
+   [
+    "set2",
+    "Games",
+    "Total games won",
+    258
+   ],
+   [
+    "set3",
+    "Service",
+    "Aces",
+    84
+   ],
+   [
+    "set3",
+    "Service",
+    "Double Faults",
+    84
+   ],
+   [
+    "set3",
+    "Service",
+    "1st serve percentage",
+    84
+   ],
+   [
+    "set3",
+    "Service",
+    "1st serve points won",
+    84
+   ],
+   [
+    "set3",
+    "Service",
+    "2nd serve points won",
+    84
+   ],
+   [
+    "set3",
+    "Service",
+    "Break Points Saved",
+    84
+   ],
+   [
+    "set3",
+    "Return",
+    "1st return points won",
+    84
+   ],
+   [
+    "set3",
+    "Return",
+    "2nd return points won",
+    84
+   ],
+   [
+    "set3",
+    "Return",
+    "Break Points Converted",
+    84
+   ],
+   [
+    "set3",
+    "Points",
+    "Service Points Won",
+    84
+   ],
+   [
+    "set3",
+    "Points",
+    "Return Points Won",
+    84
+   ]
+  ]
+ }
+}

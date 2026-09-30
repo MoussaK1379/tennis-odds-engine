@@ -108,8 +108,10 @@ python update_data.py --local atp_matches_2025.csv   # offline test</code></pre>
       <strong>Today's matches</strong>; <em>Analyse</em> loads a match, its surface, format and odds.</p>
     <pre><code>ODDS_API_KEY=your-key python update_matches.py
 ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code></pre>
-    <p>Surface and best-of-5 are guessed from the tournament name (Grand Slam men's draws are best
-      of 5; unknown events count as hard court). Players not in <code>players.json</code> — usually
+    <p>Surface comes from a built-in table of every ATP tournament: Grand Slams, Masters 1000, 500s,
+      250s and team events, plus the main WTA-only stops. Stuttgart is grass for ATP and clay for WTA.
+      Indoor events are labelled but the model treats them as ordinary hard courts. A tournament
+      not in the table counts as hard court and shows a “?” on the site. Only men's Grand Slams are best of 5. Players not in <code>players.json</code> — usually
       qualifiers — are listed under <code>unmatched</code> and skipped.</p>
 
     <h2>Automatic daily run (one-time setup)</h2>

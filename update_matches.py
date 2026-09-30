@@ -25,12 +25,94 @@ from functools import lru_cache
 API = "https://api.the-odds-api.com/v4"
 
 GRAND_SLAMS = ("australian open", "french open", "roland garros", "wimbledon", "us open")
-CLAY = ("french open", "roland garros", "monte carlo", "madrid", "italian open", "rome",
-        "barcelona", "hamburg", "rio", "buenos aires", "geneva", "lyon", "estoril",
-        "munich", "bastad", "gstaad", "kitzbuhel", "umag", "strasbourg", "rabat",
-        "charleston", "bogota", "palermo", "prague", "bucharest")
-GRASS = ("wimbledon", "queen", "halle", "s-hertogenbosch", "hertogenbosch",
-         "eastbourne", "mallorca", "newport", "berlin", "birmingham", "nottingham", "bad homburg")
+
+# Tournament surfaces. Titles are normalised to lowercase ASCII words first
+# ("Båstad" -> "bastad", "Monte-Carlo" -> "monte carlo"), then the first
+# matching row wins, so more specific names sit above looser ones.
+# Each row: (name keywords, surface, indoor). The model has no indoor
+# adjustment; indoor is shown on the site for information.
+TOURNAMENTS = [
+    # Grand Slams
+    (("australian open",), "hard", False),
+    (("french open", "roland garros"), "clay", False),
+    (("wimbledon",), "grass", False),
+    (("us open",), "hard", False),
+    # Year-end and team events
+    (("next gen",), "hard", False),                   # before "atp finals"
+    (("atp finals", "nitto", "turin"), "hard", True),
+    (("united cup",), "hard", False),
+    (("laver cup",), "hard", True),
+    (("davis cup",), "hard", True),
+    # Masters 1000
+    (("indian wells", "bnp paribas open"), "hard", False),
+    (("miami",), "hard", False),
+    (("monte carlo", "monaco"), "clay", False),
+    (("madrid",), "clay", False),
+    (("rome", "italian open", "internazionali"), "clay", False),
+    (("montreal", "toronto", "canadian open", "national bank open"), "hard", False),
+    (("cincinnati",), "hard", False),
+    (("shanghai",), "hard", False),
+    (("paris masters", "rolex paris", "paris"), "hard", True),
+    # ATP 500
+    (("dallas",), "hard", True),
+    (("rotterdam",), "hard", True),
+    (("doha", "qatar"), "hard", False),
+    (("rio de janeiro", "rio open"), "clay", False),
+    (("acapulco", "mexican open"), "hard", False),
+    (("dubai",), "hard", False),
+    (("barcelona",), "clay", False),
+    (("munich",), "clay", False),
+    (("hamburg",), "clay", False),
+    (("halle",), "grass", False),
+    (("queen s", "queens"), "grass", False),
+    (("washington", "citi open"), "hard", False),
+    (("tokyo", "japan open"), "hard", False),
+    (("beijing", "china open"), "hard", False),
+    (("basel", "swiss indoors"), "hard", True),
+    (("vienna", "erste bank"), "hard", True),
+    # ATP 250
+    (("brisbane",), "hard", False),
+    (("hong kong",), "hard", False),
+    (("adelaide",), "hard", False),
+    (("auckland", "asb classic"), "hard", False),
+    (("montpellier", "open occitanie"), "hard", True),
+    (("buenos aires", "argentina open"), "clay", False),
+    (("delray beach",), "hard", False),
+    (("santiago", "chile open"), "clay", False),
+    (("bucharest",), "clay", False),
+    (("houston", "clay court"), "clay", False),
+    (("marrakech", "morocco"), "clay", False),
+    (("geneva",), "clay", False),
+    (("s hertogenbosch", "hertogenbosch", "libema"), "grass", False),
+    (("mallorca",), "grass", False),
+    (("eastbourne",), "grass", False),
+    (("bastad", "swedish open"), "clay", False),
+    (("gstaad", "swiss open"), "clay", False),
+    (("umag", "croatia open"), "clay", False),
+    (("kitzbuhel", "austrian open"), "clay", False),
+    (("estoril",), "clay", False),
+    (("los cabos",), "hard", False),
+    (("winston salem",), "hard", False),
+    (("chengdu",), "hard", False),
+    (("hangzhou",), "hard", False),
+    (("almaty",), "hard", True),
+    (("brussels", "antwerp", "european open"), "hard", True),
+    (("lyon",), "hard", True),
+    (("stockholm", "nordic open"), "hard", True),
+]
+# Stuttgart is grass on the ATP tour but clay (indoor) on the WTA tour.
+TOUR_SPECIFIC = {
+    ("ATP", "stuttgart"): ("grass", False),
+    ("WTA", "stuttgart"): ("clay", True),
+}
+# WTA-only events not on the ATP list above.
+WTA_EXTRA = [
+    (("charleston",), "clay", False),
+    (("berlin", "bad homburg", "birmingham", "nottingham"), "grass", False),
+    (("wuhan", "ningbo", "guadalajara", "seoul", "osaka", "abu dhabi",
+      "linz", "ostrava", "san diego", "cleveland", "monterrey"), "hard", False),
+    (("rabat", "strasbourg", "palermo", "prague", "bogota"), "clay", False),
+]
 
 
 # ---------- engine (mirrors the JS in index.html) -----------------------------
@@ -130,15 +212,25 @@ def resolve(name, tour, players, idx):
             return k
     return None
 
-def guess_surface(title):
-    t = (title or "").lower()
-    if any(k in t for k in GRASS): return "grass"
-    if any(k in t for k in CLAY): return "clay"
-    return "hard"
+def _words(title):
+    t = unicodedata.normalize("NFKD", title or "").encode("ascii", "ignore").decode().lower()
+    return " " + re.sub(r"[^a-z0-9]+", " ", t).strip() + " "
+
+def surface_for(title, tour):
+    """-> (surface, indoor, known). Unknown tournaments default to outdoor hard."""
+    t = _words(title)
+    has = lambda k: f" {k} " in t
+    for (tr, k), (surf, indoor) in TOUR_SPECIFIC.items():
+        if tr == tour and has(k):
+            return surf, indoor, True
+    for keys, surf, indoor in TOURNAMENTS + (WTA_EXTRA if tour == "WTA" else []):
+        if any(has(k) for k in keys):
+            return surf, indoor, True
+    return "hard", False, False
 
 def guess_best_of(title, tour):
-    t = (title or "").lower()
-    return 5 if tour == "ATP" and any(k in t for k in GRAND_SLAMS) else 3
+    t = _words(title)
+    return 5 if tour == "ATP" and any(f" {k} " in t for k in GRAND_SLAMS) else 3
 
 def iso(dt): return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
 
@@ -219,14 +311,18 @@ def main():
             print(f"  · {title}: odds unavailable ({e})", file=sys.stderr)
             continue
 
-        surf, best_of = guess_surface(title), guess_best_of(title, tour)
+        surf, indoor, known = surface_for(title, tour)
+        best_of = guess_best_of(title, tour)
+        if not known:
+            print(f"  · {title}: surface unknown, assuming hard", file=sys.stderr)
         t_avg = tour_avgs.get(tour) or (0.64 if tour == "ATP" else 0.56)
         for ev in events:
             a, b = ev.get("home_team"), ev.get("away_team")
             ka, kb = resolve(a, tour, players, idx), resolve(b, tour, players, idx)
             summary = price_summary(ev, a, b)
             row = {"id": ev.get("id"), "tour": tour, "tournament": title,
-                   "start": ev.get("commence_time"), "surface": surf, "best_of": best_of,
+                   "start": ev.get("commence_time"), "surface": surf, "indoor": indoor,
+                   "surface_known": known, "best_of": best_of,
                    "a": {"name": a, "key": ka}, "b": {"name": b, "key": kb}}
             if not summary:
                 continue

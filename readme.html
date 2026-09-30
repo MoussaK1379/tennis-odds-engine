@@ -94,11 +94,16 @@
     <p>The app reads <code>players.json</code> on every load (uncached). <code>update_data.py</code>
       rebuilds it each morning, trying these sources in order for each tour:</p>
     <ol>
-      <li><strong>Jeff Sackmann's match files</strong> on GitHub: results plus serve/return stats.</li>
+      <li><strong>api-tennis.com</strong> (needs the <code>TENNIS_API_KEY</code> secret): ATP and WTA
+        results with serve points won. Results are saved in <code>data/api_tennis_matches.csv</code>. The
+        first run downloads about two years; after that each run only fetches the last week, and
+        the saved history keeps working even if the subscription lapses.</li>
+      <li><strong>Jeff Sackmann's match files</strong> on GitHub: results plus serve/return stats
+        (no longer available at the time of writing).</li>
       <li><strong>tennis-data.co.uk</strong> yearly spreadsheets: results only. Elo stays current;
         serve/return stats are carried over from the previous day (new players get the tour average).</li>
       <li><strong>Neither reachable:</strong> yesterday's file is kept and the Predictor's date stamp
-        turns orange ("not updating"), so the site keeps working.</li>
+        turns orange ("not updating"), so the site keeps working. The same happens if the newest result is more than two weeks old.</li>
     </ol>
     <p>How the stats are built: a player is listed if they played in the last 12 months. Elo ignores
       walkovers and retirements. Serve/return rates count every point, weight recent matches more
@@ -142,6 +147,8 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
     <ol>
       <li><strong>Turn on Pages:</strong> repo <em>Settings → Pages → Build and deployment → Source:
         GitHub Actions</em>. The site appears at <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code>.</li>
+      <li><strong>Add the stats key:</strong> from api-tennis.com, as a repository secret named
+        <code>TENNIS_API_KEY</code> (same place as the odds key below).</li>
       <li><strong>Add the odds key:</strong> sign up free at the-odds-api.com (500 requests a
         month; each run uses about one per active tournament, so around 300 a month), then add it under
         <em>Settings → Secrets and variables → Actions → New repository secret</em>, named

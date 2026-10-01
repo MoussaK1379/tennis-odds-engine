@@ -260,9 +260,10 @@
       <h3>Point &amp; game engine <span class="hint">per serve</span></h3>
       <div class="serverow"><span class="lab">Serve point won — <span class="va" id="srvNameA">A</span></span><span class="va" id="paV">—</span></div>
       <div class="serverow"><span class="lab">Serve point won — <span class="vb" id="srvNameB">B</span></span><span class="vb" id="pbV">—</span></div>
-      <div class="serverow"><span class="lab">Holds serve — <span class="va">A</span></span><span class="va" id="holdA">—</span></div>
-      <div class="serverow"><span class="lab">Holds serve — <span class="vb">B</span></span><span class="vb" id="holdB">—</span></div>
-      <div class="serverow"><span class="lab">Wins a set — <span class="va">A</span></span><span class="va" id="setA">—</span></div>
+      <div class="serverow"><span class="lab">Holds serve — <span class="va" id="holdNameA">A</span></span><span class="va" id="holdA">—</span></div>
+      <div class="serverow"><span class="lab">Holds serve — <span class="vb" id="holdNameB">B</span></span><span class="vb" id="holdB">—</span></div>
+      <div class="serverow"><span class="lab">Wins a set — <span class="va" id="setNameA">A</span></span><span class="va" id="setA">—</span></div>
+      <div class="serverow"><span class="lab">Wins a set — <span class="vb" id="setNameB">B</span></span><span class="vb" id="setB">—</span></div>
     </div>
     <div class="panel">
       <h3>Most likely scorelines <span class="hint" id="scoreFmt">best of 3</span></h3>
@@ -434,7 +435,7 @@ function compute(){
 function render(d){
   const {A,B,pa,pb,s,pMkv,pElo,pEns} = d;
   $("nameA").textContent = A.name; $("nameB").textContent = B.name;
-  $("srvNameA").textContent = A.name; $("srvNameB").textContent = B.name;
+  ["srvName","holdName","setName"].forEach(id => { $(id+"A").textContent = A.name; $(id+"B").textContent = B.name; });
   $("evNameA").textContent = A.name; $("evNameB").textContent = B.name;
   $("eloSub").textContent = $("mkvSub").textContent = $("ensSub").textContent = `P(${A.name} wins)`;
 
@@ -451,6 +452,7 @@ function render(d){
   $("holdA").textContent = pct(gameWinProb(pa));
   $("holdB").textContent = pct(gameWinProb(pb));
   $("setA").textContent = pct(s);
+  $("setB").textContent = pct(1 - s);
 
   $("scoreFmt").textContent = state.bestOf===3 ? "best of 3" : "best of 5";
   let rows;

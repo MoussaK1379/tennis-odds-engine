@@ -20,7 +20,6 @@ Usage:
 import argparse, csv, json, os, re, statistics, sys, unicodedata
 import urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
-from functools import lru_cache
 
 API = "https://api.the-odds-api.com/v4"
 
@@ -39,6 +38,7 @@ TOURNAMENTS = [
     (("us open",), "hard", False),
     # Year-end and team events
     (("next gen",), "hard", False),                   # before "atp finals"
+    (("wta finals", "riyadh"), "hard", True),
     (("atp finals", "nitto", "turin"), "hard", True),
     (("united cup",), "hard", False),
     (("laver cup",), "hard", True),
@@ -65,6 +65,7 @@ TOURNAMENTS = [
     (("hamburg",), "clay", False),
     (("halle",), "grass", False),
     (("queen s", "queens"), "grass", False),
+    (("london",), "grass", False),                    # api-tennis calls Queen's "London"; after Laver Cup/Finals
     (("washington", "citi open"), "hard", False),
     (("tokyo", "japan open"), "hard", False),
     (("beijing", "china open"), "hard", False),
@@ -99,85 +100,40 @@ TOURNAMENTS = [
     (("brussels", "antwerp", "european open"), "hard", True),
     (("lyon",), "hard", True),
     (("stockholm", "nordic open"), "hard", True),
+    (("marseille", "open 13"), "hard", True),
+    (("metz", "moselle"), "hard", True),
+    (("athens", "hellenic"), "hard", True),
+    (("belgrade",), "hard", True),
 ]
 # Stuttgart is grass on the ATP tour but clay (indoor) on the WTA tour.
 TOUR_SPECIFIC = {
     ("ATP", "stuttgart"): ("grass", False),
     ("WTA", "stuttgart"): ("clay", True),
 }
-# WTA-only events not on the ATP list above.
+# Events whose surface depends on the time of year: (tour, keyword) -> {month: (surface, indoor)}.
+# Linz moved from indoor hard (Jan/Feb) to indoor clay (April) in 2026.
+SEASONAL = {
+    ("WTA", "linz"): {3: ("clay", True), 4: ("clay", True), 5: ("clay", True)},
+}
+# WTA-only events not on the ATP list above. Each keyword here is its own court.
 WTA_EXTRA = [
     (("charleston",), "clay", False),
     (("berlin", "bad homburg", "birmingham", "nottingham"), "grass", False),
-    (("wuhan", "ningbo", "guadalajara", "seoul", "osaka", "abu dhabi",
-      "linz", "ostrava", "san diego", "cleveland", "monterrey"), "hard", False),
-    (("rabat", "strasbourg", "palermo", "prague", "bogota"), "clay", False),
+    (("linz", "ostrava", "cluj", "singapore"), "hard", True),
+    (("wuhan", "ningbo", "guadalajara", "seoul", "osaka", "abu dhabi", "san diego",
+      "cleveland", "monterrey", "austin", "chennai", "guangzhou", "hobart", "jiujiang",
+      "merida", "sao paulo", "prague"), "hard", False),
+    (("rouen",), "clay", True),
+    (("rabat", "strasbourg", "palermo", "bogota", "iasi"), "clay", False),
 ]
 
 
-# ---------- engine (mirrors the JS in index.html) -----------------------------
-def clip(p, lo=0.01, hi=0.99): return max(lo, min(hi, p))
-def elo_expected(ra, rb): return 1.0 / (1.0 + 10 ** ((rb - ra) / 400.0))
-def serve_point_prob(s, r, t): return clip(t + (s - t) - (r - (1 - t)))
-
-def game_win_prob(p):
-    q = 1 - p
-    den = p * p + q * q
-    pd = (p * p) / den if den > 0 else 0.5
-    return p**4 + 4 * p**4 * q + 10 * p**4 * q * q + 20 * p**3 * q**3 * pd
-
-def _tb_server_is_a(a, b): return True if a + b == 0 else ((a + b - 1) // 2) % 2 == 1
-
-def tiebreak_win_prob(pa, pb):
-    a_s, a_r = pa, 1 - pb
-    den = a_s * a_r + (1 - a_s) * (1 - a_r)
-    tail = (a_s * a_r) / den if den > 0 else 0.5
-
-    @lru_cache(maxsize=None)
-    def f(a, b):
-        if a == b and a >= 6: return tail
-        if a >= 7 and a - b >= 2: return 1.0
-        if b >= 7 and b - a >= 2: return 0.0
-        ppt = pa if _tb_server_is_a(a, b) else 1 - pb
-        return ppt * f(a + 1, b) + (1 - ppt) * f(a, b + 1)
-    return f(0, 0)
-
-def set_win_prob(pa, pb):
-    ga, gb, tb = game_win_prob(pa), game_win_prob(pb), tiebreak_win_prob(pa, pb)
-
-    @lru_cache(maxsize=None)
-    def f(a, b, a_serves):
-        if a == 6 and b == 6: return tb
-        if a >= 6 and a - b >= 2: return 1.0
-        if b >= 6 and b - a >= 2: return 0.0
-        pg = ga if a_serves else 1 - gb
-        return pg * f(a + 1, b, not a_serves) + (1 - pg) * f(a, b + 1, not a_serves)
-    return 0.5 * f(0, 0, True) + 0.5 * f(0, 0, False)
-
-def match_from_set(s, best_of):
-    return s * s * (3 - 2 * s) if best_of == 3 else s**3 * (6 * s * s - 15 * s + 10)
+# ---------- model (shared with update_data.py and the backtest) ----------------
+from model import predict_export  # noqa: E402  (after the tables above, which model-free callers import)
 
 def kelly_fraction(p, d, frac=0.25):
     b = d - 1
     return max(0.0, frac * ((b * p - (1 - p)) / b)) if b > 0 else 0.0
-
-
-def _pick(obj, surf):
-    if not obj: return None
-    return obj[surf] if obj.get(surf) is not None else obj.get("overall")
-
-def player_stats(p, surf):
-    return {"elo": _pick(p["elo"], surf),
-            "spw": clip(_pick(p["serve"], surf), 0.50, 0.85),
-            "rpw": clip(_pick(p["return"], surf), 0.20, 0.55)}
-
-def predict(pa_data, pb_data, surf, best_of, tour_avg):
-    A, B = player_stats(pa_data, surf), player_stats(pb_data, surf)
-    pa = serve_point_prob(A["spw"], B["rpw"], tour_avg)
-    pb = serve_point_prob(B["spw"], A["rpw"], tour_avg)
-    p_mkv = match_from_set(set_win_prob(pa, pb), best_of)
-    p_elo = elo_expected(A["elo"], B["elo"])
-    return 0.5 * (p_elo + p_mkv)
 
 
 # ---------- helpers -----------------------------------------------------------
@@ -236,17 +192,36 @@ def _words(title):
     t = unicodedata.normalize("NFKD", title or "").encode("ascii", "ignore").decode().lower()
     return " " + re.sub(r"[^a-z0-9]+", " ", t).strip() + " "
 
-def surface_for(title, tour):
-    """-> (surface, indoor, known). Unknown tournaments default to outdoor hard."""
+def _match_event(title, tour, month=None):
+    """-> (court id, surface, indoor) or None. The court id is the same for a
+    tournament however each feed names it ('Tokyo' / 'ATP Japan Open' -> 'tokyo')."""
     t = _words(title)
     has = lambda k: f" {k} " in t
+    for (tr, k), by_month in SEASONAL.items():
+        if tr == tour and has(k) and month in by_month:
+            return (k,) + by_month[month]
     for (tr, k), (surf, indoor) in TOUR_SPECIFIC.items():
         if tr == tour and has(k):
-            return surf, indoor, True
-    for keys, surf, indoor in TOURNAMENTS + (WTA_EXTRA if tour == "WTA" else []):
+            return k, surf, indoor
+    for keys, surf, indoor in TOURNAMENTS:
         if any(has(k) for k in keys):
-            return surf, indoor, True
-    return "hard", False, False
+            return keys[0], surf, indoor
+    if tour == "WTA":
+        for keys, surf, indoor in WTA_EXTRA:
+            for k in keys:
+                if has(k):
+                    return k, surf, indoor
+    return None
+
+def surface_for(title, tour, month=None):
+    """-> (surface, indoor, known). Unknown tournaments default to outdoor hard."""
+    hit = _match_event(title, tour, month)
+    return (hit[1], hit[2], True) if hit else ("hard", False, False)
+
+def court_id(title, tour, month=None):
+    """Stable id for a tournament's court, shared by both feeds; None if unknown."""
+    hit = _match_event(title, tour, month)
+    return hit[0] if hit else None
 
 def guess_best_of(title, tour):
     t = _words(title)
@@ -262,10 +237,11 @@ def get_json(path, params):
 
 # ---------- odds --------------------------------------------------------------
 def price_summary(event, a, b):
-    """Best price per side, plus the de-vigged market probability for A
-    (average of each bookmaker's own de-vigged number)."""
+    """Best price per side, the de-vigged market probability for A (average of
+    each bookmaker's own de-vigged number), the number of books, and Pinnacle's
+    de-vigged probability for A when Pinnacle prices the match."""
     best = {a: (0.0, None), b: (0.0, None)}
-    fair_a = []
+    fair_a, pinnacle_a = [], None
     for bk in event.get("bookmakers", []):
         for m in bk.get("markets", []):
             if m.get("key") != "h2h": continue
@@ -276,8 +252,49 @@ def price_summary(event, a, b):
             if pb_ > best[b][0]: best[b] = (pb_, bk.get("title"))
             ia, ib = 1 / pa_, 1 / pb_
             fair_a.append(ia / (ia + ib))
+            if bk.get("key") == "pinnacle":           # the sharpest book: the real benchmark
+                pinnacle_a = ia / (ia + ib)
     if not fair_a: return None
-    return best, statistics.mean(fair_a), len(fair_a)
+    return best, statistics.mean(fair_a), len(fair_a), pinnacle_a
+
+# Warnings shown next to a match. Each is (code, text); the codes go in the log
+# so the track record can be split by whether a pick carried warnings.
+THIN_MATCHES = 10        # fewer matches than this in the last 12 months
+LAYOFF_DAYS = 45         # longer than this since the last match
+SURFACE_FEW = 3          # fewer matches than this on the surface in 12 months
+SPECIALIST_SHARE = 0.5   # at least this share of the year's matches on clay or on grass
+RECENT_RET_DAYS = 60
+DISAGREE = 0.15          # model and market this far apart (15 percentage points)
+
+def player_flags(p, surface, today):
+    i, out, name = p.get("info") or {}, [], p.get("name", "?")
+    if i.get("m12", 0) < THIN_MATCHES:
+        out.append(("thin", f"{name}: only {i.get('m12', 0)} matches in 12 months"))
+    if i.get("last"):
+        gap = (today - datetime.strptime(i["last"], "%Y-%m-%d").date()).days
+        if gap > LAYOFF_DAYS:
+            out.append(("layoff", f"{name}: first match in {gap} days"))
+    if (i.get("surf12") or {}).get(surface, 0) < SURFACE_FEW:
+        out.append(("surface_few", f"{name}: few {surface} matches this year"))
+    # Hard courts are most of the calendar, so only clay and grass make a specialist.
+    m12, surf12 = i.get("m12", 0), i.get("surf12") or {}
+    for spec in ("clay", "grass"):
+        if m12 >= THIN_MATCHES and surf12.get(spec, 0) / m12 >= SPECIALIST_SHARE:
+            share = f"{surf12[spec] / m12:.0%} of matches on {spec}"
+            out.append(("specialist", f"{name}: {spec}-court specialist ({share})"
+                        + ("" if spec == surface else f", now on {surface}")))
+    if i.get("last_ret"):
+        ago = (today - datetime.strptime(i["last_ret"], "%Y-%m-%d").date()).days
+        if ago <= RECENT_RET_DAYS or i.get("ret180", 0) >= 2:
+            out.append(("retired", f"{name}: retired from a match {ago} days ago"
+                        + (f" ({i['ret180']} in 6 months)" if i.get("ret180", 0) >= 2 else "")))
+    return out
+
+def match_flags(A, B, surface, today, model_p, market_p):
+    out = player_flags(A, surface, today) + player_flags(B, surface, today)
+    if abs(model_p - market_p) >= DISAGREE:
+        out.append(("disagree", f"Model and market differ by {abs(model_p - market_p) * 100:.0f} points"))
+    return out
 
 def side(model_p, market_p, price, book):
     ev = model_p * price - 1
@@ -288,7 +305,8 @@ def side(model_p, market_p, price, book):
 
 # ---------- prediction log + track record ------------------------------------
 HIST_FIELDS = ["id", "tour", "tournament", "start", "surface", "best_of", "player_a", "player_b",
-               "model_a", "market_a", "odds_a", "odds_b", "books", "logged", "result", "settled"]
+               "model_a", "market_a", "odds_a", "odds_b", "books", "logged", "result", "settled",
+               "pinnacle_a", "flags", "model_version"]
 SETTLE_AFTER_H = 3        # try to settle once a match started this long ago
 GIVE_UP_DAYS = 30         # after this, a match with no result found is voided
 
@@ -335,7 +353,10 @@ def log_predictions(hist, matches, now):
                          "player_a": m["a"]["name"], "player_b": m["b"]["name"],
                          "model_a": m["a"]["model"], "market_a": m["a"]["market"],
                          "odds_a": m["a"]["best_odds"], "odds_b": m["b"]["best_odds"],
-                         "books": m.get("books", ""), "logged": iso(now), "result": "", "settled": ""}
+                         "books": m.get("books", ""), "logged": iso(now), "result": "", "settled": "",
+                         "pinnacle_a": m.get("pinnacle_a", ""),
+                         "flags": ";".join(sorted({c for c, _ in m.get("flags", [])})),
+                         "model_version": m.get("model_version", "")}
 
 def settle(hist, results, now):
     """Fill in winners from recent_results.json. result: 'a', 'b' or 'void'."""
@@ -364,11 +385,17 @@ def settle(hist, results, now):
             h["result"], h["settled"] = "void", iso(now)
     return n
 
-def track_record(hist):
+def track_record(hist, split=True):
     rows = [h for h in hist.values() if h.get("result") in ("a", "b")]
     rec = {"settled": len(rows), "pending": sum(1 for h in hist.values() if not h.get("result"))}
     if not rows:
         return rec
+    if split:
+        # the same numbers per model version, so a model change gets its own record
+        versions = sorted({h.get("model_version") or "original" for h in rows})
+        rec["by_model"] = {v: track_record({k: h for k, h in hist.items()
+                                            if (h.get("model_version") or "original") == v}, split=False)
+                           for v in versions}
     f = lambda h, k: float(h[k])
     won_a = lambda h: 1.0 if h["result"] == "a" else 0.0
     rec["model_right"] = round(sum((f(h, "model_a") > 0.5) == (h["result"] == "a") for h in rows) / len(rows), 4)
@@ -390,6 +417,25 @@ def track_record(hist):
             profit -= 1
     rec.update(value_bets=bets, value_wins=wins, profit_units=round(profit, 2),
                roi=round(profit / bets, 4) if bets else None)
+    # against Pinnacle, on the matches Pinnacle priced
+    pin = [h for h in rows if h.get("pinnacle_a")]
+    if pin:
+        rec["pinnacle_n"] = len(pin)
+        rec["brier_model_pin"] = round(statistics.mean((f(h, "model_a") - won_a(h)) ** 2 for h in pin), 4)
+        rec["brier_pinnacle"] = round(statistics.mean((f(h, "pinnacle_a") - won_a(h)) ** 2 for h in pin), 4)
+    # value bets on matches with no warnings
+    # (only predictions logged since warnings existed: they carry a model version)
+    clean = [h for h in rows if h.get("model_version") and not h.get("flags")]
+    cb = cp = 0
+    for h in clean:
+        pa, oa, ob = f(h, "model_a"), f(h, "odds_a"), f(h, "odds_b")
+        ev_a, ev_b = pa * oa - 1, (1 - pa) * ob - 1
+        if max(ev_a, ev_b) <= 0:
+            continue
+        pick_a = ev_a >= ev_b
+        cb += 1
+        cp += ((oa if pick_a else ob) - 1) if pick_a == (h["result"] == "a") else -1
+    rec.update(clean_bets=cb, clean_profit=round(cp, 2))
     return rec
 
 
@@ -435,6 +481,9 @@ def main():
     players = data["players"]
     idx = build_name_index(players)
     tour_avgs = {t.upper(): v.get("tour_avg_spw") for t, v in (data.get("tours") or {}).items()}
+    mdl = data.get("model") or {"rating": "elo", "w": {"ATP": 0.5, "WTA": 0.5}, "n0": 0}
+    version = mdl.get("version", "")
+    today = now.date()
 
     sports, remaining = get_json("/sports", {"apiKey": key})       # this call is free
     tennis = [s for s in sports if s.get("active") and re.match(r"tennis_(atp|wta)_", s.get("key", ""))]
@@ -463,12 +512,15 @@ def main():
             print(f"  · {title}: odds unavailable ({e})", file=sys.stderr)
             continue
 
-        surf, indoor, known = surface_for(title, tour)
         best_of = guess_best_of(title, tour)
-        if not known:
-            print(f"  · {title}: surface unknown, assuming hard", file=sys.stderr)
         t_avg = tour_avgs.get(tour) or (0.64 if tour == "ATP" else 0.56)
         for ev in events:
+            start = parse_iso(ev.get("commence_time"))
+            month = start.month if start else now.month
+            surf, indoor, known = surface_for(title, tour, month)
+            court = court_id(title, tour, month)
+            if not known:
+                print(f"  · {title}: surface unknown, assuming hard", file=sys.stderr)
             a, b = ev.get("home_team"), ev.get("away_team")
             ka, kb = resolve(a, tour, players, idx), resolve(b, tour, players, idx)
             summary = price_summary(ev, a, b)
@@ -478,15 +530,22 @@ def main():
                    "a": {"name": a, "key": ka}, "b": {"name": b, "key": kb}}
             if not summary:
                 continue
-            (best, mkt_a, n_books) = summary
+            (best, mkt_a, n_books, pin_a) = summary
             row["books"] = n_books
             if not (ka and kb):
                 row["missing"] = [n for n, k in ((a, ka), (b, kb)) if not k]
                 out["unmatched"].append(row)
                 continue
-            p = predict(players[ka], players[kb], surf, best_of, t_avg)
+            r = predict_export(players[ka], players[kb], surf, best_of, t_avg, mdl)
+            p = r["p"]
             row["a"].update(side(p, mkt_a, *best[a]))
             row["b"].update(side(1 - p, 1 - mkt_a, *best[b]))
+            row.update(court=court, model_version=version,
+                       parts={"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3)})
+            if pin_a is not None:
+                row["pinnacle_a"] = round(pin_a, 4)
+            row["flags"] = match_flags(players[ka], players[kb], surf, today, p,
+                                       pin_a if pin_a is not None else mkt_a)
             out["matches"].append(row)
 
     out["matches"].sort(key=lambda r: r["start"] or "")

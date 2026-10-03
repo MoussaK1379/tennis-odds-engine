@@ -21,11 +21,9 @@ Sources, tried in order for each tour:
 Also writes recent_results.json (the last few weeks of results), which
 update_matches.py uses to settle its logged predictions.
 
-Model details:
-  - ELO ignores walkovers and retirements (they say little about strength).
-  - Serve/return rates are points-weighted, recency-weighted (half-life one
-    year) and adjusted for opponent strength.
-  - A player is listed if they played in the last 12 months.
+The ratings themselves come from model.py (shared with the match list and the
+backtest), using the settings in model_params.json that tools/backtest.py
+chose. A player is listed if they played in the last 12 months.
 
 Self-contained (standard library only) so it runs cleanly on a CI runner.
 
@@ -54,18 +52,10 @@ TENNIS_DATA = {
 UA = {"User-Agent": "tennis-odds-engine/1.0 (+github actions daily refresh)"}
 
 SURFACES = ("hard", "clay", "grass")
-DEFAULT_ELO = 1500.0
-MIN_SURFACE_MATCHES = 3
 RECENT_DAYS = 365          # listed if played within this many days of the latest result
-HALF_LIFE_DAYS = 365       # recency weighting for serve/return rates
-SHRINK_POINTS = 400        # opponent ratings shrink toward the tour average by this many points
 RESULTS_DAYS = 28          # how much history recent_results.json keeps
 STALE_AFTER_DAYS = 14      # newest result older than this -> tour marked stale
-
-
-# ---------- tiny ELO ----------------------------------------------------------
-def k_factor(m): return 250.0 / (m + 5) ** 0.4
-def expected(ra, rb): return 1.0 / (1.0 + 10 ** ((rb - ra) / 400.0))
+PARAMS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "model_params.json")
 
 
 # ---------- helpers -----------------------------------------------------------
@@ -202,6 +192,9 @@ def sync_api_tennis(key, cache_path, tours, today=None):
     return cache, changed, err
 
 def from_api_cache(cache, tour_label):
+    # Surface, court and format come from the tournament table at load time, so
+    # fixes to the table also apply to matches cached before the fix.
+    from update_matches import surface_for, court_id, guess_best_of
     out, names = [], {}
     for r in cache.values():
         if r["tour"] != tour_label:
@@ -217,8 +210,13 @@ def from_api_cache(cache, tour_label):
         def srv(won, pts):
             won, pts = to_float(won), to_float(pts)
             return (won, pts) if won is not None and pts else None
-        out.append({"date": d, "order": (r["time"], r["event_key"]), "surface": r["surface"] or None,
+        surf, _, _ = surface_for(r["tournament"], tour_label, d.month)
+        qual = r.get("qualifying") == "True"
+        out.append({"date": d, "order": (r["time"], r["event_key"]), "surface": surf,
                     "winner": w, "loser": l, "status": r["status"], "tournament": r["tournament"],
+                    "court": court_id(r["tournament"], tour_label, d.month),
+                    "best_of": 3 if qual else guess_best_of(r["tournament"], tour_label),
+                    "qualifying": qual,
                     "w_srv": srv(r["w_srv_won"], r["w_srv_pts"]), "l_srv": srv(r["l_srv_won"], r["l_srv_pts"])})
     return out
 
@@ -347,82 +345,44 @@ def fetch_tennis_data(tour, years):
 
 
 # ---------- computation (one tour) -------------------------------------------
-def compute_tour(matches, tour_label, top_n, prev_players=None):
-    """matches: normalised rows (see from_sackmann_rows). Returns (players, tour_avg, has_serve)."""
+def load_params(path=PARAMS_PATH):
+    """Model settings chosen by tools/backtest.py --tune (defaults if the file is missing)."""
+    import model
+    try:
+        with open(path) as fh:
+            return model.Params.from_dict(json.load(fh)["params"])
+    except (OSError, ValueError, KeyError):
+        return model.Params()
+
+def params_version(path=PARAMS_PATH):
+    try:
+        with open(path) as fh:
+            return json.load(fh).get("version", "")
+    except (OSError, ValueError):
+        return ""
+
+
+def compute_tour(matches, tour_label, top_n, prev_players=None, params=None, today=None):
+    """matches: normalised rows (see from_sackmann_rows). Runs them through the
+    shared model in date order. Returns (players, tour_avg, has_serve, model_block)."""
+    import model
+    P = params or load_params()
     matches = sorted((m for m in matches if m["surface"]), key=lambda m: (m["date"], m["order"]))
     if not matches:
-        return {}, None, False
+        return {}, None, False, None
     latest = matches[-1]["date"]
-    recent_cut = latest - timedelta(days=RECENT_DAYS)
+    as_of = max(today or latest, latest)
+    recent_cut = as_of - timedelta(days=RECENT_DAYS)
 
-    # --- ELO (walkovers and retirements skipped) ---
-    elo_all, elo_surf, played, last_seen = {}, {}, {}, {}
+    eng = model.TourEngine(tour_label, P)
     for m in matches:
-        w, l, surf = m["winner"], m["loser"], m["surface"]
-        last_seen[w] = last_seen[l] = m["date"]
-        if m["status"] != "completed":
-            continue
-        rw, rl = elo_all.get(w, DEFAULT_ELO), elo_all.get(l, DEFAULT_ELO)
-        kw, kl = k_factor(played.get(w, 0)), k_factor(played.get(l, 0))
-        ew = expected(rw, rl)
-        elo_all[w] = rw + kw * (1 - ew)
-        elo_all[l] = rl - kl * (1 - ew)
-        sw, sl = elo_surf.get((w, surf), DEFAULT_ELO), elo_surf.get((l, surf), DEFAULT_ELO)
-        ews = expected(sw, sl)
-        elo_surf[(w, surf)] = sw + kw * (1 - ews)
-        elo_surf[(l, surf)] = sl - kl * (1 - ews)
-        played[w] = played.get(w, 0) + 1
-        played[l] = played.get(l, 0) + 1
+        eng.update(m)
+    has_serve = eng.T_den > 0
+    T = eng.T()
 
-    # --- serve/return: points-weighted, recency-weighted, opponent-adjusted ---
-    # One entry per (server, returner, surface, weight, points won, points played).
-    serve_obs = []
-    for m in matches:
-        if m["status"] == "wo":
-            continue
-        wt = 0.5 ** ((latest - m["date"]).days / HALF_LIFE_DAYS)
-        if m["w_srv"]: serve_obs.append((m["winner"], m["loser"], m["surface"], wt) + m["w_srv"])
-        if m["l_srv"]: serve_obs.append((m["loser"], m["winner"], m["surface"], wt) + m["l_srv"])
-    has_serve = bool(serve_obs)
-
-    tot_w = sum(o[3] * o[5] for o in serve_obs)
-    T = (sum(o[3] * o[4] for o in serve_obs) / tot_w) if tot_w else (0.64 if tour_label == "ATP" else 0.56)
-
-    # Opponent ratings: start from raw overall rates, then re-estimate each
-    # player against their opponents' current ratings a few times so the
-    # opponent ratings are themselves adjusted. Shrunk toward the tour average.
-    S, R = {}, {}
-    for _ in range(4):
-        s_acc, r_acc = {}, {}
-        for srv, ret, _, wt, won, pts in serve_obs:
-            rate_ = won / pts
-            a = s_acc.setdefault(srv, [0.0, 0.0]); a[0] += wt * pts * (rate_ + (R.get(ret, 1 - T) - (1 - T))); a[1] += wt * pts
-            b = r_acc.setdefault(ret, [0.0, 0.0]); b[0] += wt * pts * ((1 - rate_) + (S.get(srv, T) - T)); b[1] += wt * pts
-        S = {p: (v[0] + SHRINK_POINTS * T) / (v[1] + SHRINK_POINTS) for p, v in s_acc.items()}
-        R = {p: (v[0] + SHRINK_POINTS * (1 - T)) / (v[1] + SHRINK_POINTS) for p, v in r_acc.items()}
-
-    # per-surface adjusted rates against the final opponent ratings
-    srv_acc, ret_acc = {}, {}      # key (player, surface|overall) -> [sum w*pts*adj_rate, sum w*pts, n matches]
-    def acc(d, key, rate, weight):
-        e = d.setdefault(key, [0.0, 0.0, 0]); e[0] += rate * weight; e[1] += weight; e[2] += 1
-    for srv, ret, surf, wt, won, pts in serve_obs:
-        rate = won / pts
-        adj_s = rate + (R.get(ret, 1 - T) - (1 - T))       # tough returner -> serve rate counts for more
-        adj_r = (1 - rate) + (S.get(srv, T) - T)           # big server -> return rate counts for more
-        for k in (surf, "overall"):
-            acc(srv_acc, (srv, k), adj_s, wt * pts)
-            acc(ret_acc, (ret, k), adj_r, wt * pts)
-
-    def rate(d, name, k):
-        v = d.get((name, k))
-        if v and v[2] >= MIN_SURFACE_MATCHES and v[1] > 0:
-            return round(v[0] / v[1], 4)
-        v = d.get((name, "overall"))
-        return round(v[0] / v[1], 4) if v and v[1] > 0 else None
-
-    # --- who gets listed ---
+    last_seen = {p: max(i["dates"]) for p, i in eng.info.items() if i["dates"]}
     candidates = [p for p in last_seen if last_seen[p] >= recent_cut] or list(last_seen)
-    candidates.sort(key=lambda p: elo_all.get(p, DEFAULT_ELO), reverse=True)
+    candidates.sort(key=lambda p: eng.rating(p, None, as_of)[0], reverse=True)
     chosen = candidates if top_n <= 0 else candidates[:top_n]
 
     prev_by_loose = {}
@@ -432,32 +392,19 @@ def compute_tour(matches, tour_label, top_n, prev_players=None):
 
     players = {}
     for name in chosen:
-        elo = {"overall": round(elo_all.get(name, DEFAULT_ELO))}
-        for s in SURFACES:
-            if (name, s) in elo_surf:
-                elo[s] = round(elo_surf[(name, s)])
-        prev = prev_by_loose.get(loose_key(name))
-        entry = {"name": name, "tour": tour_label, "elo": elo}
-        if has_serve:
-            serve = {"overall": rate(srv_acc, name, "overall")}
-            rtn = {"overall": rate(ret_acc, name, "overall")}
-            if serve["overall"] is None or rtn["overall"] is None:
-                continue
-            for s in SURFACES:
-                sv, rt = rate(srv_acc, name, s), rate(ret_acc, name, s)
-                if sv is not None: serve[s] = sv
-                if rt is not None: rtn[s] = rt
-            entry.update(serve=serve, **{"return": rtn})
-        elif prev:
-            # results-only source: keep last known serve/return, and the fuller display name
-            entry.update(name=prev["name"], serve=prev["serve"], **{"return": prev["return"]})
-            entry["stats_carried_over"] = True
-        else:
-            entry.update(serve={"overall": round(T, 4)}, **{"return": {"overall": round(1 - T, 4)}})
-            entry["stats_estimated"] = True
+        entry = {"name": name, "tour": tour_label, **eng.export(name, as_of)}
+        if not has_serve:
+            prev = prev_by_loose.get(loose_key(name))
+            if prev:
+                # results-only source: keep last known serve/return, and the fuller display name
+                entry.update(name=prev["name"], serve=prev["serve"], **{"return": prev["return"]})
+                entry["n"] = prev.get("n", 0)
+                entry["stats_carried_over"] = True
+            else:
+                entry["stats_estimated"] = True
         players[slugify(entry["name"])] = entry
 
-    return players, round(T, 4), has_serve
+    return players, round(T, 4), has_serve, eng.model_block()
 
 
 def recent_results(matches, tour_label):
@@ -504,6 +451,8 @@ def main():
     now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     players_all, tours_meta, results = {}, {}, []
+    params = load_params()
+    model_block = prev.get("model") or {"rating": "elo", "w": {"ATP": 0.5, "WTA": 0.5}, "n0": 0}
     for tour in (args.tours[:1] if (args.local or args.local_xlsx) else args.tours):
         label = tour.upper()
         print(f"Loading {label} matches…", file=sys.stderr)
@@ -523,7 +472,10 @@ def main():
                 print(f"  · {label}: Sackmann unavailable, trying tennis-data.co.uk", file=sys.stderr)
                 matches, source = fetch_tennis_data(tour, args.years), "tennis-data.co.uk"
 
-        pl, avg, has_serve = compute_tour(matches, label, args.top, prev_players)
+        pl, avg, has_serve, mblock = compute_tour(matches, label, args.top, prev_players, params,
+                                                  today=date.today())
+        if mblock:
+            model_block = {**mblock, "version": params_version()}
         if pl:
             latest = max(m["date"] for m in matches).isoformat()
             players_all.update(pl)
@@ -557,6 +509,7 @@ def main():
         "source": " · ".join(f"{t}: {m.get('source')}" for t, m in tours_meta.items()),
         "tours": tours_meta,
         "tour_avg_spw": tours_meta.get("atp", {}).get("tour_avg_spw", 0.64),  # legacy default
+        "model": model_block,
         "players": players_all,
     }
     with open(args.out, "w", encoding="utf-8") as fh:

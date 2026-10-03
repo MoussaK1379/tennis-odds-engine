@@ -21,6 +21,9 @@
   .doc li code{ color:var(--ball); }
   .doc code{ font-family:var(--mono); font-size:.86em; background:var(--ink-2);
     border:1px solid var(--ink-3); border-radius:5px; padding:.08em .4em; color:var(--ball); }
+  .doc table.bt{ border-collapse:collapse; margin:.6rem 0 1rem; font-family:var(--mono); font-size:.82rem; color:#cdd9d1; }
+  .doc table.bt th, .doc table.bt td{ border-bottom:1px solid var(--ink-3); padding:.4rem .9rem .4rem 0; text-align:left; }
+  .doc table.bt th{ color:var(--faint); font-weight:500; }
   .doc pre{ background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r);
     padding:14px 16px; overflow-x:auto; margin:1rem 0; }
   .doc pre code{ background:none; border:0; padding:0; color:#cdd9d1; }
@@ -76,8 +79,11 @@
       <div><span class="fn">model-math.html</span><span class="fd">The math reference, formulas rendered with MathJax</span></div>
       <div><span class="fn">styles.css</span><span class="fd">Shared design tokens for all three pages</span></div>
       <div><span class="fn">players.json</span><span class="fd">Player ratings the app reads on load — rebuilt daily</span></div>
-      <div><span class="fn">update_data.py</span><span class="fd">Regenerates players.json from live ATP results</span></div>
+      <div><span class="fn">update_data.py</span><span class="fd">Regenerates players.json from ATP and WTA results</span></div>
       <div><span class="fn">update_matches.py</span><span class="fd">Builds matches.json: upcoming matches, odds and model picks</span></div>
+      <div><span class="fn">model.py</span><span class="fd">The model, shared by the updater, the match list and the backtest</span></div>
+      <div><span class="fn">model_params.json</span><span class="fd">Model settings chosen by the backtest</span></div>
+      <div><span class="fn">tools/backtest.py</span><span class="fd">Walk-forward backtest and tuning; writes backtest_report.json</span></div>
       <div><span class="fn">.github/workflows/update.yml</span><span class="fd">Daily cron: refreshes both data files, commits, publishes to Pages</span></div>
     </div>
     <p style="color:var(--mute); margin:1.2rem 0 .4rem;">The analysis pipeline (separate, optional)</p>
@@ -89,6 +95,44 @@
       <div><span class="fn">data.py</span><span class="fd">Synthetic generator + Sackmann loader</span></div>
       <div><span class="fn">main.py</span><span class="fd">Train → ensemble → calibrate → backtest → bet (<code>python main.py</code>)</span></div>
     </div>
+
+    <h2>The model, and how well it does</h2>
+    <p>One implementation (<code>model.py</code>) is used by the daily updater, the match list and the
+      backtest; the predictor repeats the same formula in the browser.</p>
+    <ul>
+      <li><strong>Rating:</strong> Elo on match results (walkovers and retirements skipped), with K =
+        150/(matches+5)<sup>0.4</sup>. Each surface is an offset on top of the
+        overall rating, so a player's first grass match starts from their overall level, not from scratch.</li>
+      <li><strong>Serve model:</strong> share of serve and return points won, weighted by recency
+        (half-life 135 days), adjusted for the strength of each opponent, and pulled toward the
+        tour average when a player has few points. Fed through a point → game → set → match Markov chain.</li>
+      <li><strong>Blend:</strong> the serve model gets 85% of the weight on the ATP and
+        100% on the WTA, less when either player has little data (half weight at
+        250 recent serve points).</li>
+    </ul>
+    <p><strong>Backtest.</strong> <code>tools/backtest.py</code> predicts every saved match using only
+      the matches before it. Settings were tuned on 2025-04-01 – 2026-03-31; the
+      numbers below are the <em>holdout</em> (2026-04-01 – 2026-10-03,
+      4,718 finished matches), which tuning never saw.</p>
+    <table class="bt">
+      <tr><th></th><th>Original model</th><th>Current model</th></tr>
+      <tr><td>Log loss (lower is better)</td><td>0.6431</td><td><strong>0.6291</strong></td></tr>
+      <tr><td>Brier (lower is better)</td><td>0.2261</td><td><strong>0.2204</strong></td></tr>
+      <tr><td>Favourite won</td><td>62.8%</td><td><strong>63.8%</strong></td></tr>
+    </table>
+    <p>Calibration on the holdout (favourite's side):</p>
+    <table class="bt"><tr><th>Predicted</th><th>Average predicted</th><th>Actually won</th><th>Matches</th></tr><tr><td>50-60%</td><td>55%</td><td>56%</td><td>2112</td></tr><tr><td>60-70%</td><td>65%</td><td>62%</td><td>1465</td></tr><tr><td>70-80%</td><td>74%</td><td>76%</td><td>730</td></tr><tr><td>80-90%</td><td>84%</td><td>85%</td><td>317</td></tr><tr><td>90-100%</td><td>93%</td><td>96%</td><td>94</td></tr></table>
+    <p>Tested and not adopted, because they didn't beat the simpler option by at least 0.001 log loss:
+      <strong>Glicko-2</strong> (a tie with Elo) and a <strong>court-speed</strong> adjustment (when a
+      court is fast both players hold more, which barely changes who wins). The live track record is
+      the real test; a backtest has no bookmaker to beat. Re-tune with
+      <code>python tools/backtest.py --tune</code>.</p>
+    <p><strong>Warnings.</strong> The match list flags: fewer than 10 matches in 12 months, more than 45
+      days since the last match, fewer than 3 matches on the surface this year, clay or grass
+      specialists (half their matches on that surface), a retirement in the last 60 days (or two in
+      six months), and model and market more than 15 points apart. The track record splits out
+      value bets that carried no warnings, and compares the model with Pinnacle where Pinnacle prices
+      the match.</p>
 
     <h2>Daily data updates</h2>
     <p>The app reads <code>players.json</code> on every load (uncached). <code>update_data.py</code>

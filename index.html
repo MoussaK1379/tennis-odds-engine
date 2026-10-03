@@ -111,7 +111,7 @@
   .record{ margin-top:14px; background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r); padding:18px clamp(14px,2.4vw,22px); }
   .record h3{ font-family:var(--display); font-weight:600; font-size:.95rem; margin:0 0 4px; }
   .record__lede{ color:var(--mute); font-size:.86rem; margin:0 0 14px; }
-  .record__grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+  .record__grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
   .record__note{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:12px; }
   .ev__margin{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; min-height:1em; }
   .ev-pos{ color:var(--pos); font-weight:600; } .ev-neg{ color:var(--neg); }
@@ -133,11 +133,15 @@
   .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
     color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:7px; padding:.4rem .6rem; }
   .match__go:hover{ background:var(--ball); color:var(--ink); }
+  .match__extra{ grid-column:2 / -1; font-family:var(--mono); font-size:.7rem; line-height:1.5; }
+  .match__pin{ color:var(--faint); }
+  .match__flags{ color:var(--clay); }
   .today__empty{ font-family:var(--mono); font-size:.82rem; color:var(--faint); padding:.4rem 0; }
 
   @media (max-width:760px){
     .match{ grid-template-columns:1fr auto; }
     .match__when{ grid-column:1 / -1; }
+    .match__extra{ grid-column:1 / -1; }
     .match__p{ flex-direction:column; gap:0; }
     .match__who{ gap:8px; }
     .today h3 .hint{ float:none; display:block; margin-top:4px; }
@@ -146,7 +150,8 @@
     .readouts{ grid-template-columns:1fr; }
     .record__grid{ grid-template-columns:1fr 1fr; }
     .panels{ grid-template-columns:1fr; }
-    .evtable th:nth-child(3), .evtable td:nth-child(3){ display:none; }
+    .evtable th:nth-child(3), .evtable td:nth-child(3),
+    .evtable th:nth-child(5), .evtable td:nth-child(5){ display:none; }
   }
 </style>
 </head>
@@ -249,9 +254,9 @@
       <div class="netbar__pct netbar__pct--b" id="pctB">50%</div>
     </div>
     <div class="readouts">
-      <div class="stat"><div class="stat__k">Surface ELO</div><div class="stat__v" id="eloV">50.0%</div><div class="stat__sub" id="eloSub">P(A wins)</div></div>
-      <div class="stat"><div class="stat__k">Markov serve</div><div class="stat__v" id="mkvV">50.0%</div><div class="stat__sub" id="mkvSub">P(A wins)</div></div>
-      <div class="stat stat--ens"><div class="stat__k">Ensemble · headline</div><div class="stat__v" id="ensV">50.0%</div><div class="stat__sub" id="ensSub">P(A wins)</div></div>
+      <div class="stat"><div class="stat__k">Rating · Elo</div><div class="stat__v" id="eloV">50.0%</div><div class="stat__sub" id="eloSub">P(A wins)</div></div>
+      <div class="stat"><div class="stat__k">Serve model · Markov</div><div class="stat__v" id="mkvV">50.0%</div><div class="stat__sub" id="mkvSub">P(A wins)</div></div>
+      <div class="stat stat--ens"><div class="stat__k">Blend · headline</div><div class="stat__v" id="ensV">50.0%</div><div class="stat__sub" id="ensSub">P(A wins)</div></div>
     </div>
   </section>
 
@@ -374,11 +379,31 @@ function readCustom(side){
 function statsFor(key, surf, custom){
   if(key === "custom" || !DATA.players[key]){
     const c = custom || {spw:0.64, rpw:0.38};
-    return { name:"Custom", elo:1850, spw:clip(c.spw,0.50,0.85), rpw:clip(c.rpw,0.20,0.55) };
+    // a custom player counts as fully known, so the serve model gets its full weight
+    return { name:"Custom", elo:1850, rd:0, n:1e6, raw:null,
+             spw:clip(c.spw,0.40,0.85), rpw:clip(c.rpw,0.20,0.60) };
   }
-  const p = DATA.players[key];
-  return { name:p.name, elo:pick(p.elo, surf),
-    spw:clip(pick(p.serve, surf), 0.50, 0.85), rpw:clip(pick(p.return, surf), 0.20, 0.55) };
+  const p = DATA.players[key], t = tourAvg();
+  const sv = pick(p.serve, surf), rt = pick(p.return, surf);
+  return { name:p.name, elo:pick(p.elo, surf), rd:p.rd || 0, n:p.n || 0, raw:p,
+    spw: sv == null ? t : sv, rpw: rt == null ? 1 - t : rt };
+}
+
+/* warnings for a player (same rules as update_matches.py player_flags) */
+function playerFlags(p, surf){
+  const i = (p && p.info) || null, out = [];
+  if(!i) return out;
+  const today = new Date(), days = d => Math.round((today - new Date(d + "T00:00:00Z")) / 864e5);
+  const m12 = i.m12 || 0, s12 = i.surf12 || {};
+  if(m12 < 10) out.push(`${p.name}: only ${m12} matches in 12 months`);
+  if(i.last && days(i.last) > 45) out.push(`${p.name}: first match in ${days(i.last)} days`);
+  if((s12[surf] || 0) < 3) out.push(`${p.name}: few ${surf} matches this year`);
+  for(const sp of ["clay","grass"])
+    if(m12 >= 10 && (s12[sp] || 0) / m12 >= 0.5)
+      out.push(`${p.name}: ${sp}-court specialist (${Math.round(100*(s12[sp]||0)/m12)}% of matches on ${sp})` + (sp === surf ? "" : `, now on ${surf}`));
+  if(i.last_ret && (days(i.last_ret) <= 60 || (i.ret180 || 0) >= 2))
+    out.push(`${p.name}: retired from a match ${days(i.last_ret)} days ago` + ((i.ret180||0) >= 2 ? ` (${i.ret180} in 6 months)` : ""));
+  return out;
 }
 
 function nameFromKey(k){ return k === "custom" ? "Custom player…" : (DATA.players[k] ? DATA.players[k].name : ""); }
@@ -425,11 +450,22 @@ function compute(){
   const pb = servePointProb(B.spw, A.rpw, t);
   const s  = setWinProb(pa, pb);
   const pMkv = matchFromSet(s, state.bestOf);
-  const pElo = eloExpected(A.elo, B.elo);
-  const pEns = 0.5*(pElo + pMkv);
-  $("note").textContent = (state.a !== "custom" && state.a === state.b)
-    ? "Same player on both sides — pick two different players for a meaningful number." : "";
-  render({A,B,pa,pb,s,pMkv,pElo,pEns});
+  // same formula as predict_export() in model.py
+  const M = DATA.model || {};
+  let g = 1;
+  if(M.rating === "glicko"){
+    const q = Math.LN10 / 400;
+    g = 1 / Math.sqrt(1 + 3*q*q*(A.rd*A.rd + B.rd*B.rd) / (Math.PI*Math.PI));
+  }
+  const pElo = 1 / (1 + Math.pow(10, -g*(A.elo - B.elo)/400));
+  const wFull = (M.w && M.w[state.tour] != null) ? M.w[state.tour] : 0.5, n0 = M.n0 || 0;
+  const n = Math.min(A.n, B.n), w = n0 > 0 ? wFull * n / (n + n0) : wFull;
+  const pEns = w*pMkv + (1-w)*pElo;
+  const warn = state.a !== "custom" && state.a === state.b
+    ? ["Same player on both sides — pick two different players for a meaningful number."]
+    : [...playerFlags(A.raw, state.surface), ...playerFlags(B.raw, state.surface)];
+  $("note").innerHTML = warn.map(t => "⚠ " + esc(t)).join("<br>");
+  render({A,B,pa,pb,s,pMkv,pElo,pEns,w});
   return pEns;
 }
 function render(d){
@@ -437,7 +473,8 @@ function render(d){
   $("nameA").textContent = A.name; $("nameB").textContent = B.name;
   ["srvName","holdName","setName"].forEach(id => { $(id+"A").textContent = A.name; $(id+"B").textContent = B.name; });
   $("evNameA").textContent = A.name; $("evNameB").textContent = B.name;
-  $("eloSub").textContent = $("mkvSub").textContent = $("ensSub").textContent = `P(${A.name} wins)`;
+  $("eloSub").textContent = $("mkvSub").textContent = `P(${A.name} wins)`;
+  $("ensSub").textContent = `P(${A.name} wins) · serve model ${Math.round(d.w*100)}%`;
 
   $("fillA").style.width = (pEns*100) + "%";
   $("fillB").style.width = ((1-pEns)*100) + "%";
@@ -618,6 +655,13 @@ function matchSide(cls, p){
   return `<div class="match__p match__p--${cls}"><span class="n">${esc(p.name)}</span>
     <span class="nums">${pct(p.model)} · ${p.best_odds.toFixed(2)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}">${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
 }
+function matchExtras(m){
+  const bits = [];
+  if(m.pinnacle_a != null) bits.push(`<div class="match__pin">Pinnacle: ${pct(m.pinnacle_a)} / ${pct(1 - m.pinnacle_a)}</div>`);
+  const fl = (m.flags || []).map(f => Array.isArray(f) ? f[1] : f);
+  if(fl.length) bits.push(`<div class="match__flags">${fl.map(t => "⚠ " + esc(t)).join("<br>")}</div>`);
+  return bits.length ? `<div class="match__extra">${bits.join("")}</div>` : "";
+}
 function renderToday(j){
   const list = $("todayList");
   if(!j){ list.innerHTML = '<div class="today__empty">No match list yet — it appears after the first daily run.</div>'; return; }
@@ -630,7 +674,8 @@ function renderToday(j){
   list.innerHTML = ms.map((m,i) => `<div class="match">
       <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
       <div class="match__who">${matchSide("a", m.a)}${matchSide("b", m.b)}</div>
-      <button class="match__go" type="button" data-i="${i}">Analyse</button></div>`).join("");
+      <button class="match__go" type="button" data-i="${i}">Analyse</button>
+      ${matchExtras(m)}</div>`).join("");
   list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () => loadMatch(ms[+b.dataset.i])));
 }
 function renderRecord(r){
@@ -643,14 +688,23 @@ function renderRecord(r){
   const signed = x => (x>=0?"+":"") + x.toFixed(1);
   const tile = (k, v, sub, cls="") => `<div class="stat"><div class="stat__k">${k}</div><div class="stat__v ${cls}">${v}</div><div class="stat__sub">${sub}</div></div>`;
   const beat = r.brier_model < r.brier_market;
+  const pinTile = r.pinnacle_n
+    ? tile("Vs Pinnacle", r.brier_model_pin.toFixed(3), "Pinnacle " + r.brier_pinnacle.toFixed(3) + " · " + r.pinnacle_n + " matches · lower is better",
+           r.brier_model_pin < r.brier_pinnacle ? "ev-pos" : "ev-neg")
+    : "";
   grid.innerHTML =
     tile("Matches settled", r.settled, r.pending + " pending") +
     tile("Picked the winner", pct(r.model_right), "bookmakers' favourite: " + pct(r.market_right)) +
     tile("Accuracy score", r.brier_model.toFixed(3), "market " + r.brier_market.toFixed(3) + " · lower is better", beat ? "ev-pos" : "ev-neg") +
     tile("Value bets", r.value_bets ? signed(r.profit_units) + "u" : "—",
-         r.value_bets ? r.value_bets + " bets · " + r.value_wins + " won · ROI " + signed(r.roi*100) + "%" : "no value flags settled", r.profit_units > 0 ? "ev-pos" : (r.value_bets ? "ev-neg" : ""));
-  note.textContent = "Value bets = 1 unit on each flagged side at the logged best price. " +
-    (r.value_bets < 300 ? "Under ~300 bets, luck dominates — don't read much into the profit yet." : "");
+         r.value_bets ? r.value_bets + " bets · " + r.value_wins + " won · ROI " + signed(r.roi*100) + "%" : "no value flags settled", r.profit_units > 0 ? "ev-pos" : (r.value_bets ? "ev-neg" : "")) +
+    pinTile;
+  const versions = Object.entries(r.by_model || {}).map(([v, x]) =>
+    `${v === "original" ? "Original model" : "Model of " + v}: ${x.settled} settled, accuracy ${x.brier_model.toFixed(3)} vs market ${x.brier_market.toFixed(3)}` +
+    (x.clean_bets ? `, value bets with no warnings ${x.clean_bets} (${signed(x.clean_profit)}u)` : ""));
+  note.innerHTML = [...versions.map(esc),
+    esc("Value bets = 1 unit on each flagged side at the logged best price. " +
+        (r.value_bets < 300 ? "Under ~300 bets, luck dominates — don't read much into the profit yet." : ""))].join("<br>");
 }
 async function loadMatches(){
   try{

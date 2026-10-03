@@ -1,0 +1,22 @@
+{
+  "version": "2026-10-03",
+  "tuned_on": "2025-04-01..2026-03-31",
+  "params": {
+    "rating": "elo",
+    "k0": 150,
+    "k_off": 5.0,
+    "k_exp": 0.4,
+    "surf_k": 0.25,
+    "g_tau": 0.5,
+    "g_rd0": 350.0,
+    "g_days": 30.0,
+    "g_surf_k": 20.0,
+    "half_life": 135,
+    "shrink": 400,
+    "surf_shrink": 2000,
+    "court_shrink": 0,
+    "w_atp": 0.85,
+    "w_wta": 1.0,
+    "n0": 250
+  }
+}

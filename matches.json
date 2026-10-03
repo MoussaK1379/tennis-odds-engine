@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-03T19:17:47Z",
+  "updated": "2026-10-03T22:31:07Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "479",
+  "requests_remaining": "476",
   "matches": [
     {
       "id": "5357c574f469ea94b1ae1dd036711f7f",
@@ -16,26 +16,35 @@
       "a": {
         "name": "Jaume Munar",
         "key": "j-munar",
-        "model": 0.7251,
-        "fair_odds": 1.38,
-        "market": 0.5797,
-        "best_odds": 1.75,
+        "model": 0.6515,
+        "fair_odds": 1.53,
+        "market": 0.5784,
+        "best_odds": 1.73,
         "book": "Betfair",
-        "ev": 0.269,
-        "kelly": 0.0897
+        "ev": 0.1271,
+        "kelly": 0.0435
       },
       "b": {
         "name": "Kyrian Jacquet",
         "key": "k-jacquet",
-        "model": 0.2749,
-        "fair_odds": 3.64,
-        "market": 0.4203,
-        "best_odds": 2.33,
-        "book": "BetOnline.ag",
-        "ev": -0.3596,
+        "model": 0.3485,
+        "fair_odds": 2.87,
+        "market": 0.4216,
+        "best_odds": 2.34,
+        "book": "Betfair",
+        "ev": -0.1846,
         "kelly": 0.0
       },
-      "books": 20
+      "books": 20,
+      "court": "tokyo",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.5743,
+        "serve": 0.6781,
+        "w": 0.744
+      },
+      "pinnacle_a": 0.5729,
+      "flags": []
     },
     {
       "id": "86d5be8c100a0589e1b1b737111770ae",
@@ -49,26 +58,35 @@
       "a": {
         "name": "Nikola Bartunkova",
         "key": "n-bartunkova",
-        "model": 0.1102,
-        "fair_odds": 9.07,
-        "market": 0.1615,
+        "model": 0.1562,
+        "fair_odds": 6.4,
+        "market": 0.1661,
         "best_odds": 6.6,
         "book": "Betfair",
-        "ev": -0.2725,
-        "kelly": 0.0
+        "ev": 0.0312,
+        "kelly": 0.0014
       },
       "b": {
         "name": "Aryna Sabalenka",
         "key": "a-sabalenka",
-        "model": 0.8898,
-        "fair_odds": 1.12,
-        "market": 0.8385,
-        "best_odds": 1.16,
+        "model": 0.8438,
+        "fair_odds": 1.19,
+        "market": 0.8339,
+        "best_odds": 1.17,
         "book": "Betfair",
-        "ev": 0.0321,
-        "kelly": 0.0502
+        "ev": -0.0128,
+        "kelly": 0.0
       },
-      "books": 21
+      "books": 21,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.1355,
+        "serve": 0.1588,
+        "w": 0.889
+      },
+      "pinnacle_a": 0.1552,
+      "flags": []
     },
     {
       "id": "984b276e5c976125c744389eaaadece8",
@@ -82,26 +100,40 @@
       "a": {
         "name": "Sinja Kraus",
         "key": "s-kraus",
-        "model": 0.4503,
-        "fair_odds": 2.22,
-        "market": 0.2935,
-        "best_odds": 3.45,
-        "book": "Matchbook",
-        "ev": 0.5537,
-        "kelly": 0.0565
+        "model": 0.5252,
+        "fair_odds": 1.9,
+        "market": 0.2944,
+        "best_odds": 3.4,
+        "book": "Betfair",
+        "ev": 0.7855,
+        "kelly": 0.0818
       },
       "b": {
         "name": "Dayana Yastremska",
         "key": "d-yastremska",
-        "model": 0.5497,
-        "fair_odds": 1.82,
-        "market": 0.7065,
-        "best_odds": 1.4,
+        "model": 0.4748,
+        "fair_odds": 2.11,
+        "market": 0.7056,
+        "best_odds": 1.41,
         "book": "Betfair",
-        "ev": -0.2305,
+        "ev": -0.3305,
         "kelly": 0.0
       },
-      "books": 21
+      "books": 21,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.4986,
+        "serve": 0.5301,
+        "w": 0.843
+      },
+      "pinnacle_a": 0.2974,
+      "flags": [
+        [
+          "disagree",
+          "Model and market differ by 23 points"
+        ]
+      ]
     },
     {
       "id": "d29e017ede49b7615b809bfefcffea6c",
@@ -115,26 +147,40 @@
       "a": {
         "name": "Carlos Alcaraz",
         "key": "c-alcaraz",
-        "model": 0.8543,
-        "fair_odds": 1.17,
-        "market": 0.8521,
+        "model": 0.8666,
+        "fair_odds": 1.15,
+        "market": 0.8491,
         "best_odds": 1.15,
         "book": "Betfair",
-        "ev": -0.0176,
+        "ev": -0.0034,
         "kelly": 0.0
       },
       "b": {
         "name": "Denis Shapovalov",
         "key": "d-shapovalov",
-        "model": 0.1457,
-        "fair_odds": 6.86,
-        "market": 0.1479,
-        "best_odds": 7.4,
+        "model": 0.1334,
+        "fair_odds": 7.5,
+        "market": 0.1509,
+        "best_odds": 7.2,
         "book": "Betfair",
-        "ev": 0.0784,
-        "kelly": 0.0031
+        "ev": -0.0398,
+        "kelly": 0.0
       },
-      "books": 19
+      "books": 19,
+      "court": "tokyo",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.8847,
+        "serve": 0.8607,
+        "w": 0.752
+      },
+      "pinnacle_a": 0.8551,
+      "flags": [
+        [
+          "retired",
+          "D. Shapovalov: retired from a match 60 days ago (2 in 6 months)"
+        ]
+      ]
     },
     {
       "id": "3df5911c366dc0b476572540e9a85b6d",
@@ -148,26 +194,35 @@
       "a": {
         "name": "Ekaterina Alexandrova",
         "key": "e-alexandrova",
-        "model": 0.4062,
-        "fair_odds": 2.46,
-        "market": 0.3349,
-        "best_odds": 2.98,
-        "book": "Betfair",
-        "ev": 0.2104,
-        "kelly": 0.0266
+        "model": 0.3483,
+        "fair_odds": 2.87,
+        "market": 0.3383,
+        "best_odds": 2.95,
+        "book": "Nordic Bet",
+        "ev": 0.0275,
+        "kelly": 0.0035
       },
       "b": {
         "name": "Diana Shnaider",
         "key": "d-shnaider",
-        "model": 0.5938,
-        "fair_odds": 1.68,
-        "market": 0.6651,
+        "model": 0.6517,
+        "fair_odds": 1.53,
+        "market": 0.6617,
         "best_odds": 1.5,
-        "book": "Matchbook",
-        "ev": -0.1093,
+        "book": "Betfair",
+        "ev": -0.0225,
         "kelly": 0.0
       },
-      "books": 22
+      "books": 22,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.3573,
+        "serve": 0.3472,
+        "w": 0.892
+      },
+      "pinnacle_a": 0.3387,
+      "flags": []
     },
     {
       "id": "69ec18acddec63da011d8f44d376b90c",
@@ -181,26 +236,35 @@
       "a": {
         "name": "Hubert Hurkacz",
         "key": "h-hurkacz",
-        "model": 0.4934,
-        "fair_odds": 2.03,
-        "market": 0.4236,
+        "model": 0.4717,
+        "fair_odds": 2.12,
+        "market": 0.4212,
         "best_odds": 2.4,
         "book": "Betfair",
-        "ev": 0.1842,
-        "kelly": 0.0329
+        "ev": 0.132,
+        "kelly": 0.0236
       },
       "b": {
         "name": "Karen Khachanov",
         "key": "k-khachanov",
-        "model": 0.5066,
-        "fair_odds": 1.97,
-        "market": 0.5764,
+        "model": 0.5283,
+        "fair_odds": 1.89,
+        "market": 0.5788,
         "best_odds": 1.72,
         "book": "GTbets",
-        "ev": -0.1287,
+        "ev": -0.0913,
         "kelly": 0.0
       },
-      "books": 21
+      "books": 21,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.5729,
+        "serve": 0.4409,
+        "w": 0.767
+      },
+      "pinnacle_a": 0.4179,
+      "flags": []
     },
     {
       "id": "914790a88c70778d0830ef9368dd70f6",
@@ -214,26 +278,35 @@
       "a": {
         "name": "Polina Kudermetova",
         "key": "p-kudermetova",
-        "model": 0.1067,
-        "fair_odds": 9.37,
-        "market": 0.1089,
-        "best_odds": 12.0,
+        "model": 0.0726,
+        "fair_odds": 13.77,
+        "market": 0.1099,
+        "best_odds": 11.0,
         "book": "Betfair",
-        "ev": 0.2801,
-        "kelly": 0.0064
+        "ev": -0.2012,
+        "kelly": 0.0
       },
       "b": {
         "name": "Mirra Andreeva",
         "key": "m-andreeva",
-        "model": 0.8933,
-        "fair_odds": 1.12,
-        "market": 0.8911,
+        "model": 0.9274,
+        "fair_odds": 1.08,
+        "market": 0.8901,
         "best_odds": 1.08,
         "book": "Betfair",
-        "ev": -0.0352,
-        "kelly": 0.0
+        "ev": 0.0016,
+        "kelly": 0.0049
       },
-      "books": 22
+      "books": 22,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.16,
+        "serve": 0.0587,
+        "w": 0.863
+      },
+      "pinnacle_a": 0.0921,
+      "flags": []
     },
     {
       "id": "e2954e055ea3f8716333b8ff13e39708",
@@ -247,26 +320,35 @@
       "a": {
         "name": "Daria Snigur",
         "key": "d-snigur",
-        "model": 0.5623,
-        "fair_odds": 1.78,
-        "market": 0.6027,
-        "best_odds": 1.67,
+        "model": 0.6866,
+        "fair_odds": 1.46,
+        "market": 0.607,
+        "best_odds": 1.6,
         "book": "Betfair",
-        "ev": -0.0609,
-        "kelly": 0.0
+        "ev": 0.0986,
+        "kelly": 0.0411
       },
       "b": {
         "name": "Taylah Preston",
         "key": "t-preston",
-        "model": 0.4377,
-        "fair_odds": 2.28,
-        "market": 0.3973,
-        "best_odds": 2.47,
-        "book": "BetOnline.ag",
-        "ev": 0.081,
-        "kelly": 0.0138
+        "model": 0.3134,
+        "fair_odds": 3.19,
+        "market": 0.393,
+        "best_odds": 2.64,
+        "book": "Betfair",
+        "ev": -0.1727,
+        "kelly": 0.0
       },
-      "books": 22
+      "books": 22,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.6159,
+        "serve": 0.7065,
+        "w": 0.781
+      },
+      "pinnacle_a": 0.6156,
+      "flags": []
     },
     {
       "id": "e9d8fec90ecda0bc0721e481e8cdaa69",
@@ -280,26 +362,35 @@
       "a": {
         "name": "Alex de Minaur",
         "key": "a-de-minaur",
-        "model": 0.6493,
-        "fair_odds": 1.54,
-        "market": 0.5413,
-        "best_odds": 1.87,
+        "model": 0.6031,
+        "fair_odds": 1.66,
+        "market": 0.5357,
+        "best_odds": 1.85,
         "book": "Matchbook",
-        "ev": 0.2142,
-        "kelly": 0.0616
+        "ev": 0.1157,
+        "kelly": 0.034
       },
       "b": {
         "name": "Andrey Rublev",
         "key": "a-rublev",
-        "model": 0.3507,
-        "fair_odds": 2.85,
-        "market": 0.4587,
-        "best_odds": 2.15,
-        "book": "1xBet",
-        "ev": -0.246,
+        "model": 0.3969,
+        "fair_odds": 2.52,
+        "market": 0.4643,
+        "best_odds": 2.14,
+        "book": "Matchbook",
+        "ev": -0.1506,
         "kelly": 0.0
       },
-      "books": 21
+      "books": 21,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.6334,
+        "serve": 0.5945,
+        "w": 0.78
+      },
+      "pinnacle_a": 0.532,
+      "flags": []
     },
     {
       "id": "7079fae92b1e1fbd3acdd13e50cd0e8a",
@@ -313,26 +404,35 @@
       "a": {
         "name": "Linda Noskova",
         "key": "l-noskova",
-        "model": 0.7928,
-        "fair_odds": 1.26,
-        "market": 0.8412,
+        "model": 0.7835,
+        "fair_odds": 1.28,
+        "market": 0.8419,
         "best_odds": 1.15,
-        "book": "GTbets",
-        "ev": -0.0883,
+        "book": "Betfair",
+        "ev": -0.099,
         "kelly": 0.0
       },
       "b": {
         "name": "Viktorija Golubic",
         "key": "v-golubic",
-        "model": 0.2072,
-        "fair_odds": 4.83,
-        "market": 0.1588,
-        "best_odds": 7.8,
+        "model": 0.2165,
+        "fair_odds": 4.62,
+        "market": 0.1581,
+        "best_odds": 7.4,
         "book": "Betfair",
-        "ev": 0.6162,
-        "kelly": 0.0227
+        "ev": 0.6024,
+        "kelly": 0.0235
       },
-      "books": 21
+      "books": 21,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.8196,
+        "serve": 0.7782,
+        "w": 0.873
+      },
+      "pinnacle_a": 0.8586,
+      "flags": []
     },
     {
       "id": "2ef03d744d19f6f72feffe902dd58fb3",
@@ -346,26 +446,35 @@
       "a": {
         "name": "Valentin Vacherot",
         "key": "v-vacherot",
-        "model": 0.2945,
-        "fair_odds": 3.4,
+        "model": 0.2585,
+        "fair_odds": 3.87,
         "market": 0.2344,
         "best_odds": 4.4,
         "book": "Betfair",
-        "ev": 0.2957,
-        "kelly": 0.0217
+        "ev": 0.1374,
+        "kelly": 0.0101
       },
       "b": {
         "name": "Arthur Fils",
         "key": "a-fils",
-        "model": 0.7055,
-        "fair_odds": 1.42,
+        "model": 0.7415,
+        "fair_odds": 1.35,
         "market": 0.7656,
         "best_odds": 1.28,
         "book": "Betfair",
-        "ev": -0.0969,
+        "ev": -0.0509,
         "kelly": 0.0
       },
-      "books": 20
+      "books": 20,
+      "court": "tokyo",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.2709,
+        "serve": 0.2543,
+        "w": 0.745
+      },
+      "pinnacle_a": 0.2234,
+      "flags": []
     },
     {
       "id": "8df898f639928a81d8b621732f0c3d95",
@@ -379,26 +488,35 @@
       "a": {
         "name": "Jiri Lehecka",
         "key": "j-lehecka",
-        "model": 0.69,
-        "fair_odds": 1.45,
-        "market": 0.6931,
+        "model": 0.705,
+        "fair_odds": 1.42,
+        "market": 0.6933,
         "best_odds": 1.41,
         "book": "Betfair",
-        "ev": -0.0271,
+        "ev": -0.006,
         "kelly": 0.0
       },
       "b": {
         "name": "Adolfo Daniel Vallejo",
         "key": "d-vallejo",
-        "model": 0.31,
-        "fair_odds": 3.23,
-        "market": 0.3069,
+        "model": 0.295,
+        "fair_odds": 3.39,
+        "market": 0.3067,
         "best_odds": 3.3,
-        "book": "Matchbook",
-        "ev": 0.023,
-        "kelly": 0.0025
+        "book": "Betfair",
+        "ev": -0.0264,
+        "kelly": 0.0
       },
-      "books": 19
+      "books": 19,
+      "court": "tokyo",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.7211,
+        "serve": 0.6997,
+        "w": 0.753
+      },
+      "pinnacle_a": 0.7026,
+      "flags": []
     },
     {
       "id": "503668639586796c463e08dc29b69bfb",
@@ -412,26 +530,35 @@
       "a": {
         "name": "Daniil Medvedev",
         "key": "d-medvedev",
-        "model": 0.6614,
-        "fair_odds": 1.51,
-        "market": 0.6874,
-        "best_odds": 1.43,
+        "model": 0.6322,
+        "fair_odds": 1.58,
+        "market": 0.6895,
+        "best_odds": 1.42,
         "book": "Betfair",
-        "ev": -0.0542,
+        "ev": -0.1023,
         "kelly": 0.0
       },
       "b": {
         "name": "Francisco Cerundolo",
         "key": "f-cerundolo",
-        "model": 0.3386,
-        "fair_odds": 2.95,
-        "market": 0.3126,
-        "best_odds": 3.25,
+        "model": 0.3678,
+        "fair_odds": 2.72,
+        "market": 0.3105,
+        "best_odds": 3.3,
         "book": "Betfair",
-        "ev": 0.1004,
-        "kelly": 0.0112
+        "ev": 0.2138,
+        "kelly": 0.0232
       },
-      "books": 21
+      "books": 21,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.5925,
+        "serve": 0.6435,
+        "w": 0.777
+      },
+      "pinnacle_a": 0.6985,
+      "flags": []
     },
     {
       "id": "305b3ecd1828799e8cf4ddc17a43e582",
@@ -445,26 +572,35 @@
       "a": {
         "name": "Alexander Zverev",
         "key": "a-zverev",
-        "model": 0.5488,
-        "fair_odds": 1.82,
-        "market": 0.7241,
-        "best_odds": 1.37,
-        "book": "Matchbook",
-        "ev": -0.2481,
+        "model": 0.6762,
+        "fair_odds": 1.48,
+        "market": 0.7244,
+        "best_odds": 1.41,
+        "book": "Betfair",
+        "ev": -0.0466,
         "kelly": 0.0
       },
       "b": {
         "name": "Novak Djokovic",
         "key": "n-djokovic",
-        "model": 0.4512,
-        "fair_odds": 2.22,
-        "market": 0.2759,
+        "model": 0.3238,
+        "fair_odds": 3.09,
+        "market": 0.2756,
         "best_odds": 3.6,
-        "book": "Matchbook",
-        "ev": 0.6242,
-        "kelly": 0.06
+        "book": "888sport",
+        "ev": 0.1657,
+        "kelly": 0.0159
       },
-      "books": 22
+      "books": 22,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.6294,
+        "serve": 0.6925,
+        "w": 0.742
+      },
+      "pinnacle_a": 0.7091,
+      "flags": []
     },
     {
       "id": "fad08200c67499089c261f6170814604",
@@ -478,26 +614,35 @@
       "a": {
         "name": "Sara Bejlek",
         "key": "s-bejlek",
-        "model": 0.3742,
-        "fair_odds": 2.67,
-        "market": 0.278,
-        "best_odds": 3.65,
+        "model": 0.2991,
+        "fair_odds": 3.34,
+        "market": 0.2762,
+        "best_odds": 3.9,
         "book": "Betfair",
-        "ev": 0.3658,
-        "kelly": 0.0345
+        "ev": 0.1666,
+        "kelly": 0.0144
       },
       "b": {
         "name": "Naomi Osaka",
         "key": "n-osaka",
-        "model": 0.6258,
-        "fair_odds": 1.6,
-        "market": 0.722,
-        "best_odds": 1.36,
+        "model": 0.7009,
+        "fair_odds": 1.43,
+        "market": 0.7238,
+        "best_odds": 1.34,
         "book": "Betfair",
-        "ev": -0.1489,
+        "ev": -0.0608,
         "kelly": 0.0
       },
-      "books": 22
+      "books": 22,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.2778,
+        "serve": 0.3025,
+        "w": 0.864
+      },
+      "pinnacle_a": 0.2752,
+      "flags": []
     },
     {
       "id": "5dcb61ea08af6d8049acffbcb7735ce2",
@@ -511,26 +656,35 @@
       "a": {
         "name": "Karolina Muchova",
         "key": "k-muchova",
-        "model": 0.8355,
-        "fair_odds": 1.2,
-        "market": 0.7513,
+        "model": 0.8372,
+        "fair_odds": 1.19,
+        "market": 0.7487,
         "best_odds": 1.29,
         "book": "Betfair",
-        "ev": 0.0777,
-        "kelly": 0.067
+        "ev": 0.08,
+        "kelly": 0.069
       },
       "b": {
         "name": "Liudmila Samsonova",
         "key": "l-samsonova",
-        "model": 0.1645,
-        "fair_odds": 6.08,
-        "market": 0.2487,
+        "model": 0.1628,
+        "fair_odds": 6.14,
+        "market": 0.2513,
         "best_odds": 4.3,
         "book": "Betfair",
-        "ev": -0.2925,
+        "ev": -0.3002,
         "kelly": 0.0
       },
-      "books": 22
+      "books": 22,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.8304,
+        "serve": 0.8382,
+        "w": 0.878
+      },
+      "pinnacle_a": 0.7635,
+      "flags": []
     },
     {
       "id": "10911eaa50b035ec14ce0d680a6a7522",
@@ -544,26 +698,34 @@
       "a": {
         "name": "Alina Charaeva",
         "key": "a-charaeva",
-        "model": 0.2313,
-        "fair_odds": 4.32,
-        "market": 0.3852,
-        "best_odds": 2.51,
-        "book": "Marathon Bet",
-        "ev": -0.4193,
+        "model": 0.2733,
+        "fair_odds": 3.66,
+        "market": 0.3794,
+        "best_odds": 2.6,
+        "book": "Betfair",
+        "ev": -0.2893,
         "kelly": 0.0
       },
       "b": {
         "name": "Sonay Kartal",
         "key": "s-kartal",
-        "model": 0.7687,
-        "fair_odds": 1.3,
-        "market": 0.6148,
+        "model": 0.7267,
+        "fair_odds": 1.38,
+        "market": 0.6206,
         "best_odds": 1.56,
         "book": "GTbets",
-        "ev": 0.1991,
-        "kelly": 0.0889
+        "ev": 0.1336,
+        "kelly": 0.0596
       },
-      "books": 18
+      "books": 18,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.3088,
+        "serve": 0.2624,
+        "w": 0.764
+      },
+      "flags": []
     },
     {
       "id": "85440a822df78988232b37cad4521ba8",
@@ -577,26 +739,39 @@
       "a": {
         "name": "Belinda Bencic",
         "key": "b-bencic",
-        "model": 0.7899,
-        "fair_odds": 1.27,
-        "market": 0.6547,
+        "model": 0.7472,
+        "fair_odds": 1.34,
+        "market": 0.6528,
         "best_odds": 1.46,
         "book": "Nordic Bet",
-        "ev": 0.1532,
-        "kelly": 0.0833
+        "ev": 0.091,
+        "kelly": 0.0494
       },
       "b": {
         "name": "Ann Li",
         "key": "a-li",
-        "model": 0.2101,
-        "fair_odds": 4.76,
-        "market": 0.3453,
+        "model": 0.2528,
+        "fair_odds": 3.96,
+        "market": 0.3472,
         "best_odds": 2.85,
         "book": "Unibet (NL)",
-        "ev": -0.4012,
+        "ev": -0.2796,
         "kelly": 0.0
       },
-      "books": 18
+      "books": 18,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.7791,
+        "serve": 0.7425,
+        "w": 0.871
+      },
+      "flags": [
+        [
+          "retired",
+          "B. Bencic: retired from a match 48 days ago"
+        ]
+      ]
     },
     {
       "id": "74753a8978f7138d98be8ca5264742d7",
@@ -610,26 +785,43 @@
       "a": {
         "name": "Coco Gauff",
         "key": "c-gauff",
-        "model": 0.4888,
-        "fair_odds": 2.05,
+        "model": 0.9182,
+        "fair_odds": 1.09,
         "market": 0.9115,
-        "best_odds": 1.06,
+        "best_odds": 1.07,
         "book": "Betfair",
-        "ev": -0.4818,
+        "ev": -0.0176,
         "kelly": 0.0
       },
       "b": {
         "name": "Sun Xinran",
         "key": "x-sun",
-        "model": 0.5112,
-        "fair_odds": 1.96,
+        "model": 0.0818,
+        "fair_odds": 12.22,
         "market": 0.0885,
         "best_odds": 13.0,
         "book": "Unibet (NL)",
-        "ev": 5.6452,
-        "kelly": 0.1176
+        "ev": 0.0639,
+        "kelly": 0.0013
       },
-      "books": 16
+      "books": 16,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.9264,
+        "serve": 0.896,
+        "w": 0.271
+      },
+      "flags": [
+        [
+          "thin",
+          "X. Sun: only 2 matches in 12 months"
+        ],
+        [
+          "surface_few",
+          "X. Sun: few hard matches this year"
+        ]
+      ]
     },
     {
       "id": "7148ceef90fc0bed3564c4d4289389a8",
@@ -643,26 +835,35 @@
       "a": {
         "name": "Donna Vekic",
         "key": "d-vekic",
-        "model": 0.084,
-        "fair_odds": 11.91,
-        "market": 0.1256,
-        "best_odds": 10.0,
-        "book": "Betfair",
-        "ev": -0.1601,
+        "model": 0.0488,
+        "fair_odds": 20.48,
+        "market": 0.1247,
+        "best_odds": 9.92,
+        "book": "Pinnacle",
+        "ev": -0.5156,
         "kelly": 0.0
       },
       "b": {
         "name": "Iga Swiatek",
         "key": "i-swiatek",
-        "model": 0.916,
-        "fair_odds": 1.09,
-        "market": 0.8744,
+        "model": 0.9512,
+        "fair_odds": 1.05,
+        "market": 0.8753,
         "best_odds": 1.11,
-        "book": "888sport",
-        "ev": 0.0168,
-        "kelly": 0.0381
+        "book": "Betfair",
+        "ev": 0.0558,
+        "kelly": 0.1268
       },
-      "books": 20
+      "books": 20,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.1025,
+        "serve": 0.0407,
+        "w": 0.868
+      },
+      "pinnacle_a": 0.0974,
+      "flags": []
     },
     {
       "id": "1474ac5f2265d300c1a48ea91b323c09",
@@ -676,26 +877,34 @@
       "a": {
         "name": "Maria Sakkari",
         "key": "m-sakkari",
-        "model": 0.2541,
-        "fair_odds": 3.94,
-        "market": 0.2989,
+        "model": 0.2949,
+        "fair_odds": 3.39,
+        "market": 0.2986,
         "best_odds": 3.3,
         "book": "Unibet (SE)",
-        "ev": -0.1616,
+        "ev": -0.0268,
         "kelly": 0.0
       },
       "b": {
         "name": "Elina Svitolina",
         "key": "e-svitolina",
-        "model": 0.7459,
-        "fair_odds": 1.34,
-        "market": 0.7011,
+        "model": 0.7051,
+        "fair_odds": 1.42,
+        "market": 0.7014,
         "best_odds": 1.36,
         "book": "888sport",
-        "ev": 0.0145,
-        "kelly": 0.0101
+        "ev": -0.0411,
+        "kelly": 0.0
       },
-      "books": 18
+      "books": 18,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.2434,
+        "serve": 0.3017,
+        "w": 0.883
+      },
+      "flags": []
     },
     {
       "id": "2518a6f43be7c8a70b242d12cbb3f8ff",
@@ -709,26 +918,40 @@
       "a": {
         "name": "Jelena Ostapenko",
         "key": "j-ostapenko",
-        "model": 0.2815,
-        "fair_odds": 3.55,
-        "market": 0.385,
-        "best_odds": 2.6,
-        "book": "Betfair",
-        "ev": -0.268,
+        "model": 0.27,
+        "fair_odds": 3.7,
+        "market": 0.3843,
+        "best_odds": 2.56,
+        "book": "Matchbook",
+        "ev": -0.3088,
         "kelly": 0.0
       },
       "b": {
         "name": "Elise Mertens",
         "key": "e-mertens",
-        "model": 0.7185,
-        "fair_odds": 1.39,
-        "market": 0.615,
-        "best_odds": 1.61,
-        "book": "Betfair",
-        "ev": 0.1567,
-        "kelly": 0.0642
+        "model": 0.73,
+        "fair_odds": 1.37,
+        "market": 0.6157,
+        "best_odds": 1.57,
+        "book": "Pinnacle",
+        "ev": 0.1461,
+        "kelly": 0.0641
       },
-      "books": 20
+      "books": 20,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.4034,
+        "serve": 0.2485,
+        "w": 0.861
+      },
+      "pinnacle_a": 0.382,
+      "flags": [
+        [
+          "retired",
+          "J. Ostapenko: retired from a match 60 days ago (2 in 6 months)"
+        ]
+      ]
     },
     {
       "id": "7bc9edc3231f3cc910824bd36c6e2386",
@@ -742,26 +965,34 @@
       "a": {
         "name": "Iva Jović",
         "key": "i-jovic",
-        "model": 0.7527,
-        "fair_odds": 1.33,
-        "market": 0.7762,
+        "model": 0.7412,
+        "fair_odds": 1.35,
+        "market": 0.7799,
         "best_odds": 1.23,
         "book": "1xBet",
-        "ev": -0.0741,
+        "ev": -0.0884,
         "kelly": 0.0
       },
       "b": {
         "name": "Kamilla Rakhimova",
         "key": "k-rakhimova",
-        "model": 0.2473,
-        "fair_odds": 4.04,
-        "market": 0.2238,
+        "model": 0.2588,
+        "fair_odds": 3.86,
+        "market": 0.2201,
         "best_odds": 4.7,
         "book": "Betsson",
-        "ev": 0.1622,
-        "kelly": 0.011
+        "ev": 0.2165,
+        "kelly": 0.0146
       },
-      "books": 18
+      "books": 18,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.7772,
+        "serve": 0.7372,
+        "w": 0.901
+      },
+      "flags": []
     },
     {
       "id": "2fff13d64b68dd5cb7c7269617427ba2",
@@ -775,39 +1006,65 @@
       "a": {
         "name": "Marie Bouzkova",
         "key": "m-bouzkova",
-        "model": 0.3348,
-        "fair_odds": 2.99,
-        "market": 0.4554,
-        "best_odds": 2.14,
+        "model": 0.5209,
+        "fair_odds": 1.92,
+        "market": 0.4569,
+        "best_odds": 2.16,
         "book": "Betfair",
-        "ev": -0.2836,
-        "kelly": 0.0
+        "ev": 0.1252,
+        "kelly": 0.027
       },
       "b": {
         "name": "Qinwen Zheng",
         "key": "q-zheng",
-        "model": 0.6652,
-        "fair_odds": 1.5,
-        "market": 0.5446,
-        "best_odds": 1.78,
-        "book": "GTbets",
-        "ev": 0.1841,
-        "kelly": 0.059
+        "model": 0.4791,
+        "fair_odds": 2.09,
+        "market": 0.5431,
+        "best_odds": 1.84,
+        "book": "Betfair",
+        "ev": -0.1185,
+        "kelly": 0.0
       },
-      "books": 18
+      "books": 18,
+      "court": "beijing",
+      "model_version": "2026-10-03",
+      "parts": {
+        "elo": 0.4698,
+        "serve": 0.5278,
+        "w": 0.882
+      },
+      "flags": []
     }
   ],
   "unmatched": [],
   "record": {
-    "settled": 72,
-    "pending": 31,
-    "model_right": 0.6528,
-    "market_right": 0.6806,
-    "brier_model": 0.2044,
-    "brier_market": 0.19,
-    "value_bets": 70,
-    "value_wins": 31,
-    "profit_units": -6.1,
-    "roi": -0.0871
+    "settled": 78,
+    "pending": 25,
+    "by_model": {
+      "original": {
+        "settled": 78,
+        "pending": 1,
+        "model_right": 0.6538,
+        "market_right": 0.6667,
+        "brier_model": 0.2085,
+        "brier_market": 0.1992,
+        "value_bets": 74,
+        "value_wins": 33,
+        "profit_units": -4.27,
+        "roi": -0.0577,
+        "clean_bets": 0,
+        "clean_profit": 0
+      }
+    },
+    "model_right": 0.6538,
+    "market_right": 0.6667,
+    "brier_model": 0.2085,
+    "brier_market": 0.1992,
+    "value_bets": 74,
+    "value_wins": 33,
+    "profit_units": -4.27,
+    "roi": -0.0577,
+    "clean_bets": 0,
+    "clean_profit": 0
   }
 }

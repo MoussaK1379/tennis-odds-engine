@@ -181,6 +181,51 @@ def set_markets(dist, best_of):
     return out
 
 
+# ---------- exact game score of a set ---------------------------------------------
+def set_game_scores(pa, pb):
+    """{(games A, games B): probability} for one set; pa/pb = chance of winning a
+    point on serve. Who serves first is unknown, so both orders count half."""
+    ga, gb, tb = game_win_prob(pa), game_win_prob(pb), tiebreak_win_prob(pa, pb)
+    out = {}
+    def go(a, b, a_serves, pr):
+        if (a >= 6 or b >= 6) and abs(a - b) >= 2 or a == 7 or b == 7:
+            out[(a, b)] = out.get((a, b), 0.0) + pr
+            return
+        if a == 6 and b == 6:
+            out[(7, 6)] = out.get((7, 6), 0.0) + pr * tb
+            out[(6, 7)] = out.get((6, 7), 0.0) + pr * (1 - tb)
+            return
+        g = ga if a_serves else 1 - gb
+        go(a + 1, b, not a_serves, pr * g)
+        go(a, b + 1, not a_serves, pr * (1 - g))
+    go(0, 0, True, 0.5)
+    go(0, 0, False, 0.5)
+    return out
+
+def first_set_scores(pa, pb, s_target):
+    """First-set game scores, with the serve chances nudged by the same amount in
+    opposite directions so the first-set win chance equals s_target (the first-set
+    chance implied by the set-score distribution and the headline probability)."""
+    win = lambda d: sum(v for (a, b), v in set_game_scores(clip(pa + d), clip(pb - d)).items() if a > b)
+    lo, hi = -0.3, 0.3
+    for _ in range(40):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if win(mid) < s_target else (lo, mid)
+    d = (lo + hi) / 2
+    return set_game_scores(clip(pa + d), clip(pb - d))
+
+def first_set_chance(dist, best_of, m=0.0):
+    """A's chance of winning set 1 under the set-score distribution (= its solved s)."""
+    need = 3 if best_of == 5 else 2
+    win = lambda s: sum(v for (a, _), v in set_score_probs(s, best_of, m).items() if a == need)
+    target = sum(v for (a, _), v in dist.items() if a == need)
+    lo, hi = 1e-4, 1 - 1e-4
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if win(mid) < target else (lo, mid)
+    return (lo + hi) / 2
+
+
 # ---------- stacking ------------------------------------------------------------
 # Every feature is "A minus B" (or flips sign when A and B swap), and the stack
 # has no intercept, so P(A beats B) = 1 - P(B beats A) always holds.
@@ -386,7 +431,8 @@ class TourEngine:
         feats = stack_features(p_elo, p_mkv, Sa, Ra, Sb, Rb, T, na, nb, days_a, days_b, wk_a, wk_b)
         stack = P.stack(self.tour)
         p = stack_prob(stack, feats) if stack else w * p_mkv + (1 - w) * p_elo
-        return {"p": p, "p_elo": p_elo, "p_mkv": p_mkv, "w": w, "n": min(na, nb), "feats": feats}
+        return {"p": p, "p_elo": p_elo, "p_mkv": p_mkv, "w": w, "n": min(na, nb), "feats": feats,
+                "pa": pa, "pb": pb}
 
     # --- update with a finished match ---
     def update(self, m):

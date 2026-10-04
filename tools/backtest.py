@@ -56,7 +56,7 @@ def run(P, data, set_prob):
                 r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"), m["qualifying"])
                 recs.append((tour, m["date"], 1 if a == m["winner"] else 0, r["p"], r["p_elo"],
                              r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"],
-                             r["feats"], _sets_for(m, a), m["best_of"]))
+                             r["feats"], _sets_for(m, a), m["best_of"], r["pa"], r["pb"], _set1_for(m, a)))
             eng.update(m)
             seen[m["winner"]] = seen.get(m["winner"], 0) + 1
             seen[m["loser"]] = seen.get(m["loser"], 0) + 1
@@ -68,6 +68,35 @@ def _sets_for(m, a):
         return None
     w, l = m["sets"]
     return (w, l) if a == m["winner"] else (l, w)
+
+
+def _set1_for(m, a):
+    if not m.get("set1"):
+        return None
+    w, l = m["set1"]
+    return (w, l) if a == m["winner"] else (l, w)
+
+
+def first_set_check(recs, P, end, log):
+    """How well the first-set exact game scores match reality on the holdout."""
+    rows = [r for r in recs if HOLD_START <= r[1] <= end and r[14] and r[10]]
+    if len(rows) < 200:
+        log(f"  first-set game scores: only {len(rows)} matches with game scores, skipped")
+        return None
+    ll = tb_pred = tb_act = 0.0
+    for r in rows:
+        m = {"ATP": {3: P.set_m_atp3, 5: P.set_m_atp5}, "WTA": {3: P.set_m_wta3}}[r[0]].get(r[11], 0.0)
+        dist = model.set_dist(r[3], r[11], m)
+        f = model.first_set_scores(r[12], r[13], model.first_set_chance(dist, r[11], m))
+        ll -= math.log(max(f.get(tuple(r[14]), 1e-9), 1e-9))
+        tb_pred += f.get((7, 6), 0) + f.get((6, 7), 0)
+        tb_act += r[14] in ((7, 6), (6, 7))
+    out = {"n": len(rows), "logloss": ll / len(rows), "tiebreak_predicted": tb_pred / len(rows),
+           "tiebreak_actual": tb_act / len(rows)}
+    log(f"  first-set game scores on holdout: log loss {out['logloss']:.3f} (14 outcomes; guessing evenly = "
+        f"{math.log(14):.3f}); tiebreak sets predicted {out['tiebreak_predicted']:.1%}, actual "
+        f"{out['tiebreak_actual']:.1%} (n={len(rows)})")
+    return out
 
 
 SET_GRID = [round(-0.2 + 0.05 * i, 2) for i in range(29)]     # -0.2 .. 1.2
@@ -338,7 +367,9 @@ def main():
             P = tune(data, set_prob, log)
         else:
             P = model.Params.from_dict(saved["params"])
-        sets_report = fit_sets(run(P, data, set_prob), end, log, P)
+        recs_sets = run(P, data, set_prob)
+        sets_report = fit_sets(recs_sets, end, log, P)
+        sets_report["first_set"] = first_set_check(recs_sets, P, end, log)
         saved.update({"version": str(date.today()), "params": P.to_dict()})
         if args.tune:
             saved["tuned_on"] = f"{TUNE[0]}..{TUNE[1]}"

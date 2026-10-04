@@ -226,6 +226,15 @@ def sync_api_tennis(key, cache_path, tours, today=None):
         json.dump(state, fh, indent=1)
     return cache, changed, err
 
+def _first_set(games):
+    """'6-4 3-6 7-6' (winner's side) -> (6, 4); None if missing or not a finished set."""
+    m = re.match(r"\s*(\d+)-(\d+)", games or "")
+    if not m:
+        return None
+    a, b = int(m.group(1)), int(m.group(2))
+    done = (max(a, b) == 6 and abs(a - b) >= 2) or (max(a, b) == 7 and min(a, b) in (5, 6))
+    return (a, b) if done else None
+
 def from_api_cache(cache, tour_label):
     # Surface, court and format come from the tournament table at load time, so
     # fixes to the table also apply to matches cached before the fix.
@@ -250,6 +259,7 @@ def from_api_cache(cache, tour_label):
         out.append({"date": d, "order": (r["time"], r["event_key"]), "surface": surf,
                     "winner": w, "loser": l, "status": r["status"], "tournament": r["tournament"],
                     "court": court_id(r["tournament"], tour_label, d.month),
+                    "set1": _first_set(r.get("games")),
                     "sets": ((int(r["w_sets"]), int(r["l_sets"]))
                              if (r.get("w_sets") or "").isdigit() and (r.get("l_sets") or "").isdigit() else None),
                     "best_of": 3 if qual else guess_best_of(r["tournament"], tour_label),

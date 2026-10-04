@@ -113,6 +113,7 @@
   .record__lede{ color:var(--mute); font-size:.86rem; margin:0 0 14px; }
   .record__grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
   .record__note{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:12px; }
+  .sets__sub td{ font-family:var(--display); font-weight:600; font-size:.88rem; color:var(--chalk); padding-top:1rem; text-align:left !important; }
   .ev__margin{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; min-height:1em; }
   .ev-pos{ color:var(--pos); font-weight:600; } .ev-neg{ color:var(--neg); }
   .badge{ font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; padding:.1rem .4rem; border-radius:4px; margin-left:.4rem; }
@@ -323,7 +324,8 @@
     <h3>Set betting</h3>
     <p class="ev__lede">Exact set scores, set handicaps and total sets from the same model, always adding up
       to the headline chance above. Type in your bookmaker's decimal odds to see the EV. The odds feed
-      doesn't cover these markets, so they're entered by hand and not logged in the track record.</p>
+      doesn't cover these markets, so they're entered by hand and not logged in the track record. The
+      first-set game scores come from the serve model, nudged to agree with the set chances above.</p>
     <table class="evtable setstable">
       <thead><tr><th>Market</th><th>Model</th><th>Fair odds</th><th>Book odds</th><th>EV</th><th>¼-Kelly</th></tr></thead>
       <tbody id="setsBody"></tbody>
@@ -555,7 +557,7 @@ function render(d){
     <span class="score__p">${(p*100).toFixed(1)}%</span></div>`).join("");
 
   renderEV(pEns);
-  renderSets(A, B, dist);
+  renderSets(A, B, dist, pa, pb);
 }
 
 /* ===================== set scores (mirrors set_dist / set_markets in model.py) === */
@@ -579,8 +581,37 @@ function setDist(p, bo, m){
   for(let i = 0; i < 60; i++){ const mid = (lo + hi) / 2; if(win(mid) < p) lo = mid; else hi = mid; }
   return setScoreProbs((lo + hi) / 2, bo, m);
 }
+/* exact game score of the first set (mirrors set_game_scores / first_set_scores in model.py) */
+function setGameScores(pa, pb){
+  const ga = gameWinProb(pa), gb = gameWinProb(pb), tb = tiebreakWinProb(pa, pb), out = {};
+  const add = (k, v) => { out[k] = (out[k] || 0) + v; };
+  const go = (a, b, aServes, pr) => {
+    if(((a >= 6 || b >= 6) && Math.abs(a - b) >= 2) || a === 7 || b === 7){ add(a + "-" + b, pr); return; }
+    if(a === 6 && b === 6){ add("7-6", pr * tb); add("6-7", pr * (1 - tb)); return; }
+    const g = aServes ? ga : 1 - gb;
+    go(a + 1, b, !aServes, pr * g); go(a, b + 1, !aServes, pr * (1 - g));
+  };
+  go(0, 0, true, 0.5); go(0, 0, false, 0.5);      // who serves first is unknown
+  return out;
+}
+function firstSetChance(dist, bo, m){
+  const need = bo === 5 ? 3 : 2;
+  const target = Object.entries(dist).reduce((t, [k, v]) => t + (+k.split("-")[0] === need ? v : 0), 0);
+  const win = s => Object.entries(setScoreProbs(s, bo, m)).reduce((t, [k, v]) => t + (+k.split("-")[0] === need ? v : 0), 0);
+  let lo = 1e-4, hi = 1 - 1e-4;
+  for(let i = 0; i < 60; i++){ const mid = (lo + hi) / 2; if(win(mid) < target) lo = mid; else hi = mid; }
+  return (lo + hi) / 2;
+}
+function firstSetScores(pa, pb, target){
+  const win = d => Object.entries(setGameScores(clip(pa + d), clip(pb - d))).reduce((t, [k, v]) => { const [a, b] = k.split("-").map(Number); return t + (a > b ? v : 0); }, 0);
+  let lo = -0.3, hi = 0.3;
+  for(let i = 0; i < 40; i++){ const mid = (lo + hi) / 2; if(win(mid) < target) lo = mid; else hi = mid; }
+  const d = (lo + hi) / 2;
+  return setGameScores(clip(pa + d), clip(pb - d));
+}
+
 const setOdds = {};          // odds typed in, per matchup and format
-function renderSets(A, B, dist){
+function renderSets(A, B, dist, pa, pb){
   const bo = state.bestOf, need = bo === 5 ? 3 : 2, key = [state.a, state.b, bo].join("|");
   const store = setOdds[key] = setOdds[key] || {};
   const P = f => Object.entries(dist).reduce((t, [k, v]) => { const [a, b] = k.split("-").map(Number); return t + (f(a, b) ? v : 0); }, 0);
@@ -600,14 +631,21 @@ function renderSets(A, B, dist){
     mk.push(["o" + line, `Over ${line} sets`, P((a, b) => a + b > line), ""]);
     mk.push(["u" + line, `Under ${line} sets`, P((a, b) => a + b < line), ""]);
   }
-  $("setsBody").innerHTML = mk.map(([id, lab, p, side]) => `<tr data-id="${id}" data-p="${p}">
+  // first set, exact game score
+  const fs = firstSetScores(pa, pb, firstSetChance(dist, bo, setMomentum()));
+  const order = ["6-0","6-1","6-2","6-3","6-4","7-5","7-6"];
+  const fsRows = [...order.map(k => ["f" + k, `${A.name} wins set 1 ${k.replace("-", "–")}`, fs[k] || 0, "a"]),
+                  ...order.map(k => { const [x, y] = k.split("-"); return ["f" + y + "-" + x, `${B.name} wins set 1 ${x}–${y}`, fs[y + "-" + x] || 0, "b"]; })];
+  const rowHtml = ([id, lab, p, side]) => `<tr data-id="${id}" data-p="${p}">
       <td class="${side ? "side-" + side : ""}">${esc(lab)}</td><td>${pct(p)}</td><td>${p > 0 ? (1 / p).toFixed(2) : "—"}</td>
       <td><input type="number" inputmode="decimal" min="1.01" step="0.01" value="${store[id] || ""}" aria-label="${esc(lab)} decimal odds"></td>
-      <td class="sev">—</td><td class="skel">—</td></tr>`).join("");
+      <td class="sev">—</td><td class="skel">—</td></tr>`;
+  $("setsBody").innerHTML = mk.map(rowHtml).join("") +
+    `<tr class="sets__sub"><td colspan="6">First set — exact game score</td></tr>` + fsRows.map(rowHtml).join("");
   const m = setMomentum();
   $("setsNote").textContent = m ? `Set momentum ${m.toFixed(2)} (fitted on real set scores).`
                                 : "Sets treated as independent until the set-score check has run on real results.";
-  $("setsBody").querySelectorAll("tr").forEach(tr => {
+  $("setsBody").querySelectorAll("tr[data-id]").forEach(tr => {
     const inp = tr.querySelector("input"), p = +tr.dataset.p;
     const upd = () => {
       const d = parseFloat(inp.value); store[tr.dataset.id] = inp.value;

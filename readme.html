@@ -102,30 +102,41 @@
     <ul>
       <li><strong>Rating:</strong> Elo on match results (walkovers and retirements skipped), with K =
         150/(matches+5)<sup>0.4</sup>. Each surface is an offset on top of the
-        overall rating, so a player's first grass match starts from their overall level, not from scratch.</li>
+        overall rating. New players start at <strong>1400</strong>, or
+        <strong>1250</strong> if their first match is in qualifying, instead of a flat 1500:
+        newcomers are usually weaker than the tour average, and a rating that starts too high takes weeks to come down.</li>
       <li><strong>Serve model:</strong> share of serve and return points won, weighted by recency
         (half-life 135 days), adjusted for the strength of each opponent, and pulled toward the
         tour average when a player has few points. Fed through a point → game → set → match Markov chain.</li>
-      <li><strong>Blend:</strong> the serve model gets 85% of the weight on the ATP and
-        100% on the WTA, less when either player has little data (half weight at
-        250 recent serve points).</li>
+      <li><strong>Blend:</strong> the serve model gets 55% of the weight on the ATP and
+        45% on the WTA; Elo gets the rest.</li>
     </ul>
     <p><strong>Backtest.</strong> <code>tools/backtest.py</code> predicts every saved match using only
       the matches before it. Settings were tuned on 2025-04-01 – 2026-03-31; the
       numbers below are the <em>holdout</em> (2026-04-01 – 2026-10-03,
-      4,718 finished matches), which tuning never saw.</p>
+      4,725 finished matches).</p>
     <table class="bt">
       <tr><th></th><th>Original model</th><th>Current model</th></tr>
-      <tr><td>Log loss (lower is better)</td><td>0.6431</td><td><strong>0.6291</strong></td></tr>
-      <tr><td>Brier (lower is better)</td><td>0.2261</td><td><strong>0.2204</strong></td></tr>
-      <tr><td>Favourite won</td><td>62.8%</td><td><strong>63.8%</strong></td></tr>
+      <tr><td>Log loss (lower is better)</td><td>0.6436</td><td><strong>0.6270</strong></td></tr>
+      <tr><td>Brier (lower is better)</td><td>0.2262</td><td><strong>0.2193</strong></td></tr>
+      <tr><td>Favourite won</td><td>62.8%</td><td><strong>63.9%</strong></td></tr>
     </table>
     <p>Calibration on the holdout (favourite's side):</p>
-    <table class="bt"><tr><th>Predicted</th><th>Average predicted</th><th>Actually won</th><th>Matches</th></tr><tr><td>50-60%</td><td>55%</td><td>56%</td><td>2112</td></tr><tr><td>60-70%</td><td>65%</td><td>62%</td><td>1465</td></tr><tr><td>70-80%</td><td>74%</td><td>76%</td><td>730</td></tr><tr><td>80-90%</td><td>84%</td><td>85%</td><td>317</td></tr><tr><td>90-100%</td><td>93%</td><td>96%</td><td>94</td></tr></table>
-    <p>Tested and not adopted, because they didn't beat the simpler option by at least 0.001 log loss:
-      <strong>Glicko-2</strong> (a tie with Elo) and a <strong>court-speed</strong> adjustment (when a
-      court is fast both players hold more, which barely changes who wins). The live track record is
-      the real test; a backtest has no bookmaker to beat. Re-tune with
+    <table class="bt"><tr><th>Predicted</th><th>Average predicted</th><th>Actually won</th><th>Matches</th></tr><tr><td>50-60%</td><td>55%</td><td>55%</td><td>2093</td></tr><tr><td>60-70%</td><td>65%</td><td>64%</td><td>1482</td></tr><tr><td>70-80%</td><td>74%</td><td>76%</td><td>755</td></tr><tr><td>80-90%</td><td>84%</td><td>87%</td><td>303</td></tr><tr><td>90-100%</td><td>93%</td><td>94%</td><td>92</td></tr></table>
+    <p><strong>Tested and not adopted:</strong></p>
+    <ul>
+      <li><strong>Glicko-2</strong>: a tie with Elo. <strong>Court speed</strong>: when a court is fast
+        both players hold more, which barely changes who wins.</li>
+      <li><strong>Logistic-regression stack</strong> (Elo, serve model, data richness, a
+        <em>big server vs elite returner</em> term, layoff and fatigue): better on the tuning year
+        (0.6330 vs 0.6346) but not on the holdout (0.6275 vs 0.6270), so it is switched off. The
+        server-vs-returner term on its own was worth 0.0003, which is noise. The code is in place
+        (<code>stack_atp</code>/<code>stack_wta</code> in <code>model_params.json</code>) and the site
+        supports it, so a later re-tune can switch it on if more data makes it hold up.</li>
+      <li><strong>Seeding from rankings</strong>: the saved match data has no historical rankings, so
+        it can't be backtested; the lower starting ratings above do the same job in a testable way.</li>
+    </ul>
+    <p>The live track record is the real test; a backtest has no bookmaker to beat. Re-tune with
       <code>python tools/backtest.py --tune</code>.</p>
     <p><strong>Warnings.</strong> The match list flags: fewer than 10 matches in 12 months, more than 45
       days since the last match, fewer than 3 matches on the surface this year, clay or grass

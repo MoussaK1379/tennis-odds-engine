@@ -406,6 +406,8 @@ function statsFor(key, surf, custom){
     spw: sv == null ? t : sv, rpw: rt == null ? 1 - t : rt };
 }
 
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+
 /* warnings for a player (same rules as update_matches.py player_flags) */
 function playerFlags(p, surf){
   const i = (p && p.info) || null, out = [];
@@ -477,7 +479,20 @@ function compute(){
   const pElo = 1 / (1 + Math.pow(10, -g*(A.elo - B.elo)/400));
   const wFull = (M.w && M.w[state.tour] != null) ? M.w[state.tour] : 0.5, n0 = M.n0 || 0;
   const n = Math.min(A.n, B.n), w = n0 > 0 ? wFull * n / (n + n0) : wFull;
-  const pEns = w*pMkv + (1-w)*pElo;
+  let pEns = w*pMkv + (1-w)*pElo;
+  const stack = M.stack && M.stack[state.tour];
+  if(stack){                          // logistic stack (stack_features in model.py)
+    const L = p => { p = Math.min(Math.max(p, 1e-4), 1 - 1e-4); return Math.log(p/(1-p)); };
+    const info = P => (P && P.info) || {};
+    const days = P => info(P).last ? Math.max(0, Math.round((Date.parse(todayISO()) - Date.parse(info(P).last)) / 864e5)) : 0;
+    const thin = 1 - n / (n + 500), t = tourAvg();
+    const inter = ((A.spw - t)*(B.rpw - (1-t)) - (B.spw - t)*(A.rpw - (1-t))) * 100;
+    const feats = [L(pElo), L(pMkv), L(pMkv)*thin, inter,
+                   Math.log1p(Math.min(days(A.raw),365)) - Math.log1p(Math.min(days(B.raw),365)),
+                   (info(A.raw).m7 || 0) - (info(B.raw).m7 || 0)];
+    const z = feats.reduce((acc, f, i) => acc + f * stack[i], 0);
+    pEns = 1 / (1 + Math.exp(-Math.max(Math.min(z, 30), -30)));
+  }
   const warn = state.a !== "custom" && state.a === state.b
     ? ["Same player on both sides — pick two different players for a meaningful number."]
     : [...playerFlags(A.raw, state.surface), ...playerFlags(B.raw, state.surface)];

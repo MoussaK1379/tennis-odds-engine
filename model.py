@@ -112,6 +112,15 @@ class Params:
     w_atp: float = 0.5
     w_wta: float = 0.5
     n0: float = 0.0              # serve points at which the weight reaches half its full value; 0 = flat
+    # starting Elo for a player's first match (qualifying debutants usually start lower)
+    init_elo: float = 1500.0
+    init_elo_qual: float = 1500.0
+    # optional logistic-regression stack replacing the blend; weights per tour for STACK_FEATURES
+    stack_atp: list = None
+    stack_wta: list = None
+
+    def stack(self, tour):
+        return self.stack_atp if tour == "ATP" else self.stack_wta
 
     def weight(self, tour, n):
         w = self.w_atp if tour == "ATP" else self.w_wta
@@ -125,8 +134,32 @@ class Params:
         return cls(**{k: v for k, v in (d or {}).items() if k in names})
 
 
+# ---------- stacking ------------------------------------------------------------
+# Every feature is "A minus B" (or flips sign when A and B swap), and the stack
+# has no intercept, so P(A beats B) = 1 - P(B beats A) always holds.
+STACK_FEATURES = ["elo", "serve", "serve_thin", "server_vs_returner", "layoff", "fatigue"]
+THIN_POINTS = 500.0
+
+def _logit(p):
+    p = min(max(p, 1e-4), 1 - 1e-4)
+    return math.log(p / (1 - p))
+
+def stack_features(p_elo, p_mkv, Sa, Ra, Sb, Rb, T, na, nb, days_a, days_b, wk_a, wk_b):
+    n = min(na, nb)
+    thin = 1 - n / (n + THIN_POINTS)                 # 1 = no data, 0 = lots
+    # big server meeting an elite returner: product of A's serve edge and B's return
+    # edge, minus the same the other way round (in percentage points squared / 100)
+    inter = ((Sa - T) * (Rb - (1 - T)) - (Sb - T) * (Ra - (1 - T))) * 100
+    layoff = math.log1p(min(days_a, 365)) - math.log1p(min(days_b, 365))
+    return [_logit(p_elo), _logit(p_mkv), _logit(p_mkv) * thin, inter, layoff, wk_a - wk_b]
+
+def stack_prob(weights, feats):
+    z = sum(w * f for w, f in zip(weights, feats))
+    return 1 / (1 + math.exp(-max(min(z, 30), -30)))
+
+
 # ---------- export-based prediction (what update_matches.py and the site use) ---
-def predict_export(A, B, surface, best_of, tour_avg, model, court=0.0, set_prob=set_win_prob):
+def predict_export(A, B, surface, best_of, tour_avg, model, court=0.0, set_prob=set_win_prob, today=None):
     """A, B: player entries from players.json. model: players.json["model"].
     Returns the pieces shown on the site. Mirrored by compute() in index.html."""
     def pick(obj, key, default):
@@ -152,7 +185,19 @@ def predict_export(A, B, surface, best_of, tour_avg, model, court=0.0, set_prob=
     n0 = model.get("n0", 0) or 0
     n = min(A.get("n", 0) or 0, B.get("n", 0) or 0)
     w = w_full if n0 <= 0 else w_full * n / (n + n0)
-    return {"p": w * p_mkv + (1 - w) * p_elo, "p_elo": p_elo, "p_mkv": p_mkv,
+    p = w * p_mkv + (1 - w) * p_elo
+    stack = (model.get("stack") or {}).get(A.get("tour", "ATP"))
+    if stack:
+        from datetime import date as _date
+        ref = today or _date.today()
+        def days(P):
+            last = (P.get("info") or {}).get("last")
+            return max(0, (ref - _date.fromisoformat(last)).days) if last else 0
+        wk = lambda P: (P.get("info") or {}).get("m7", 0) or 0
+        feats = stack_features(p_elo, p_mkv, sa, rta, sb, rtb, T, A.get("n", 0) or 0, B.get("n", 0) or 0,
+                               days(A), days(B), wk(A), wk(B))
+        p = stack_prob(stack, feats)
+    return {"p": p, "p_elo": p_elo, "p_mkv": p_mkv,
             "w": w, "pa": pa, "pb": pb, "set": s}
 
 
@@ -244,7 +289,10 @@ class TourEngine:
         phi = min(math.sqrt(phi * phi + sigma * sigma * t), phi0)
         return [mu, phi, sigma]
 
-    def rating(self, p, surface, d):
+    def _init(self, qual):
+        return self.P.init_elo_qual if qual else self.P.init_elo
+
+    def rating(self, p, surface, d, qual=False):
         """(rating in Elo points incl. surface offset, rating deviation in Elo points)."""
         mode = self.P.rating
         if mode == "legacy":
@@ -254,14 +302,26 @@ class TourEngine:
         if mode == "glicko":
             mu, phi, _ = self._glicko(p, d)
             return 1500.0 + GLICKO_SCALE * mu + off, GLICKO_SCALE * phi
-        return self.elo.get(p, 1500.0) + off, 0.0
+        return self.elo.get(p, self._init(qual)) + off, 0.0
+
+    def _recent(self, p, d):
+        """(days since last match, matches in the last 7 days) before date d."""
+        dates = (self.info.get(p) or {}).get("dates") or []
+        if not dates:
+            return 0, 0
+        wk = 0
+        for x in reversed(dates):
+            if _days(d, x) > 7:
+                break
+            wk += 1
+        return max(0, _days(d, dates[-1])), wk
 
     # --- prediction ---
-    def predict(self, a, b, surface, best_of, d, court=None):
+    def predict(self, a, b, surface, best_of, d, court=None, qual=False):
         P = self.P
         T = self.T()
-        ra, da = self.rating(a, surface, d)
-        rb, db = self.rating(b, surface, d)
+        ra, da = self.rating(a, surface, d, qual)
+        rb, db = self.rating(b, surface, d, qual)
         if P.rating == "glicko":
             q = math.log(10) / 400
             g = 1 / math.sqrt(1 + 3 * q * q * (da * da + db * db) / math.pi ** 2)
@@ -275,8 +335,11 @@ class TourEngine:
         pb = clip(T + (Sb - T) - (Ra - (1 - T)) + ce)
         p_mkv = match_from_set(self.set_prob(pa, pb), best_of)
         w = P.weight(self.tour, min(na, nb))
-        return {"p": w * p_mkv + (1 - w) * p_elo, "p_elo": p_elo, "p_mkv": p_mkv,
-                "w": w, "n": min(na, nb)}
+        (days_a, wk_a), (days_b, wk_b) = self._recent(a, d), self._recent(b, d)
+        feats = stack_features(p_elo, p_mkv, Sa, Ra, Sb, Rb, T, na, nb, days_a, days_b, wk_a, wk_b)
+        stack = P.stack(self.tour)
+        p = stack_prob(stack, feats) if stack else w * p_mkv + (1 - w) * p_elo
+        return {"p": p, "p_elo": p_elo, "p_mkv": p_mkv, "w": w, "n": min(na, nb), "feats": feats}
 
     # --- update with a finished match ---
     def update(self, m):
@@ -288,6 +351,10 @@ class TourEngine:
             i["dates"].append(d)
             if s:
                 i["surf"].setdefault(s, []).append(d)
+        if self.P.rating == "elo":
+            for p in (w, l):
+                if p not in self.elo:                 # first match: seed the starting rating
+                    self.elo[p] = self._init(m.get("qualifying", False))
         if m["status"] == "ret":
             self.info[l]["rets"].append(d)          # the player who didn't finish
         if m["status"] == "wo":
@@ -423,6 +490,7 @@ class TourEngine:
         i = self.info.get(p) or {"dates": [], "rets": [], "surf": {}}
         last = max(i["dates"]) if i["dates"] else None
         return {"last": last.isoformat() if last else None,
+                "m7": sum(1 for x in i["dates"] if 0 <= _days(d, x) <= 7),
                 "m12": sum(1 for x in i["dates"] if _days(d, x) <= 365),
                 "surf12": {s: sum(1 for x in v if _days(d, x) <= 365) for s, v in i["surf"].items()},
                 "ret180": sum(1 for x in i["rets"] if _days(d, x) <= 180),
@@ -432,5 +500,9 @@ class TourEngine:
         return {c: round(self.court_effect(c), 4) for c in self.court} if self.P.court_shrink > 0 else {}
 
     def model_block(self):
-        return {"rating": "glicko" if self.P.rating == "glicko" else "elo",
-                "w": {"ATP": self.P.w_atp, "WTA": self.P.w_wta}, "n0": self.P.n0}
+        blk = {"rating": "glicko" if self.P.rating == "glicko" else "elo",
+               "w": {"ATP": self.P.w_atp, "WTA": self.P.w_wta}, "n0": self.P.n0}
+        if self.P.stack_atp or self.P.stack_wta:
+            blk["stack"] = {t: w for t, w in (("ATP", self.P.stack_atp), ("WTA", self.P.stack_wta)) if w}
+            blk["stack_features"] = STACK_FEATURES
+        return blk

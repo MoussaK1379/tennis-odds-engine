@@ -44,7 +44,7 @@ def load(cache_path):
 
 
 def run(P, data, set_prob):
-    """-> list of (tour, date, y, p, p_elo, p_mkv, n, prior_min, qualifying)."""
+    """-> list of (tour, date, y, p, p_elo, p_mkv, n, prior_min, qualifying, stack features)."""
     recs = []
     for tour, ms in data.items():
         eng = model.TourEngine(tour, P, set_prob=set_prob)
@@ -52,9 +52,10 @@ def run(P, data, set_prob):
         for m in ms:
             if m["status"] == "completed":
                 a, b = sorted((m["winner"], m["loser"]))
-                r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"))
+                r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"), m["qualifying"])
                 recs.append((tour, m["date"], 1 if a == m["winner"] else 0, r["p"], r["p_elo"],
-                             r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"]))
+                             r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"],
+                             r["feats"]))
             eng.update(m)
             seen[m["winner"]] = seen.get(m["winner"], 0) + 1
             seen[m["loser"]] = seen.get(m["loser"], 0) + 1
@@ -139,6 +140,18 @@ def tune(data, set_prob, log):
         log(f"  best {kind:6}: rating-only log loss {top[kind][0]:.4f}  {rating_desc(top[kind][1])}")
     # Glicko-2 is the more complex system: adopt it only for a real gain.
     best_rating = (top["glicko"] if top["glicko"][0] <= top["elo"][0] - MIN_GAIN else top["elo"])[1]
+    if best_rating.rating == "elo":
+        # starting ratings: everyone at 1500 vs lower starts (and a separate one for qualifying debuts)
+        base = (top["elo"][0], 1500, 1500)
+        res = []
+        for ie, iq in itertools.product((1500, 1450, 1400, 1350, 1300), (1500, 1450, 1400, 1350, 1300, 1250)):
+            P = model.Params(**{**best_rating.to_dict(), "init_elo": ie, "init_elo_qual": iq})
+            res.append((score(run(P, data, set_prob), lo, hi, col=4)["logloss"], ie, iq))
+        res.sort()
+        log(f"  starting ratings: best start {res[0][1]}, qualifying debut {res[0][2]} -> rating-only "
+            f"log loss {res[0][0]:.4f} (all at 1500: {base[0]:.4f})")
+        if res[0][0] <= base[0] - MIN_GAIN:
+            best_rating.init_elo, best_rating.init_elo_qual = res[0][1], res[0][2]
     log(f"Stage 1 (rating) done in {time.time() - t0:.0f}s -> {best_rating.rating}")
 
     # Stage 2: serve model on the serve-only prediction (independent of the rating).
@@ -172,7 +185,64 @@ def tune(data, set_prob, log):
     P.w_atp, P.w_wta, P.n0 = wa, ww, n0
     log(f"  best blend: serve-model weight ATP {wa:.2f}, WTA {ww:.2f}, thin-sample half-point {n0} serve points")
     log(f"Stage 3 (blend) done in {time.time() - t0:.0f}s")
+
+    # Stage 4: logistic-regression stack, fitted on the tuning year per tour.
+    blend_ll = score(blended(recs, wa, ww, n0), lo, hi)["logloss"]
+    stacks = {}
+    for tour in ("ATP", "WTA"):
+        rows = [(r[9], r[2]) for r in recs if r[0] == tour and lo <= r[1] <= hi]
+        stacks[tour] = fit_logistic(rows)
+    stacked = [r[:3] + (model.stack_prob(stacks[r[0]], r[9]),) + r[4:] for r in recs]
+    stack_ll = score(stacked, lo, hi)["logloss"]
+    for tour in ("ATP", "WTA"):
+        log(f"  stack {tour}: " + ", ".join(f"{n} {w:+.3f}" for n, w in zip(model.STACK_FEATURES, stacks[tour])))
+    log(f"  stack log loss {stack_ll:.4f} vs blend {blend_ll:.4f} on the tuning year")
+    if stack_ll <= blend_ll - MIN_GAIN:
+        P.stack_atp = [round(w, 5) for w in stacks["ATP"]]
+        P.stack_wta = [round(w, 5) for w in stacks["WTA"]]
+        log("  -> stack adopted")
+    else:
+        log("  -> stack not adopted (not 0.001 better)")
+    log(f"Stage 4 (stack) done in {time.time() - t0:.0f}s")
     return P
+
+
+def fit_logistic(rows, l2=1.0, iters=25):
+    """No-intercept logistic regression by Newton's method with a small L2 penalty.
+    rows: [(features, y)]. Pure Python so the backtest has no dependencies."""
+    k = len(rows[0][0])
+    w = [0.0] * k
+    for _ in range(iters):
+        g = [l2 * wi for wi in w]
+        H = [[(l2 if i == j else 0.0) for j in range(k)] for i in range(k)]
+        for x, y in rows:
+            p = model.stack_prob(w, x)
+            e, v = p - y, p * (1 - p)
+            for i in range(k):
+                g[i] += e * x[i]
+                for j in range(i, k):
+                    H[i][j] += v * x[i] * x[j]
+        for i in range(k):
+            for j in range(i):
+                H[i][j] = H[j][i]
+        step = _solve(H, g)
+        w = [wi - si for wi, si in zip(w, step)]
+        if max(abs(si) for si in step) < 1e-7:
+            break
+    return w
+
+
+def _solve(A, b):
+    n = len(b)
+    M = [row[:] + [b[i]] for i, row in enumerate(A)]
+    for c in range(n):
+        piv = max(range(c, n), key=lambda r: abs(M[r][c]))
+        M[c], M[piv] = M[piv], M[c]
+        for r in range(n):
+            if r != c and M[r][c]:
+                f = M[r][c] / M[c][c]
+                M[r] = [a - f * bb for a, bb in zip(M[r], M[c])]
+    return [M[i][n] / M[i][i] for i in range(n)]
 
 
 def rating_desc(P):

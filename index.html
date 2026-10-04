@@ -98,6 +98,9 @@
   .ev{ margin-top:14px; background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r); padding:18px clamp(14px,2.4vw,22px); }
   .ev h3{ font-family:var(--display); font-weight:600; font-size:.95rem; margin:0 0 4px; }
   .ev__lede{ color:var(--mute); font-size:.86rem; margin:0 0 16px; }
+  .oddsbar{ display:flex; align-items:center; gap:.6rem; margin:0 0 12px; font-family:var(--mono); font-size:.66rem;
+    letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
+  .oddsbar .seg button{ padding:.3rem .65rem; font-size:.76rem; }
   .evtable{ width:100%; border-collapse:collapse; }
   .evtable th{ font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase;
     color:var(--faint); text-align:right; font-weight:500; padding:0 0 10px; }
@@ -196,6 +199,7 @@
     <h3>Today's matches <span class="hint" id="todayStamp"></span></h3>
     <p class="today__lede">Upcoming ATP &amp; WTA matches with the best bookmaker price, refreshed every
       morning. Model win chance · best odds · EV. Press <b>Analyse</b> to load a match into the predictor below.</p>
+    <div class="oddsbar">Odds <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div></div>
     <div class="today__list" id="todayList"><div class="today__empty">Loading…</div></div>
   </section>
 
@@ -302,17 +306,18 @@
 
   <section class="ev">
     <h3>Value check</h3>
-    <p class="ev__lede">Enter the book's decimal odds for each player. The engine strips the bookmaker's
+    <div class="oddsbar">Odds <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div></div>
+    <p class="ev__lede">Enter the book's odds for each player, decimal (1.80) or American (−125) as set above. The engine strips the bookmaker's
       margin to show the market's own view, compares it with the model, and sizes a quarter-Kelly stake
       on any positive-EV side. EV is worked out at the price you'd actually get.</p>
     <table class="evtable">
       <thead><tr><th>Side</th><th>Book odds</th><th>Market (no margin)</th><th>Model</th><th>Fair odds</th><th>EV</th><th>¼-Kelly</th></tr></thead>
       <tbody>
         <tr><td class="side-a" id="evNameA">A</td>
-          <td><input id="oddsA" type="number" inputmode="decimal" min="1.01" step="0.01" value="1.80" aria-label="Player A decimal odds"></td>
+          <td><input id="oddsA" type="text" inputmode="decimal" autocomplete="off" value="1.80" aria-label="Player A odds"></td>
           <td id="impA">—</td><td id="modA">—</td><td id="fairA">—</td><td id="evA">—</td><td id="kelA">—</td></tr>
         <tr><td class="side-b" id="evNameB">B</td>
-          <td><input id="oddsB" type="number" inputmode="decimal" min="1.01" step="0.01" value="2.10" aria-label="Player B decimal odds"></td>
+          <td><input id="oddsB" type="text" inputmode="decimal" autocomplete="off" value="2.10" aria-label="Player B odds"></td>
           <td id="impB">—</td><td id="modB">—</td><td id="fairB">—</td><td id="evB">—</td><td id="kelB">—</td></tr>
       </tbody>
     </table>
@@ -340,6 +345,7 @@
   </footer>
 </main>
 
+<script src="odds.js"></script>
 <script>
 /* ===================== engine (mirrors the validated Python) ============= */
 const clip = (p, lo=0.01, hi=0.99) => Math.max(lo, Math.min(hi, p));
@@ -629,7 +635,7 @@ function renderFullScores(A, B, dist, pa, pb){
 
 function evRow(model, d, fairImplied, ids){
   $(ids.mod).textContent = pct(model);
-  $(ids.fair).textContent = (1/model).toFixed(2);
+  $(ids.fair).textContent = OddsFmt.show(1/model);
   if(!(d > 1)){ $(ids.imp).textContent="—"; $(ids.ev).textContent="—"; $(ids.ev).className=""; $(ids.kel).textContent="—"; return; }
   const ev = model*d - 1, kel = kellyFraction(model, d);
   $(ids.imp).textContent = pct(fairImplied);
@@ -639,7 +645,7 @@ function evRow(model, d, fairImplied, ids){
   $(ids.kel).textContent = ev > 0 ? (kel*100).toFixed(1) + "%" : "—";
 }
 function renderEV(pEns){
-  const dA = parseFloat($("oddsA").value), dB = parseFloat($("oddsB").value);
+  const dA = readOdds("oddsA"), dB = readOdds("oddsB");
   // De-vig: scale the two raw implied chances so they add up to 100%.
   // With only one price entered, fall back to that price's raw implied chance.
   const qA = dA > 1 ? 1/dA : null, qB = dB > 1 ? 1/dB : null;
@@ -739,7 +745,11 @@ function swapSides(){
   const av=[$("aSpw").value,$("aRpw").value]; $("aSpw").value=$("bSpw").value; $("aRpw").value=$("bRpw").value;
   $("bSpw").value=av[0]; $("bRpw").value=av[1];
   // the book prices belong to the players, so they swap sides too
-  const odds=$("oddsA").value; $("oddsA").value=$("oddsB").value; $("oddsB").value=odds;
+  const oa = readOdds("oddsA"), ob = readOdds("oddsB");
+  const raw = [$("oddsA").value, $("oddsB").value];
+  setOddsInput("oddsA", ob); setOddsInput("oddsB", oa);
+  if (!(ob > 1)) $("oddsA").value = raw[1];
+  if (!(oa > 1)) $("oddsB").value = raw[0];
   renderEV(compute());
 }
 
@@ -763,14 +773,14 @@ function loadMatch(m){
   state.a = m.a.key; state.b = m.b.key;
   $("inA").value = nameFromKey(state.a); $("inB").value = nameFromKey(state.b);
   $("customA").classList.remove("show"); $("customB").classList.remove("show");
-  $("oddsA").value = m.a.best_odds; $("oddsB").value = m.b.best_odds;
+  setOddsInput("oddsA", m.a.best_odds); setOddsInput("oddsB", m.b.best_odds);
   renderEV(compute());
   document.querySelector(".controls").scrollIntoView({ behavior:"smooth", block:"start" });
 }
 function matchSide(cls, p){
   const ev = (p.ev>=0?"+":"") + (p.ev*100).toFixed(1) + "%";
   return `<div class="match__p match__p--${cls}"><span class="n">${esc(p.name)}</span>
-    <span class="nums">${pct(p.model)} · ${p.best_odds.toFixed(2)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}">${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
+    <span class="nums">${pct(p.model)} · ${OddsFmt.show(p.best_odds)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}">${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
 }
 function matchExtras(m){
   const bits = [];
@@ -831,10 +841,10 @@ function renderParlays(j){
   else {
     const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
     list.innerHTML = ps.map(c => `<div class="parlay">
-      <div class="parlay__head"><span><span class="parlay__odds">${c.odds.toFixed(2)}</span> at ${esc(c.book)} · ${c.legs.length} legs</span>
+      <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(c.odds)}</span> at ${esc(c.book)} · ${c.legs.length} legs</span>
         <span class="parlay__nums">model ${pct(c.model)} · market ${pct(c.market)} · <span class="ev-pos">EV +${(c.ev*100).toFixed(1)}%</span> · ¼-Kelly ${(c.kelly*100).toFixed(1)}%</span></div>
       <ul class="parlay__legs">${c.legs.map(l => `<li><span class="who">${esc(l.name)} <small>to beat ${esc(l.vs)} · ${esc(l.tournament)} · ${fmt.format(new Date(l.start))}</small></span>
-        <span class="px">${l.odds.toFixed(2)} · ${pct(l.model)}</span></li>`).join("")}</ul></div>`).join("");
+        <span class="px">${OddsFmt.show(l.odds)} · ${pct(l.model)}</span></li>`).join("")}</ul></div>`).join("");
   }
   const r = j && j.parlay_record;
   note.textContent = r && r.settled
@@ -845,6 +855,7 @@ async function loadMatches(){
   try{
     const r = await fetch("matches.json", { cache:"no-store" });
     const j = r.ok ? await r.json() : null;
+    MATCHES = j;
     renderToday(j); renderRecord(j && j.record); renderParlays(j);
   }catch(e){ renderToday(null); renderRecord(null); renderParlays(null); }
 }
@@ -861,6 +872,33 @@ makeCombo("inA","dropA","a","customA"); makeCombo("inB","dropB","b","customB");
 $("swap").addEventListener("click", swapSides);
 ["aSpw","aRpw","bSpw","bRpw"].forEach(i => $(i).addEventListener("input", compute));
 ["oddsA","oddsB"].forEach(i => $(i).addEventListener("input", () => renderEV(compute())));
+
+/* ===================== odds format (decimal / American) ================== */
+let MATCHES = null;
+// The box keeps the exact price it was given, so showing it rounded (1.59 → −169)
+// doesn't move the EV; once someone edits the box, what they typed is used.
+function setOddsInput(id, dec){
+  const el = $(id);
+  el.value = dec > 1 ? OddsFmt.show(dec) : "";
+  el.dataset.dec = dec > 1 ? dec : ""; el.dataset.shown = el.value;
+}
+function readOdds(id, f){
+  const el = $(id);
+  return el.dataset.dec && el.value === el.dataset.shown ? +el.dataset.dec : OddsFmt.parse(el.value, f);
+}
+function oddsInputMode(){
+  // American prices need a minus sign, which the phone number pad doesn't have
+  ["oddsA","oddsB"].forEach(i => $(i).inputMode = OddsFmt.get() === "american" ? "text" : "decimal");
+}
+OddsFmt.bind();
+OddsFmt.onChange((f, old) => {
+  ["oddsA","oddsB"].forEach(i => { const d = readOdds(i, old); if (d > 1) setOddsInput(i, d); });
+  oddsInputMode();
+  if (MATCHES){ renderToday(MATCHES); renderParlays(MATCHES); }
+  renderEV(compute());
+});
+["oddsA","oddsB"].forEach(i => setOddsInput(i, OddsFmt.parse($(i).value, "decimal")));
+oddsInputMode();
 
 loadData().then(loadMatches);
 </script>

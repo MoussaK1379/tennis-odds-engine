@@ -85,7 +85,7 @@
     <div class="eyebrow">Every logged prediction · settled against the real result</div>
     <h1>Past <span class="accent">predictions</span></h1>
     <p class="hero__lede">Each match from the daily list, with the number the model gave before it started,
-      the market's view and the best price. Once the result is in, you can see whether the model was right
+      the market's view and the best price (decimal or American, your choice). Once the result is in, you can see whether the model was right
       and how a flat 1-unit value bet would have done.</p>
   </header>
 
@@ -112,6 +112,7 @@
         <option value="value">Value bets only</option>
       </select>
       <select id="version" aria-label="Model version"><option value="">All model versions</option></select>
+      <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div>
       <input id="q" type="search" placeholder="Player or tournament" aria-label="Search player or tournament">
     </div>
     <div id="list"></div>
@@ -132,6 +133,7 @@
   </footer>
 </main>
 
+<script src="odds.js"></script>
 <script>
 const FLAG_TEXT = { thin: "thin history", layoff: "layoff", surface_few: "few on surface",
   specialist: "surface specialist", retired: "recent retirement", disagree: "model & market disagree" };
@@ -232,7 +234,7 @@ function playerLine(h, side){
   const m = side === "a" ? h.pa : 1 - h.pa, k = side === "a" ? h.ma : 1 - h.ma, o = side === "a" ? h.oa : h.ob;
   const won = h.settled && h.result === side;
   return `<div class="p p--${side}${won ? " p--won" : ""}"><span class="n">${esc(name)}</span>
-    <span class="nums">model <b>${pct(m)}</b> · mkt ${pct(k)} · ${o > 1 ? o.toFixed(2) : "—"}</span></div>`;
+    <span class="nums">model <b>${pct(m)}</b> · mkt ${pct(k)} · ${OddsFmt.show(o)}</span></div>`;
 }
 
 function renderList(){
@@ -247,7 +249,7 @@ function renderList(){
     if (d !== day){ html += `<div class="day">${d}</div>`; day = d; }
     const t = h.when.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
     const extra = [];
-    if (h.bet) extra.push(`Value bet: ${esc(h.bet.side === "a" ? h.player_a : h.player_b)} @ ${h.bet.odds.toFixed(2)} (EV ${(h.bet.ev * 100).toFixed(1)}%)`);
+    if (h.bet) extra.push(`Value bet: ${esc(h.bet.side === "a" ? h.player_a : h.player_b)} @ ${OddsFmt.show(h.bet.odds)} (EV ${(h.bet.ev * 100).toFixed(1)}%)`);
     if (h.pin != null) extra.push(`Pinnacle ${pct(h.pin)} / ${pct(1 - h.pin)}`);
     if (h.books) extra.push(`${h.books} books`);
     extra.push(`model ${esc(h.version)}`);
@@ -265,7 +267,9 @@ function renderList(){
   more.textContent = `Show more (${rows.length - shown} left)`;
 }
 
+let PARLAYS = null;
 function renderParlays(rows){
+  PARLAYS = rows;
   const box = document.getElementById("parlays");
   if (!rows.length){ box.innerHTML = `<div class="empty">No parlays logged yet.</div>`; return; }
   rows.sort((a, b) => b.created.localeCompare(a.created));
@@ -282,9 +286,9 @@ function renderParlays(rows){
     const pl = r.payout !== "" && r.result ? ` <span class="${plClass(+r.payout - 1)}">${units(+r.payout - 1)}</span>` : "";
     const when = new Date(r.created).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
     return `<div class="parlay">
-      <div class="parlay__head"><span><span class="parlay__odds">${(+r.odds).toFixed(2)}</span> at ${esc(r.book)} · ${when}</span>
+      <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(+r.odds)}</span> at ${esc(r.book)} · ${when}</span>
         <span class="parlay__nums">model ${pct(+r.model)} · mkt ${pct(+r.market)} · EV ${(+r.ev * 100).toFixed(0)}% · ${res}${pl}</span></div>
-      <ul class="parlay__legs">${legs.map(l => `<li><span>${esc(l.name)}</span><span class="px">${(+l.odds).toFixed(2)}</span></li>`).join("")}</ul>
+      <ul class="parlay__legs">${legs.map(l => `<li><span>${esc(l.name)}</span><span class="px">${OddsFmt.show(+l.odds)}</span></li>`).join("")}</ul>
     </div>`;
   }).join("");
 }
@@ -298,6 +302,8 @@ function wire(){
     document.getElementById(id).addEventListener("change", e => { state[id] = e.target.value; shown = 60; renderList(); });
   document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; shown = 60; renderList(); });
   document.getElementById("more").addEventListener("click", () => { shown += 60; renderList(); });
+  OddsFmt.bind();
+  OddsFmt.onChange(() => { if (ALL.length) renderList(); if (PARLAYS) renderParlays(PARLAYS); });
 }
 
 (async () => {

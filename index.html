@@ -817,9 +817,13 @@ function loadMatch(m){
   $("customA").classList.remove("show"); $("customB").classList.remove("show");
   setOddsInput("oddsA", m.a.best_odds); setOddsInput("oddsB", m.b.best_odds);
   renderEV(compute());
+  if (m.no_odds) $("margin").textContent = "No bookmaker prices for this match yet: type the odds you're offered.";
   document.querySelector(".controls").scrollIntoView({ behavior:"smooth", block:"start" });
 }
 function matchSide(cls, p, m){
+  if (p.best_odds == null)            // on the schedule, no bookmaker price yet
+    return `<div class="match__p match__p--${cls}"><span class="n">${esc(p.name)}</span>
+    <span class="nums">${pct(p.model)} · fair ${OddsFmt.show(p.fair_odds)}</span></div>`;
   const ev = (p.ev>=0?"+":"") + (p.ev*100).toFixed(1) + "%";
   const add = m && m.prices ? `<button class="addleg" type="button" data-id="${esc(m.id)}" data-side="${cls}" aria-pressed="false" aria-label="Add ${esc(p.name)} to the parlay builder" title="Add to parlay">+</button>` : "";
   return `<div class="match__p match__p--${cls}"><span class="n">${add}${esc(p.name)}</span>
@@ -829,6 +833,7 @@ function matchExtras(m){
   const bits = [];
   if(m.pinnacle_a != null) bits.push(`<div class="match__pin">Pinnacle: ${pct(m.pinnacle_a)} / ${pct(1 - m.pinnacle_a)}</div>`);
   const fl = (m.flags || []).map(f => Array.isArray(f) ? f[1] : f);
+  if(m.no_odds) bits.push(`<div class="match__pin">No odds yet: bookmakers haven't priced this match. Prices appear at the next refresh after they do.</div>`);
   if(fl.length) bits.push(`<div class="match__flags">${fl.map(t => "⚠ " + esc(t)).join("<br>")}</div>`);
   return bits.length ? `<div class="match__extra">${bits.join("")}</div>` : "";
 }
@@ -837,7 +842,8 @@ function renderToday(j){
   if(!j){ list.innerHTML = '<div class="today__empty">No match list yet — it appears after the first daily run.</div>'; return; }
   $("todayStamp").textContent = "updated " + (j.updated || "").replace("T"," ").replace(/:\d\dZ$/," UTC");
   if(j.status === "quota_low") $("todayStamp").textContent += " · odds allowance low";
-  if(j.status === "no_api_key"){ list.innerHTML = '<div class="today__empty">Odds feed not connected yet — add the ODDS_API_KEY secret (see Docs).</div>'; return; }
+  if(j.scheduled_only) $("todayStamp").textContent += ` · ${j.scheduled_only} without odds yet`;
+  if(j.status === "no_api_key" && !(j.matches || []).length){ list.innerHTML = '<div class="today__empty">Odds feed not connected yet — add the ODDS_API_KEY secret (see Docs).</div>'; return; }
   const ms = (j.matches || []).filter(m => !m.start || new Date(m.start) > Date.now() - 3*3600e3);
   if(!ms.length){ list.innerHTML = '<div class="today__empty">No priced ATP/WTA matches in the next day and a half.</div>'; return; }
   const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });

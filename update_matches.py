@@ -564,6 +564,100 @@ def track_record(hist, split=True):
     return rec
 
 
+# ---------- schedule (api-tennis.com) ----------------------------------------
+# The odds feed only lists matches a bookmaker has priced, so the order of play
+# for tomorrow is often half missing there. api-tennis has the full schedule;
+# matches it lists that the odds feed doesn't get the model's number, no odds.
+def fetch_schedule(key, now, hours):
+    """Upcoming ATP/WTA singles from api-tennis: [{tour, tournament, start, a, b, ...}]."""
+    from update_data import api_tennis_call, API_TENNIS_TYPES      # lazy: update_data imports this module
+    end = now + timedelta(hours=hours)
+    out = []
+    for tour, (type_key, type_name) in API_TENNIS_TYPES.items():
+        params = dict(method="get_fixtures", event_type_key=type_key,
+                      date_start=(now - timedelta(days=1)).date().isoformat(),
+                      date_stop=(end + timedelta(days=1)).date().isoformat())
+        try:
+            events, tz = api_tennis_call(key, timezone="Etc/UTC", **params), timezone.utc
+        except Exception as e:                                        # noqa: BLE001
+            print(f"  · schedule {tour.upper()}: {e}", file=sys.stderr)
+            continue
+        for ev in events:
+            if ev.get("event_type_type") != type_name or ev.get("event_live") == "1":
+                continue
+            if (ev.get("event_status") or "").strip() not in ("", "Not Started"):
+                continue                                              # finished, retired, cancelled
+            a, b = (ev.get("event_first_player") or "").strip(), (ev.get("event_second_player") or "").strip()
+            if not a or not b:
+                continue
+            try:
+                start = datetime.strptime(f"{ev.get('event_date')} {ev.get('event_time') or '00:00'}",
+                                          "%Y-%m-%d %H:%M").replace(tzinfo=tz)
+            except ValueError:
+                continue
+            if not (now - timedelta(hours=14) < start <= end + timedelta(hours=14)):
+                continue                       # final window check after any time-zone fix
+            out.append({"key": str(ev.get("event_key")), "tour": tour.upper(),
+                        "tournament": ev.get("tournament_name", ""), "round": ev.get("tournament_round", ""),
+                        "qualifying": ev.get("event_qualification") == "True", "start": start,
+                        "a": a, "a_key": ev.get("first_player_key"), "b": b, "b_key": ev.get("second_player_key")})
+    return out
+
+def schedule_pid(name, api_key, players):
+    """players.json id for an api-tennis name (the stats come from the same feed)."""
+    for pid in (slugify(f"{name} ({api_key})"), slugify(name)):
+        if pid in players:
+            return pid
+    return None
+
+def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
+    """Add the scheduled matches the odds feed doesn't have, with the model's number only."""
+    have = {frozenset((m["a"].get("key"), m["b"].get("key"))): m for m in out["matches"]}
+    # If api-tennis ignored the time zone asked for, its times are off by whole hours;
+    # the matches both feeds list show by how much.
+    diffs = sorted(round((f["start"] - parse_iso(have[pair]["start"])).total_seconds() / 3600)
+                   for f in sched
+                   for pair in [frozenset((schedule_pid(f["a"], f["a_key"], players), schedule_pid(f["b"], f["b_key"], players)))]
+                   if pair in have and parse_iso(have[pair]["start"]))
+    shift = diffs[len(diffs) // 2] if len(diffs) >= 3 and abs(diffs[len(diffs) // 2]) <= 14 else 0
+    if shift:
+        print(f"  · schedule times are {shift:+d}h from the odds feed's ({len(diffs)} matches in both); corrected",
+              file=sys.stderr)
+        sched = [{**f, "start": f["start"] - timedelta(hours=shift)} for f in sched]
+    now = datetime.now(timezone.utc)
+    unmatched = [(name_keys(u["a"]["name"]), name_keys(u["b"]["name"])) for u in out["unmatched"]]
+    added = 0
+    for f in sched:
+        ka, kb = schedule_pid(f["a"], f["a_key"], players), schedule_pid(f["b"], f["b_key"], players)
+        if not (ka and kb) or frozenset((ka, kb)) in have or not (now < f["start"] <= now + timedelta(hours=hours)):
+            continue
+        fa, fb = name_keys(f["a"]), name_keys(f["b"])
+        if any((ua & fa and ub & fb) or (ua & fb and ub & fa) for ua, ub in unmatched):
+            continue                       # priced, but the odds feed's names didn't resolve
+        month = f["start"].month
+        surf, indoor, known = surface_for(f["tournament"], f["tour"], month)
+        best_of = 3 if f["qualifying"] else guess_best_of(f["tournament"], f["tour"])
+        t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)
+        r = predict_export(players[ka], players[kb], surf, best_of, t_avg, mdl)
+        p = r["p"]
+        def no_odds(name, key, q):
+            return {"name": name, "key": key, "model": round(q, 4), "fair_odds": round(1 / q, 2),
+                    "market": None, "best_odds": None, "book": None, "ev": None, "kelly": None}
+        title = f"{f['tour']} {f['tournament']}" + (" (qualifying)" if f["qualifying"] else "")
+        row = {"id": "sched-" + f["key"], "tour": f["tour"], "tournament": title, "round": f["round"],
+               "start": iso(f["start"]), "surface": surf, "indoor": indoor, "surface_known": known,
+               "best_of": best_of, "a": no_odds(players[ka]["name"], ka, p),
+               "b": no_odds(players[kb]["name"], kb, 1 - p), "books": 0, "no_odds": True,
+               "court": court_id(f["tournament"], f["tour"], month), "model_version": version,
+               "parts": {"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3)},
+               "flags": [fl for fl in match_flags(players[ka], players[kb], surf, today, p, p)]}
+        out["matches"].append(row)
+        have[frozenset((ka, kb))] = row
+        added += 1
+    out["matches"].sort(key=lambda m: m["start"] or "")
+    return added
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--players", default="players.json")
@@ -590,11 +684,18 @@ def main():
     parlay_rows = load_parlays(args.parlay_history)
 
     def finish():
+        tkey = os.environ.get("TENNIS_API_KEY", "").strip()
+        if tkey and players:
+            sched = fetch_schedule(tkey, now, args.hours)
+            n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours)
+            out["scheduled_only"] = n
+            print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added without odds", file=sys.stderr)
+        priced = [m for m in out["matches"] if not m.get("no_odds")]
         n_settled = settle(hist, results, now)
-        log_predictions(hist, out["matches"], now)
+        log_predictions(hist, priced, now)
         out["record"] = track_record(hist)
         save_history(args.history, hist)
-        out["parlays"] = build_parlays(out["matches"], now)
+        out["parlays"] = build_parlays(priced, now)
         settle_parlays(parlay_rows, hist, now)
         log_parlays(parlay_rows, out["parlays"], now)
         out["parlay_record"] = parlay_record(parlay_rows)
@@ -603,20 +704,23 @@ def main():
             json.dump(out, fh, ensure_ascii=False, indent=2)
         print(f"History: {len(hist)} logged, {n_settled} newly settled; record {out['record']}", file=sys.stderr)
 
-    key = os.environ.get("ODDS_API_KEY", "").strip()
-    if not key:
-        out["status"] = "no_api_key"
-        print("ODDS_API_KEY not set — no odds fetched.", file=sys.stderr)
-        return finish()
-
-    with open(args.players, encoding="utf-8") as fh:
-        data = json.load(fh)
+    try:
+        with open(args.players, encoding="utf-8") as fh:
+            data = json.load(fh)
+    except (OSError, ValueError):
+        data = {"players": {}}
     players = data["players"]
     idx = build_name_index(players)
     tour_avgs = {t.upper(): v.get("tour_avg_spw") for t, v in (data.get("tours") or {}).items()}
     mdl = data.get("model") or {"rating": "elo", "w": {"ATP": 0.5, "WTA": 0.5}, "n0": 0}
     version = mdl.get("version", "")
     today = now.date()
+
+    key = os.environ.get("ODDS_API_KEY", "").strip()
+    if not key:
+        out["status"] = "no_api_key"
+        print("ODDS_API_KEY not set — no odds fetched.", file=sys.stderr)
+        return finish()
 
     sports, remaining = get_json("/sports", {"apiKey": key})       # this call is free
     tennis = [s for s in sports if s.get("active") and re.match(r"tennis_(atp|wta)_", s.get("key", ""))]
@@ -626,7 +730,8 @@ def main():
         try:
             with open(args.out, encoding="utf-8") as fh:
                 prev = json.load(fh)
-            out["matches"], out["unmatched"], out["updated"] = prev.get("matches", []), prev.get("unmatched", []), prev.get("updated")
+            out["matches"] = [m for m in prev.get("matches", []) if not m.get("no_odds")]
+            out["unmatched"], out["updated"] = prev.get("unmatched", []), prev.get("updated")
         except (OSError, ValueError):
             pass
         out["status"], out["requests_remaining"] = "quota_low", remaining

@@ -21,7 +21,10 @@
     "init_elo": 1400,
     "init_elo_qual": 1250,
     "stack_atp": null,
-    "stack_wta": null
+    "stack_wta": null,
+    "set_m_atp3": 0.55,
+    "set_m_atp5": 0.6,
+    "set_m_wta3": 0.6
   },
   "notes": "Logistic stack (features: elo, serve, serve_thin, server_vs_returner, layoff, fatigue) beat the blend on the tuning year (0.6330 vs 0.6346) but not on the holdout (0.6275 vs 0.6270), so it is switched off. Weights it found are kept under tested_stack.",
   "tested_stack": {

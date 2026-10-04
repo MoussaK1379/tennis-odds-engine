@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tennis Odds Engine — Past predictions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .box{ margin-top:14px; background:var(--ink-2); border:1px solid var(--ink-3); border-radius:var(--r); padding:18px clamp(14px,2.4vw,22px); }
+  .box h3{ font-family:var(--display); font-weight:600; font-size:.95rem; margin:0 0 4px; }
+  .box h3 .hint{ font-family:var(--mono); font-weight:400; font-size:.68rem; color:var(--faint); text-transform:uppercase; letter-spacing:.12em; float:right; }
+  .box__lede{ color:var(--mute); font-size:.86rem; margin:0 0 14px; }
+
+  .stats{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+  .stat{ background:var(--ink-3); border-radius:var(--r-sm); padding:10px 12px; }
+  .stat__k{ font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); }
+  .stat__v{ font-family:var(--display); font-weight:700; font-size:1.35rem; font-variant-numeric:tabular-nums; }
+  .stat__s{ font-family:var(--mono); font-size:.7rem; color:var(--mute); }
+
+  .filters{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+  .filters select, .filters input{ font-family:var(--mono); font-size:.8rem; color:var(--chalk); background:var(--ink-3);
+    border:1px solid var(--ink-4); border-radius:var(--r-sm); padding:.45rem .6rem; }
+  .filters input{ flex:1 1 160px; min-width:0; }
+
+  .days{ display:flex; align-items:stretch; gap:6px; margin:16px 0 4px; }
+  .days__chips{ position:relative; display:flex; gap:6px; overflow-x:auto; scrollbar-width:thin; flex:1; min-width:0; padding-bottom:4px; }
+  .days__nav{ flex:0 0 auto; width:34px; font-family:var(--display); font-size:1.2rem; color:var(--chalk); background:var(--ink-3);
+    border:1px solid var(--ink-4); border-radius:var(--r-sm); cursor:pointer; }
+  .days__nav:disabled{ opacity:.35; cursor:default; }
+  .dchip{ flex:0 0 auto; display:flex; flex-direction:column; align-items:flex-start; gap:1px; cursor:pointer; text-align:left;
+    background:var(--ink-3); border:1px solid var(--ink-4); border-radius:var(--r-sm); padding:.35rem .6rem; color:var(--chalk); }
+  .dchip__d{ font-family:var(--display); font-weight:600; font-size:.82rem; white-space:nowrap; }
+  .dchip__s{ font-family:var(--mono); font-size:.64rem; color:var(--mute); white-space:nowrap; }
+  .dchip[aria-pressed="true"]{ background:var(--ball); border-color:var(--ball); color:var(--ink); }
+  .dchip[aria-pressed="true"] .dchip__s{ color:var(--ink); }
+  .dayhead{ font-family:var(--mono); font-size:.74rem; color:var(--mute); margin:12px 0 4px; }
+  .dayhead b{ font-family:var(--display); font-size:.95rem; color:var(--chalk); font-weight:600; margin-right:.2rem; }
+  .row{ display:grid; grid-template-columns:150px minmax(0,1fr) 128px; gap:6px 14px; align-items:center; padding:.6rem 0; border-top:1px solid var(--ink-3); }
+  .row__when{ font-family:var(--mono); font-size:.72rem; color:var(--faint); line-height:1.35; }
+  .row__who{ display:flex; flex-direction:column; gap:3px; min-width:0; }
+  .p{ display:flex; justify-content:space-between; gap:10px; font-family:var(--mono); font-size:.84rem; font-variant-numeric:tabular-nums; }
+  .p .n{ font-family:var(--display); font-weight:600; font-size:.95rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--mute); }
+  .p--won .n{ color:var(--chalk); } .p--won .n::after{ content:" ✓"; color:var(--pos); }
+  .p--a .n{ border-left:3px solid var(--A); padding-left:.45rem; } .p--b .n{ border-left:3px solid var(--B); padding-left:.45rem; }
+  .p .nums{ color:var(--mute); white-space:nowrap; }
+  .p .nums b{ color:var(--chalk); font-weight:600; }
+  .row__res{ font-family:var(--mono); font-size:.74rem; text-align:right; line-height:1.5; }
+  .row__extra{ grid-column:2 / -1; font-family:var(--mono); font-size:.7rem; line-height:1.5; color:var(--faint); }
+  .row__extra .w{ color:var(--clay); }
+  .tagx{ display:inline-block; font-family:var(--mono); font-size:.62rem; letter-spacing:.1em; text-transform:uppercase; padding:.1rem .4rem; border-radius:4px; }
+  .tagx--right{ background:var(--pos); color:var(--ink); }
+  .tagx--wrong{ background:var(--neg); color:var(--chalk); }
+  .tagx--pend{ background:var(--ink-3); color:var(--mute); }
+  .tagx--void{ background:var(--ink-3); color:var(--faint); }
+  .pl-pos{ color:var(--pos); } .pl-neg{ color:var(--neg); }
+  .empty{ font-family:var(--mono); font-size:.82rem; color:var(--faint); padding:.6rem 0; }
+  .more{ margin-top:12px; font-family:var(--mono); font-size:.74rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+    color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:7px; padding:.5rem .8rem; }
+  .more:hover{ background:var(--ball); color:var(--ink); }
+
+  .parlay{ padding:.7rem 0; border-top:1px solid var(--ink-3); }
+  .parlay__head{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 14px; font-family:var(--mono); font-size:.84rem; }
+  .parlay__odds{ font-family:var(--display); font-weight:700; font-size:1.05rem; }
+  .parlay__nums{ color:var(--mute); }
+  .parlay__legs{ margin:.35rem 0 0; padding:0; list-style:none; font-size:.88rem; }
+  .parlay__legs li{ display:flex; justify-content:space-between; gap:10px; padding:.15rem 0; }
+  .parlay__legs .px{ font-family:var(--mono); color:var(--mute); white-space:nowrap; }
+
+  @media (max-width:760px){
+    .row{ grid-template-columns:minmax(0,1fr) auto; }
+    .row__when{ grid-column:1 / -1; }
+    .row__extra{ grid-column:1 / -1; }
+    .p{ flex-direction:column; gap:0; }
+    .row__who{ gap:8px; }
+    .box h3 .hint{ float:none; display:block; margin-top:4px; }
+    .stats{ grid-template-columns:1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav__brand"><span class="nav__dot"></span>tennis odds engine</div>
+  <div class="nav__links">
+    <a href="index.html">Predictor</a>
+    <a href="history.html" aria-current="page">Past predictions</a>
+    <a href="model-math.html">The Math</a>
+    <a href="readme.html">Docs</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Every logged prediction · settled against the real result</div>
+    <h1>Past <span class="accent">predictions</span></h1>
+    <p class="hero__lede">Each match from the daily list, with the number the model gave before it started,
+      the market's view and the best price (decimal or American, your choice). Once the result is in, you can see whether the model was right
+      and how a flat 1-unit value bet would have done.</p>
+  </header>
+
+  <section class="box">
+    <h3>Summary <span class="hint" id="sumHint"></span></h3>
+    <div class="stats" id="stats"></div>
+  </section>
+
+  <section class="box">
+    <h3>Predictions <span class="hint" id="countHint"></span></h3>
+    <p class="box__lede">“Model” and “Market” are each player's win chance (the market's with the bookmaker margin
+      removed). The value bet is the side where the model's chance times the best price came out above 1,
+      the same rule as the track record on the predictor.</p>
+    <div class="filters">
+      <div class="seg" id="tourSeg">
+        <button aria-pressed="true" data-v="">All</button><button aria-pressed="false" data-v="ATP">ATP</button><button aria-pressed="false" data-v="WTA">WTA</button>
+      </div>
+      <select id="status" aria-label="Status">
+        <option value="">All results</option>
+        <option value="settled">Settled</option>
+        <option value="pending">Pending</option>
+        <option value="right">Model right</option>
+        <option value="wrong">Model wrong</option>
+        <option value="value">Value bets only</option>
+      </select>
+      <select id="version" aria-label="Model version"><option value="">All model versions</option></select>
+      <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div>
+      <input id="q" type="search" placeholder="Player or tournament" aria-label="Search player or tournament">
+    </div>
+    <div class="days" id="days"></div>
+    <div id="list"></div>
+    <button class="more" id="more" hidden>Show more</button>
+  </section>
+
+  <section class="box">
+    <h3>Past parlays <span class="hint" id="parlayHint"></span></h3>
+    <p class="box__lede">Recommended parlays as they were posted, settled from the results above. Profit is for a 1-unit stake.</p>
+    <div id="parlays"></div>
+  </section>
+
+  <footer class="foot">
+    <p><strong>Where this comes from.</strong> The daily updater writes every prediction to
+      <a href="history/predictions.csv">history/predictions.csv</a> and every parlay to
+      <a href="history/parlays.csv">history/parlays.csv</a> before the match starts, and settles them when the
+      result arrives. Nothing is edited after the fact.</p>
+  </footer>
+</main>
+
+<script src="odds.js"></script>
+<script>
+const FLAG_TEXT = { thin: "thin history", layoff: "layoff", surface_few: "few on surface",
+  specialist: "surface specialist", retired: "recent retirement", disagree: "model & market disagree" };
+const pct = p => (p * 100).toFixed(0) + "%";
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const units = u => (u > 0 ? "+" : "") + u.toFixed(2) + "u";
+const plClass = u => u > 0 ? "pl-pos" : u < 0 ? "pl-neg" : "";
+
+function parseCSV(text){
+  const rows = []; let row = [], cell = "", q = false;
+  for (let i = 0; i < text.length; i++){
+    const c = text[i];
+    if (q){
+      if (c === '"'){ if (text[i + 1] === '"'){ cell += '"'; i++; } else q = false; }
+      else cell += c;
+    } else if (c === '"') q = true;
+    else if (c === ","){ row.push(cell); cell = ""; }
+    else if (c === "\n" || c === "\r"){
+      if (c === "\r" && text[i + 1] === "\n") i++;
+      row.push(cell); rows.push(row); row = []; cell = "";
+    } else cell += c;
+  }
+  if (cell || row.length){ row.push(cell); rows.push(row); }
+  const head = rows.shift() || [];
+  return rows.filter(r => r.length > 1).map(r => Object.fromEntries(head.map((h, i) => [h, r[i] ?? ""])));
+}
+
+async function load(path){
+  const r = await fetch(path + "?v=" + Date.now(), { cache: "no-store" });
+  if (!r.ok) throw new Error(path + ": " + r.status);
+  return parseCSV(await r.text());
+}
+
+/* one prediction → everything the page shows about it */
+function enrich(h){
+  const pa = +h.model_a, ma = +h.market_a, oa = +h.odds_a, ob = +h.odds_b;
+  const settled = h.result === "a" || h.result === "b";
+  const evA = pa * oa - 1, evB = (1 - pa) * ob - 1;
+  const bet = oa > 1 && ob > 1 && Math.max(evA, evB) > 0
+    ? (evA >= evB ? { side: "a", odds: oa, ev: evA } : { side: "b", odds: ob, ev: evB }) : null;
+  let pl = null;
+  if (bet && settled) pl = bet.side === h.result ? bet.odds - 1 : -1;
+  return { ...h, pa, ma, oa, ob, settled, bet, pl,
+    pin: h.pinnacle_a ? +h.pinnacle_a : null,
+    version: h.model_version || "original",
+    flags: h.flags ? h.flags.split(";").filter(Boolean) : [],
+    modelRight: settled ? (pa > 0.5) === (h.result === "a") : null,
+    marketRight: settled ? (ma > 0.5) === (h.result === "a") : null,
+    when: new Date(h.start), day: new Date(h.start).toLocaleDateString("en-CA") };
+}
+
+let ALL = [], shown = 60;
+const state = { tour: "", status: "", version: "", q: "", day: null };
+
+function filtered(){
+  const q = state.q.trim().toLowerCase();
+  return ALL.filter(h => {
+    if (state.tour && h.tour !== state.tour) return false;
+    if (state.version && h.version !== state.version) return false;
+    if (state.status === "settled" && !h.settled) return false;
+    if (state.status === "pending" && (h.settled || h.result === "void")) return false;
+    if (state.status === "right" && h.modelRight !== true) return false;
+    if (state.status === "wrong" && h.modelRight !== false) return false;
+    if (state.status === "value" && !h.bet) return false;
+    if (q && !(h.player_a + " " + h.player_b + " " + h.tournament).toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+function renderStats(rows){
+  const s = rows.filter(h => h.settled), n = s.length;
+  const pending = rows.filter(h => !h.settled && h.result !== "void").length;
+  const bets = s.filter(h => h.bet), profit = bets.reduce((t, h) => t + h.pl, 0);
+  const wins = bets.filter(h => h.pl > 0).length;
+  const brier = (k) => n ? s.reduce((t, h) => t + (h[k] - (h.result === "a" ? 1 : 0)) ** 2, 0) / n : null;
+  const card = (k, v, sub) => `<div class="stat"><div class="stat__k">${k}</div><div class="stat__v">${v}</div><div class="stat__s">${sub}</div></div>`;
+  document.getElementById("stats").innerHTML = [
+    card("Settled", n, `${pending} still to play`),
+    card("Model right", n ? pct(s.filter(h => h.modelRight).length / n) : "—", n ? `Brier ${brier("pa").toFixed(3)}` : "no results yet"),
+    card("Market right", n ? pct(s.filter(h => h.marketRight).length / n) : "—", n ? `Brier ${brier("ma").toFixed(3)}` : "no results yet"),
+    card("Value bets", bets.length, bets.length ? `${wins} won · ${pct(wins / bets.length)}` : "none settled"),
+    card("Profit (1u flat)", bets.length ? `<span class="${plClass(profit)}">${units(profit)}</span>` : "—",
+      bets.length ? `ROI ${(profit / bets.length * 100).toFixed(1)}%` : "on value bets"),
+  ].join("");
+  document.getElementById("sumHint").textContent = "for the current filter · lower Brier is better";
+}
+
+function resultCell(h){
+  if (h.result === "void") return `<span class="tagx tagx--void">void</span>`;
+  if (!h.settled) return `<span class="tagx tagx--pend">pending</span>`;
+  const tag = h.modelRight ? `<span class="tagx tagx--right">model right</span>` : `<span class="tagx tagx--wrong">model wrong</span>`;
+  const pl = h.pl == null ? "" : `<br><span class="${plClass(h.pl)}">${units(h.pl)}</span> <span style="color:var(--faint)">value bet</span>`;
+  return tag + pl;
+}
+
+function playerLine(h, side){
+  const name = side === "a" ? h.player_a : h.player_b;
+  const m = side === "a" ? h.pa : 1 - h.pa, k = side === "a" ? h.ma : 1 - h.ma, o = side === "a" ? h.oa : h.ob;
+  const won = h.settled && h.result === side;
+  return `<div class="p p--${side}${won ? " p--won" : ""}"><span class="n">${esc(name)}</span>
+    <span class="nums">model <b>${pct(m)}</b> · mkt ${pct(k)} · ${OddsFmt.show(o)}</span></div>`;
+}
+
+function rowHTML(h, withDate){
+  const t = h.when.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  const d = withDate ? h.when.toLocaleDateString(undefined, { day: "numeric", month: "short" }) + " · " : "";
+  const extra = [];
+  if (h.bet) extra.push(`Value bet: ${esc(h.bet.side === "a" ? h.player_a : h.player_b)} @ ${OddsFmt.show(h.bet.odds)} (EV ${(h.bet.ev * 100).toFixed(1)}%)`);
+  if (h.pin != null) extra.push(`Pinnacle ${pct(h.pin)} / ${pct(1 - h.pin)}`);
+  if (h.books) extra.push(`${h.books} books`);
+  extra.push(`model ${esc(h.version)}`);
+  const warn = h.flags.length ? `<br><span class="w">⚠ ${h.flags.map(f => esc(FLAG_TEXT[f] || f)).join(" · ")}</span>` : "";
+  return `<div class="row">
+    <div class="row__when">${d}${t} · ${esc(h.tour)}<br>${esc(h.tournament)}<br>${esc(h.surface)}${h.best_of === "5" ? " · best of 5" : ""}</div>
+    <div class="row__who">${playerLine(h, "a")}${playerLine(h, "b")}</div>
+    <div class="row__res">${resultCell(h)}</div>
+    <div class="row__extra">${extra.join(" · ")}${warn}</div>
+  </div>`;
+}
+
+// one day's record in a few words: "6/9 right · +1.20u"
+function dayLine(rows){
+  const s = rows.filter(h => h.settled), right = s.filter(h => h.modelRight).length;
+  const pend = rows.filter(h => !h.settled && h.result !== "void").length;
+  const bets = s.filter(h => h.bet), pl = bets.reduce((t, h) => t + h.pl, 0);
+  const bits = [`${rows.length} match${rows.length === 1 ? "" : "es"}`];
+  if (s.length) bits.push(`model right ${right}/${s.length}`);
+  if (bets.length) bits.push(`value bets <span class="${plClass(pl)}">${units(pl)}</span> (${bets.length})`);
+  if (pend) bits.push(`${pend} pending`);
+  return bits.join(" · ");
+}
+
+function renderList(){
+  const rows = filtered();
+  renderStats(rows);
+  const list = document.getElementById("list"), strip = document.getElementById("days"), more = document.getElementById("more");
+  more.hidden = true;
+  if (!rows.length){
+    strip.innerHTML = ""; list.innerHTML = `<div class="empty">No predictions match this filter.</div>`;
+    document.getElementById("countHint").textContent = "0 matches"; return;
+  }
+  // a search looks across every day
+  if (state.q.trim()){
+    strip.innerHTML = "";
+    document.getElementById("countHint").textContent = `${rows.length} found · all days`;
+    list.innerHTML = `<div class="dayhead">${dayLine(rows)}</div>` + rows.slice(0, shown).map(h => rowHTML(h, true)).join("");
+    more.hidden = rows.length <= shown; more.textContent = `Show more (${rows.length - shown} left)`;
+    return;
+  }
+  const byDay = new Map();
+  for (const h of rows){ if (!byDay.has(h.day)) byDay.set(h.day, []); byDay.get(h.day).push(h); }
+  const days = [...byDay.keys()];                       // newest first
+  if (!byDay.has(state.day)){
+    const today = new Date().toLocaleDateString("en-CA");
+    state.day = days.find(d => d <= today) || days[days.length - 1];
+  }
+  const i = days.indexOf(state.day), dayRows = byDay.get(state.day);
+  const label = (d, o) => new Date(d + "T12:00:00").toLocaleDateString(undefined, o);
+  strip.innerHTML = `<button class="days__nav" data-day="${days[i + 1] || ""}" ${days[i + 1] ? "" : "disabled"} aria-label="Older day">‹</button>
+    <div class="days__chips">${days.map(d => {
+      const r = byDay.get(d), st = r.filter(h => h.settled), ok = st.filter(h => h.modelRight).length;
+      const sub = st.length ? `${ok}/${st.length} right` : `${r.length} to play`;
+      return `<button class="dchip" data-day="${d}" aria-pressed="${d === state.day}">
+        <span class="dchip__d">${label(d, { weekday: "short", day: "numeric", month: "short" })}</span><span class="dchip__s">${sub}</span></button>`;
+    }).join("")}</div>
+    <button class="days__nav" data-day="${days[i - 1] || ""}" ${i > 0 ? "" : "disabled"} aria-label="Newer day">›</button>`;
+  strip.querySelectorAll("[data-day]").forEach(b => b.addEventListener("click", () => {
+    if (!b.dataset.day) return; state.day = b.dataset.day; renderList();
+  }));
+  const on = strip.querySelector('.dchip[aria-pressed="true"]');
+  const chips = strip.querySelector(".days__chips");      // scroll the strip only, never the page
+  if (on) chips.scrollLeft = on.offsetLeft - chips.clientWidth / 2 + on.offsetWidth / 2;
+  document.getElementById("countHint").textContent = `day ${days.length - i} of ${days.length}`;
+  list.innerHTML = `<div class="dayhead"><b>${label(state.day, { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</b> · ${dayLine(dayRows)}</div>`
+    + dayRows.map(h => rowHTML(h, false)).join("");
+}
+
+let PARLAYS = null;
+function renderParlays(rows){
+  PARLAYS = rows;
+  const box = document.getElementById("parlays");
+  if (!rows.length){ box.innerHTML = `<div class="empty">No parlays logged yet.</div>`; return; }
+  rows.sort((a, b) => b.created.localeCompare(a.created));
+  const done = rows.filter(r => r.result === "won" || r.result === "lost");
+  const profit = done.reduce((t, r) => t + (r.payout !== "" ? +r.payout - 1 : (r.result === "won" ? +r.odds - 1 : -1)), 0);
+  document.getElementById("parlayHint").textContent = done.length
+    ? `${done.filter(r => r.result === "won").length}/${done.length} won · ${units(profit)}` : `${rows.length} logged`;
+  box.innerHTML = rows.map(r => {
+    let legs = [];
+    try { legs = JSON.parse(r.legs); } catch (e) { /* keep empty */ }
+    const res = r.result === "won" ? `<span class="tagx tagx--right">won</span>`
+      : r.result === "lost" ? `<span class="tagx tagx--wrong">lost</span>`
+      : r.result === "void" ? `<span class="tagx tagx--void">void</span>` : `<span class="tagx tagx--pend">pending</span>`;
+    const pl = r.payout !== "" && r.result ? ` <span class="${plClass(+r.payout - 1)}">${units(+r.payout - 1)}</span>` : "";
+    const when = new Date(r.created).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
+    return `<div class="parlay">
+      <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(+r.odds)}</span> at ${esc(r.book)} · ${when}</span>
+        <span class="parlay__nums">model ${pct(+r.model)} · mkt ${pct(+r.market)} · EV ${(+r.ev * 100).toFixed(0)}% · ${res}${pl}</span></div>
+      <ul class="parlay__legs">${legs.map(l => `<li><span>${esc(l.name)}</span><span class="px">${OddsFmt.show(+l.odds)}</span></li>`).join("")}</ul>
+    </div>`;
+  }).join("");
+}
+
+function wire(){
+  document.querySelectorAll("#tourSeg button").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll("#tourSeg button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    state.tour = b.dataset.v; shown = 60; renderList();
+  }));
+  for (const id of ["status", "version"])
+    document.getElementById(id).addEventListener("change", e => { state[id] = e.target.value; shown = 60; renderList(); });
+  document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; shown = 60; renderList(); });
+  document.getElementById("more").addEventListener("click", () => { shown += 60; renderList(); });
+  OddsFmt.bind();
+  OddsFmt.onChange(() => { if (ALL.length) renderList(); if (PARLAYS) renderParlays(PARLAYS); });
+}
+
+(async () => {
+  wire();
+  try {
+    ALL = (await load("history/predictions.csv")).map(enrich).filter(h => !isNaN(h.pa))
+      .sort((a, b) => b.when - a.when || a.player_a.localeCompare(b.player_a));
+    const versions = [...new Set(ALL.map(h => h.version))].sort().reverse();
+    document.getElementById("version").innerHTML = `<option value="">All model versions</option>`
+      + versions.map(v => `<option value="${esc(v)}">${esc(v)}</option>`).join("");
+    renderList();
+  } catch (e) {
+    document.getElementById("list").innerHTML = `<div class="empty">Couldn't load the prediction log (${esc(e.message)}).</div>`;
+  }
+  try { renderParlays(await load("history/parlays.csv")); }
+  catch (e) { document.getElementById("parlays").innerHTML = `<div class="empty">Couldn't load the parlay log.</div>`; }
+})();
+</script>
+</body>
+</html>

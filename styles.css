@@ -79,6 +79,11 @@ a:hover{ text-decoration:underline; }
 }
 .nav__links a:hover{ color:var(--chalk); background:var(--ink-2); text-decoration:none; }
 .nav__links a[aria-current="page"]{ color:var(--ink); background:var(--ball); }
+@media (max-width:560px){
+  .nav{ flex-wrap:wrap; gap:.5rem; padding-top:10px; padding-bottom:10px; }
+  .nav__links{ flex-wrap:wrap; gap:.2rem; }
+  .nav__links a{ padding:.35rem .55rem; }
+}
 
 /* ---- shared layout shells -------------------------------------------- */
 .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 clamp(16px,4vw,40px); }

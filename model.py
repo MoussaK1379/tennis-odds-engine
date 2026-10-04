@@ -142,7 +142,8 @@ class Params:
 # Sets aren't independent: whoever wins a set is a little more likely to win the
 # next. `m` is that momentum on the log-odds scale (0 = independent sets), fitted
 # on real set scores by tools/backtest.py. The per-set chance is solved so the
-# set-score distribution always agrees with the headline match probability.
+# set-score distribution always agrees with the headline match probability; the
+# games inside each set come from the serve model (full_scorelines).
 def set_score_probs(s, best_of, m=0.0):
     """{(sets won by A, sets won by B): probability} given A's first-set chance s."""
     need = 3 if best_of == 5 else 2
@@ -167,19 +168,6 @@ def set_dist(p_match, best_of, m=0.0):
         mid = (lo + hi) / 2
         lo, hi = (mid, hi) if win(mid) < p_match else (lo, mid)
     return set_score_probs((lo + hi) / 2, best_of, m)
-
-def set_markets(dist, best_of):
-    """Prices people bet: exact scores, ±1.5 sets, total sets, to win a set."""
-    need = 3 if best_of == 5 else 2
-    P = lambda f: sum(v for k, v in dist.items() if f(*k))
-    out = {"exact": {f"{a}-{b}": v for (a, b), v in sorted(dist.items(), key=lambda kv: (-kv[0][0], kv[0][1]))},
-           "A_-1.5": P(lambda a, b: a == need and b <= need - 2),
-           "B_-1.5": P(lambda a, b: b == need and a <= need - 2),
-           "A_win_set": P(lambda a, b: a >= 1), "B_win_set": P(lambda a, b: b >= 1)}
-    for line in ((2.5,) if best_of == 3 else (3.5, 4.5)):
-        out[f"over_{line}"] = P(lambda a, b: a + b > line)
-    return out
-
 
 # ---------- exact game score of a set ---------------------------------------------
 def set_game_scores(pa, pb):
@@ -224,6 +212,34 @@ def first_set_chance(dist, best_of, m=0.0):
         mid = (lo + hi) / 2
         lo, hi = (mid, hi) if win(mid) < target else (lo, mid)
     return (lo + hi) / 2
+
+
+def full_scorelines(pa, pb, dist, best_of, m=0.0, top=8):
+    """Most likely full scores with the games of every set, e.g. (("6-4", "3-6", "7-6"), p),
+    from A's side. Who wins each set follows the set-score distribution (with momentum);
+    the games of each set come from the serve model, given who won it."""
+    need = 3 if best_of == 5 else 2
+    s1 = first_set_chance(dist, best_of, m)
+    L = _logit(s1)
+    qw, ql = 1 / (1 + math.exp(-(L + m))), 1 / (1 + math.exp(-(L - m)))
+    g = first_set_scores(pa, pb, s1)
+    def cond(a_won):
+        e = [(f"{a}-{b}", v) for (a, b), v in g.items() if (a > b) == a_won]
+        t = sum(v for _, v in e)
+        return [(k, v / t) for k, v in e]
+    wins, losses, out = cond(True), cond(False), []
+    def go(a, b, q, pr, sets):
+        if pr < 1e-5:
+            return
+        if a == need or b == need:
+            out.append((tuple(sets), pr))
+            return
+        for k, v in wins:
+            go(a + 1, b, qw, pr * q * v, sets + [k])
+        for k, v in losses:
+            go(a, b + 1, ql, pr * (1 - q) * v, sets + [k])
+    go(0, 0, s1, 1.0, [])
+    return sorted(out, key=lambda x: -x[1])[:top]
 
 
 # ---------- stacking ------------------------------------------------------------

@@ -91,7 +91,7 @@
   .score__row{ display:grid; grid-template-columns:78px 1fr 52px; align-items:center; gap:10px; margin:.34rem 0; }
   .score__lab{ font-family:var(--mono); font-size:.8rem; color:var(--chalk); }
   .score__track{ height:9px; background:var(--ink-3); border-radius:6px; overflow:hidden; }
-  .score__bar{ height:100%; border-radius:6px; transition:width .5s ease; }
+  .score__bar{ display:block; height:100%; border-radius:6px; transition:width .5s ease; }
   .score__bar--a{ background:var(--A); } .score__bar--b{ background:var(--B); }
   .score__p{ font-family:var(--mono); font-size:.78rem; color:var(--mute); text-align:right; }
 
@@ -113,7 +113,10 @@
   .record__lede{ color:var(--mute); font-size:.86rem; margin:0 0 14px; }
   .record__grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
   .record__note{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:12px; }
-  .sets__sub td{ font-family:var(--display); font-weight:600; font-size:.88rem; color:var(--chalk); padding-top:1rem; text-align:left !important; }
+  .score__sub{ font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin:14px 0 4px; }
+  .score__row--full{ grid-template-columns:minmax(0,1.6fr) 1fr 52px; }
+  .score__row--full .score__lab{ font-size:.76rem; }
+  .score__row--full .score__lab b{ font-weight:600; color:var(--chalk); }
   .ev__margin{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; min-height:1em; }
   .ev-pos{ color:var(--pos); font-weight:600; } .ev-neg{ color:var(--neg); }
   .badge{ font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; padding:.1rem .4rem; border-radius:4px; margin-left:.4rem; }
@@ -161,13 +164,6 @@
     .panels{ grid-template-columns:1fr; }
     .evtable th:nth-child(3), .evtable td:nth-child(3),
     .evtable th:nth-child(5), .evtable td:nth-child(5){ display:none; }
-    .setstable th:nth-child(3), .setstable td:nth-child(3){ display:none; }
-    .setstable th:nth-child(5), .setstable td:nth-child(5){ display:table-cell; }
-    .setstable th:nth-child(6), .setstable td:nth-child(6){ display:none; }
-    .setstable td:first-child{ font-size:.82rem; }
-    .setstable th, .setstable td{ padding-left:8px; }
-    .setstable th:first-child, .setstable td:first-child{ padding-left:0; }
-    .setstable input{ width:62px; }
   }
 </style>
 </head>
@@ -298,6 +294,8 @@
     <div class="panel">
       <h3>Most likely scorelines <span class="hint" id="scoreFmt">best of 3</span></h3>
       <div class="score" id="scoreList"></div>
+      <div class="score__sub">Most likely full scores</div>
+      <div class="score" id="fullList"></div>
     </div>
   </section>
 
@@ -320,18 +318,6 @@
     <div class="ev__margin" id="margin"></div>
   </section>
 
-  <section class="ev sets">
-    <h3>Set betting</h3>
-    <p class="ev__lede">Exact set scores, set handicaps and total sets from the same model, always adding up
-      to the headline chance above. Type in your bookmaker's decimal odds to see the EV. The odds feed
-      doesn't cover these markets, so they're entered by hand and not logged in the track record. The
-      first-set game scores come from the serve model, nudged to agree with the set chances above.</p>
-    <table class="evtable setstable">
-      <thead><tr><th>Market</th><th>Model</th><th>Fair odds</th><th>Book odds</th><th>EV</th><th>¼-Kelly</th></tr></thead>
-      <tbody id="setsBody"></tbody>
-    </table>
-    <div class="ev__margin" id="setsNote"></div>
-  </section>
 
   <section class="record" id="record">
     <h3>Track record</h3>
@@ -557,7 +543,7 @@ function render(d){
     <span class="score__p">${(p*100).toFixed(1)}%</span></div>`).join("");
 
   renderEV(pEns);
-  renderSets(A, B, dist, pa, pb);
+  renderFullScores(A, B, dist, pa, pb);
 }
 
 /* ===================== set scores (mirrors set_dist / set_markets in model.py) === */
@@ -610,55 +596,35 @@ function firstSetScores(pa, pb, target){
   return setGameScores(clip(pa + d), clip(pb - d));
 }
 
-const setOdds = {};          // odds typed in, per matchup and format
-function renderSets(A, B, dist, pa, pb){
-  const bo = state.bestOf, need = bo === 5 ? 3 : 2, key = [state.a, state.b, bo].join("|");
-  const store = setOdds[key] = setOdds[key] || {};
-  const P = f => Object.entries(dist).reduce((t, [k, v]) => { const [a, b] = k.split("-").map(Number); return t + (f(a, b) ? v : 0); }, 0);
-  const mk = [];
-  Object.entries(dist).sort((x, y) => (y[0].split("-")[0] - x[0].split("-")[0]) || (x[0].split("-")[1] - y[0].split("-")[1]))
-    .forEach(([k, v]) => { const [a, b] = k.split("-").map(Number);
-      mk.push(["x" + k, a > b ? `${A.name} wins ${a}–${b}` : `${B.name} wins ${b}–${a}`, v, a > b ? "a" : "b"]); });
-  mk.push(["a-1.5", `${A.name} −1.5 sets`, P((a, b) => a === need && b <= need - 2), "a"]);
-  mk.push(["b-1.5", `${B.name} −1.5 sets`, P((a, b) => b === need && a <= need - 2), "b"]);
-  mk.push(["a+1.5", `${A.name} +1.5 sets` + (bo === 3 ? " (wins a set)" : ""), 1 - P((a, b) => b === need && a <= need - 2), "a"]);
-  mk.push(["b+1.5", `${B.name} +1.5 sets` + (bo === 3 ? " (wins a set)" : ""), 1 - P((a, b) => a === need && b <= need - 2), "b"]);
-  if(bo === 5){
-    mk.push(["aset", `${A.name} wins at least a set`, P((a, b) => a >= 1), "a"]);
-    mk.push(["bset", `${B.name} wins at least a set`, P((a, b) => b >= 1), "b"]);
-  }
-  for(const line of (bo === 3 ? [2.5] : [3.5, 4.5])){
-    mk.push(["o" + line, `Over ${line} sets`, P((a, b) => a + b > line), ""]);
-    mk.push(["u" + line, `Under ${line} sets`, P((a, b) => a + b < line), ""]);
-  }
-  // first set, exact game score
-  const fs = firstSetScores(pa, pb, firstSetChance(dist, bo, setMomentum()));
-  const order = ["6-0","6-1","6-2","6-3","6-4","7-5","7-6"];
-  const fsRows = [...order.map(k => ["f" + k, `${A.name} wins set 1 ${k.replace("-", "–")}`, fs[k] || 0, "a"]),
-                  ...order.map(k => { const [x, y] = k.split("-"); return ["f" + y + "-" + x, `${B.name} wins set 1 ${x}–${y}`, fs[y + "-" + x] || 0, "b"]; })];
-  const rowHtml = ([id, lab, p, side]) => `<tr data-id="${id}" data-p="${p}">
-      <td class="${side ? "side-" + side : ""}">${esc(lab)}</td><td>${pct(p)}</td><td>${p > 0 ? (1 / p).toFixed(2) : "—"}</td>
-      <td><input type="number" inputmode="decimal" min="1.01" step="0.01" value="${store[id] || ""}" aria-label="${esc(lab)} decimal odds"></td>
-      <td class="sev">—</td><td class="skel">—</td></tr>`;
-  $("setsBody").innerHTML = mk.map(rowHtml).join("") +
-    `<tr class="sets__sub"><td colspan="6">First set — exact game score</td></tr>` + fsRows.map(rowHtml).join("");
-  const m = setMomentum();
-  $("setsNote").textContent = m ? `Set momentum ${m.toFixed(2)} (fitted on real set scores).`
-                                : "Sets treated as independent until the set-score check has run on real results.";
-  $("setsBody").querySelectorAll("tr[data-id]").forEach(tr => {
-    const inp = tr.querySelector("input"), p = +tr.dataset.p;
-    const upd = () => {
-      const d = parseFloat(inp.value); store[tr.dataset.id] = inp.value;
-      const ev = tr.querySelector(".sev"), kel = tr.querySelector(".skel");
-      if(!(d > 1)){ ev.textContent = "—"; ev.className = "sev"; kel.textContent = "—"; return; }
-      const e = p * d - 1;
-      ev.innerHTML = (e >= 0 ? "+" : "") + (e * 100).toFixed(1) + "%" + (e > 0 ? '<span class="badge badge--ev">value</span>' : "");
-      ev.className = "sev " + (e > 0 ? "ev-pos" : "ev-neg");
-      kel.textContent = e > 0 ? (kellyFraction(p, d) * 100).toFixed(1) + "%" : "—";
-    };
-    inp.addEventListener("input", upd); upd();
-  });
+/* most likely full scorelines, games in every set (mirrors full_scorelines in model.py) */
+function fullScorelines(pa, pb, dist, bo, m, top){
+  const need = bo === 5 ? 3 : 2, s1 = firstSetChance(dist, bo, m), L = Math.log(s1 / (1 - s1));
+  const qw = 1 / (1 + Math.exp(-(L + m))), ql = 1 / (1 + Math.exp(-(L - m)));
+  const g = firstSetScores(pa, pb, s1);                 // game scores of a set, before conditioning
+  const cond = side => { const e = Object.entries(g).filter(([k]) => { const [a, b] = k.split("-").map(Number); return side ? a > b : a < b; });
+                         const t = e.reduce((x, [, v]) => x + v, 0); return e.map(([k, v]) => [k, v / t]); };
+  const wins = cond(true), losses = cond(false), out = [];
+  const go = (a, b, q, pr, sets) => {
+    if(pr < 1e-5) return;                               // too unlikely to make the top list
+    if(a === need || b === need){ out.push([sets, pr]); return; }
+    for(const [k, v] of wins) go(a + 1, b, qw, pr * q * v, [...sets, k]);
+    for(const [k, v] of losses) go(a, b + 1, ql, pr * (1 - q) * v, [...sets, k]);
+  };
+  go(0, 0, s1, 1, []);
+  return out.sort((x, y) => y[1] - x[1]).slice(0, top);
 }
+function renderFullScores(A, B, dist, pa, pb){
+  const rows = fullScorelines(pa, pb, dist, state.bestOf, setMomentum(), 8);
+  const max = Math.max(...rows.map(r => r[1]), 1e-9);
+  $("fullList").innerHTML = rows.map(([sets, p]) => {
+    const aWon = sets.filter(k => { const [a, b] = k.split("-").map(Number); return a > b; }).length;
+    const aWins = aWon > sets.length / 2, who = aWins ? A.name : B.name;
+    const score = sets.map(k => { const [a, b] = k.split("-"); return aWins ? a + "–" + b : b + "–" + a; }).join(" ");
+    return `<div class="score__row score__row--full"><span class="score__lab">${esc(who)} <b>${score}</b></span>
+      <span class="score__track"><span class="score__bar score__bar--${aWins ? "a" : "b"}" style="width:${p / max * 100}%"></span></span>
+      <span class="score__p">${(p * 100).toFixed(1)}%</span></div>`; }).join("");
+}
+
 function evRow(model, d, fairImplied, ids){
   $(ids.mod).textContent = pct(model);
   $(ids.fair).textContent = (1/model).toFixed(2);

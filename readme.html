@@ -193,21 +193,17 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       lower, the market is sharper than the model), and the profit from betting 1 unit on every
       value flag. Results arrive when the stats source publishes them, so settling can lag by days.</p>
 
-    <h2>Set betting</h2>
-    <p>The predictor's <strong>Set betting</strong> panel prices exact set scores, ±1.5 sets, total sets
-      and "to win a set" from the same model. The set-score distribution is solved so it always adds up to
-      the headline match chance. Sets aren't quite independent: whoever wins a set is a little more likely
-      to win the next, so the model has a <em>set momentum</em> setting per tour and format, fitted on real
-      set scores by <code>python tools/backtest.py --sets</code> (and by <code>--tune</code>), and adopted only
-      if it beats independent sets on the tuning year. Set scores are stored with each cached match; the
-      first daily run after this change re-downloads the history once to add them. The odds feed doesn't
-      cover set markets, so you type your bookmaker's odds in to see the EV; these aren't logged in the
-      track record.</p>
-    <p>It also prices the <strong>first set's exact game score</strong> (6–0 to 7–6 either way, 14 outcomes).
-      The serve model plays the set game by game (either player may serve first), with both serve
-      chances nudged by the same amount in opposite directions so the first-set win chance agrees with
-      the set scores and the headline. The backtest reports how these compare with real first-set scores
-      (log loss, and predicted vs actual share of tiebreak sets) once game scores are in the cache.</p>
+    <h2>Scorelines</h2>
+    <p>The predictor's <strong>Most likely scorelines</strong> panel shows the chance of each set result
+      (2–0, 2–1, …) and the most likely <strong>full scores, with the games of every set</strong>
+      (e.g. 6–4 3–6 7–6). The set results are solved so they add up to the headline win chance. Sets
+      aren't quite independent: whoever wins a set is a little more likely to win the next, so there is
+      a <em>set momentum</em> setting per tour and format, fitted on real set scores by
+      <code>python tools/backtest.py --sets</code> (and <code>--tune</code>) and adopted only if it beats
+      independent sets on the tuning year. The games inside each set come from the serve model playing
+      the set game by game, nudged to agree with the set chances. Set and game scores are stored with each
+      cached match; the first daily run after this change re-downloads the history once to add them,
+      and the backtest then reports how the first-set game scores compare with reality.</p>
 
     <h2>Recommended parlays</h2>
     <p>Up to three 2- or 3-leg parlays a day, built only from matches with no warnings. Each leg must

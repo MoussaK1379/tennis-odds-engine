@@ -227,8 +227,9 @@ def sync_api_tennis(key, cache_path, tours, today=None):
     return cache, changed, err
 
 def _first_set(games):
-    """'6-4 3-6 7-6' (winner's side) -> (6, 4); None if missing or not a finished set."""
-    m = re.match(r"\s*(\d+)-(\d+)", games or "")
+    """'6-4 3-6 7-6' (winner's side) -> (6, 4); None if missing or not a finished set.
+    api-tennis writes tiebreak sets with the tiebreak points after a dot: '7.7-6.5' is 7-6."""
+    m = re.match(r"\s*(\d+)(?:\.\d+)?-(\d+)(?:\.\d+)?", games or "")
     if not m:
         return None
     a, b = int(m.group(1)), int(m.group(2))

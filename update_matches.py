@@ -17,7 +17,7 @@ Usage:
     ODDS_API_KEY=... python update_matches.py --hours 48 --regions eu,uk
 """
 
-import argparse, csv, json, os, re, statistics, sys, unicodedata
+import argparse, csv, json, math, os, re, statistics, sys, unicodedata
 import urllib.parse, urllib.request
 from datetime import datetime, timedelta, timezone
 
@@ -239,9 +239,10 @@ def get_json(path, params):
 def price_summary(event, a, b):
     """Best price per side, the de-vigged market probability for A (average of
     each bookmaker's own de-vigged number), the number of books, and Pinnacle's
-    de-vigged probability for A when Pinnacle prices the match."""
+    de-vigged probability for A when Pinnacle prices the match, and every
+    book's prices ({book: [price A, price B]}) for building parlays."""
     best = {a: (0.0, None), b: (0.0, None)}
-    fair_a, pinnacle_a = [], None
+    fair_a, pinnacle_a, by_book = [], None, {}
     for bk in event.get("bookmakers", []):
         for m in bk.get("markets", []):
             if m.get("key") != "h2h": continue
@@ -252,10 +253,11 @@ def price_summary(event, a, b):
             if pb_ > best[b][0]: best[b] = (pb_, bk.get("title"))
             ia, ib = 1 / pa_, 1 / pb_
             fair_a.append(ia / (ia + ib))
+            by_book[bk.get("title") or bk.get("key")] = [pa_, pb_]
             if bk.get("key") == "pinnacle":           # the sharpest book: the real benchmark
                 pinnacle_a = ia / (ia + ib)
     if not fair_a: return None
-    return best, statistics.mean(fair_a), len(fair_a), pinnacle_a
+    return best, statistics.mean(fair_a), len(fair_a), pinnacle_a, by_book
 
 # Warnings shown next to a match. Each is (code, text); the codes go in the log
 # so the track record can be split by whether a pick carried warnings.
@@ -301,6 +303,120 @@ def side(model_p, market_p, price, book):
     return {"model": round(model_p, 4), "fair_odds": round(1 / model_p, 2),
             "market": round(market_p, 4), "best_odds": price, "book": book,
             "ev": round(ev, 4), "kelly": round(kelly_fraction(model_p, price), 4)}
+
+
+# ---------- parlays ---------------------------------------------------------------
+# A parlay multiplies the bookmaker's margin and the model's errors, so legs are
+# held to a stricter standard than single picks, and the whole ticket is priced
+# at ONE bookmaker that offers every leg (prices can't be mixed across books).
+PARLAY_LEG_MIN_EV = 0.03     # each leg must be value at the parlay's bookmaker
+PARLAY_LEG_MIN_P = 0.40      # no long shots
+PARLAY_MIN_EV = 0.05
+PARLAY_SIZES = (2, 3)
+PARLAY_SHOW = 3
+
+def build_parlays(matches, now):
+    from itertools import combinations
+    books = {}
+    for m in matches:
+        st = parse_iso(m.get("start"))
+        if not st or st <= now or m.get("flags"):
+            continue
+        for book, prices in (m.get("prices") or {}).items():
+            for side, price in zip(("a", "b"), prices):
+                p = m[side]["model"]
+                if p >= PARLAY_LEG_MIN_P and p * price - 1 >= PARLAY_LEG_MIN_EV:
+                    books.setdefault(book, []).append({
+                        "id": m["id"], "side": side, "name": m[side]["name"],
+                        "vs": m["b" if side == "a" else "a"]["name"], "tournament": m["tournament"],
+                        "start": m["start"], "odds": price, "model": p, "market": m[side]["market"]})
+    cands = []
+    for book, legs in books.items():
+        for k in PARLAY_SIZES:
+            for combo in combinations(legs, k):
+                if len({l["id"] for l in combo}) < k:
+                    continue                       # both sides of one match
+                odds = math.prod(l["odds"] for l in combo)
+                p = math.prod(l["model"] for l in combo)       # matches are independent
+                ev = p * odds - 1
+                if ev >= PARLAY_MIN_EV:
+                    cands.append({"book": book, "legs": sorted(combo, key=lambda l: l["start"]),
+                                  "odds": round(odds, 2), "model": round(p, 4),
+                                  "market": round(math.prod(l["market"] for l in combo), 4),
+                                  "ev": round(ev, 4), "kelly": round(kelly_fraction(p, odds), 4)})
+    # Best first, but keep the list varied: each new ticket must differ from the ones
+    # already chosen by at least one leg, and no match appears in more than two.
+    cands.sort(key=lambda c: (-c["ev"], -c["model"]))
+    chosen, used = [], {}
+    for c in cands:
+        ids = frozenset(l["id"] for l in c["legs"])
+        if any(ids == frozenset(l["id"] for l in x["legs"]) for x in chosen):
+            continue
+        if any(used.get(i, 0) >= 2 for i in ids):
+            continue
+        chosen.append(c)
+        for i in ids:
+            used[i] = used.get(i, 0) + 1
+        if len(chosen) >= PARLAY_SHOW:
+            break
+    for c in chosen:
+        c["id"] = "+".join(f"{l['id']}:{l['side']}" for l in c["legs"])
+    return chosen
+
+PARLAY_FIELDS = ["id", "created", "book", "legs", "odds", "model", "market", "ev", "result", "settled", "payout"]
+
+def load_parlays(path):
+    try:
+        with open(path, encoding="utf-8", newline="") as fh:
+            return {r["id"]: r for r in csv.DictReader(fh)}
+    except OSError:
+        return {}
+
+def save_parlays(path, rows):
+    os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=PARLAY_FIELDS)
+        w.writeheader()
+        for r in sorted(rows.values(), key=lambda r: r["created"]):
+            w.writerow({k: r.get(k, "") for k in PARLAY_FIELDS})
+
+def log_parlays(rows, parlays, now):
+    """First recommendation wins: a ticket's price is the one shown when it first appeared."""
+    for c in parlays:
+        if c["id"] not in rows:
+            rows[c["id"]] = {"id": c["id"], "created": iso(now), "book": c["book"],
+                             "legs": json.dumps([{k: l[k] for k in ("id", "side", "name", "odds")} for l in c["legs"]]),
+                             "odds": c["odds"], "model": c["model"], "market": c["market"], "ev": c["ev"],
+                             "result": "", "settled": "", "payout": ""}
+
+def settle_parlays(rows, hist, now):
+    """Settle from the single-match log. A void leg counts as odds 1.0 (usual bookmaker rule)."""
+    for r in rows.values():
+        if r.get("result"):
+            continue
+        legs = json.loads(r["legs"])
+        res = [(hist.get(l["id"]) or {}).get("result") for l in legs]
+        if any(x and x != "void" and x != l["side"] for x, l in zip(res, legs)):
+            r["result"], r["payout"] = "lost", 0
+        elif all(res):
+            live = [l for x, l in zip(res, legs) if x != "void"]
+            if not live:
+                r["result"], r["payout"] = "void", 1
+            else:
+                r["result"], r["payout"] = "won", round(math.prod(float(l["odds"]) for l in live), 2)
+        else:
+            continue
+        r["settled"] = iso(now)
+
+def parlay_record(rows):
+    done = [r for r in rows.values() if r.get("result") in ("won", "lost")]
+    rec = {"settled": len(done), "pending": sum(1 for r in rows.values() if not r.get("result"))}
+    if done:
+        profit = sum(float(r["payout"]) - 1 for r in done)
+        rec.update(won=sum(r["result"] == "won" for r in done), profit_units=round(profit, 2),
+                   roi=round(profit / len(done), 4),
+                   expected_wins=round(sum(float(r["model"]) for r in done), 1))
+    return rec
 
 
 # ---------- prediction log + track record ------------------------------------
@@ -445,6 +561,7 @@ def main():
     ap.add_argument("--out", default="matches.json")
     ap.add_argument("--results", default="recent_results.json")
     ap.add_argument("--history", default="history/predictions.csv")
+    ap.add_argument("--parlay-history", default="history/parlays.csv")
     ap.add_argument("--hours", type=int, default=36, help="look this far ahead")
     ap.add_argument("--regions", default="eu", help="bookmaker regions: us, uk, eu, au (each costs 1 request)")
     ap.add_argument("--min-remaining", type=int, default=0,
@@ -461,11 +578,18 @@ def main():
     except (OSError, ValueError):
         results = []
 
+    parlay_rows = load_parlays(args.parlay_history)
+
     def finish():
         n_settled = settle(hist, results, now)
         log_predictions(hist, out["matches"], now)
         out["record"] = track_record(hist)
         save_history(args.history, hist)
+        out["parlays"] = build_parlays(out["matches"], now)
+        settle_parlays(parlay_rows, hist, now)
+        log_parlays(parlay_rows, out["parlays"], now)
+        out["parlay_record"] = parlay_record(parlay_rows)
+        save_parlays(args.parlay_history, parlay_rows)
         with open(args.out, "w", encoding="utf-8") as fh:
             json.dump(out, fh, ensure_ascii=False, indent=2)
         print(f"History: {len(hist)} logged, {n_settled} newly settled; record {out['record']}", file=sys.stderr)
@@ -530,8 +654,9 @@ def main():
                    "a": {"name": a, "key": ka}, "b": {"name": b, "key": kb}}
             if not summary:
                 continue
-            (best, mkt_a, n_books, pin_a) = summary
+            (best, mkt_a, n_books, pin_a, by_book) = summary
             row["books"] = n_books
+            row["prices"] = by_book
             if not (ka and kb):
                 row["missing"] = [n for n, k in ((a, ka), (b, kb)) if not k]
                 out["unmatched"].append(row)

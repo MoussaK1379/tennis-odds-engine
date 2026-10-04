@@ -182,6 +182,17 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       lower, the market is sharper than the model), and the profit from betting 1 unit on every
       value flag. Results arrive when the stats source publishes them, so settling can lag by days.</p>
 
+    <h2>Recommended parlays</h2>
+    <p>Up to three 2- or 3-leg parlays a day, built only from matches with no warnings. Each leg must
+      be at least +3% EV <em>at the parlay's bookmaker</em> and have a 40%+ chance by the model, and the
+      whole ticket at least +5% EV. Every ticket is priced at one bookmaker that offers all its legs,
+      because prices from different books can't be combined into one bet. Legs are treated as
+      independent (different matches). Each recommendation is logged to
+      <code>history/parlays.csv</code> at the price first shown and settled from the match results
+      (a void leg counts as odds 1.0); the site shows how many won against how many the model expected.
+      A parlay multiplies the bookmaker's margin and any model error, so it needs a real edge on every
+      leg; until the single-pick track record shows the model beats the market, treat these as entertainment-sized stakes.</p>
+
     <h2>Automatic daily run (one-time setup)</h2>
     <p><code>.github/workflows/update.yml</code> runs every day at 06:20 UTC. It rebuilds
       the player stats, the match list and the track record, commits them, and publishes the site

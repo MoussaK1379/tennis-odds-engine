@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-03",
+  "version": "2026-10-04",
   "tuned_on": "2025-04-01..2026-03-31",
   "params": {
     "rating": "elo",
@@ -15,8 +15,31 @@
     "shrink": 400,
     "surf_shrink": 2000,
     "court_shrink": 0,
-    "w_atp": 0.85,
-    "w_wta": 1.0,
-    "n0": 250
+    "w_atp": 0.55,
+    "w_wta": 0.45,
+    "n0": 0,
+    "init_elo": 1400,
+    "init_elo_qual": 1250,
+    "stack_atp": null,
+    "stack_wta": null
+  },
+  "notes": "Logistic stack (features: elo, serve, serve_thin, server_vs_returner, layoff, fatigue) beat the blend on the tuning year (0.6330 vs 0.6346) but not on the holdout (0.6275 vs 0.6270), so it is switched off. Weights it found are kept under tested_stack.",
+  "tested_stack": {
+    "stack_atp": [
+      0.43513,
+      0.53928,
+      -0.17198,
+      0.14959,
+      0.02882,
+      0.07379
+    ],
+    "stack_wta": [
+      0.5598,
+      0.44904,
+      0.0395,
+      0.86996,
+      0.08494,
+      0.0562
+    ]
   }
 }

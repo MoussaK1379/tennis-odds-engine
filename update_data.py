@@ -98,7 +98,8 @@ API_TENNIS = "https://api.api-tennis.com/tennis/"
 API_TENNIS_TYPES = {"atp": ("265", "Atp Singles"), "wta": ("266", "Wta Singles")}
 API_CACHE_FIELDS = ["event_key", "date", "time", "tour", "tournament", "round", "qualifying",
                     "surface", "indoor", "status", "winner", "winner_key", "loser", "loser_key",
-                    "w_srv_won", "w_srv_pts", "l_srv_won", "l_srv_pts"]
+                    "w_srv_won", "w_srv_pts", "l_srv_won", "l_srv_pts",
+                    "w_sets", "l_sets", "games"]
 API_STATUS = {"Finished": "completed", "Retired": "ret", "Walk Over": "wo"}
 API_WINDOW_DAYS = 7        # date range per request
 API_REFRESH_DAYS = 7       # re-fetch this many recent days each run (late stats, corrections)
@@ -134,13 +135,26 @@ def api_event_row(ev, tour):
         return None
     surf, indoor, _ = surface_for(ev.get("tournament_name", ""), tour.upper())
     ws, ls = _service_points(ev, wk), _service_points(ev, lk)
+    # sets and games from the winner's side: "1 - 2" is first player - second player
+    w_first = winner_side == "First Player"
+    sets = re.match(r"\s*(\d+)\s*-\s*(\d+)", ev.get("event_final_result") or "")
+    w_sets = l_sets = ""
+    if sets:
+        f_, s_ = int(sets.group(1)), int(sets.group(2))
+        w_sets, l_sets = (f_, s_) if w_first else (s_, f_)
+    games = []
+    for sc in sorted(ev.get("scores") or [], key=lambda x: to_float(x.get("score_set")) or 0):
+        a_, b_ = sc.get("score_first"), sc.get("score_second")
+        if a_ not in (None, "") and b_ not in (None, ""):
+            games.append(f"{a_}-{b_}" if w_first else f"{b_}-{a_}")
     return {"event_key": ev.get("event_key"), "date": ev.get("event_date"), "time": ev.get("event_time") or "",
             "tour": tour.upper(), "tournament": ev.get("tournament_name", ""),
             "round": ev.get("tournament_round", ""), "qualifying": ev.get("event_qualification") == "True",
             "surface": surf, "indoor": indoor, "status": status,
             "winner": w.strip(), "winner_key": wk, "loser": l.strip(), "loser_key": lk,
             "w_srv_won": ws[0] if ws else "", "w_srv_pts": ws[1] if ws else "",
-            "l_srv_won": ls[0] if ls else "", "l_srv_pts": ls[1] if ls else ""}
+            "l_srv_won": ls[0] if ls else "", "l_srv_pts": ls[1] if ls else "",
+            "w_sets": w_sets, "l_sets": l_sets, "games": " ".join(games)}
 
 def load_api_cache(path):
     try:
@@ -157,10 +171,18 @@ def save_api_cache(path, cache):
         for r in sorted(cache.values(), key=lambda r: (r["date"], r["time"], str(r["event_key"]))):
             w.writerow({k: r.get(k, "") for k in API_CACHE_FIELDS})
 
+def _state_path(cache_path):
+    return os.path.join(os.path.dirname(cache_path) or ".", "api_tennis_state.json")
+
 def sync_api_tennis(key, cache_path, tours, today=None):
-    """Bring the cache up to date. Returns (cache, number of new/updated rows, error or None)."""
+    """Bring the cache up to date. Returns (cache, number of new/updated rows, error or None).
+
+    Matches cached before set scores were stored are re-fetched once (a one-off
+    backfill tracked in api_tennis_state.json, resumable if it's interrupted)."""
     today = today or date.today()
     cache = load_api_cache(cache_path)
+    state = load_json(_state_path(cache_path)) or {}
+    sets_state = state.setdefault("sets_backfill", {})
     changed, err = 0, None
     for tour in tours:
         type_key, type_name = API_TENNIS_TYPES[tour]
@@ -168,6 +190,12 @@ def sync_api_tennis(key, cache_path, tours, today=None):
         have = [r["date"] for r in cache.values() if r["tour"] == tour.upper()]
         a = (datetime.strptime(max(have), "%Y-%m-%d").date() - timedelta(days=API_REFRESH_DAYS)
              if have else today - timedelta(days=API_BACKFILL_DAYS))
+        backfill = bool(have) and sets_state.get(tour) != "done"
+        if backfill:                       # re-fetch the history once to add set scores
+            done_to = sets_state.get(tour)
+            a = (datetime.strptime(done_to, "%Y-%m-%d").date() + timedelta(days=1)
+                 if done_to else datetime.strptime(min(have), "%Y-%m-%d").date())
+            print(f"  · api-tennis {tour}: adding set scores to history from {a}", file=sys.stderr)
         while a <= today:
             b = min(a + timedelta(days=API_WINDOW_DAYS - 1), today)
             try:
@@ -187,9 +215,25 @@ def sync_api_tennis(key, cache_path, tours, today=None):
                     if cache.get(k) != row:
                         cache[k] = row
                         changed += 1
+            if backfill:
+                sets_state[tour] = b.isoformat()
             a = b + timedelta(days=1)
+        else:
+            if backfill:
+                sets_state[tour] = "done"
     save_api_cache(cache_path, cache)
+    with open(_state_path(cache_path), "w", encoding="utf-8") as fh:
+        json.dump(state, fh, indent=1)
     return cache, changed, err
+
+def _first_set(games):
+    """'6-4 3-6 7-6' (winner's side) -> (6, 4); None if missing or not a finished set."""
+    m = re.match(r"\s*(\d+)-(\d+)", games or "")
+    if not m:
+        return None
+    a, b = int(m.group(1)), int(m.group(2))
+    done = (max(a, b) == 6 and abs(a - b) >= 2) or (max(a, b) == 7 and min(a, b) in (5, 6))
+    return (a, b) if done else None
 
 def from_api_cache(cache, tour_label):
     # Surface, court and format come from the tournament table at load time, so
@@ -215,6 +259,9 @@ def from_api_cache(cache, tour_label):
         out.append({"date": d, "order": (r["time"], r["event_key"]), "surface": surf,
                     "winner": w, "loser": l, "status": r["status"], "tournament": r["tournament"],
                     "court": court_id(r["tournament"], tour_label, d.month),
+                    "set1": _first_set(r.get("games")),
+                    "sets": ((int(r["w_sets"]), int(r["l_sets"]))
+                             if (r.get("w_sets") or "").isdigit() and (r.get("l_sets") or "").isdigit() else None),
                     "best_of": 3 if qual else guess_best_of(r["tournament"], tour_label),
                     "qualifying": qual,
                     "w_srv": srv(r["w_srv_won"], r["w_srv_pts"]), "l_srv": srv(r["l_srv_won"], r["l_srv_pts"])})

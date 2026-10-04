@@ -91,7 +91,7 @@
   .score__row{ display:grid; grid-template-columns:78px 1fr 52px; align-items:center; gap:10px; margin:.34rem 0; }
   .score__lab{ font-family:var(--mono); font-size:.8rem; color:var(--chalk); }
   .score__track{ height:9px; background:var(--ink-3); border-radius:6px; overflow:hidden; }
-  .score__bar{ height:100%; border-radius:6px; transition:width .5s ease; }
+  .score__bar{ display:block; height:100%; border-radius:6px; transition:width .5s ease; }
   .score__bar--a{ background:var(--A); } .score__bar--b{ background:var(--B); }
   .score__p{ font-family:var(--mono); font-size:.78rem; color:var(--mute); text-align:right; }
 
@@ -113,6 +113,10 @@
   .record__lede{ color:var(--mute); font-size:.86rem; margin:0 0 14px; }
   .record__grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; }
   .record__note{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:12px; }
+  .score__sub{ font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin:14px 0 4px; }
+  .score__row--full{ grid-template-columns:minmax(0,1.6fr) 1fr 52px; }
+  .score__row--full .score__lab{ font-size:.76rem; }
+  .score__row--full .score__lab b{ font-weight:600; color:var(--chalk); }
   .ev__margin{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; min-height:1em; }
   .ev-pos{ color:var(--pos); font-weight:600; } .ev-neg{ color:var(--neg); }
   .badge{ font-family:var(--mono); font-size:.6rem; letter-spacing:.1em; text-transform:uppercase; padding:.1rem .4rem; border-radius:4px; margin-left:.4rem; }
@@ -290,6 +294,8 @@
     <div class="panel">
       <h3>Most likely scorelines <span class="hint" id="scoreFmt">best of 3</span></h3>
       <div class="score" id="scoreList"></div>
+      <div class="score__sub">Most likely full scores</div>
+      <div class="score" id="fullList"></div>
     </div>
   </section>
 
@@ -311,6 +317,7 @@
     </table>
     <div class="ev__margin" id="margin"></div>
   </section>
+
 
   <section class="record" id="record">
     <h3>Track record</h3>
@@ -406,6 +413,8 @@ function statsFor(key, surf, custom){
     spw: sv == null ? t : sv, rpw: rt == null ? 1 - t : rt };
 }
 
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+
 /* warnings for a player (same rules as update_matches.py player_flags) */
 function playerFlags(p, surf){
   const i = (p && p.info) || null, out = [];
@@ -477,7 +486,20 @@ function compute(){
   const pElo = 1 / (1 + Math.pow(10, -g*(A.elo - B.elo)/400));
   const wFull = (M.w && M.w[state.tour] != null) ? M.w[state.tour] : 0.5, n0 = M.n0 || 0;
   const n = Math.min(A.n, B.n), w = n0 > 0 ? wFull * n / (n + n0) : wFull;
-  const pEns = w*pMkv + (1-w)*pElo;
+  let pEns = w*pMkv + (1-w)*pElo;
+  const stack = M.stack && M.stack[state.tour];
+  if(stack){                          // logistic stack (stack_features in model.py)
+    const L = p => { p = Math.min(Math.max(p, 1e-4), 1 - 1e-4); return Math.log(p/(1-p)); };
+    const info = P => (P && P.info) || {};
+    const days = P => info(P).last ? Math.max(0, Math.round((Date.parse(todayISO()) - Date.parse(info(P).last)) / 864e5)) : 0;
+    const thin = 1 - n / (n + 500), t = tourAvg();
+    const inter = ((A.spw - t)*(B.rpw - (1-t)) - (B.spw - t)*(A.rpw - (1-t))) * 100;
+    const feats = [L(pElo), L(pMkv), L(pMkv)*thin, inter,
+                   Math.log1p(Math.min(days(A.raw),365)) - Math.log1p(Math.min(days(B.raw),365)),
+                   (info(A.raw).m7 || 0) - (info(B.raw).m7 || 0)];
+    const z = feats.reduce((acc, f, i) => acc + f * stack[i], 0);
+    pEns = 1 / (1 + Math.exp(-Math.max(Math.min(z, 30), -30)));
+  }
   const warn = state.a !== "custom" && state.a === state.b
     ? ["Same player on both sides — pick two different players for a meaningful number."]
     : [...playerFlags(A.raw, state.surface), ...playerFlags(B.raw, state.surface)];
@@ -509,16 +531,11 @@ function render(d){
   $("setB").textContent = pct(1 - s);
 
   $("scoreFmt").textContent = state.bestOf===3 ? "best of 3" : "best of 5";
-  let rows;
-  if(state.bestOf === 3){
-    rows = [[`${A.name} 2–0`, s*s,"a"],[`${A.name} 2–1`, 2*s*s*(1-s),"a"],
-            [`${B.name} 2–1`, 2*(1-s)*(1-s)*s,"b"],[`${B.name} 2–0`, (1-s)*(1-s),"b"]];
-  } else {
-    const t = 1 - s;
-    rows = [[`${A.name} 3–0`, Math.pow(s,3),"a"],[`${A.name} 3–1`, 3*Math.pow(s,3)*t,"a"],
-            [`${A.name} 3–2`, 6*Math.pow(s,3)*t*t,"a"],[`${B.name} 3–2`, 6*Math.pow(t,3)*s*s,"b"],
-            [`${B.name} 3–1`, 3*Math.pow(t,3)*s,"b"],[`${B.name} 3–0`, Math.pow(t,3),"b"]];
-  }
+  // same distribution as model.set_dist: agrees with the headline chance, with set momentum
+  const dist = setDist(pEns, state.bestOf, setMomentum());
+  const rows = Object.entries(dist).sort((x, y) => (y[0].split("-")[0] - x[0].split("-")[0]) || (x[0].split("-")[1] - y[0].split("-")[1]))
+    .map(([k, p]) => { const [a, b] = k.split("-").map(Number);
+      return a > b ? [`${A.name} ${a}–${b}`, p, "a"] : [`${B.name} ${b}–${a}`, p, "b"]; });
   const max = Math.max(...rows.map(r => r[1]), 1e-9);
   $("scoreList").innerHTML = rows.map(([lab,p,side]) => `
     <div class="score__row"><span class="score__lab">${lab}</span>
@@ -526,7 +543,88 @@ function render(d){
     <span class="score__p">${(p*100).toFixed(1)}%</span></div>`).join("");
 
   renderEV(pEns);
+  renderFullScores(A, B, dist, pa, pb);
 }
+
+/* ===================== set scores (mirrors set_dist / set_markets in model.py) === */
+function setMomentum(){
+  const sm = (DATA.model && DATA.model.set_m) || {};
+  return ((sm[state.tour] || {})[String(state.bestOf)]) || 0;
+}
+function setScoreProbs(s, bo, m){
+  const need = bo === 5 ? 3 : 2, L = Math.log(s / (1 - s));
+  const qw = 1 / (1 + Math.exp(-(L + m))), ql = 1 / (1 + Math.exp(-(L - m))), out = {};
+  (function go(a, b, q, pr){
+    if(a === need || b === need){ const k = a + "-" + b; out[k] = (out[k] || 0) + pr; return; }
+    go(a + 1, b, qw, pr * q); go(a, b + 1, ql, pr * (1 - q));
+  })(0, 0, s, 1);
+  return out;
+}
+function setDist(p, bo, m){
+  const need = bo === 5 ? 3 : 2;
+  const win = s => Object.entries(setScoreProbs(s, bo, m)).reduce((t, [k, v]) => t + (+k.split("-")[0] === need ? v : 0), 0);
+  let lo = 1e-4, hi = 1 - 1e-4;
+  for(let i = 0; i < 60; i++){ const mid = (lo + hi) / 2; if(win(mid) < p) lo = mid; else hi = mid; }
+  return setScoreProbs((lo + hi) / 2, bo, m);
+}
+/* exact game score of the first set (mirrors set_game_scores / first_set_scores in model.py) */
+function setGameScores(pa, pb){
+  const ga = gameWinProb(pa), gb = gameWinProb(pb), tb = tiebreakWinProb(pa, pb), out = {};
+  const add = (k, v) => { out[k] = (out[k] || 0) + v; };
+  const go = (a, b, aServes, pr) => {
+    if(((a >= 6 || b >= 6) && Math.abs(a - b) >= 2) || a === 7 || b === 7){ add(a + "-" + b, pr); return; }
+    if(a === 6 && b === 6){ add("7-6", pr * tb); add("6-7", pr * (1 - tb)); return; }
+    const g = aServes ? ga : 1 - gb;
+    go(a + 1, b, !aServes, pr * g); go(a, b + 1, !aServes, pr * (1 - g));
+  };
+  go(0, 0, true, 0.5); go(0, 0, false, 0.5);      // who serves first is unknown
+  return out;
+}
+function firstSetChance(dist, bo, m){
+  const need = bo === 5 ? 3 : 2;
+  const target = Object.entries(dist).reduce((t, [k, v]) => t + (+k.split("-")[0] === need ? v : 0), 0);
+  const win = s => Object.entries(setScoreProbs(s, bo, m)).reduce((t, [k, v]) => t + (+k.split("-")[0] === need ? v : 0), 0);
+  let lo = 1e-4, hi = 1 - 1e-4;
+  for(let i = 0; i < 60; i++){ const mid = (lo + hi) / 2; if(win(mid) < target) lo = mid; else hi = mid; }
+  return (lo + hi) / 2;
+}
+function firstSetScores(pa, pb, target){
+  const win = d => Object.entries(setGameScores(clip(pa + d), clip(pb - d))).reduce((t, [k, v]) => { const [a, b] = k.split("-").map(Number); return t + (a > b ? v : 0); }, 0);
+  let lo = -0.3, hi = 0.3;
+  for(let i = 0; i < 40; i++){ const mid = (lo + hi) / 2; if(win(mid) < target) lo = mid; else hi = mid; }
+  const d = (lo + hi) / 2;
+  return setGameScores(clip(pa + d), clip(pb - d));
+}
+
+/* most likely full scorelines, games in every set (mirrors full_scorelines in model.py) */
+function fullScorelines(pa, pb, dist, bo, m, top){
+  const need = bo === 5 ? 3 : 2, s1 = firstSetChance(dist, bo, m), L = Math.log(s1 / (1 - s1));
+  const qw = 1 / (1 + Math.exp(-(L + m))), ql = 1 / (1 + Math.exp(-(L - m)));
+  const g = firstSetScores(pa, pb, s1);                 // game scores of a set, before conditioning
+  const cond = side => { const e = Object.entries(g).filter(([k]) => { const [a, b] = k.split("-").map(Number); return side ? a > b : a < b; });
+                         const t = e.reduce((x, [, v]) => x + v, 0); return e.map(([k, v]) => [k, v / t]); };
+  const wins = cond(true), losses = cond(false), out = [];
+  const go = (a, b, q, pr, sets) => {
+    if(pr < 1e-5) return;                               // too unlikely to make the top list
+    if(a === need || b === need){ out.push([sets, pr]); return; }
+    for(const [k, v] of wins) go(a + 1, b, qw, pr * q * v, [...sets, k]);
+    for(const [k, v] of losses) go(a, b + 1, ql, pr * (1 - q) * v, [...sets, k]);
+  };
+  go(0, 0, s1, 1, []);
+  return out.sort((x, y) => y[1] - x[1]).slice(0, top);
+}
+function renderFullScores(A, B, dist, pa, pb){
+  const rows = fullScorelines(pa, pb, dist, state.bestOf, setMomentum(), 8);
+  const max = Math.max(...rows.map(r => r[1]), 1e-9);
+  $("fullList").innerHTML = rows.map(([sets, p]) => {
+    const aWon = sets.filter(k => { const [a, b] = k.split("-").map(Number); return a > b; }).length;
+    const aWins = aWon > sets.length / 2, who = aWins ? A.name : B.name;
+    const score = sets.map(k => { const [a, b] = k.split("-"); return aWins ? a + "–" + b : b + "–" + a; }).join(" ");
+    return `<div class="score__row score__row--full"><span class="score__lab">${esc(who)} <b>${score}</b></span>
+      <span class="score__track"><span class="score__bar score__bar--${aWins ? "a" : "b"}" style="width:${p / max * 100}%"></span></span>
+      <span class="score__p">${(p * 100).toFixed(1)}%</span></div>`; }).join("");
+}
+
 function evRow(model, d, fairImplied, ids){
   $(ids.mod).textContent = pct(model);
   $(ids.fair).textContent = (1/model).toFixed(2);

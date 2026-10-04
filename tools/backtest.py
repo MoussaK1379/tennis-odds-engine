@@ -44,7 +44,8 @@ def load(cache_path):
 
 
 def run(P, data, set_prob):
-    """-> list of (tour, date, y, p, p_elo, p_mkv, n, prior_min, qualifying)."""
+    """-> list of (tour, date, y, p, p_elo, p_mkv, n, prior_min, qualifying, stack features,
+    (sets won by a, sets won by b) or None, best of)."""
     recs = []
     for tour, ms in data.items():
         eng = model.TourEngine(tour, P, set_prob=set_prob)
@@ -52,13 +53,101 @@ def run(P, data, set_prob):
         for m in ms:
             if m["status"] == "completed":
                 a, b = sorted((m["winner"], m["loser"]))
-                r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"))
+                r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"), m["qualifying"])
                 recs.append((tour, m["date"], 1 if a == m["winner"] else 0, r["p"], r["p_elo"],
-                             r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"]))
+                             r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"],
+                             r["feats"], _sets_for(m, a), m["best_of"], r["pa"], r["pb"], _set1_for(m, a)))
             eng.update(m)
             seen[m["winner"]] = seen.get(m["winner"], 0) + 1
             seen[m["loser"]] = seen.get(m["loser"], 0) + 1
     return recs
+
+
+def _sets_for(m, a):
+    if not m.get("sets"):
+        return None
+    w, l = m["sets"]
+    return (w, l) if a == m["winner"] else (l, w)
+
+
+def _set1_for(m, a):
+    if not m.get("set1"):
+        return None
+    w, l = m["set1"]
+    return (w, l) if a == m["winner"] else (l, w)
+
+
+def first_set_check(recs, P, end, log):
+    """How well the first-set exact game scores match reality on the holdout."""
+    rows = [r for r in recs if HOLD_START <= r[1] <= end and r[14] and r[10]]
+    if len(rows) < 200:
+        log(f"  first-set game scores: only {len(rows)} matches with game scores, skipped")
+        return None
+    ll = tb_pred = tb_act = 0.0
+    for r in rows:
+        m = {"ATP": {3: P.set_m_atp3, 5: P.set_m_atp5}, "WTA": {3: P.set_m_wta3}}[r[0]].get(r[11], 0.0)
+        dist = model.set_dist(r[3], r[11], m)
+        f = model.first_set_scores(r[12], r[13], model.first_set_chance(dist, r[11], m))
+        ll -= math.log(max(f.get(tuple(r[14]), 1e-9), 1e-9))
+        tb_pred += f.get((7, 6), 0) + f.get((6, 7), 0)
+        tb_act += r[14] in ((7, 6), (6, 7))
+    out = {"n": len(rows), "logloss": ll / len(rows), "tiebreak_predicted": tb_pred / len(rows),
+           "tiebreak_actual": tb_act / len(rows)}
+    log(f"  first-set game scores on holdout: log loss {out['logloss']:.3f} (14 outcomes; guessing evenly = "
+        f"{math.log(14):.3f}); tiebreak sets predicted {out['tiebreak_predicted']:.1%}, actual "
+        f"{out['tiebreak_actual']:.1%} (n={len(rows)})")
+    return out
+
+
+SET_GRID = [round(-0.2 + 0.05 * i, 2) for i in range(29)]     # -0.2 .. 1.2
+
+
+def set_rows(recs, lo, hi, tour, bo):
+    need = 3 if bo == 5 else 2
+    return [(r[3], r[10]) for r in recs if r[0] == tour and r[11] == bo and lo <= r[1] <= hi
+            and r[10] and max(r[10]) == need and min(r[10]) < need]
+
+
+def set_logloss(rows, bo, m):
+    ll = 0.0
+    for p, sc in rows:
+        ll -= math.log(max(model.set_dist(p, bo, m).get(tuple(sc), 1e-9), 1e-9))
+    return ll / len(rows) if rows else float("nan")
+
+
+def straight_sets(rows, bo, m):
+    """(predicted, actual) share of matches won without dropping a set."""
+    need = 3 if bo == 5 else 2
+    pred = sum(model.set_dist(p, bo, m).get((need, 0), 0) + model.set_dist(p, bo, m).get((0, need), 0)
+               for p, _ in rows)
+    act = sum(1 for _, sc in rows if min(sc) == 0)
+    return pred / len(rows), act / len(rows)
+
+
+def fit_sets(recs, end, log, P):
+    """Stage 5: set momentum per tour and format, fitted on the tuning year."""
+    lo, hi = TUNE
+    out = {}
+    for tour, bo, field in (("ATP", 3, "set_m_atp3"), ("ATP", 5, "set_m_atp5"), ("WTA", 3, "set_m_wta3")):
+        tune_rows, hold_rows = set_rows(recs, lo, hi, tour, bo), set_rows(recs, HOLD_START, end, tour, bo)
+        if len(tune_rows) < 200:
+            log(f"  sets {tour} bo{bo}: only {len(tune_rows)} matches with set scores, keeping momentum 0")
+            continue
+        best = min(SET_GRID, key=lambda m: set_logloss(tune_rows, bo, m))
+        t0_, t1_ = set_logloss(tune_rows, bo, 0.0), set_logloss(tune_rows, bo, best)
+        h0, h1 = set_logloss(hold_rows, bo, 0.0), set_logloss(hold_rows, bo, best)
+        sp0, sa = straight_sets(hold_rows, bo, 0.0)
+        sp1, _ = straight_sets(hold_rows, bo, best)
+        adopt = t1_ <= t0_ - MIN_GAIN
+        log(f"  sets {tour} bo{bo}: momentum {best:+.2f}; exact-score log loss tune {t0_:.4f} -> {t1_:.4f}, "
+            f"holdout {h0:.4f} -> {h1:.4f}; straight sets on holdout: predicted {sp0:.1%} (independent) / "
+            f"{sp1:.1%} (with momentum), actual {sa:.1%} (n={len(hold_rows)})" + ("" if adopt else " -> not adopted"))
+        out[field] = best if adopt else 0.0
+        setattr(P, field, out[field])
+        out[f"{tour}{bo}"] = {"momentum": best, "tune": [t0_, t1_], "holdout": [h0, h1],
+                              "straight_sets_holdout": {"independent": sp0, "momentum": sp1, "actual": sa},
+                              "n_holdout": len(hold_rows), "adopted": adopt}
+    return out
 
 
 def score(recs, lo, hi, col=3, tour=None, min_prior=0):
@@ -139,6 +228,18 @@ def tune(data, set_prob, log):
         log(f"  best {kind:6}: rating-only log loss {top[kind][0]:.4f}  {rating_desc(top[kind][1])}")
     # Glicko-2 is the more complex system: adopt it only for a real gain.
     best_rating = (top["glicko"] if top["glicko"][0] <= top["elo"][0] - MIN_GAIN else top["elo"])[1]
+    if best_rating.rating == "elo":
+        # starting ratings: everyone at 1500 vs lower starts (and a separate one for qualifying debuts)
+        base = (top["elo"][0], 1500, 1500)
+        res = []
+        for ie, iq in itertools.product((1500, 1450, 1400, 1350, 1300), (1500, 1450, 1400, 1350, 1300, 1250)):
+            P = model.Params(**{**best_rating.to_dict(), "init_elo": ie, "init_elo_qual": iq})
+            res.append((score(run(P, data, set_prob), lo, hi, col=4)["logloss"], ie, iq))
+        res.sort()
+        log(f"  starting ratings: best start {res[0][1]}, qualifying debut {res[0][2]} -> rating-only "
+            f"log loss {res[0][0]:.4f} (all at 1500: {base[0]:.4f})")
+        if res[0][0] <= base[0] - MIN_GAIN:
+            best_rating.init_elo, best_rating.init_elo_qual = res[0][1], res[0][2]
     log(f"Stage 1 (rating) done in {time.time() - t0:.0f}s -> {best_rating.rating}")
 
     # Stage 2: serve model on the serve-only prediction (independent of the rating).
@@ -172,7 +273,64 @@ def tune(data, set_prob, log):
     P.w_atp, P.w_wta, P.n0 = wa, ww, n0
     log(f"  best blend: serve-model weight ATP {wa:.2f}, WTA {ww:.2f}, thin-sample half-point {n0} serve points")
     log(f"Stage 3 (blend) done in {time.time() - t0:.0f}s")
+
+    # Stage 4: logistic-regression stack, fitted on the tuning year per tour.
+    blend_ll = score(blended(recs, wa, ww, n0), lo, hi)["logloss"]
+    stacks = {}
+    for tour in ("ATP", "WTA"):
+        rows = [(r[9], r[2]) for r in recs if r[0] == tour and lo <= r[1] <= hi]
+        stacks[tour] = fit_logistic(rows)
+    stacked = [r[:3] + (model.stack_prob(stacks[r[0]], r[9]),) + r[4:] for r in recs]
+    stack_ll = score(stacked, lo, hi)["logloss"]
+    for tour in ("ATP", "WTA"):
+        log(f"  stack {tour}: " + ", ".join(f"{n} {w:+.3f}" for n, w in zip(model.STACK_FEATURES, stacks[tour])))
+    log(f"  stack log loss {stack_ll:.4f} vs blend {blend_ll:.4f} on the tuning year")
+    if stack_ll <= blend_ll - MIN_GAIN:
+        P.stack_atp = [round(w, 5) for w in stacks["ATP"]]
+        P.stack_wta = [round(w, 5) for w in stacks["WTA"]]
+        log("  -> stack adopted")
+    else:
+        log("  -> stack not adopted (not 0.001 better)")
+    log(f"Stage 4 (stack) done in {time.time() - t0:.0f}s")
     return P
+
+
+def fit_logistic(rows, l2=1.0, iters=25):
+    """No-intercept logistic regression by Newton's method with a small L2 penalty.
+    rows: [(features, y)]. Pure Python so the backtest has no dependencies."""
+    k = len(rows[0][0])
+    w = [0.0] * k
+    for _ in range(iters):
+        g = [l2 * wi for wi in w]
+        H = [[(l2 if i == j else 0.0) for j in range(k)] for i in range(k)]
+        for x, y in rows:
+            p = model.stack_prob(w, x)
+            e, v = p - y, p * (1 - p)
+            for i in range(k):
+                g[i] += e * x[i]
+                for j in range(i, k):
+                    H[i][j] += v * x[i] * x[j]
+        for i in range(k):
+            for j in range(i):
+                H[i][j] = H[j][i]
+        step = _solve(H, g)
+        w = [wi - si for wi, si in zip(w, step)]
+        if max(abs(si) for si in step) < 1e-7:
+            break
+    return w
+
+
+def _solve(A, b):
+    n = len(b)
+    M = [row[:] + [b[i]] for i, row in enumerate(A)]
+    for c in range(n):
+        piv = max(range(c, n), key=lambda r: abs(M[r][c]))
+        M[c], M[piv] = M[piv], M[c]
+        for r in range(n):
+            if r != c and M[r][c]:
+                f = M[r][c] / M[c][c]
+                M[r] = [a - f * bb for a, bb in zip(M[r], M[c])]
+    return [M[i][n] / M[i][i] for i in range(n)]
 
 
 def rating_desc(P):
@@ -188,6 +346,7 @@ def main():
     ap.add_argument("--cache", default="data/api_tennis_matches.csv")
     ap.add_argument("--params", default="model_params.json")
     ap.add_argument("--tune", action="store_true")
+    ap.add_argument("--sets", action="store_true", help="only (re)fit set momentum, keeping the other settings")
     ap.add_argument("--report", default="backtest_report.json")
     args = ap.parse_args()
 
@@ -197,15 +356,28 @@ def main():
     log(f"{sum(len(v) for v in data.values())} matches, {min(m['date'] for ms in data.values() for m in ms)} -> {end}")
     set_prob = model.SetTable()
 
-    if args.tune:
-        P = tune(data, set_prob, log)
+    try:
+        with open(args.params) as fh:
+            saved = json.load(fh)
+    except (OSError, ValueError):
+        saved = {}
+    sets_report = None
+    if args.tune or args.sets:
+        if args.tune:
+            P = tune(data, set_prob, log)
+        else:
+            P = model.Params.from_dict(saved["params"])
+        recs_sets = run(P, data, set_prob)
+        sets_report = fit_sets(recs_sets, end, log, P)
+        sets_report["first_set"] = first_set_check(recs_sets, P, end, log)
+        saved.update({"version": str(date.today()), "params": P.to_dict()})
+        if args.tune:
+            saved["tuned_on"] = f"{TUNE[0]}..{TUNE[1]}"
         with open(args.params, "w") as fh:
-            json.dump({"version": str(date.today()), "tuned_on": f"{TUNE[0]}..{TUNE[1]}",
-                       "params": P.to_dict()}, fh, indent=2)
+            json.dump(saved, fh, indent=2)
         log(f"wrote {args.params}")
     else:
-        with open(args.params) as fh:
-            P = model.Params.from_dict(json.load(fh)["params"])
+        P = model.Params.from_dict(saved["params"])
 
     base = summary("original model", run(BASELINE, data, set_prob), end)
     new = summary("tuned model", run(P, data, set_prob), end)
@@ -220,7 +392,9 @@ def main():
     with open(args.report, "w") as fh:
         json.dump({"periods": {"warm_up_until": str(WARM_END), "tune": [str(TUNE[0]), str(TUNE[1])],
                                "holdout": [str(HOLD_START), str(end)]},
-                   "params": P.to_dict(), "original": base, "tuned": new}, fh, indent=1, default=str)
+                   "params": P.to_dict(), "original": base, "tuned": new,
+                   "sets": sets_report or (json.load(open(args.report)).get("sets") if os.path.exists(args.report) else None)},
+                  fh, indent=1, default=str)
     log(f"wrote {args.report}")
 
 

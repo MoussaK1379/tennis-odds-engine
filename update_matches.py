@@ -236,11 +236,19 @@ def get_json(path, params):
 
 
 # ---------- odds --------------------------------------------------------------
+# Betting exchanges: their prices exclude the commission they take on winnings,
+# and they don't offer parlays, so they're left out of parlay pricing.
+EXCHANGES = ("matchbook", "smarkets", "betdaq")
+
+def is_exchange(key):
+    return "_ex_" in key or key in EXCHANGES
+
 def price_summary(event, a, b):
     """Best price per side, the de-vigged market probability for A (average of
     each bookmaker's own de-vigged number), the number of books, and Pinnacle's
     de-vigged probability for A when Pinnacle prices the match, and every
-    book's prices ({book: [price A, price B]}) for building parlays."""
+    sportsbook's prices ({book: [price A, price B]}, exchanges left out) for
+    building parlays."""
     best = {a: (0.0, None), b: (0.0, None)}
     fair_a, pinnacle_a, by_book = [], None, {}
     for bk in event.get("bookmakers", []):
@@ -253,7 +261,8 @@ def price_summary(event, a, b):
             if pb_ > best[b][0]: best[b] = (pb_, bk.get("title"))
             ia, ib = 1 / pa_, 1 / pb_
             fair_a.append(ia / (ia + ib))
-            by_book[bk.get("title") or bk.get("key")] = [pa_, pb_]
+            if not is_exchange(bk.get("key", "")):      # exchanges don't take parlays
+                by_book[bk.get("title") or bk.get("key")] = [pa_, pb_]
             if bk.get("key") == "pinnacle":           # the sharpest book: the real benchmark
                 pinnacle_a = ia / (ia + ib)
     if not fair_a: return None

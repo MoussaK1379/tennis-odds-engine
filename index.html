@@ -133,6 +133,14 @@
   .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
     color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:7px; padding:.4rem .6rem; }
   .match__go:hover{ background:var(--ball); color:var(--ink); }
+  .parlay{ padding:.7rem 0; border-top:1px solid var(--ink-3); }
+  .parlay__head{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 14px; font-family:var(--mono); font-size:.84rem; }
+  .parlay__odds{ font-family:var(--display); font-weight:700; font-size:1.05rem; color:var(--chalk); }
+  .parlay__nums{ color:var(--mute); }
+  .parlay__legs{ margin:.35rem 0 0; padding:0; list-style:none; font-size:.88rem; }
+  .parlay__legs li{ display:flex; justify-content:space-between; gap:10px; padding:.15rem 0; }
+  .parlay__legs .who{ color:var(--chalk); } .parlay__legs .who small{ color:var(--faint); font-family:var(--mono); font-size:.7rem; }
+  .parlay__legs .px{ font-family:var(--mono); color:var(--mute); white-space:nowrap; }
   .match__extra{ grid-column:2 / -1; font-family:var(--mono); font-size:.7rem; line-height:1.5; }
   .match__pin{ color:var(--faint); }
   .match__flags{ color:var(--clay); }
@@ -184,6 +192,15 @@
     <p class="today__lede">Upcoming ATP &amp; WTA matches with the best bookmaker price, refreshed every
       morning. Model win chance · best odds · EV. Press <b>Analyse</b> to load a match into the predictor below.</p>
     <div class="today__list" id="todayList"><div class="today__empty">Loading…</div></div>
+  </section>
+
+  <section class="today parlays" id="parlays">
+    <h3>Recommended parlays <span class="hint" id="parlayStamp"></span></h3>
+    <p class="today__lede">Built only from value picks with no warnings, each leg at least +3% EV and a 40%+
+      chance by the model, priced at <b>one</b> bookmaker that offers every leg. A parlay multiplies the
+      bookmaker's margin and the model's mistakes, so treat these as small stakes at most.</p>
+    <div id="parlayList"><div class="today__empty">Loading…</div></div>
+    <div class="record__note" id="parlayNote"></div>
   </section>
 
   <section class="controls">
@@ -706,12 +723,30 @@ function renderRecord(r){
     esc("Value bets = 1 unit on each flagged side at the logged best price. " +
         (r.value_bets < 300 ? "Under ~300 bets, luck dominates — don't read much into the profit yet." : ""))].join("<br>");
 }
+function renderParlays(j){
+  const list = $("parlayList"), note = $("parlayNote");
+  const ps = (j && j.parlays || []).filter(c => c.legs.every(l => new Date(l.start) > Date.now()));
+  if(!j || j.status === "no_api_key"){ list.innerHTML = '<div class="today__empty">Needs the odds feed.</div>'; }
+  else if(!ps.length){ list.innerHTML = '<div class="today__empty">No parlay today: fewer than two picks pass the rules at the same bookmaker.</div>'; }
+  else {
+    const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
+    list.innerHTML = ps.map(c => `<div class="parlay">
+      <div class="parlay__head"><span><span class="parlay__odds">${c.odds.toFixed(2)}</span> at ${esc(c.book)} · ${c.legs.length} legs</span>
+        <span class="parlay__nums">model ${pct(c.model)} · market ${pct(c.market)} · <span class="ev-pos">EV +${(c.ev*100).toFixed(1)}%</span> · ¼-Kelly ${(c.kelly*100).toFixed(1)}%</span></div>
+      <ul class="parlay__legs">${c.legs.map(l => `<li><span class="who">${esc(l.name)} <small>to beat ${esc(l.vs)} · ${esc(l.tournament)} · ${fmt.format(new Date(l.start))}</small></span>
+        <span class="px">${l.odds.toFixed(2)} · ${pct(l.model)}</span></li>`).join("")}</ul></div>`).join("");
+  }
+  const r = j && j.parlay_record;
+  note.textContent = r && r.settled
+    ? `Recommended parlays so far: ${r.settled} settled, ${r.won} won (model expected ${r.expected_wins}), ${(r.profit_units>=0?"+":"") + r.profit_units}u at 1 unit each, ${r.pending} pending.`
+    : (r && r.pending ? `${r.pending} recommended parlays waiting for results.` : "");
+}
 async function loadMatches(){
   try{
     const r = await fetch("matches.json", { cache:"no-store" });
     const j = r.ok ? await r.json() : null;
-    renderToday(j); renderRecord(j && j.record);
-  }catch(e){ renderToday(null); renderRecord(null); }
+    renderToday(j); renderRecord(j && j.record); renderParlays(j);
+  }catch(e){ renderToday(null); renderRecord(null); renderParlays(null); }
 }
 
 bindSeg("segSurface", "surface");

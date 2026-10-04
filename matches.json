@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-03T22:31:07Z",
+  "updated": "2026-10-04T01:15:20Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "476",
+  "requests_remaining": "473",
   "matches": [
     {
       "id": "5357c574f469ea94b1ae1dd036711f7f",
@@ -16,34 +16,116 @@
       "a": {
         "name": "Jaume Munar",
         "key": "j-munar",
-        "model": 0.6515,
-        "fair_odds": 1.53,
-        "market": 0.5784,
-        "best_odds": 1.73,
-        "book": "Betfair",
-        "ev": 0.1271,
-        "kelly": 0.0435
+        "model": 0.6511,
+        "fair_odds": 1.54,
+        "market": 0.5802,
+        "best_odds": 1.72,
+        "book": "Matchbook",
+        "ev": 0.1199,
+        "kelly": 0.0416
       },
       "b": {
         "name": "Kyrian Jacquet",
         "key": "k-jacquet",
-        "model": 0.3485,
+        "model": 0.3489,
         "fair_odds": 2.87,
-        "market": 0.4216,
-        "best_odds": 2.34,
+        "market": 0.4198,
+        "best_odds": 2.38,
         "book": "Betfair",
-        "ev": -0.1846,
+        "ev": -0.1697,
         "kelly": 0.0
       },
       "books": 20,
+      "prices": {
+        "Nordic Bet": [
+          1.63,
+          2.24
+        ],
+        "Betfair": [
+          1.71,
+          2.38
+        ],
+        "Marathon Bet": [
+          1.63,
+          2.26
+        ],
+        "Betclic (FR)": [
+          1.63,
+          2.24
+        ],
+        "Unibet (FR)": [
+          1.54,
+          2.15
+        ],
+        "Betsson": [
+          1.63,
+          2.24
+        ],
+        "Unibet (NL)": [
+          1.61,
+          2.32
+        ],
+        "PMU (FR)": [
+          1.54,
+          2.2
+        ],
+        "Unibet (SE)": [
+          1.61,
+          2.32
+        ],
+        "Winamax (DE)": [
+          1.64,
+          2.25
+        ],
+        "Winamax (FR)": [
+          1.58,
+          2.1
+        ],
+        "Tipico": [
+          1.57,
+          2.25
+        ],
+        "GTbets": [
+          1.58,
+          2.28
+        ],
+        "888sport": [
+          1.67,
+          2.2
+        ],
+        "William Hill": [
+          1.67,
+          2.2
+        ],
+        "Coolbet": [
+          1.66,
+          2.23
+        ],
+        "Matchbook": [
+          1.72,
+          2.36
+        ],
+        "Pinnacle": [
+          1.69,
+          2.31
+        ],
+        "BetOnline.ag": [
+          1.67,
+          2.3
+        ],
+        "BetAnything": [
+          1.67,
+          2.3
+        ]
+      },
       "court": "tokyo",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.5743,
-        "serve": 0.6781,
-        "w": 0.744
+        "serve": 0.6777,
+        "w": 0.743
       },
-      "pinnacle_a": 0.5729,
+      "pinnacle_a": 0.5775,
       "flags": []
     },
     {
@@ -58,34 +140,120 @@
       "a": {
         "name": "Nikola Bartunkova",
         "key": "n-bartunkova",
-        "model": 0.1562,
-        "fair_odds": 6.4,
-        "market": 0.1661,
-        "best_odds": 6.6,
+        "model": 0.1565,
+        "fair_odds": 6.39,
+        "market": 0.1668,
+        "best_odds": 6.4,
         "book": "Betfair",
-        "ev": 0.0312,
-        "kelly": 0.0014
+        "ev": 0.0015,
+        "kelly": 0.0001
       },
       "b": {
         "name": "Aryna Sabalenka",
         "key": "a-sabalenka",
-        "model": 0.8438,
+        "model": 0.8435,
         "fair_odds": 1.19,
-        "market": 0.8339,
+        "market": 0.8332,
         "best_odds": 1.17,
         "book": "Betfair",
-        "ev": -0.0128,
+        "ev": -0.0131,
         "kelly": 0.0
       },
       "books": 21,
+      "prices": {
+        "Marathon Bet": [
+          5.6,
+          1.14
+        ],
+        "LeoVegas (SE)": [
+          5.3,
+          1.16
+        ],
+        "Unibet (NL)": [
+          5.3,
+          1.16
+        ],
+        "Betfair": [
+          6.4,
+          1.17
+        ],
+        "Unibet (SE)": [
+          5.3,
+          1.16
+        ],
+        "PMU (FR)": [
+          4.9,
+          1.11
+        ],
+        "William Hill": [
+          5.5,
+          1.14
+        ],
+        "888sport": [
+          5.5,
+          1.14
+        ],
+        "Unibet (FR)": [
+          5.2,
+          1.1
+        ],
+        "1xBet": [
+          5.6,
+          1.14
+        ],
+        "Betclic (FR)": [
+          5.6,
+          1.14
+        ],
+        "GTbets": [
+          5.72,
+          1.13
+        ],
+        "Winamax (DE)": [
+          6.25,
+          1.14
+        ],
+        "Winamax (FR)": [
+          5.9,
+          1.13
+        ],
+        "Tipico": [
+          5.7,
+          1.1
+        ],
+        "Betsson": [
+          6.0,
+          1.13
+        ],
+        "Nordic Bet": [
+          6.0,
+          1.13
+        ],
+        "Pinnacle": [
+          6.24,
+          1.15
+        ],
+        "Matchbook": [
+          6.4,
+          1.17
+        ],
+        "Coolbet": [
+          5.5,
+          1.15
+        ],
+        "BetOnline.ag": [
+          6.05,
+          1.14
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.1355,
-        "serve": 0.1588,
+        "serve": 0.1591,
         "w": 0.889
       },
-      "pinnacle_a": 0.1552,
+      "pinnacle_a": 0.1556,
       "flags": []
     },
     {
@@ -100,34 +268,120 @@
       "a": {
         "name": "Sinja Kraus",
         "key": "s-kraus",
-        "model": 0.5252,
+        "model": 0.5251,
         "fair_odds": 1.9,
-        "market": 0.2944,
-        "best_odds": 3.4,
+        "market": 0.3013,
+        "best_odds": 3.35,
         "book": "Betfair",
-        "ev": 0.7855,
-        "kelly": 0.0818
+        "ev": 0.7592,
+        "kelly": 0.0808
       },
       "b": {
         "name": "Dayana Yastremska",
         "key": "d-yastremska",
-        "model": 0.4748,
+        "model": 0.4749,
         "fair_odds": 2.11,
-        "market": 0.7056,
+        "market": 0.6987,
         "best_odds": 1.41,
         "book": "Betfair",
-        "ev": -0.3305,
+        "ev": -0.3304,
         "kelly": 0.0
       },
       "books": 21,
+      "prices": {
+        "888sport": [
+          3.1,
+          1.36
+        ],
+        "Betfair": [
+          3.35,
+          1.41
+        ],
+        "Marathon Bet": [
+          3.18,
+          1.35
+        ],
+        "Betclic (FR)": [
+          3.15,
+          1.34
+        ],
+        "Unibet (FR)": [
+          2.9,
+          1.3
+        ],
+        "Winamax (FR)": [
+          2.95,
+          1.31
+        ],
+        "Winamax (DE)": [
+          3.2,
+          1.35
+        ],
+        "GTbets": [
+          3.31,
+          1.34
+        ],
+        "1xBet": [
+          3.15,
+          1.36
+        ],
+        "Tipico": [
+          3.2,
+          1.3
+        ],
+        "LeoVegas (SE)": [
+          3.05,
+          1.38
+        ],
+        "Unibet (SE)": [
+          3.05,
+          1.38
+        ],
+        "PMU (FR)": [
+          2.9,
+          1.32
+        ],
+        "Unibet (NL)": [
+          3.05,
+          1.38
+        ],
+        "Nordic Bet": [
+          3.25,
+          1.35
+        ],
+        "Betsson": [
+          3.25,
+          1.35
+        ],
+        "William Hill": [
+          3.1,
+          1.36
+        ],
+        "Pinnacle": [
+          3.28,
+          1.39
+        ],
+        "Coolbet": [
+          3.18,
+          1.36
+        ],
+        "Matchbook": [
+          3.35,
+          1.41
+        ],
+        "BetOnline.ag": [
+          3.14,
+          1.38
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.4986,
         "serve": 0.5301,
-        "w": 0.843
+        "w": 0.842
       },
-      "pinnacle_a": 0.2974,
+      "pinnacle_a": 0.2976,
       "flags": [
         [
           "disagree",
@@ -147,38 +401,116 @@
       "a": {
         "name": "Carlos Alcaraz",
         "key": "c-alcaraz",
-        "model": 0.8666,
+        "model": 0.8664,
         "fair_odds": 1.15,
-        "market": 0.8491,
-        "best_odds": 1.15,
+        "market": 0.8514,
+        "best_odds": 1.13,
         "book": "Betfair",
-        "ev": -0.0034,
+        "ev": -0.0209,
         "kelly": 0.0
       },
       "b": {
         "name": "Denis Shapovalov",
         "key": "d-shapovalov",
-        "model": 0.1334,
-        "fair_odds": 7.5,
-        "market": 0.1509,
-        "best_odds": 7.2,
+        "model": 0.1336,
+        "fair_odds": 7.49,
+        "market": 0.1486,
+        "best_odds": 8.0,
         "book": "Betfair",
-        "ev": -0.0398,
-        "kelly": 0.0
+        "ev": 0.0684,
+        "kelly": 0.0024
       },
       "books": 19,
+      "prices": {
+        "Betfair": [
+          1.13,
+          8.0
+        ],
+        "Unibet (FR)": [
+          1.08,
+          5.8
+        ],
+        "Matchbook": [
+          1.13,
+          8.0
+        ],
+        "Betclic (FR)": [
+          1.12,
+          6.0
+        ],
+        "Nordic Bet": [
+          1.12,
+          6.0
+        ],
+        "Marathon Bet": [
+          1.11,
+          6.25
+        ],
+        "Coolbet": [
+          1.12,
+          6.4
+        ],
+        "Betsson": [
+          1.12,
+          6.0
+        ],
+        "GTbets": [
+          1.1,
+          6.53
+        ],
+        "Winamax (DE)": [
+          1.12,
+          6.25
+        ],
+        "Winamax (FR)": [
+          1.09,
+          5.2
+        ],
+        "Pinnacle": [
+          1.13,
+          7.09
+        ],
+        "Unibet (NL)": [
+          1.11,
+          6.5
+        ],
+        "Unibet (SE)": [
+          1.11,
+          6.5
+        ],
+        "PMU (FR)": [
+          1.07,
+          6.0
+        ],
+        "Tipico": [
+          1.07,
+          6.7
+        ],
+        "888sport": [
+          1.12,
+          6.0
+        ],
+        "William Hill": [
+          1.12,
+          6.0
+        ],
+        "BetOnline.ag": [
+          1.12,
+          6.59
+        ]
+      },
       "court": "tokyo",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.8847,
-        "serve": 0.8607,
+        "serve": 0.8604,
         "w": 0.752
       },
-      "pinnacle_a": 0.8551,
+      "pinnacle_a": 0.8625,
       "flags": [
         [
           "retired",
-          "D. Shapovalov: retired from a match 60 days ago (2 in 6 months)"
+          "D. Shapovalov: retired from a match 61 days ago (2 in 6 months)"
         ]
       ]
     },
@@ -194,34 +526,124 @@
       "a": {
         "name": "Ekaterina Alexandrova",
         "key": "e-alexandrova",
-        "model": 0.3483,
+        "model": 0.3487,
         "fair_odds": 2.87,
-        "market": 0.3383,
+        "market": 0.3414,
         "best_odds": 2.95,
         "book": "Nordic Bet",
-        "ev": 0.0275,
-        "kelly": 0.0035
+        "ev": 0.0288,
+        "kelly": 0.0037
       },
       "b": {
         "name": "Diana Shnaider",
         "key": "d-shnaider",
-        "model": 0.6517,
-        "fair_odds": 1.53,
-        "market": 0.6617,
-        "best_odds": 1.5,
+        "model": 0.6513,
+        "fair_odds": 1.54,
+        "market": 0.6586,
+        "best_odds": 1.51,
         "book": "Betfair",
-        "ev": -0.0225,
+        "ev": -0.0166,
         "kelly": 0.0
       },
       "books": 22,
+      "prices": {
+        "Betfair": [
+          2.94,
+          1.51
+        ],
+        "LeoVegas (SE)": [
+          2.7,
+          1.47
+        ],
+        "Marathon Bet": [
+          2.76,
+          1.44
+        ],
+        "PMU (FR)": [
+          2.55,
+          1.41
+        ],
+        "Unibet (SE)": [
+          2.7,
+          1.47
+        ],
+        "888sport": [
+          2.6,
+          1.5
+        ],
+        "William Hill": [
+          2.6,
+          1.5
+        ],
+        "Unibet (NL)": [
+          2.7,
+          1.47
+        ],
+        "1xBet": [
+          2.75,
+          1.45
+        ],
+        "Unibet (FR)": [
+          2.7,
+          1.35
+        ],
+        "Betclic (FR)": [
+          2.9,
+          1.4
+        ],
+        "Nordic Bet": [
+          2.95,
+          1.41
+        ],
+        "Winamax (FR)": [
+          2.7,
+          1.36
+        ],
+        "Tipico": [
+          2.95,
+          1.35
+        ],
+        "Winamax (DE)": [
+          2.9,
+          1.4
+        ],
+        "GTbets": [
+          2.92,
+          1.46
+        ],
+        "Betsson": [
+          2.95,
+          1.41
+        ],
+        "Pinnacle": [
+          2.91,
+          1.47
+        ],
+        "Coolbet": [
+          2.78,
+          1.45
+        ],
+        "Matchbook": [
+          2.94,
+          1.51
+        ],
+        "BetOnline.ag": [
+          2.74,
+          1.5
+        ],
+        "BetAnything": [
+          2.7,
+          1.48
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.3573,
-        "serve": 0.3472,
+        "serve": 0.3477,
         "w": 0.892
       },
-      "pinnacle_a": 0.3387,
+      "pinnacle_a": 0.3356,
       "flags": []
     },
     {
@@ -236,32 +658,118 @@
       "a": {
         "name": "Hubert Hurkacz",
         "key": "h-hurkacz",
-        "model": 0.4717,
+        "model": 0.4714,
         "fair_odds": 2.12,
-        "market": 0.4212,
-        "best_odds": 2.4,
+        "market": 0.4208,
+        "best_odds": 2.42,
         "book": "Betfair",
-        "ev": 0.132,
-        "kelly": 0.0236
+        "ev": 0.1407,
+        "kelly": 0.0248
       },
       "b": {
         "name": "Karen Khachanov",
         "key": "k-khachanov",
-        "model": 0.5283,
+        "model": 0.5286,
         "fair_odds": 1.89,
-        "market": 0.5788,
+        "market": 0.5792,
         "best_odds": 1.72,
         "book": "GTbets",
-        "ev": -0.0913,
+        "ev": -0.0907,
         "kelly": 0.0
       },
       "books": 21,
+      "prices": {
+        "1xBet": [
+          2.32,
+          1.65
+        ],
+        "Betfair": [
+          2.42,
+          1.69
+        ],
+        "888sport": [
+          2.2,
+          1.67
+        ],
+        "Marathon Bet": [
+          2.28,
+          1.62
+        ],
+        "Betsson": [
+          2.23,
+          1.63
+        ],
+        "Nordic Bet": [
+          2.23,
+          1.63
+        ],
+        "Unibet (FR)": [
+          2.15,
+          1.58
+        ],
+        "Coolbet": [
+          2.25,
+          1.65
+        ],
+        "William Hill": [
+          2.2,
+          1.67
+        ],
+        "GTbets": [
+          2.25,
+          1.72
+        ],
+        "Betclic (FR)": [
+          2.23,
+          1.63
+        ],
+        "Winamax (FR)": [
+          2.25,
+          1.64
+        ],
+        "Winamax (DE)": [
+          2.3,
+          1.66
+        ],
+        "Matchbook": [
+          2.42,
+          1.69
+        ],
+        "Unibet (NL)": [
+          2.25,
+          1.65
+        ],
+        "PMU (FR)": [
+          2.15,
+          1.57
+        ],
+        "Unibet (SE)": [
+          2.25,
+          1.65
+        ],
+        "LeoVegas (SE)": [
+          2.25,
+          1.65
+        ],
+        "BetOnline.ag": [
+          2.35,
+          1.65
+        ],
+        "Pinnacle": [
+          2.34,
+          1.68
+        ],
+        "Tipico": [
+          2.25,
+          1.57
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.5729,
-        "serve": 0.4409,
-        "w": 0.767
+        "serve": 0.4404,
+        "w": 0.766
       },
       "pinnacle_a": 0.4179,
       "flags": []
@@ -278,34 +786,124 @@
       "a": {
         "name": "Polina Kudermetova",
         "key": "p-kudermetova",
-        "model": 0.0726,
-        "fair_odds": 13.77,
-        "market": 0.1099,
-        "best_odds": 11.0,
+        "model": 0.0728,
+        "fair_odds": 13.73,
+        "market": 0.1114,
+        "best_odds": 11.5,
         "book": "Betfair",
-        "ev": -0.2012,
+        "ev": -0.1626,
         "kelly": 0.0
       },
       "b": {
         "name": "Mirra Andreeva",
         "key": "m-andreeva",
-        "model": 0.9274,
+        "model": 0.9272,
         "fair_odds": 1.08,
-        "market": 0.8901,
-        "best_odds": 1.08,
+        "market": 0.8886,
+        "best_odds": 1.09,
         "book": "Betfair",
-        "ev": 0.0016,
-        "kelly": 0.0049
+        "ev": 0.0106,
+        "kelly": 0.0295
       },
       "books": 22,
+      "prices": {
+        "1xBet": [
+          8.5,
+          1.07
+        ],
+        "Betfair": [
+          11.5,
+          1.09
+        ],
+        "PMU (FR)": [
+          7.5,
+          1.03
+        ],
+        "Marathon Bet": [
+          8.5,
+          1.07
+        ],
+        "LeoVegas (SE)": [
+          8.0,
+          1.07
+        ],
+        "Unibet (NL)": [
+          8.0,
+          1.07
+        ],
+        "Unibet (SE)": [
+          8.0,
+          1.07
+        ],
+        "888sport": [
+          9.0,
+          1.06
+        ],
+        "Unibet (FR)": [
+          6.3,
+          1.05
+        ],
+        "Betclic (FR)": [
+          8.2,
+          1.07
+        ],
+        "Winamax (FR)": [
+          6.5,
+          1.05
+        ],
+        "Tipico": [
+          9.0,
+          1.03
+        ],
+        "Winamax (DE)": [
+          8.5,
+          1.07
+        ],
+        "GTbets": [
+          8.44,
+          1.08
+        ],
+        "Betsson": [
+          8.6,
+          1.07
+        ],
+        "William Hill": [
+          9.0,
+          1.06
+        ],
+        "Nordic Bet": [
+          8.6,
+          1.07
+        ],
+        "Pinnacle": [
+          10.23,
+          1.07
+        ],
+        "Coolbet": [
+          8.7,
+          1.07
+        ],
+        "Matchbook": [
+          11.5,
+          1.09
+        ],
+        "BetOnline.ag": [
+          8.53,
+          1.07
+        ],
+        "BetAnything": [
+          8.95,
+          1.06
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.16,
-        "serve": 0.0587,
-        "w": 0.863
+        "serve": 0.0589,
+        "w": 0.862
       },
-      "pinnacle_a": 0.0921,
+      "pinnacle_a": 0.0947,
       "flags": []
     },
     {
@@ -325,8 +923,8 @@
         "market": 0.607,
         "best_odds": 1.6,
         "book": "Betfair",
-        "ev": 0.0986,
-        "kelly": 0.0411
+        "ev": 0.0985,
+        "kelly": 0.041
       },
       "b": {
         "name": "Taylah Preston",
@@ -334,20 +932,110 @@
         "model": 0.3134,
         "fair_odds": 3.19,
         "market": 0.393,
-        "best_odds": 2.64,
-        "book": "Betfair",
-        "ev": -0.1727,
+        "best_odds": 2.66,
+        "book": "Matchbook",
+        "ev": -0.1663,
         "kelly": 0.0
       },
       "books": 22,
+      "prices": {
+        "Betfair": [
+          1.6,
+          2.64
+        ],
+        "PMU (FR)": [
+          1.51,
+          2.28
+        ],
+        "LeoVegas (SE)": [
+          1.57,
+          2.38
+        ],
+        "Unibet (SE)": [
+          1.57,
+          2.38
+        ],
+        "William Hill": [
+          1.57,
+          2.38
+        ],
+        "888sport": [
+          1.57,
+          2.38
+        ],
+        "Unibet (NL)": [
+          1.57,
+          2.38
+        ],
+        "1xBet": [
+          1.58,
+          2.38
+        ],
+        "Betclic (FR)": [
+          1.56,
+          2.39
+        ],
+        "Unibet (FR)": [
+          1.5,
+          2.25
+        ],
+        "Marathon Bet": [
+          1.56,
+          2.41
+        ],
+        "Nordic Bet": [
+          1.57,
+          2.42
+        ],
+        "Winamax (FR)": [
+          1.5,
+          2.25
+        ],
+        "Tipico": [
+          1.52,
+          2.35
+        ],
+        "Winamax (DE)": [
+          1.56,
+          2.4
+        ],
+        "GTbets": [
+          1.58,
+          2.41
+        ],
+        "Betsson": [
+          1.57,
+          2.42
+        ],
+        "Pinnacle": [
+          1.59,
+          2.54
+        ],
+        "Coolbet": [
+          1.57,
+          2.42
+        ],
+        "Matchbook": [
+          1.6,
+          2.66
+        ],
+        "BetOnline.ag": [
+          1.56,
+          2.53
+        ],
+        "BetAnything": [
+          1.57,
+          2.45
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.6159,
         "serve": 0.7065,
-        "w": 0.781
+        "w": 0.78
       },
-      "pinnacle_a": 0.6156,
+      "pinnacle_a": 0.615,
       "flags": []
     },
     {
@@ -364,32 +1052,118 @@
         "key": "a-de-minaur",
         "model": 0.6031,
         "fair_odds": 1.66,
-        "market": 0.5357,
-        "best_odds": 1.85,
+        "market": 0.5343,
+        "best_odds": 1.88,
         "book": "Matchbook",
-        "ev": 0.1157,
-        "kelly": 0.034
+        "ev": 0.1338,
+        "kelly": 0.038
       },
       "b": {
         "name": "Andrey Rublev",
         "key": "a-rublev",
         "model": 0.3969,
         "fair_odds": 2.52,
-        "market": 0.4643,
-        "best_odds": 2.14,
+        "market": 0.4657,
+        "best_odds": 2.12,
         "book": "Matchbook",
-        "ev": -0.1506,
+        "ev": -0.1586,
         "kelly": 0.0
       },
       "books": 21,
+      "prices": {
+        "Matchbook": [
+          1.88,
+          2.12
+        ],
+        "Coolbet": [
+          1.8,
+          2.02
+        ],
+        "Betfair": [
+          1.88,
+          2.12
+        ],
+        "Nordic Bet": [
+          1.79,
+          2.0
+        ],
+        "Betclic (FR)": [
+          1.77,
+          2.02
+        ],
+        "Unibet (FR)": [
+          1.69,
+          1.97
+        ],
+        "Betsson": [
+          1.79,
+          2.0
+        ],
+        "GTbets": [
+          1.78,
+          2.07
+        ],
+        "Marathon Bet": [
+          1.75,
+          2.06
+        ],
+        "1xBet": [
+          1.79,
+          2.09
+        ],
+        "Winamax (FR)": [
+          1.7,
+          1.94
+        ],
+        "Winamax (DE)": [
+          1.78,
+          2.0
+        ],
+        "LeoVegas (SE)": [
+          1.74,
+          2.08
+        ],
+        "PMU (FR)": [
+          1.67,
+          2.0
+        ],
+        "Unibet (SE)": [
+          1.74,
+          2.08
+        ],
+        "Unibet (NL)": [
+          1.74,
+          2.08
+        ],
+        "Tipico": [
+          1.72,
+          2.0
+        ],
+        "888sport": [
+          1.8,
+          2.0
+        ],
+        "William Hill": [
+          1.8,
+          2.0
+        ],
+        "Pinnacle": [
+          1.85,
+          2.04
+        ],
+        "BetOnline.ag": [
+          1.8,
+          2.05
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.6334,
         "serve": 0.5945,
-        "w": 0.78
+        "w": 0.779
       },
-      "pinnacle_a": 0.532,
+      "pinnacle_a": 0.5244,
       "flags": []
     },
     {
@@ -406,9 +1180,9 @@
         "key": "l-noskova",
         "model": 0.7835,
         "fair_odds": 1.28,
-        "market": 0.8419,
+        "market": 0.843,
         "best_odds": 1.15,
-        "book": "Betfair",
+        "book": "GTbets",
         "ev": -0.099,
         "kelly": 0.0
       },
@@ -417,21 +1191,107 @@
         "key": "v-golubic",
         "model": 0.2165,
         "fair_odds": 4.62,
-        "market": 0.1581,
-        "best_odds": 7.4,
+        "market": 0.157,
+        "best_odds": 7.6,
         "book": "Betfair",
-        "ev": 0.6024,
-        "kelly": 0.0235
+        "ev": 0.6455,
+        "kelly": 0.0245
       },
       "books": 21,
+      "prices": {
+        "888sport": [
+          1.12,
+          6.0
+        ],
+        "Betfair": [
+          1.14,
+          7.6
+        ],
+        "Marathon Bet": [
+          1.13,
+          5.9
+        ],
+        "Betclic (FR)": [
+          1.12,
+          5.8
+        ],
+        "Unibet (FR)": [
+          1.1,
+          5.0
+        ],
+        "Winamax (FR)": [
+          1.1,
+          5.1
+        ],
+        "Winamax (DE)": [
+          1.12,
+          6.0
+        ],
+        "1xBet": [
+          1.13,
+          5.9
+        ],
+        "Tipico": [
+          1.1,
+          5.7
+        ],
+        "GTbets": [
+          1.15,
+          5.86
+        ],
+        "Unibet (SE)": [
+          1.14,
+          5.75
+        ],
+        "PMU (FR)": [
+          1.09,
+          5.2
+        ],
+        "Unibet (NL)": [
+          1.14,
+          5.75
+        ],
+        "LeoVegas (SE)": [
+          1.14,
+          5.75
+        ],
+        "Nordic Bet": [
+          1.13,
+          6.2
+        ],
+        "Betsson": [
+          1.13,
+          6.2
+        ],
+        "William Hill": [
+          1.12,
+          6.0
+        ],
+        "Pinnacle": [
+          1.13,
+          6.98
+        ],
+        "Coolbet": [
+          1.12,
+          6.4
+        ],
+        "Matchbook": [
+          1.14,
+          7.6
+        ],
+        "BetOnline.ag": [
+          1.1,
+          7.32
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.8196,
         "serve": 0.7782,
-        "w": 0.873
+        "w": 0.872
       },
-      "pinnacle_a": 0.8586,
+      "pinnacle_a": 0.8607,
       "flags": []
     },
     {
@@ -446,32 +1306,114 @@
       "a": {
         "name": "Valentin Vacherot",
         "key": "v-vacherot",
-        "model": 0.2585,
-        "fair_odds": 3.87,
+        "model": 0.2591,
+        "fair_odds": 3.86,
         "market": 0.2344,
         "best_odds": 4.4,
         "book": "Betfair",
-        "ev": 0.1374,
-        "kelly": 0.0101
+        "ev": 0.14,
+        "kelly": 0.0103
       },
       "b": {
         "name": "Arthur Fils",
         "key": "a-fils",
-        "model": 0.7415,
+        "model": 0.7409,
         "fair_odds": 1.35,
         "market": 0.7656,
         "best_odds": 1.28,
         "book": "Betfair",
-        "ev": -0.0509,
+        "ev": -0.0516,
         "kelly": 0.0
       },
       "books": 20,
+      "prices": {
+        "PMU (FR)": [
+          3.75,
+          1.2
+        ],
+        "Unibet (NL)": [
+          3.95,
+          1.25
+        ],
+        "Betfair": [
+          4.4,
+          1.28
+        ],
+        "William Hill": [
+          4.0,
+          1.25
+        ],
+        "888sport": [
+          4.0,
+          1.25
+        ],
+        "Unibet (SE)": [
+          3.95,
+          1.25
+        ],
+        "Betsson": [
+          4.0,
+          1.24
+        ],
+        "Nordic Bet": [
+          4.0,
+          1.24
+        ],
+        "Unibet (FR)": [
+          4.15,
+          1.22
+        ],
+        "Marathon Bet": [
+          3.9,
+          1.25
+        ],
+        "Betclic (FR)": [
+          4.0,
+          1.24
+        ],
+        "GTbets": [
+          4.04,
+          1.27
+        ],
+        "Tipico": [
+          4.0,
+          1.2
+        ],
+        "Winamax (DE)": [
+          4.3,
+          1.25
+        ],
+        "Winamax (FR)": [
+          4.1,
+          1.23
+        ],
+        "Coolbet": [
+          4.0,
+          1.25
+        ],
+        "Matchbook": [
+          4.4,
+          1.28
+        ],
+        "Pinnacle": [
+          4.38,
+          1.26
+        ],
+        "BetOnline.ag": [
+          4.04,
+          1.26
+        ],
+        "BetAnything": [
+          4.1,
+          1.25
+        ]
+      },
       "court": "tokyo",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.2709,
-        "serve": 0.2543,
-        "w": 0.745
+        "serve": 0.255,
+        "w": 0.744
       },
       "pinnacle_a": 0.2234,
       "flags": []
@@ -488,34 +1430,112 @@
       "a": {
         "name": "Jiri Lehecka",
         "key": "j-lehecka",
-        "model": 0.705,
+        "model": 0.7047,
         "fair_odds": 1.42,
-        "market": 0.6933,
-        "best_odds": 1.41,
+        "market": 0.6932,
+        "best_odds": 1.42,
         "book": "Betfair",
-        "ev": -0.006,
-        "kelly": 0.0
+        "ev": 0.0006,
+        "kelly": 0.0004
       },
       "b": {
         "name": "Adolfo Daniel Vallejo",
         "key": "d-vallejo",
-        "model": 0.295,
+        "model": 0.2953,
         "fair_odds": 3.39,
-        "market": 0.3067,
+        "market": 0.3068,
         "best_odds": 3.3,
         "book": "Betfair",
-        "ev": -0.0264,
+        "ev": -0.0254,
         "kelly": 0.0
       },
       "books": 19,
+      "prices": {
+        "Winamax (FR)": [
+          1.33,
+          2.85
+        ],
+        "Betsson": [
+          1.37,
+          3.05
+        ],
+        "Coolbet": [
+          1.37,
+          3.1
+        ],
+        "Betfair": [
+          1.42,
+          3.3
+        ],
+        "Winamax (DE)": [
+          1.37,
+          3.05
+        ],
+        "GTbets": [
+          1.4,
+          3.14
+        ],
+        "Unibet (FR)": [
+          1.31,
+          2.95
+        ],
+        "Nordic Bet": [
+          1.37,
+          3.05
+        ],
+        "Betclic (FR)": [
+          1.37,
+          3.05
+        ],
+        "Marathon Bet": [
+          1.36,
+          3.12
+        ],
+        "Matchbook": [
+          1.42,
+          3.3
+        ],
+        "Pinnacle": [
+          1.38,
+          3.29
+        ],
+        "Tipico": [
+          1.35,
+          2.95
+        ],
+        "William Hill": [
+          1.36,
+          3.1
+        ],
+        "888sport": [
+          1.36,
+          3.1
+        ],
+        "Unibet (NL)": [
+          1.36,
+          3.1
+        ],
+        "PMU (FR)": [
+          1.32,
+          2.95
+        ],
+        "Unibet (SE)": [
+          1.36,
+          3.1
+        ],
+        "BetOnline.ag": [
+          1.38,
+          3.15
+        ]
+      },
       "court": "tokyo",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.7211,
-        "serve": 0.6997,
+        "serve": 0.6993,
         "w": 0.753
       },
-      "pinnacle_a": 0.7026,
+      "pinnacle_a": 0.7045,
       "flags": []
     },
     {
@@ -532,7 +1552,7 @@
         "key": "d-medvedev",
         "model": 0.6322,
         "fair_odds": 1.58,
-        "market": 0.6895,
+        "market": 0.6893,
         "best_odds": 1.42,
         "book": "Betfair",
         "ev": -0.1023,
@@ -543,13 +1563,99 @@
         "key": "f-cerundolo",
         "model": 0.3678,
         "fair_odds": 2.72,
-        "market": 0.3105,
+        "market": 0.3107,
         "best_odds": 3.3,
-        "book": "Betfair",
-        "ev": 0.2138,
+        "book": "Matchbook",
+        "ev": 0.2139,
         "kelly": 0.0232
       },
       "books": 21,
+      "prices": {
+        "Coolbet": [
+          1.38,
+          3.07
+        ],
+        "888sport": [
+          1.4,
+          2.9
+        ],
+        "Betfair": [
+          1.42,
+          3.25
+        ],
+        "William Hill": [
+          1.4,
+          2.9
+        ],
+        "Matchbook": [
+          1.42,
+          3.3
+        ],
+        "Pinnacle": [
+          1.39,
+          3.21
+        ],
+        "Marathon Bet": [
+          1.36,
+          3.1
+        ],
+        "1xBet": [
+          1.39,
+          3.16
+        ],
+        "GTbets": [
+          1.38,
+          3.05
+        ],
+        "Betsson": [
+          1.37,
+          3.0
+        ],
+        "Unibet (FR)": [
+          1.32,
+          2.9
+        ],
+        "Nordic Bet": [
+          1.37,
+          3.0
+        ],
+        "Betclic (FR)": [
+          1.37,
+          3.0
+        ],
+        "Winamax (FR)": [
+          1.33,
+          2.8
+        ],
+        "Winamax (DE)": [
+          1.38,
+          3.05
+        ],
+        "Tipico": [
+          1.35,
+          2.95
+        ],
+        "Unibet (SE)": [
+          1.36,
+          3.1
+        ],
+        "LeoVegas (SE)": [
+          1.36,
+          3.1
+        ],
+        "Unibet (NL)": [
+          1.36,
+          3.1
+        ],
+        "PMU (FR)": [
+          1.32,
+          2.95
+        ],
+        "BetOnline.ag": [
+          1.39,
+          3.11
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
@@ -557,7 +1663,7 @@
         "serve": 0.6435,
         "w": 0.777
       },
-      "pinnacle_a": 0.6985,
+      "pinnacle_a": 0.6978,
       "flags": []
     },
     {
@@ -574,9 +1680,9 @@
         "key": "a-zverev",
         "model": 0.6762,
         "fair_odds": 1.48,
-        "market": 0.7244,
+        "market": 0.7154,
         "best_odds": 1.41,
-        "book": "Betfair",
+        "book": "Matchbook",
         "ev": -0.0466,
         "kelly": 0.0
       },
@@ -585,21 +1691,111 @@
         "key": "n-djokovic",
         "model": 0.3238,
         "fair_odds": 3.09,
-        "market": 0.2756,
+        "market": 0.2846,
         "best_odds": 3.6,
         "book": "888sport",
-        "ev": 0.1657,
+        "ev": 0.1658,
         "kelly": 0.0159
       },
       "books": 22,
+      "prices": {
+        "Marathon Bet": [
+          1.33,
+          3.28
+        ],
+        "Coolbet": [
+          1.33,
+          3.35
+        ],
+        "Matchbook": [
+          1.41,
+          3.35
+        ],
+        "Betfair": [
+          1.41,
+          3.35
+        ],
+        "888sport": [
+          1.29,
+          3.6
+        ],
+        "1xBet": [
+          1.35,
+          3.4
+        ],
+        "William Hill": [
+          1.29,
+          3.6
+        ],
+        "GTbets": [
+          1.34,
+          3.55
+        ],
+        "Unibet (FR)": [
+          1.29,
+          3.3
+        ],
+        "Betclic (FR)": [
+          1.34,
+          3.2
+        ],
+        "Betsson": [
+          1.32,
+          3.3
+        ],
+        "Nordic Bet": [
+          1.32,
+          3.3
+        ],
+        "Tipico": [
+          1.27,
+          3.4
+        ],
+        "Pinnacle": [
+          1.37,
+          3.33
+        ],
+        "Winamax (FR)": [
+          1.28,
+          3.05
+        ],
+        "Winamax (DE)": [
+          1.32,
+          3.35
+        ],
+        "BetOnline.ag": [
+          1.36,
+          3.25
+        ],
+        "LeoVegas (SE)": [
+          1.32,
+          3.35
+        ],
+        "Unibet (NL)": [
+          1.32,
+          3.35
+        ],
+        "Unibet (SE)": [
+          1.32,
+          3.35
+        ],
+        "PMU (FR)": [
+          1.28,
+          3.2
+        ],
+        "BetAnything": [
+          1.36,
+          3.29
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.6294,
         "serve": 0.6925,
-        "w": 0.742
+        "w": 0.741
       },
-      "pinnacle_a": 0.7091,
+      "pinnacle_a": 0.7085,
       "flags": []
     },
     {
@@ -614,34 +1810,124 @@
       "a": {
         "name": "Sara Bejlek",
         "key": "s-bejlek",
-        "model": 0.2991,
-        "fair_odds": 3.34,
-        "market": 0.2762,
-        "best_odds": 3.9,
+        "model": 0.2987,
+        "fair_odds": 3.35,
+        "market": 0.2764,
+        "best_odds": 3.85,
         "book": "Betfair",
-        "ev": 0.1666,
-        "kelly": 0.0144
+        "ev": 0.1501,
+        "kelly": 0.0132
       },
       "b": {
         "name": "Naomi Osaka",
         "key": "n-osaka",
-        "model": 0.7009,
+        "model": 0.7013,
         "fair_odds": 1.43,
-        "market": 0.7238,
+        "market": 0.7236,
         "best_odds": 1.34,
         "book": "Betfair",
-        "ev": -0.0608,
+        "ev": -0.0603,
         "kelly": 0.0
       },
       "books": 22,
+      "prices": {
+        "LeoVegas (SE)": [
+          3.45,
+          1.3
+        ],
+        "Betfair": [
+          3.85,
+          1.34
+        ],
+        "PMU (FR)": [
+          3.25,
+          1.26
+        ],
+        "Unibet (SE)": [
+          3.45,
+          1.3
+        ],
+        "Unibet (NL)": [
+          3.45,
+          1.3
+        ],
+        "Marathon Bet": [
+          3.34,
+          1.32
+        ],
+        "1xBet": [
+          3.32,
+          1.33
+        ],
+        "GTbets": [
+          3.52,
+          1.31
+        ],
+        "888sport": [
+          3.3,
+          1.33
+        ],
+        "Betclic (FR)": [
+          3.45,
+          1.3
+        ],
+        "Unibet (FR)": [
+          3.15,
+          1.26
+        ],
+        "Tipico": [
+          3.4,
+          1.27
+        ],
+        "Winamax (FR)": [
+          3.3,
+          1.33
+        ],
+        "Winamax (DE)": [
+          3.45,
+          1.34
+        ],
+        "Betsson": [
+          3.5,
+          1.31
+        ],
+        "Nordic Bet": [
+          3.5,
+          1.31
+        ],
+        "William Hill": [
+          3.3,
+          1.33
+        ],
+        "Pinnacle": [
+          3.51,
+          1.34
+        ],
+        "Coolbet": [
+          3.42,
+          1.32
+        ],
+        "Matchbook": [
+          3.85,
+          1.34
+        ],
+        "BetOnline.ag": [
+          3.56,
+          1.32
+        ],
+        "BetAnything": [
+          3.4,
+          1.32
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.2778,
-        "serve": 0.3025,
-        "w": 0.864
+        "serve": 0.302,
+        "w": 0.863
       },
-      "pinnacle_a": 0.2752,
+      "pinnacle_a": 0.2763,
       "flags": []
     },
     {
@@ -656,31 +1942,121 @@
       "a": {
         "name": "Karolina Muchova",
         "key": "k-muchova",
-        "model": 0.8372,
+        "model": 0.837,
         "fair_odds": 1.19,
         "market": 0.7487,
         "best_odds": 1.29,
         "book": "Betfair",
-        "ev": 0.08,
-        "kelly": 0.069
+        "ev": 0.0797,
+        "kelly": 0.0687
       },
       "b": {
         "name": "Liudmila Samsonova",
         "key": "l-samsonova",
-        "model": 0.1628,
-        "fair_odds": 6.14,
+        "model": 0.163,
+        "fair_odds": 6.13,
         "market": 0.2513,
         "best_odds": 4.3,
         "book": "Betfair",
-        "ev": -0.3002,
+        "ev": -0.2989,
         "kelly": 0.0
       },
       "books": 22,
+      "prices": {
+        "Betfair": [
+          1.29,
+          4.3
+        ],
+        "PMU (FR)": [
+          1.23,
+          3.5
+        ],
+        "Marathon Bet": [
+          1.26,
+          3.8
+        ],
+        "LeoVegas (SE)": [
+          1.27,
+          3.75
+        ],
+        "Unibet (SE)": [
+          1.27,
+          3.75
+        ],
+        "Unibet (NL)": [
+          1.27,
+          3.75
+        ],
+        "William Hill": [
+          1.29,
+          3.6
+        ],
+        "888sport": [
+          1.29,
+          3.6
+        ],
+        "1xBet": [
+          1.27,
+          3.76
+        ],
+        "Unibet (FR)": [
+          1.23,
+          3.35
+        ],
+        "Betclic (FR)": [
+          1.26,
+          3.7
+        ],
+        "Winamax (FR)": [
+          1.23,
+          3.4
+        ],
+        "Tipico": [
+          1.22,
+          3.8
+        ],
+        "Winamax (DE)": [
+          1.27,
+          3.75
+        ],
+        "GTbets": [
+          1.27,
+          3.76
+        ],
+        "Betsson": [
+          1.27,
+          3.8
+        ],
+        "Nordic Bet": [
+          1.27,
+          3.8
+        ],
+        "Pinnacle": [
+          1.27,
+          4.1
+        ],
+        "Coolbet": [
+          1.27,
+          3.8
+        ],
+        "Matchbook": [
+          1.29,
+          4.3
+        ],
+        "BetOnline.ag": [
+          1.27,
+          3.88
+        ],
+        "BetAnything": [
+          1.27,
+          3.85
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.8304,
-        "serve": 0.8382,
+        "serve": 0.8379,
         "w": 0.878
       },
       "pinnacle_a": 0.7635,
@@ -698,32 +2074,106 @@
       "a": {
         "name": "Alina Charaeva",
         "key": "a-charaeva",
-        "model": 0.2733,
-        "fair_odds": 3.66,
-        "market": 0.3794,
+        "model": 0.2737,
+        "fair_odds": 3.65,
+        "market": 0.3795,
         "best_odds": 2.6,
         "book": "Betfair",
-        "ev": -0.2893,
+        "ev": -0.2884,
         "kelly": 0.0
       },
       "b": {
         "name": "Sonay Kartal",
         "key": "s-kartal",
-        "model": 0.7267,
+        "model": 0.7263,
         "fair_odds": 1.38,
-        "market": 0.6206,
+        "market": 0.6205,
         "best_odds": 1.56,
         "book": "GTbets",
-        "ev": 0.1336,
-        "kelly": 0.0596
+        "ev": 0.133,
+        "kelly": 0.0594
       },
       "books": 18,
+      "prices": {
+        "Betfair": [
+          2.6,
+          1.45
+        ],
+        "888sport": [
+          2.5,
+          1.53
+        ],
+        "Betclic (FR)": [
+          2.34,
+          1.49
+        ],
+        "Matchbook": [
+          2.4,
+          1.37
+        ],
+        "Unibet (FR)": [
+          2.3,
+          1.47
+        ],
+        "William Hill": [
+          2.5,
+          1.53
+        ],
+        "1xBet": [
+          2.5,
+          1.53
+        ],
+        "Marathon Bet": [
+          2.54,
+          1.51
+        ],
+        "GTbets": [
+          2.44,
+          1.56
+        ],
+        "Betsson": [
+          2.49,
+          1.54
+        ],
+        "Nordic Bet": [
+          2.49,
+          1.54
+        ],
+        "Winamax (FR)": [
+          2.3,
+          1.47
+        ],
+        "Winamax (DE)": [
+          2.45,
+          1.54
+        ],
+        "Tipico": [
+          2.5,
+          1.47
+        ],
+        "LeoVegas (SE)": [
+          2.5,
+          1.53
+        ],
+        "PMU (FR)": [
+          2.38,
+          1.45
+        ],
+        "Unibet (NL)": [
+          2.5,
+          1.53
+        ],
+        "Unibet (SE)": [
+          2.5,
+          1.53
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.3088,
-        "serve": 0.2624,
-        "w": 0.764
+        "serve": 0.2629,
+        "w": 0.763
       },
       "flags": []
     },
@@ -739,37 +2189,111 @@
       "a": {
         "name": "Belinda Bencic",
         "key": "b-bencic",
-        "model": 0.7472,
+        "model": 0.7469,
         "fair_odds": 1.34,
         "market": 0.6528,
         "best_odds": 1.46,
         "book": "Nordic Bet",
-        "ev": 0.091,
-        "kelly": 0.0494
+        "ev": 0.0905,
+        "kelly": 0.0492
       },
       "b": {
         "name": "Ann Li",
         "key": "a-li",
-        "model": 0.2528,
-        "fair_odds": 3.96,
+        "model": 0.2531,
+        "fair_odds": 3.95,
         "market": 0.3472,
         "best_odds": 2.85,
         "book": "Unibet (NL)",
-        "ev": -0.2796,
+        "ev": -0.2787,
         "kelly": 0.0
       },
       "books": 18,
+      "prices": {
+        "Betfair": [
+          1.43,
+          2.42
+        ],
+        "Matchbook": [
+          1.37,
+          2.22
+        ],
+        "1xBet": [
+          1.44,
+          2.79
+        ],
+        "William Hill": [
+          1.44,
+          2.75
+        ],
+        "GTbets": [
+          1.44,
+          2.8
+        ],
+        "888sport": [
+          1.44,
+          2.75
+        ],
+        "Unibet (FR)": [
+          1.39,
+          2.5
+        ],
+        "Marathon Bet": [
+          1.43,
+          2.8
+        ],
+        "Betclic (FR)": [
+          1.41,
+          2.55
+        ],
+        "Nordic Bet": [
+          1.46,
+          2.75
+        ],
+        "Winamax (DE)": [
+          1.46,
+          2.7
+        ],
+        "Betsson": [
+          1.46,
+          2.75
+        ],
+        "Winamax (FR)": [
+          1.4,
+          2.5
+        ],
+        "Tipico": [
+          1.4,
+          2.7
+        ],
+        "Unibet (NL)": [
+          1.42,
+          2.85
+        ],
+        "Unibet (SE)": [
+          1.42,
+          2.85
+        ],
+        "LeoVegas (SE)": [
+          1.42,
+          2.85
+        ],
+        "PMU (FR)": [
+          1.36,
+          2.7
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.7791,
-        "serve": 0.7425,
-        "w": 0.871
+        "serve": 0.7421,
+        "w": 0.87
       },
       "flags": [
         [
           "retired",
-          "B. Bencic: retired from a match 48 days ago"
+          "B. Bencic: retired from a match 49 days ago"
         ]
       ]
     },
@@ -785,32 +2309,102 @@
       "a": {
         "name": "Coco Gauff",
         "key": "c-gauff",
-        "model": 0.9182,
+        "model": 0.9184,
         "fair_odds": 1.09,
-        "market": 0.9115,
-        "best_odds": 1.07,
+        "market": 0.9109,
+        "best_odds": 1.06,
         "book": "Betfair",
-        "ev": -0.0176,
+        "ev": -0.0265,
         "kelly": 0.0
       },
       "b": {
         "name": "Sun Xinran",
         "key": "x-sun",
-        "model": 0.0818,
-        "fair_odds": 12.22,
-        "market": 0.0885,
+        "model": 0.0816,
+        "fair_odds": 12.25,
+        "market": 0.0891,
         "best_odds": 13.0,
         "book": "Unibet (NL)",
-        "ev": 0.0639,
+        "ev": 0.0614,
         "kelly": 0.0013
       },
-      "books": 16,
+      "books": 17,
+      "prices": {
+        "Betsson": [
+          1.04,
+          12.0
+        ],
+        "Unibet (FR)": [
+          1.02,
+          7.1
+        ],
+        "Betfair": [
+          1.06,
+          11.0
+        ],
+        "William Hill": [
+          1.05,
+          10.0
+        ],
+        "888sport": [
+          1.05,
+          10.0
+        ],
+        "GTbets": [
+          1.05,
+          11.34
+        ],
+        "Betclic (FR)": [
+          1.02,
+          8.0
+        ],
+        "Marathon Bet": [
+          1.02,
+          12.75
+        ],
+        "Winamax (FR)": [
+          1.02,
+          7.5
+        ],
+        "Nordic Bet": [
+          1.04,
+          12.0
+        ],
+        "Winamax (DE)": [
+          1.03,
+          11.5
+        ],
+        "1xBet": [
+          1.02,
+          12.7
+        ],
+        "Tipico": [
+          1.01,
+          11.0
+        ],
+        "Unibet (NL)": [
+          1.03,
+          13.0
+        ],
+        "LeoVegas (SE)": [
+          1.03,
+          13.0
+        ],
+        "Unibet (SE)": [
+          1.03,
+          13.0
+        ],
+        "Matchbook": [
+          1.05,
+          9.6
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.9264,
-        "serve": 0.896,
-        "w": 0.271
+        "serve": 0.8964,
+        "w": 0.269
       },
       "flags": [
         [
@@ -835,31 +2429,113 @@
       "a": {
         "name": "Donna Vekic",
         "key": "d-vekic",
-        "model": 0.0488,
-        "fair_odds": 20.48,
+        "model": 0.049,
+        "fair_odds": 20.43,
         "market": 0.1247,
         "best_odds": 9.92,
         "book": "Pinnacle",
-        "ev": -0.5156,
+        "ev": -0.5144,
         "kelly": 0.0
       },
       "b": {
         "name": "Iga Swiatek",
         "key": "i-swiatek",
-        "model": 0.9512,
+        "model": 0.951,
         "fair_odds": 1.05,
         "market": 0.8753,
         "best_odds": 1.11,
         "book": "Betfair",
-        "ev": 0.0558,
-        "kelly": 0.1268
+        "ev": 0.0557,
+        "kelly": 0.1265
       },
       "books": 20,
+      "prices": {
+        "Betfair": [
+          8.6,
+          1.11
+        ],
+        "Unibet (FR)": [
+          5.9,
+          1.05
+        ],
+        "888sport": [
+          6.5,
+          1.11
+        ],
+        "Betsson": [
+          8.2,
+          1.08
+        ],
+        "William Hill": [
+          6.5,
+          1.11
+        ],
+        "Marathon Bet": [
+          8.0,
+          1.07
+        ],
+        "Nordic Bet": [
+          8.2,
+          1.08
+        ],
+        "1xBet": [
+          8.0,
+          1.07
+        ],
+        "Betclic (FR)": [
+          6.4,
+          1.06
+        ],
+        "GTbets": [
+          7.99,
+          1.09
+        ],
+        "Winamax (FR)": [
+          6.0,
+          1.05
+        ],
+        "Winamax (DE)": [
+          8.0,
+          1.07
+        ],
+        "PMU (FR)": [
+          7.0,
+          1.05
+        ],
+        "Unibet (SE)": [
+          7.5,
+          1.09
+        ],
+        "Unibet (NL)": [
+          7.5,
+          1.09
+        ],
+        "LeoVegas (SE)": [
+          7.5,
+          1.09
+        ],
+        "Tipico": [
+          8.2,
+          1.04
+        ],
+        "Matchbook": [
+          9.2,
+          1.08
+        ],
+        "Pinnacle": [
+          9.92,
+          1.07
+        ],
+        "BetOnline.ag": [
+          8.49,
+          1.08
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.1025,
-        "serve": 0.0407,
+        "serve": 0.0408,
         "w": 0.868
       },
       "pinnacle_a": 0.0974,
@@ -877,31 +2553,105 @@
       "a": {
         "name": "Maria Sakkari",
         "key": "m-sakkari",
-        "model": 0.2949,
+        "model": 0.2953,
         "fair_odds": 3.39,
-        "market": 0.2986,
-        "best_odds": 3.3,
-        "book": "Unibet (SE)",
-        "ev": -0.0268,
-        "kelly": 0.0
+        "market": 0.2818,
+        "best_odds": 3.6,
+        "book": "888sport",
+        "ev": 0.063,
+        "kelly": 0.0061
       },
       "b": {
         "name": "Elina Svitolina",
         "key": "e-svitolina",
-        "model": 0.7051,
+        "model": 0.7047,
         "fair_odds": 1.42,
-        "market": 0.7014,
-        "best_odds": 1.36,
-        "book": "888sport",
-        "ev": -0.0411,
+        "market": 0.7182,
+        "best_odds": 1.35,
+        "book": "Betfair",
+        "ev": -0.0486,
         "kelly": 0.0
       },
       "books": 18,
+      "prices": {
+        "GTbets": [
+          3.54,
+          1.34
+        ],
+        "Betfair": [
+          3.25,
+          1.35
+        ],
+        "Matchbook": [
+          3.0,
+          1.3
+        ],
+        "Betsson": [
+          3.5,
+          1.31
+        ],
+        "Marathon Bet": [
+          3.42,
+          1.31
+        ],
+        "Nordic Bet": [
+          3.5,
+          1.31
+        ],
+        "Unibet (FR)": [
+          3.05,
+          1.26
+        ],
+        "888sport": [
+          3.6,
+          1.29
+        ],
+        "William Hill": [
+          3.6,
+          1.29
+        ],
+        "Betclic (FR)": [
+          3.2,
+          1.27
+        ],
+        "Winamax (FR)": [
+          3.1,
+          1.26
+        ],
+        "Winamax (DE)": [
+          3.45,
+          1.31
+        ],
+        "1xBet": [
+          3.38,
+          1.32
+        ],
+        "Tipico": [
+          3.4,
+          1.27
+        ],
+        "PMU (FR)": [
+          3.1,
+          1.28
+        ],
+        "Unibet (SE)": [
+          3.3,
+          1.34
+        ],
+        "LeoVegas (SE)": [
+          3.3,
+          1.34
+        ],
+        "Unibet (NL)": [
+          3.3,
+          1.34
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.2434,
-        "serve": 0.3017,
+        "serve": 0.3022,
         "w": 0.883
       },
       "flags": []
@@ -918,38 +2668,120 @@
       "a": {
         "name": "Jelena Ostapenko",
         "key": "j-ostapenko",
-        "model": 0.27,
+        "model": 0.2704,
         "fair_odds": 3.7,
-        "market": 0.3843,
+        "market": 0.3845,
         "best_odds": 2.56,
         "book": "Matchbook",
-        "ev": -0.3088,
+        "ev": -0.3077,
         "kelly": 0.0
       },
       "b": {
         "name": "Elise Mertens",
         "key": "e-mertens",
-        "model": 0.73,
+        "model": 0.7296,
         "fair_odds": 1.37,
-        "market": 0.6157,
-        "best_odds": 1.57,
-        "book": "Pinnacle",
-        "ev": 0.1461,
-        "kelly": 0.0641
+        "market": 0.6155,
+        "best_odds": 1.58,
+        "book": "Betfair",
+        "ev": 0.1527,
+        "kelly": 0.0658
       },
       "books": 20,
+      "prices": {
+        "Betfair": [
+          2.44,
+          1.58
+        ],
+        "888sport": [
+          2.5,
+          1.53
+        ],
+        "Betsson": [
+          2.46,
+          1.55
+        ],
+        "Unibet (FR)": [
+          2.25,
+          1.48
+        ],
+        "Marathon Bet": [
+          2.48,
+          1.53
+        ],
+        "Nordic Bet": [
+          2.46,
+          1.55
+        ],
+        "William Hill": [
+          2.5,
+          1.53
+        ],
+        "1xBet": [
+          2.46,
+          1.55
+        ],
+        "Betclic (FR)": [
+          2.43,
+          1.54
+        ],
+        "Winamax (FR)": [
+          2.25,
+          1.48
+        ],
+        "Winamax (DE)": [
+          2.45,
+          1.54
+        ],
+        "GTbets": [
+          2.41,
+          1.55
+        ],
+        "Unibet (NL)": [
+          2.5,
+          1.53
+        ],
+        "LeoVegas (SE)": [
+          2.5,
+          1.53
+        ],
+        "PMU (FR)": [
+          2.38,
+          1.47
+        ],
+        "Unibet (SE)": [
+          2.5,
+          1.53
+        ],
+        "Tipico": [
+          2.5,
+          1.47
+        ],
+        "Matchbook": [
+          2.56,
+          1.57
+        ],
+        "Pinnacle": [
+          2.54,
+          1.57
+        ],
+        "BetOnline.ag": [
+          2.51,
+          1.57
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.4034,
-        "serve": 0.2485,
+        "serve": 0.2489,
         "w": 0.861
       },
       "pinnacle_a": 0.382,
       "flags": [
         [
           "retired",
-          "J. Ostapenko: retired from a match 60 days ago (2 in 6 months)"
+          "J. Ostapenko: retired from a match 61 days ago (2 in 6 months)"
         ]
       ]
     },
@@ -965,31 +2797,105 @@
       "a": {
         "name": "Iva Jović",
         "key": "i-jovic",
-        "model": 0.7412,
+        "model": 0.7416,
         "fair_odds": 1.35,
         "market": 0.7799,
         "best_odds": 1.23,
         "book": "1xBet",
-        "ev": -0.0884,
+        "ev": -0.0879,
         "kelly": 0.0
       },
       "b": {
         "name": "Kamilla Rakhimova",
         "key": "k-rakhimova",
-        "model": 0.2588,
-        "fair_odds": 3.86,
+        "model": 0.2584,
+        "fair_odds": 3.87,
         "market": 0.2201,
         "best_odds": 4.7,
         "book": "Betsson",
-        "ev": 0.2165,
-        "kelly": 0.0146
+        "ev": 0.2146,
+        "kelly": 0.0145
       },
       "books": 18,
+      "prices": {
+        "Matchbook": [
+          1.18,
+          2.7
+        ],
+        "Betsson": [
+          1.2,
+          4.7
+        ],
+        "Unibet (FR)": [
+          1.16,
+          3.9
+        ],
+        "Betfair": [
+          1.22,
+          4.3
+        ],
+        "William Hill": [
+          1.22,
+          4.2
+        ],
+        "888sport": [
+          1.22,
+          4.2
+        ],
+        "GTbets": [
+          1.21,
+          4.5
+        ],
+        "Betclic (FR)": [
+          1.17,
+          4.1
+        ],
+        "Marathon Bet": [
+          1.22,
+          4.25
+        ],
+        "Winamax (FR)": [
+          1.16,
+          4.0
+        ],
+        "Nordic Bet": [
+          1.2,
+          4.7
+        ],
+        "Winamax (DE)": [
+          1.19,
+          4.6
+        ],
+        "1xBet": [
+          1.23,
+          4.18
+        ],
+        "Tipico": [
+          1.16,
+          4.5
+        ],
+        "Unibet (NL)": [
+          1.2,
+          4.6
+        ],
+        "LeoVegas (SE)": [
+          1.2,
+          4.6
+        ],
+        "Unibet (SE)": [
+          1.2,
+          4.6
+        ],
+        "PMU (FR)": [
+          1.15,
+          4.3
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.7772,
-        "serve": 0.7372,
+        "serve": 0.7377,
         "w": 0.901
       },
       "flags": []
@@ -1006,32 +2912,106 @@
       "a": {
         "name": "Marie Bouzkova",
         "key": "m-bouzkova",
-        "model": 0.5209,
+        "model": 0.5205,
         "fair_odds": 1.92,
-        "market": 0.4569,
-        "best_odds": 2.16,
-        "book": "Betfair",
-        "ev": 0.1252,
-        "kelly": 0.027
+        "market": 0.4573,
+        "best_odds": 2.14,
+        "book": "Marathon Bet",
+        "ev": 0.1138,
+        "kelly": 0.0249
       },
       "b": {
         "name": "Qinwen Zheng",
         "key": "q-zheng",
-        "model": 0.4791,
+        "model": 0.4795,
         "fair_odds": 2.09,
-        "market": 0.5431,
+        "market": 0.5427,
         "best_odds": 1.84,
         "book": "Betfair",
-        "ev": -0.1185,
+        "ev": -0.1176,
         "kelly": 0.0
       },
       "books": 18,
+      "prices": {
+        "Betfair": [
+          2.12,
+          1.84
+        ],
+        "888sport": [
+          2.1,
+          1.73
+        ],
+        "Matchbook": [
+          1.96,
+          1.71
+        ],
+        "GTbets": [
+          2.05,
+          1.78
+        ],
+        "William Hill": [
+          2.1,
+          1.73
+        ],
+        "Unibet (FR)": [
+          1.95,
+          1.65
+        ],
+        "Marathon Bet": [
+          2.14,
+          1.7
+        ],
+        "1xBet": [
+          2.12,
+          1.72
+        ],
+        "Betclic (FR)": [
+          1.99,
+          1.68
+        ],
+        "Betsson": [
+          2.09,
+          1.75
+        ],
+        "Nordic Bet": [
+          2.09,
+          1.75
+        ],
+        "Winamax (DE)": [
+          2.05,
+          1.74
+        ],
+        "Winamax (FR)": [
+          1.96,
+          1.66
+        ],
+        "Tipico": [
+          2.05,
+          1.7
+        ],
+        "Unibet (NL)": [
+          2.06,
+          1.76
+        ],
+        "LeoVegas (SE)": [
+          2.06,
+          1.76
+        ],
+        "Unibet (SE)": [
+          2.06,
+          1.76
+        ],
+        "PMU (FR)": [
+          1.96,
+          1.68
+        ]
+      },
       "court": "beijing",
       "model_version": "2026-10-03",
       "parts": {
         "elo": 0.4698,
-        "serve": 0.5278,
-        "w": 0.882
+        "serve": 0.5273,
+        "w": 0.881
       },
       "flags": []
     }
@@ -1066,5 +3046,143 @@
     "roi": -0.0577,
     "clean_bets": 0,
     "clean_profit": 0
+  },
+  "parlays": [
+    {
+      "book": "Matchbook",
+      "legs": [
+        {
+          "id": "5357c574f469ea94b1ae1dd036711f7f",
+          "side": "a",
+          "name": "Jaume Munar",
+          "vs": "Kyrian Jacquet",
+          "tournament": "ATP Japan Open",
+          "start": "2026-10-04T02:00:00Z",
+          "odds": 1.72,
+          "model": 0.6511,
+          "market": 0.5802
+        },
+        {
+          "id": "69ec18acddec63da011d8f44d376b90c",
+          "side": "a",
+          "name": "Hubert Hurkacz",
+          "vs": "Karen Khachanov",
+          "tournament": "ATP China Open",
+          "start": "2026-10-04T05:00:00Z",
+          "odds": 2.42,
+          "model": 0.4714,
+          "market": 0.4208
+        },
+        {
+          "id": "e9d8fec90ecda0bc0721e481e8cdaa69",
+          "side": "a",
+          "name": "Alex de Minaur",
+          "vs": "Andrey Rublev",
+          "tournament": "ATP China Open",
+          "start": "2026-10-04T06:10:00Z",
+          "odds": 1.88,
+          "model": 0.6031,
+          "market": 0.5343
+        }
+      ],
+      "odds": 7.83,
+      "model": 0.1851,
+      "market": 0.1304,
+      "ev": 0.4485,
+      "kelly": 0.0164,
+      "id": "5357c574f469ea94b1ae1dd036711f7f:a+69ec18acddec63da011d8f44d376b90c:a+e9d8fec90ecda0bc0721e481e8cdaa69:a"
+    },
+    {
+      "book": "Betfair",
+      "legs": [
+        {
+          "id": "69ec18acddec63da011d8f44d376b90c",
+          "side": "a",
+          "name": "Hubert Hurkacz",
+          "vs": "Karen Khachanov",
+          "tournament": "ATP China Open",
+          "start": "2026-10-04T05:00:00Z",
+          "odds": 2.42,
+          "model": 0.4714,
+          "market": 0.4208
+        },
+        {
+          "id": "e9d8fec90ecda0bc0721e481e8cdaa69",
+          "side": "a",
+          "name": "Alex de Minaur",
+          "vs": "Andrey Rublev",
+          "tournament": "ATP China Open",
+          "start": "2026-10-04T06:10:00Z",
+          "odds": 1.88,
+          "model": 0.6031,
+          "market": 0.5343
+        },
+        {
+          "id": "2fff13d64b68dd5cb7c7269617427ba2",
+          "side": "a",
+          "name": "Marie Bouzkova",
+          "vs": "Qinwen Zheng",
+          "tournament": "WTA China Open",
+          "start": "2026-10-05T04:00:00Z",
+          "odds": 2.12,
+          "model": 0.5205,
+          "market": 0.4573
+        }
+      ],
+      "odds": 9.65,
+      "model": 0.148,
+      "market": 0.1028,
+      "ev": 0.4273,
+      "kelly": 0.0124,
+      "id": "69ec18acddec63da011d8f44d376b90c:a+e9d8fec90ecda0bc0721e481e8cdaa69:a+2fff13d64b68dd5cb7c7269617427ba2:a"
+    },
+    {
+      "book": "Betfair",
+      "legs": [
+        {
+          "id": "5357c574f469ea94b1ae1dd036711f7f",
+          "side": "a",
+          "name": "Jaume Munar",
+          "vs": "Kyrian Jacquet",
+          "tournament": "ATP Japan Open",
+          "start": "2026-10-04T02:00:00Z",
+          "odds": 1.71,
+          "model": 0.6511,
+          "market": 0.5802
+        },
+        {
+          "id": "e2954e055ea3f8716333b8ff13e39708",
+          "side": "a",
+          "name": "Daria Snigur",
+          "vs": "Taylah Preston",
+          "tournament": "WTA China Open",
+          "start": "2026-10-04T05:20:00Z",
+          "odds": 1.6,
+          "model": 0.6866,
+          "market": 0.607
+        },
+        {
+          "id": "2fff13d64b68dd5cb7c7269617427ba2",
+          "side": "a",
+          "name": "Marie Bouzkova",
+          "vs": "Qinwen Zheng",
+          "tournament": "WTA China Open",
+          "start": "2026-10-05T04:00:00Z",
+          "odds": 2.12,
+          "model": 0.5205,
+          "market": 0.4573
+        }
+      ],
+      "odds": 5.8,
+      "model": 0.2327,
+      "market": 0.1611,
+      "ev": 0.3497,
+      "kelly": 0.0182,
+      "id": "5357c574f469ea94b1ae1dd036711f7f:a+e2954e055ea3f8716333b8ff13e39708:a+2fff13d64b68dd5cb7c7269617427ba2:a"
+    }
+  ],
+  "parlay_record": {
+    "settled": 0,
+    "pending": 3
   }
 }

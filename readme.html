@@ -176,6 +176,11 @@ python update_data.py --local-xlsx 2025.xlsx         # offline test, tennis-data
       the same model as the Predictor, and writes <code>matches.json</code>: model win chance, best
       price and which book has it, EV and a quarter-Kelly stake. The Predictor shows it as
       <strong>Today's matches</strong>; <em>Analyse</em> loads a match, its surface, format and odds.</p>
+    <p>The odds feed only lists matches a bookmaker has already priced, so the next day's order of play is
+      often only partly there. With <code>TENNIS_API_KEY</code> set, the updater also reads the full schedule
+      from api-tennis.com and adds the matches the odds feed doesn't have, with the model's chance and fair
+      odds and a "no odds yet" note. Their prices fill in at the next refresh after bookmakers post them.
+      These matches aren't logged to the track record or used in parlays until they have odds.</p>
     <pre><code>ODDS_API_KEY=your-key python update_matches.py
 ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code></pre>
     <p>Surface comes from a built-in table of every ATP tournament: Grand Slams, Masters 1000, 500s,
@@ -233,7 +238,7 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
     <h2>Automatic daily run (one-time setup)</h2>
     <p><code>.github/workflows/update.yml</code> runs every day at 06:20 UTC. It rebuilds
       the player stats, the match list and the track record, commits them, and publishes the site
-      to GitHub Pages. A second run at 16:20 UTC refreshes only the odds, for later matches, and
+      to GitHub Pages. Runs at 16:20 and 21:20 UTC refresh only the odds (bookmakers often price the next day in the evening), and
       skips them if fewer than 60 requests are left in the month. You can also run it by hand from the repo's <strong>Actions</strong> tab
       (<em>refresh-data → Run workflow</em>).</p>
     <ol>
@@ -250,7 +255,7 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
         permissions → Read and write permissions</em>.</li>
     </ol>
     <div class="callout">
-      <p><strong>Odds move.</strong> Prices are snapshots from 06:20 and 16:20 UTC — check the live
+      <p><strong>Odds move.</strong> Prices are snapshots from 06:20, 16:20 and 21:20 UTC — check the live
         price before acting on any "value" flag.</p>
       <p>The date stamps on the Predictor show when each file was last rebuilt.</p>
     </div>

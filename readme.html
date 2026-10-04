@@ -217,6 +217,19 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       A parlay multiplies the bookmaker's margin and any model error, so it needs a real edge on every
       leg; until the single-pick track record shows the model beats the market, treat these as entertainment-sized stakes.</p>
 
+    <h2>Parlay builder</h2>
+    <p>On the predictor, the <b>+</b> next to each player in Today's matches adds that player to the parlay
+      builder (one side per match, up to ten legs); a recommended parlay can be opened there too. Choose a
+      bookmaker that prices every leg (listed best combined price first), the best price for each leg (which
+      mixes books, so it can't be placed as one ticket), or type your own prices. The builder multiplies the
+      prices and the model's chances, and shows EV, a quarter-Kelly stake and the return on your stake. Legs
+      are kept in your browser only; builder tickets aren't logged.</p>
+
+    <h2>Past predictions</h2>
+    <p>The <a href="history.html">Past predictions</a> page shows the prediction log one day at a time, with
+      the result, whether the model was right and the value-bet profit, plus filters and a search across
+      every day.</p>
+
     <h2>Automatic daily run (one-time setup)</h2>
     <p><code>.github/workflows/update.yml</code> runs every day at 06:20 UTC. It rebuilds
       the player stats, the match list and the track record, commits them, and publishes the site

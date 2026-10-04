@@ -25,7 +25,19 @@
     border:1px solid var(--ink-4); border-radius:var(--r-sm); padding:.45rem .6rem; }
   .filters input{ flex:1 1 160px; min-width:0; }
 
-  .day{ font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ball); margin:18px 0 2px; }
+  .days{ display:flex; align-items:stretch; gap:6px; margin:16px 0 4px; }
+  .days__chips{ position:relative; display:flex; gap:6px; overflow-x:auto; scrollbar-width:thin; flex:1; min-width:0; padding-bottom:4px; }
+  .days__nav{ flex:0 0 auto; width:34px; font-family:var(--display); font-size:1.2rem; color:var(--chalk); background:var(--ink-3);
+    border:1px solid var(--ink-4); border-radius:var(--r-sm); cursor:pointer; }
+  .days__nav:disabled{ opacity:.35; cursor:default; }
+  .dchip{ flex:0 0 auto; display:flex; flex-direction:column; align-items:flex-start; gap:1px; cursor:pointer; text-align:left;
+    background:var(--ink-3); border:1px solid var(--ink-4); border-radius:var(--r-sm); padding:.35rem .6rem; color:var(--chalk); }
+  .dchip__d{ font-family:var(--display); font-weight:600; font-size:.82rem; white-space:nowrap; }
+  .dchip__s{ font-family:var(--mono); font-size:.64rem; color:var(--mute); white-space:nowrap; }
+  .dchip[aria-pressed="true"]{ background:var(--ball); border-color:var(--ball); color:var(--ink); }
+  .dchip[aria-pressed="true"] .dchip__s{ color:var(--ink); }
+  .dayhead{ font-family:var(--mono); font-size:.74rem; color:var(--mute); margin:12px 0 4px; }
+  .dayhead b{ font-family:var(--display); font-size:.95rem; color:var(--chalk); font-weight:600; margin-right:.2rem; }
   .row{ display:grid; grid-template-columns:150px minmax(0,1fr) 128px; gap:6px 14px; align-items:center; padding:.6rem 0; border-top:1px solid var(--ink-3); }
   .row__when{ font-family:var(--mono); font-size:.72rem; color:var(--faint); line-height:1.35; }
   .row__who{ display:flex; flex-direction:column; gap:3px; min-width:0; }
@@ -115,6 +127,7 @@
       <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div>
       <input id="q" type="search" placeholder="Player or tournament" aria-label="Search player or tournament">
     </div>
+    <div class="days" id="days"></div>
     <div id="list"></div>
     <button class="more" id="more" hidden>Show more</button>
   </section>
@@ -182,11 +195,11 @@ function enrich(h){
     flags: h.flags ? h.flags.split(";").filter(Boolean) : [],
     modelRight: settled ? (pa > 0.5) === (h.result === "a") : null,
     marketRight: settled ? (ma > 0.5) === (h.result === "a") : null,
-    when: new Date(h.start) };
+    when: new Date(h.start), day: new Date(h.start).toLocaleDateString("en-CA") };
 }
 
 let ALL = [], shown = 60;
-const state = { tour: "", status: "", version: "", q: "" };
+const state = { tour: "", status: "", version: "", q: "", day: null };
 
 function filtered(){
   const q = state.q.trim().toLowerCase();
@@ -237,34 +250,78 @@ function playerLine(h, side){
     <span class="nums">model <b>${pct(m)}</b> · mkt ${pct(k)} · ${OddsFmt.show(o)}</span></div>`;
 }
 
+function rowHTML(h, withDate){
+  const t = h.when.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  const d = withDate ? h.when.toLocaleDateString(undefined, { day: "numeric", month: "short" }) + " · " : "";
+  const extra = [];
+  if (h.bet) extra.push(`Value bet: ${esc(h.bet.side === "a" ? h.player_a : h.player_b)} @ ${OddsFmt.show(h.bet.odds)} (EV ${(h.bet.ev * 100).toFixed(1)}%)`);
+  if (h.pin != null) extra.push(`Pinnacle ${pct(h.pin)} / ${pct(1 - h.pin)}`);
+  if (h.books) extra.push(`${h.books} books`);
+  extra.push(`model ${esc(h.version)}`);
+  const warn = h.flags.length ? `<br><span class="w">⚠ ${h.flags.map(f => esc(FLAG_TEXT[f] || f)).join(" · ")}</span>` : "";
+  return `<div class="row">
+    <div class="row__when">${d}${t} · ${esc(h.tour)}<br>${esc(h.tournament)}<br>${esc(h.surface)}${h.best_of === "5" ? " · best of 5" : ""}</div>
+    <div class="row__who">${playerLine(h, "a")}${playerLine(h, "b")}</div>
+    <div class="row__res">${resultCell(h)}</div>
+    <div class="row__extra">${extra.join(" · ")}${warn}</div>
+  </div>`;
+}
+
+// one day's record in a few words: "6/9 right · +1.20u"
+function dayLine(rows){
+  const s = rows.filter(h => h.settled), right = s.filter(h => h.modelRight).length;
+  const pend = rows.filter(h => !h.settled && h.result !== "void").length;
+  const bets = s.filter(h => h.bet), pl = bets.reduce((t, h) => t + h.pl, 0);
+  const bits = [`${rows.length} match${rows.length === 1 ? "" : "es"}`];
+  if (s.length) bits.push(`model right ${right}/${s.length}`);
+  if (bets.length) bits.push(`value bets <span class="${plClass(pl)}">${units(pl)}</span> (${bets.length})`);
+  if (pend) bits.push(`${pend} pending`);
+  return bits.join(" · ");
+}
+
 function renderList(){
   const rows = filtered();
   renderStats(rows);
-  document.getElementById("countHint").textContent = `${rows.length} match${rows.length === 1 ? "" : "es"}`;
-  const list = document.getElementById("list");
-  if (!rows.length){ list.innerHTML = `<div class="empty">No predictions match this filter.</div>`; document.getElementById("more").hidden = true; return; }
-  let html = "", day = "";
-  for (const h of rows.slice(0, shown)){
-    const d = h.when.toLocaleDateString(undefined, { weekday: "short", day: "numeric", month: "short", year: "numeric" });
-    if (d !== day){ html += `<div class="day">${d}</div>`; day = d; }
-    const t = h.when.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
-    const extra = [];
-    if (h.bet) extra.push(`Value bet: ${esc(h.bet.side === "a" ? h.player_a : h.player_b)} @ ${OddsFmt.show(h.bet.odds)} (EV ${(h.bet.ev * 100).toFixed(1)}%)`);
-    if (h.pin != null) extra.push(`Pinnacle ${pct(h.pin)} / ${pct(1 - h.pin)}`);
-    if (h.books) extra.push(`${h.books} books`);
-    extra.push(`model ${esc(h.version)}`);
-    const warn = h.flags.length ? `<br><span class="w">⚠ ${h.flags.map(f => esc(FLAG_TEXT[f] || f)).join(" · ")}</span>` : "";
-    html += `<div class="row">
-      <div class="row__when">${t} · ${esc(h.tour)}<br>${esc(h.tournament)}<br>${esc(h.surface)}${h.best_of === "5" ? " · best of 5" : ""}</div>
-      <div class="row__who">${playerLine(h, "a")}${playerLine(h, "b")}</div>
-      <div class="row__res">${resultCell(h)}</div>
-      <div class="row__extra">${extra.join(" · ")}${warn}</div>
-    </div>`;
+  const list = document.getElementById("list"), strip = document.getElementById("days"), more = document.getElementById("more");
+  more.hidden = true;
+  if (!rows.length){
+    strip.innerHTML = ""; list.innerHTML = `<div class="empty">No predictions match this filter.</div>`;
+    document.getElementById("countHint").textContent = "0 matches"; return;
   }
-  list.innerHTML = html;
-  const more = document.getElementById("more");
-  more.hidden = rows.length <= shown;
-  more.textContent = `Show more (${rows.length - shown} left)`;
+  // a search looks across every day
+  if (state.q.trim()){
+    strip.innerHTML = "";
+    document.getElementById("countHint").textContent = `${rows.length} found · all days`;
+    list.innerHTML = `<div class="dayhead">${dayLine(rows)}</div>` + rows.slice(0, shown).map(h => rowHTML(h, true)).join("");
+    more.hidden = rows.length <= shown; more.textContent = `Show more (${rows.length - shown} left)`;
+    return;
+  }
+  const byDay = new Map();
+  for (const h of rows){ if (!byDay.has(h.day)) byDay.set(h.day, []); byDay.get(h.day).push(h); }
+  const days = [...byDay.keys()];                       // newest first
+  if (!byDay.has(state.day)){
+    const today = new Date().toLocaleDateString("en-CA");
+    state.day = days.find(d => d <= today) || days[days.length - 1];
+  }
+  const i = days.indexOf(state.day), dayRows = byDay.get(state.day);
+  const label = (d, o) => new Date(d + "T12:00:00").toLocaleDateString(undefined, o);
+  strip.innerHTML = `<button class="days__nav" data-day="${days[i + 1] || ""}" ${days[i + 1] ? "" : "disabled"} aria-label="Older day">‹</button>
+    <div class="days__chips">${days.map(d => {
+      const r = byDay.get(d), st = r.filter(h => h.settled), ok = st.filter(h => h.modelRight).length;
+      const sub = st.length ? `${ok}/${st.length} right` : `${r.length} to play`;
+      return `<button class="dchip" data-day="${d}" aria-pressed="${d === state.day}">
+        <span class="dchip__d">${label(d, { weekday: "short", day: "numeric", month: "short" })}</span><span class="dchip__s">${sub}</span></button>`;
+    }).join("")}</div>
+    <button class="days__nav" data-day="${days[i - 1] || ""}" ${i > 0 ? "" : "disabled"} aria-label="Newer day">›</button>`;
+  strip.querySelectorAll("[data-day]").forEach(b => b.addEventListener("click", () => {
+    if (!b.dataset.day) return; state.day = b.dataset.day; renderList();
+  }));
+  const on = strip.querySelector('.dchip[aria-pressed="true"]');
+  const chips = strip.querySelector(".days__chips");      // scroll the strip only, never the page
+  if (on) chips.scrollLeft = on.offsetLeft - chips.clientWidth / 2 + on.offsetWidth / 2;
+  document.getElementById("countHint").textContent = `day ${days.length - i} of ${days.length}`;
+  list.innerHTML = `<div class="dayhead"><b>${label(state.day, { weekday: "long", day: "numeric", month: "long", year: "numeric" })}</b> · ${dayLine(dayRows)}</div>`
+    + dayRows.map(h => rowHTML(h, false)).join("");
 }
 
 let PARLAYS = null;

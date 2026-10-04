@@ -151,6 +151,36 @@
   .match__extra{ grid-column:2 / -1; font-family:var(--mono); font-size:.7rem; line-height:1.5; }
   .match__pin{ color:var(--faint); }
   .match__flags{ color:var(--clay); }
+  .addleg{ width:22px; height:22px; margin-right:.45rem; vertical-align:1px; flex:0 0 auto; cursor:pointer; line-height:1;
+    font-family:var(--mono); font-size:.9rem; color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:6px; padding:0; }
+  .addleg:hover{ border-color:var(--ball); }
+  .addleg[aria-pressed="true"]{ background:var(--ball); border-color:var(--ball); color:var(--ink); }
+  .pb__legs{ display:flex; flex-direction:column; }
+  .pb__leg{ display:grid; grid-template-columns:28px minmax(0,1fr) auto 92px; gap:4px 12px; align-items:center; padding:.55rem 0; border-top:1px solid var(--ink-3); }
+  .pb__rm{ width:26px; height:26px; cursor:pointer; font-size:1rem; line-height:1; color:var(--mute); background:transparent; border:1px solid var(--ink-4); border-radius:6px; padding:0; }
+  .pb__rm:hover{ color:var(--neg); border-color:var(--neg); }
+  .pb__who{ min-width:0; }
+  .pb__who b{ font-family:var(--display); font-weight:600; font-size:.95rem; }
+  .pb__who small{ display:block; font-family:var(--mono); font-size:.68rem; color:var(--faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .pb__who .warn{ color:var(--clay); white-space:normal; }
+  .pb__nums{ font-family:var(--mono); font-size:.78rem; color:var(--mute); text-align:right; white-space:nowrap; }
+  .pb__leg input, .pb__opts select, .pb__opts input{ font-family:var(--mono); font-size:.88rem; color:var(--chalk); background:var(--ink-3);
+    border:1px solid var(--ink-4); border-radius:var(--r-sm); padding:.4rem .5rem; min-width:0; }
+  .pb__leg input{ width:100%; text-align:right; }
+  .pb__opts{ display:flex; flex-wrap:wrap; gap:10px 14px; align-items:end; margin:12px 0; }
+  .pb__opts label{ display:flex; flex-direction:column; gap:3px; font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); }
+  .pb__opts select{ max-width:100%; }
+  .pb__opts input{ width:90px; }
+  .pb__clear{ margin-left:auto; font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
+    color:var(--mute); background:transparent; border:1px solid var(--ink-4); border-radius:7px; padding:.45rem .7rem; }
+  .pb__clear:hover{ color:var(--chalk); border-color:var(--chalk); }
+  .pb__grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; }
+  .pb__grid .stat__v{ font-size:1.35rem; }
+  .pb__note{ font-family:var(--mono); font-size:.72rem; color:var(--faint); margin-top:10px; line-height:1.55; }
+  .pb__note .warn{ color:var(--clay); }
+  .parlay__edit{ font-family:var(--mono); font-size:.66rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer; margin-top:.4rem;
+    color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:6px; padding:.3rem .55rem; }
+  .parlay__edit:hover{ background:var(--ball); color:var(--ink); }
   .today__empty{ font-family:var(--mono); font-size:.82rem; color:var(--faint); padding:.4rem 0; }
 
   @media (max-width:760px){
@@ -164,6 +194,10 @@
     .vs{ flex-direction:row; padding:0; }
     .readouts{ grid-template-columns:1fr; }
     .record__grid{ grid-template-columns:1fr 1fr; }
+    .pb__leg{ grid-template-columns:28px minmax(0,1fr) 84px; }
+    .pb__leg input{ grid-row:1; grid-column:3; }
+    .pb__nums{ grid-row:2; grid-column:2 / -1; text-align:left; }
+    .pb__grid{ grid-template-columns:1fr 1fr; }
     .panels{ grid-template-columns:1fr; }
     .evtable th:nth-child(3), .evtable td:nth-child(3),
     .evtable th:nth-child(5), .evtable td:nth-child(5){ display:none; }
@@ -210,6 +244,14 @@
       bookmaker's margin and the model's mistakes, so treat these as small stakes at most.</p>
     <div id="parlayList"><div class="today__empty">Loading…</div></div>
     <div class="record__note" id="parlayNote"></div>
+  </section>
+
+  <section class="today" id="builder">
+    <h3>Parlay builder <span class="hint" id="pbHint"></span></h3>
+    <p class="today__lede">Press <b>+</b> next to any player in Today's matches to add them as a leg, or open a recommended
+      parlay here. Pick the bookmaker you'll use (or type your own prices) and the builder shows the combined odds, the
+      model's chance of every leg winning, and whether the ticket has value.</p>
+    <div id="pbBody"></div>
   </section>
 
   <section class="controls">
@@ -777,9 +819,10 @@ function loadMatch(m){
   renderEV(compute());
   document.querySelector(".controls").scrollIntoView({ behavior:"smooth", block:"start" });
 }
-function matchSide(cls, p){
+function matchSide(cls, p, m){
   const ev = (p.ev>=0?"+":"") + (p.ev*100).toFixed(1) + "%";
-  return `<div class="match__p match__p--${cls}"><span class="n">${esc(p.name)}</span>
+  const add = m && m.prices ? `<button class="addleg" type="button" data-id="${esc(m.id)}" data-side="${cls}" aria-pressed="false" aria-label="Add ${esc(p.name)} to the parlay builder" title="Add to parlay">+</button>` : "";
+  return `<div class="match__p match__p--${cls}"><span class="n">${add}${esc(p.name)}</span>
     <span class="nums">${pct(p.model)} · ${OddsFmt.show(p.best_odds)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}">${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
 }
 function matchExtras(m){
@@ -800,10 +843,12 @@ function renderToday(j){
   const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
   list.innerHTML = ms.map((m,i) => `<div class="match">
       <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
-      <div class="match__who">${matchSide("a", m.a)}${matchSide("b", m.b)}</div>
+      <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}</div>
       <button class="match__go" type="button" data-i="${i}">Analyse</button>
       ${matchExtras(m)}</div>`).join("");
   list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () => loadMatch(ms[+b.dataset.i])));
+  list.querySelectorAll(".addleg").forEach(b => b.addEventListener("click", () => pbToggle(b.dataset.id, b.dataset.side)));
+  pbSyncButtons();
 }
 function renderRecord(r){
   const grid = $("recordGrid"), note = $("recordNote");
@@ -844,7 +889,14 @@ function renderParlays(j){
       <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(c.odds)}</span> at ${esc(c.book)} · ${c.legs.length} legs</span>
         <span class="parlay__nums">model ${pct(c.model)} · market ${pct(c.market)} · <span class="ev-pos">EV +${(c.ev*100).toFixed(1)}%</span> · ¼-Kelly ${(c.kelly*100).toFixed(1)}%</span></div>
       <ul class="parlay__legs">${c.legs.map(l => `<li><span class="who">${esc(l.name)} <small>to beat ${esc(l.vs)} · ${esc(l.tournament)} · ${fmt.format(new Date(l.start))}</small></span>
-        <span class="px">${OddsFmt.show(l.odds)} · ${pct(l.model)}</span></li>`).join("")}</ul></div>`).join("");
+        <span class="px">${OddsFmt.show(l.odds)} · ${pct(l.model)}</span></li>`).join("")}</ul>
+      <button class="parlay__edit" type="button" data-i="${ps.indexOf(c)}">Open in builder</button></div>`).join("");
+    list.querySelectorAll(".parlay__edit").forEach(b => b.addEventListener("click", () => {
+      const c = ps[+b.dataset.i];
+      PB.legs = c.legs.map(l => ({ id: l.id, side: l.side })); PB.book = c.book;
+      pbSave(); renderBuilder(); pbSyncButtons();
+      $("builder").scrollIntoView({ behavior: "smooth", block: "start" });
+    }));
   }
   const r = j && j.parlay_record;
   note.textContent = r && r.settled
@@ -856,8 +908,8 @@ async function loadMatches(){
     const r = await fetch("matches.json", { cache:"no-store" });
     const j = r.ok ? await r.json() : null;
     MATCHES = j;
-    renderToday(j); renderRecord(j && j.record); renderParlays(j);
-  }catch(e){ renderToday(null); renderRecord(null); renderParlays(null); }
+    renderToday(j); renderBuilder(); renderRecord(j && j.record); renderParlays(j);
+  }catch(e){ renderToday(null); renderRecord(null); renderParlays(null); renderBuilder(); }
 }
 
 bindSeg("segSurface", "surface");
@@ -894,11 +946,142 @@ OddsFmt.bind();
 OddsFmt.onChange((f, old) => {
   ["oddsA","oddsB"].forEach(i => { const d = readOdds(i, old); if (d > 1) setOddsInput(i, d); });
   oddsInputMode();
-  if (MATCHES){ renderToday(MATCHES); renderParlays(MATCHES); }
+  if (MATCHES){ renderToday(MATCHES); renderParlays(MATCHES); renderBuilder(); }
   renderEV(compute());
 });
 ["oddsA","oddsB"].forEach(i => setOddsInput(i, OddsFmt.parse($(i).value, "decimal")));
 oddsInputMode();
+
+/* ===================== parlay builder ==================================== */
+// Legs live in this browser only. Each leg is one side of a match in matches.json;
+// the price comes from the chosen bookmaker, the best price per leg, or what was typed.
+const PB_KEY = "parlayBuilder", PB_MAX = 10;
+let PB = { legs: [], book: "auto", stake: 10 };
+try { const saved = JSON.parse(localStorage.getItem(PB_KEY) || "null"); if (saved && Array.isArray(saved.legs)) PB = { ...PB, ...saved }; } catch (e) { /* storage blocked */ }
+function pbSave(){ try { localStorage.setItem(PB_KEY, JSON.stringify(PB)); } catch (e) { /* storage blocked */ } }
+const pbMatch = id => ((MATCHES && MATCHES.matches) || []).find(m => m.id === id);
+function pbToggle(id, side){
+  const i = PB.legs.findIndex(l => l.id === id);
+  if (i >= 0 && PB.legs[i].side === side) PB.legs.splice(i, 1);          // tap again to remove
+  else if (i >= 0) PB.legs[i] = { id, side };                            // one side per match
+  else if (PB.legs.length < PB_MAX) PB.legs.push({ id, side });
+  if (PB.book === "custom") PB.book = "auto";
+  pbSave(); renderBuilder(); pbSyncButtons();
+}
+function pbSyncButtons(){
+  document.querySelectorAll(".addleg").forEach(b => b.setAttribute("aria-pressed",
+    PB.legs.some(l => l.id === b.dataset.id && l.side === b.dataset.side) ? "true" : "false"));
+}
+// bookmakers that price every leg, best combined odds first
+function pbBooks(legs){
+  if (!legs.length) return [];
+  const names = Object.keys(legs[0].m.prices || {}).filter(bk => legs.every(l => l.m.prices && l.m.prices[bk]));
+  return names.map(bk => ({ book: bk, odds: legs.reduce((t, l) => t * l.m.prices[bk][l.side === "a" ? 0 : 1], 1) }))
+    .sort((x, y) => y.odds - x.odds);
+}
+function pbBestPrice(l){
+  const px = Object.values(l.m.prices || {}).map(p => p[l.side === "a" ? 0 : 1]).filter(x => x > 1);
+  return px.length ? Math.max(...px) : l.m[l.side].best_odds;
+}
+function pbPrice(l, book){
+  if (book === "custom") return l.odds > 1 ? l.odds : pbBestPrice(l);
+  if (book === "best") return pbBestPrice(l);
+  const p = l.m.prices && l.m.prices[book];
+  return p ? p[l.side === "a" ? 0 : 1] : null;
+}
+function pbLegs(){ return PB.legs.map(l => ({ ...l, m: pbMatch(l.id) })).filter(l => l.m); }
+function pbResolveBook(legs, books){
+  if (PB.book === "custom" || PB.book === "best") return PB.book;
+  if (PB.book !== "auto" && books.some(b => b.book === PB.book)) return PB.book;
+  return books.length ? books[0].book : "best";
+}
+function renderBuilder(){
+  const body = $("pbBody");
+  if (!MATCHES || !(MATCHES.matches || []).length){ body.innerHTML = '<div class="today__empty">Needs today\'s match list.</div>'; $("pbHint").textContent = ""; return; }
+  // drop legs whose match has left the list
+  const known = PB.legs.filter(l => pbMatch(l.id));
+  if (known.length !== PB.legs.length){ PB.legs = known; pbSave(); }
+  const legs = pbLegs();
+  $("pbHint").textContent = legs.length ? `${legs.length} leg${legs.length === 1 ? "" : "s"}` : "";
+  if (!legs.length){ body.innerHTML = '<div class="today__empty">No legs yet. Press + next to a player above.</div>'; return; }
+  const books = pbBooks(legs), book = pbResolveBook(legs, books);
+  const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
+  body.innerHTML = `<div class="pb__legs">${legs.map((l, i) => {
+      const me = l.m[l.side], vs = l.m[l.side === "a" ? "b" : "a"];
+      const started = new Date(l.m.start) <= Date.now();
+      const fl = (l.m.flags || []).map(f => Array.isArray(f) ? f[1] : f);
+      const warn = [started ? "already started" : "", ...fl].filter(Boolean);
+      return `<div class="pb__leg">
+        <button class="pb__rm" type="button" data-i="${i}" aria-label="Remove ${esc(me.name)}">×</button>
+        <div class="pb__who"><b class="side-${l.side}" style="color:var(--${l.side === "a" ? "A" : "B"})">${esc(me.name)}</b>
+          <small>to beat ${esc(vs.name)} · ${esc(l.m.tournament)} · ${fmt.format(new Date(l.m.start))}</small>
+          ${warn.length ? `<small class="warn">⚠ ${warn.map(esc).join(" · ")}</small>` : ""}</div>
+        <div class="pb__nums">model ${pct(me.model)} · <span id="pbEv${i}"></span></div>
+        <input id="pbOdds${i}" type="text" autocomplete="off" inputmode="${OddsFmt.get() === "american" ? "text" : "decimal"}" aria-label="Odds for ${esc(me.name)}">
+      </div>`; }).join("")}</div>
+    <div class="pb__opts">
+      <label>Bookmaker<select id="pbBook">
+        ${books.map(b => `<option value="${esc(b.book)}">${esc(b.book)} — ${OddsFmt.show(b.odds)}</option>`).join("")}
+        <option value="best">Best price for each leg (mixes books)</option>
+        <option value="custom">My own odds</option>
+      </select></label>
+      <label>Stake<input id="pbStake" type="text" inputmode="decimal" value="${esc(String(PB.stake))}"></label>
+      <button class="pb__clear" type="button" id="pbClear">Clear</button>
+    </div>
+    <div class="pb__grid" id="pbGrid"></div>
+    <div class="pb__note" id="pbNote"></div>`;
+  $("pbBook").value = book;
+  legs.forEach((l, i) => setOddsInput("pbOdds" + i, pbPrice(l, book)));
+  body.querySelectorAll(".pb__rm").forEach(b => b.addEventListener("click", () => {
+    PB.legs.splice(+b.dataset.i, 1); pbSave(); renderBuilder(); pbSyncButtons();
+  }));
+  $("pbBook").addEventListener("change", e => { PB.book = e.target.value; pbSave(); renderBuilder(); });
+  $("pbStake").addEventListener("input", e => { PB.stake = e.target.value; pbSave(); pbTotals(); });
+  $("pbClear").addEventListener("click", () => { PB.legs = []; PB.book = "auto"; pbSave(); renderBuilder(); pbSyncButtons(); });
+  legs.forEach((l, i) => $("pbOdds" + i).addEventListener("input", () => {
+    // typing a price switches to "my own odds", keeping the other legs' current prices
+    if (PB.book !== "custom"){
+      const cur = pbLegs().map((x, j) => readOdds("pbOdds" + j));
+      PB.legs.forEach((x, j) => { x.odds = cur[j]; });
+      PB.book = "custom"; $("pbBook").value = "custom";
+    }
+    PB.legs[i].odds = readOdds("pbOdds" + i); pbSave(); pbTotals();
+  }));
+  pbTotals();
+}
+function pbTotals(){
+  const legs = pbLegs(); if (!legs.length) return;
+  const book = $("pbBook").value;
+  const odds = legs.map((l, i) => readOdds("pbOdds" + i));
+  legs.forEach((l, i) => {
+    const el = $("pbEv" + i), p = l.m[l.side].model, ev = odds[i] > 1 ? p * odds[i] - 1 : null;
+    el.textContent = ev == null ? "no price" : "EV " + (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%";
+    el.className = ev == null ? "" : ev > 0 ? "ev-pos" : "ev-neg";
+  });
+  const ok = odds.every(o => o > 1);
+  const pModel = legs.reduce((t, l) => t * l.m[l.side].model, 1);
+  const pMkt = legs.reduce((t, l) => t * l.m[l.side].market, 1);
+  const tot = ok ? odds.reduce((t, o) => t * o, 1) : null;
+  const ev = ok ? pModel * tot - 1 : null, kel = ok ? kellyFraction(pModel, tot) : 0;
+  const stake = parseFloat(String(PB.stake).replace(",", ".")) || 0;
+  const tile = (k, v, sub, cls = "") => `<div class="stat"><div class="stat__k">${k}</div><div class="stat__v ${cls}">${v}</div><div class="stat__sub">${sub}</div></div>`;
+  $("pbGrid").innerHTML =
+    tile("Parlay odds", ok ? OddsFmt.show(tot) : "—", book === "best" ? "best price per leg" : book === "custom" ? "your prices" : esc(book)) +
+    tile("Model chance", pct(pModel), "fair odds " + OddsFmt.show(1 / pModel)) +
+    tile("Market chance", pct(pMkt), "no-margin prices multiplied") +
+    tile("EV", ok ? (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%" : "—", ok && ev > 0 ? "model says value" : "no value at these prices", ok ? (ev > 0 ? "ev-pos" : "ev-neg") : "") +
+    tile("¼-Kelly stake", ok && ev > 0 ? (kel * 100).toFixed(1) + "%" : "—", "of bankroll") +
+    tile("Returns", ok && stake ? (stake * tot).toFixed(2) : "—", stake ? `on ${stake} staked · profit ${ok ? (stake * (tot - 1)).toFixed(2) : "—"}` : "enter a stake");
+  const notes = [];
+  if (legs.length === 1) notes.push("One leg is a single bet, add another to make a parlay.");
+  if (book === "best") notes.push(`<span class="warn">Best prices come from different bookmakers, so you can't place this as one ticket. Pick a bookmaker for a price you can actually get.</span>`);
+  if (legs.some(l => (l.m.flags || []).length)) notes.push(`<span class="warn">Some legs carry warnings, where the model is less reliable.</span>`);
+  if (legs.some(l => new Date(l.m.start) <= Date.now())) notes.push(`<span class="warn">A leg has already started, so the price has probably moved.</span>`);
+  const sameEvent = new Set(legs.map(l => l.m.tournament)).size < legs.length;
+  if (sameEvent) notes.push("Several legs in one tournament is fine, but some books won't combine matches that could meet later.");
+  notes.push("Model chance multiplies each leg's chance, treating the matches as independent. Every leg multiplies the bookmaker's margin too, so long parlays lose value fast unless each leg has an edge.");
+  $("pbNote").innerHTML = notes.join("<br>");
+}
 
 loadData().then(loadMatches);
 </script>

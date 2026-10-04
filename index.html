@@ -160,6 +160,13 @@
     .panels{ grid-template-columns:1fr; }
     .evtable th:nth-child(3), .evtable td:nth-child(3),
     .evtable th:nth-child(5), .evtable td:nth-child(5){ display:none; }
+    .setstable th:nth-child(3), .setstable td:nth-child(3){ display:none; }
+    .setstable th:nth-child(5), .setstable td:nth-child(5){ display:table-cell; }
+    .setstable th:nth-child(6), .setstable td:nth-child(6){ display:none; }
+    .setstable td:first-child{ font-size:.82rem; }
+    .setstable th, .setstable td{ padding-left:8px; }
+    .setstable th:first-child, .setstable td:first-child{ padding-left:0; }
+    .setstable input{ width:62px; }
   }
 </style>
 </head>
@@ -310,6 +317,18 @@
       </tbody>
     </table>
     <div class="ev__margin" id="margin"></div>
+  </section>
+
+  <section class="ev sets">
+    <h3>Set betting</h3>
+    <p class="ev__lede">Exact set scores, set handicaps and total sets from the same model, always adding up
+      to the headline chance above. Type in your bookmaker's decimal odds to see the EV. The odds feed
+      doesn't cover these markets, so they're entered by hand and not logged in the track record.</p>
+    <table class="evtable setstable">
+      <thead><tr><th>Market</th><th>Model</th><th>Fair odds</th><th>Book odds</th><th>EV</th><th>¼-Kelly</th></tr></thead>
+      <tbody id="setsBody"></tbody>
+    </table>
+    <div class="ev__margin" id="setsNote"></div>
   </section>
 
   <section class="record" id="record">
@@ -524,16 +543,11 @@ function render(d){
   $("setB").textContent = pct(1 - s);
 
   $("scoreFmt").textContent = state.bestOf===3 ? "best of 3" : "best of 5";
-  let rows;
-  if(state.bestOf === 3){
-    rows = [[`${A.name} 2–0`, s*s,"a"],[`${A.name} 2–1`, 2*s*s*(1-s),"a"],
-            [`${B.name} 2–1`, 2*(1-s)*(1-s)*s,"b"],[`${B.name} 2–0`, (1-s)*(1-s),"b"]];
-  } else {
-    const t = 1 - s;
-    rows = [[`${A.name} 3–0`, Math.pow(s,3),"a"],[`${A.name} 3–1`, 3*Math.pow(s,3)*t,"a"],
-            [`${A.name} 3–2`, 6*Math.pow(s,3)*t*t,"a"],[`${B.name} 3–2`, 6*Math.pow(t,3)*s*s,"b"],
-            [`${B.name} 3–1`, 3*Math.pow(t,3)*s,"b"],[`${B.name} 3–0`, Math.pow(t,3),"b"]];
-  }
+  // same distribution as model.set_dist: agrees with the headline chance, with set momentum
+  const dist = setDist(pEns, state.bestOf, setMomentum());
+  const rows = Object.entries(dist).sort((x, y) => (y[0].split("-")[0] - x[0].split("-")[0]) || (x[0].split("-")[1] - y[0].split("-")[1]))
+    .map(([k, p]) => { const [a, b] = k.split("-").map(Number);
+      return a > b ? [`${A.name} ${a}–${b}`, p, "a"] : [`${B.name} ${b}–${a}`, p, "b"]; });
   const max = Math.max(...rows.map(r => r[1]), 1e-9);
   $("scoreList").innerHTML = rows.map(([lab,p,side]) => `
     <div class="score__row"><span class="score__lab">${lab}</span>
@@ -541,6 +555,71 @@ function render(d){
     <span class="score__p">${(p*100).toFixed(1)}%</span></div>`).join("");
 
   renderEV(pEns);
+  renderSets(A, B, dist);
+}
+
+/* ===================== set scores (mirrors set_dist / set_markets in model.py) === */
+function setMomentum(){
+  const sm = (DATA.model && DATA.model.set_m) || {};
+  return ((sm[state.tour] || {})[String(state.bestOf)]) || 0;
+}
+function setScoreProbs(s, bo, m){
+  const need = bo === 5 ? 3 : 2, L = Math.log(s / (1 - s));
+  const qw = 1 / (1 + Math.exp(-(L + m))), ql = 1 / (1 + Math.exp(-(L - m))), out = {};
+  (function go(a, b, q, pr){
+    if(a === need || b === need){ const k = a + "-" + b; out[k] = (out[k] || 0) + pr; return; }
+    go(a + 1, b, qw, pr * q); go(a, b + 1, ql, pr * (1 - q));
+  })(0, 0, s, 1);
+  return out;
+}
+function setDist(p, bo, m){
+  const need = bo === 5 ? 3 : 2;
+  const win = s => Object.entries(setScoreProbs(s, bo, m)).reduce((t, [k, v]) => t + (+k.split("-")[0] === need ? v : 0), 0);
+  let lo = 1e-4, hi = 1 - 1e-4;
+  for(let i = 0; i < 60; i++){ const mid = (lo + hi) / 2; if(win(mid) < p) lo = mid; else hi = mid; }
+  return setScoreProbs((lo + hi) / 2, bo, m);
+}
+const setOdds = {};          // odds typed in, per matchup and format
+function renderSets(A, B, dist){
+  const bo = state.bestOf, need = bo === 5 ? 3 : 2, key = [state.a, state.b, bo].join("|");
+  const store = setOdds[key] = setOdds[key] || {};
+  const P = f => Object.entries(dist).reduce((t, [k, v]) => { const [a, b] = k.split("-").map(Number); return t + (f(a, b) ? v : 0); }, 0);
+  const mk = [];
+  Object.entries(dist).sort((x, y) => (y[0].split("-")[0] - x[0].split("-")[0]) || (x[0].split("-")[1] - y[0].split("-")[1]))
+    .forEach(([k, v]) => { const [a, b] = k.split("-").map(Number);
+      mk.push(["x" + k, a > b ? `${A.name} wins ${a}–${b}` : `${B.name} wins ${b}–${a}`, v, a > b ? "a" : "b"]); });
+  mk.push(["a-1.5", `${A.name} −1.5 sets`, P((a, b) => a === need && b <= need - 2), "a"]);
+  mk.push(["b-1.5", `${B.name} −1.5 sets`, P((a, b) => b === need && a <= need - 2), "b"]);
+  mk.push(["a+1.5", `${A.name} +1.5 sets` + (bo === 3 ? " (wins a set)" : ""), 1 - P((a, b) => b === need && a <= need - 2), "a"]);
+  mk.push(["b+1.5", `${B.name} +1.5 sets` + (bo === 3 ? " (wins a set)" : ""), 1 - P((a, b) => a === need && b <= need - 2), "b"]);
+  if(bo === 5){
+    mk.push(["aset", `${A.name} wins at least a set`, P((a, b) => a >= 1), "a"]);
+    mk.push(["bset", `${B.name} wins at least a set`, P((a, b) => b >= 1), "b"]);
+  }
+  for(const line of (bo === 3 ? [2.5] : [3.5, 4.5])){
+    mk.push(["o" + line, `Over ${line} sets`, P((a, b) => a + b > line), ""]);
+    mk.push(["u" + line, `Under ${line} sets`, P((a, b) => a + b < line), ""]);
+  }
+  $("setsBody").innerHTML = mk.map(([id, lab, p, side]) => `<tr data-id="${id}" data-p="${p}">
+      <td class="${side ? "side-" + side : ""}">${esc(lab)}</td><td>${pct(p)}</td><td>${p > 0 ? (1 / p).toFixed(2) : "—"}</td>
+      <td><input type="number" inputmode="decimal" min="1.01" step="0.01" value="${store[id] || ""}" aria-label="${esc(lab)} decimal odds"></td>
+      <td class="sev">—</td><td class="skel">—</td></tr>`).join("");
+  const m = setMomentum();
+  $("setsNote").textContent = m ? `Set momentum ${m.toFixed(2)} (fitted on real set scores).`
+                                : "Sets treated as independent until the set-score check has run on real results.";
+  $("setsBody").querySelectorAll("tr").forEach(tr => {
+    const inp = tr.querySelector("input"), p = +tr.dataset.p;
+    const upd = () => {
+      const d = parseFloat(inp.value); store[tr.dataset.id] = inp.value;
+      const ev = tr.querySelector(".sev"), kel = tr.querySelector(".skel");
+      if(!(d > 1)){ ev.textContent = "—"; ev.className = "sev"; kel.textContent = "—"; return; }
+      const e = p * d - 1;
+      ev.innerHTML = (e >= 0 ? "+" : "") + (e * 100).toFixed(1) + "%" + (e > 0 ? '<span class="badge badge--ev">value</span>' : "");
+      ev.className = "sev " + (e > 0 ? "ev-pos" : "ev-neg");
+      kel.textContent = e > 0 ? (kellyFraction(p, d) * 100).toFixed(1) + "%" : "—";
+    };
+    inp.addEventListener("input", upd); upd();
+  });
 }
 function evRow(model, d, fairImplied, ids){
   $(ids.mod).textContent = pct(model);

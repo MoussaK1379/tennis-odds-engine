@@ -118,6 +118,10 @@ class Params:
     # optional logistic-regression stack replacing the blend; weights per tour for STACK_FEATURES
     stack_atp: list = None
     stack_wta: list = None
+    # set momentum on the log-odds scale (0 = independent sets), fitted on real set scores
+    set_m_atp3: float = 0.0
+    set_m_atp5: float = 0.0
+    set_m_wta3: float = 0.0
 
     def stack(self, tour):
         return self.stack_atp if tour == "ATP" else self.stack_wta
@@ -132,6 +136,49 @@ class Params:
     def from_dict(cls, d):
         names = {f.name for f in fields(cls)}
         return cls(**{k: v for k, v in (d or {}).items() if k in names})
+
+
+# ---------- set scores ----------------------------------------------------------
+# Sets aren't independent: whoever wins a set is a little more likely to win the
+# next. `m` is that momentum on the log-odds scale (0 = independent sets), fitted
+# on real set scores by tools/backtest.py. The per-set chance is solved so the
+# set-score distribution always agrees with the headline match probability.
+def set_score_probs(s, best_of, m=0.0):
+    """{(sets won by A, sets won by B): probability} given A's first-set chance s."""
+    need = 3 if best_of == 5 else 2
+    L = _logit(s)
+    after_win, after_loss = 1 / (1 + math.exp(-(L + m))), 1 / (1 + math.exp(-(L - m)))
+    out = {}
+    def go(a, b, q, pr):
+        if a == need or b == need:
+            out[(a, b)] = out.get((a, b), 0.0) + pr
+            return
+        go(a + 1, b, after_win, pr * q)
+        go(a, b + 1, after_loss, pr * (1 - q))
+    go(0, 0, s, 1.0)
+    return out
+
+def set_dist(p_match, best_of, m=0.0):
+    """Set-score distribution whose A-wins total equals p_match."""
+    need = 3 if best_of == 5 else 2
+    win = lambda s: sum(v for (a, _), v in set_score_probs(s, best_of, m).items() if a == need)
+    lo, hi = 1e-4, 1 - 1e-4
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        lo, hi = (mid, hi) if win(mid) < p_match else (lo, mid)
+    return set_score_probs((lo + hi) / 2, best_of, m)
+
+def set_markets(dist, best_of):
+    """Prices people bet: exact scores, ±1.5 sets, total sets, to win a set."""
+    need = 3 if best_of == 5 else 2
+    P = lambda f: sum(v for k, v in dist.items() if f(*k))
+    out = {"exact": {f"{a}-{b}": v for (a, b), v in sorted(dist.items(), key=lambda kv: (-kv[0][0], kv[0][1]))},
+           "A_-1.5": P(lambda a, b: a == need and b <= need - 2),
+           "B_-1.5": P(lambda a, b: b == need and a <= need - 2),
+           "A_win_set": P(lambda a, b: a >= 1), "B_win_set": P(lambda a, b: b >= 1)}
+    for line in ((2.5,) if best_of == 3 else (3.5, 4.5)):
+        out[f"over_{line}"] = P(lambda a, b: a + b > line)
+    return out
 
 
 # ---------- stacking ------------------------------------------------------------
@@ -502,6 +549,7 @@ class TourEngine:
     def model_block(self):
         blk = {"rating": "glicko" if self.P.rating == "glicko" else "elo",
                "w": {"ATP": self.P.w_atp, "WTA": self.P.w_wta}, "n0": self.P.n0}
+        blk["set_m"] = {"ATP": {"3": self.P.set_m_atp3, "5": self.P.set_m_atp5}, "WTA": {"3": self.P.set_m_wta3}}
         if self.P.stack_atp or self.P.stack_wta:
             blk["stack"] = {t: w for t, w in (("ATP", self.P.stack_atp), ("WTA", self.P.stack_wta)) if w}
             blk["stack_features"] = STACK_FEATURES

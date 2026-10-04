@@ -44,7 +44,8 @@ def load(cache_path):
 
 
 def run(P, data, set_prob):
-    """-> list of (tour, date, y, p, p_elo, p_mkv, n, prior_min, qualifying, stack features)."""
+    """-> list of (tour, date, y, p, p_elo, p_mkv, n, prior_min, qualifying, stack features,
+    (sets won by a, sets won by b) or None, best of)."""
     recs = []
     for tour, ms in data.items():
         eng = model.TourEngine(tour, P, set_prob=set_prob)
@@ -55,11 +56,69 @@ def run(P, data, set_prob):
                 r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"), m["qualifying"])
                 recs.append((tour, m["date"], 1 if a == m["winner"] else 0, r["p"], r["p_elo"],
                              r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"],
-                             r["feats"]))
+                             r["feats"], _sets_for(m, a), m["best_of"]))
             eng.update(m)
             seen[m["winner"]] = seen.get(m["winner"], 0) + 1
             seen[m["loser"]] = seen.get(m["loser"], 0) + 1
     return recs
+
+
+def _sets_for(m, a):
+    if not m.get("sets"):
+        return None
+    w, l = m["sets"]
+    return (w, l) if a == m["winner"] else (l, w)
+
+
+SET_GRID = [round(-0.2 + 0.05 * i, 2) for i in range(29)]     # -0.2 .. 1.2
+
+
+def set_rows(recs, lo, hi, tour, bo):
+    need = 3 if bo == 5 else 2
+    return [(r[3], r[10]) for r in recs if r[0] == tour and r[11] == bo and lo <= r[1] <= hi
+            and r[10] and max(r[10]) == need and min(r[10]) < need]
+
+
+def set_logloss(rows, bo, m):
+    ll = 0.0
+    for p, sc in rows:
+        ll -= math.log(max(model.set_dist(p, bo, m).get(tuple(sc), 1e-9), 1e-9))
+    return ll / len(rows) if rows else float("nan")
+
+
+def straight_sets(rows, bo, m):
+    """(predicted, actual) share of matches won without dropping a set."""
+    need = 3 if bo == 5 else 2
+    pred = sum(model.set_dist(p, bo, m).get((need, 0), 0) + model.set_dist(p, bo, m).get((0, need), 0)
+               for p, _ in rows)
+    act = sum(1 for _, sc in rows if min(sc) == 0)
+    return pred / len(rows), act / len(rows)
+
+
+def fit_sets(recs, end, log, P):
+    """Stage 5: set momentum per tour and format, fitted on the tuning year."""
+    lo, hi = TUNE
+    out = {}
+    for tour, bo, field in (("ATP", 3, "set_m_atp3"), ("ATP", 5, "set_m_atp5"), ("WTA", 3, "set_m_wta3")):
+        tune_rows, hold_rows = set_rows(recs, lo, hi, tour, bo), set_rows(recs, HOLD_START, end, tour, bo)
+        if len(tune_rows) < 200:
+            log(f"  sets {tour} bo{bo}: only {len(tune_rows)} matches with set scores, keeping momentum 0")
+            continue
+        best = min(SET_GRID, key=lambda m: set_logloss(tune_rows, bo, m))
+        t0_, t1_ = set_logloss(tune_rows, bo, 0.0), set_logloss(tune_rows, bo, best)
+        h0, h1 = set_logloss(hold_rows, bo, 0.0), set_logloss(hold_rows, bo, best)
+        sp0, sa = straight_sets(hold_rows, bo, 0.0)
+        sp1, _ = straight_sets(hold_rows, bo, best)
+        adopt = t1_ <= t0_ - MIN_GAIN
+        log(f"  sets {tour} bo{bo}: momentum {best:+.2f}; exact-score log loss tune {t0_:.4f} -> {t1_:.4f}, "
+            f"holdout {h0:.4f} -> {h1:.4f}; straight sets on holdout: predicted {sp0:.1%} (independent) / "
+            f"{sp1:.1%} (with momentum), actual {sa:.1%} (n={len(hold_rows)})" + ("" if adopt else " -> not adopted"))
+        out[field] = best if adopt else 0.0
+        setattr(P, field, out[field])
+        out[f"{tour}{bo}"] = {"momentum": best, "tune": [t0_, t1_], "holdout": [h0, h1],
+                              "straight_sets_holdout": {"independent": sp0, "momentum": sp1, "actual": sa},
+                              "n_holdout": len(hold_rows), "adopted": adopt}
+    return out
 
 
 def score(recs, lo, hi, col=3, tour=None, min_prior=0):
@@ -258,6 +317,7 @@ def main():
     ap.add_argument("--cache", default="data/api_tennis_matches.csv")
     ap.add_argument("--params", default="model_params.json")
     ap.add_argument("--tune", action="store_true")
+    ap.add_argument("--sets", action="store_true", help="only (re)fit set momentum, keeping the other settings")
     ap.add_argument("--report", default="backtest_report.json")
     args = ap.parse_args()
 
@@ -267,15 +327,26 @@ def main():
     log(f"{sum(len(v) for v in data.values())} matches, {min(m['date'] for ms in data.values() for m in ms)} -> {end}")
     set_prob = model.SetTable()
 
-    if args.tune:
-        P = tune(data, set_prob, log)
+    try:
+        with open(args.params) as fh:
+            saved = json.load(fh)
+    except (OSError, ValueError):
+        saved = {}
+    sets_report = None
+    if args.tune or args.sets:
+        if args.tune:
+            P = tune(data, set_prob, log)
+        else:
+            P = model.Params.from_dict(saved["params"])
+        sets_report = fit_sets(run(P, data, set_prob), end, log, P)
+        saved.update({"version": str(date.today()), "params": P.to_dict()})
+        if args.tune:
+            saved["tuned_on"] = f"{TUNE[0]}..{TUNE[1]}"
         with open(args.params, "w") as fh:
-            json.dump({"version": str(date.today()), "tuned_on": f"{TUNE[0]}..{TUNE[1]}",
-                       "params": P.to_dict()}, fh, indent=2)
+            json.dump(saved, fh, indent=2)
         log(f"wrote {args.params}")
     else:
-        with open(args.params) as fh:
-            P = model.Params.from_dict(json.load(fh)["params"])
+        P = model.Params.from_dict(saved["params"])
 
     base = summary("original model", run(BASELINE, data, set_prob), end)
     new = summary("tuned model", run(P, data, set_prob), end)
@@ -290,7 +361,9 @@ def main():
     with open(args.report, "w") as fh:
         json.dump({"periods": {"warm_up_until": str(WARM_END), "tune": [str(TUNE[0]), str(TUNE[1])],
                                "holdout": [str(HOLD_START), str(end)]},
-                   "params": P.to_dict(), "original": base, "tuned": new}, fh, indent=1, default=str)
+                   "params": P.to_dict(), "original": base, "tuned": new,
+                   "sets": sets_report or (json.load(open(args.report)).get("sets") if os.path.exists(args.report) else None)},
+                  fh, indent=1, default=str)
     log(f"wrote {args.report}")
 
 

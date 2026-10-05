@@ -134,7 +134,7 @@
 
   <section class="box">
     <h3>Past parlays <span class="hint" id="parlayHint"></span></h3>
-    <p class="box__lede">Recommended parlays as they were posted, at most three a day from bookmakers and three from Kalshi (by UTC date), settled from the results above. Profit is for a 1-unit stake.</p>
+    <p class="box__lede">Recommended parlays as they were posted, moved here once their first match starts (up to three live at a time on the predictor, for bookmakers and for Kalshi), settled from the results above. Profit is for a 1-unit stake.</p>
     <div id="parlays"></div>
   </section>
 
@@ -325,16 +325,22 @@ function renderList(){
 }
 
 let PARLAYS = null;
-function renderParlays(rows){
-  PARLAYS = rows;
+function renderParlays(all){
+  PARLAYS = all;
   const box = document.getElementById("parlays");
-  if (!rows.length){ box.innerHTML = `<div class="empty">No parlays logged yet.</div>`; return; }
+  // a parlay moves here once its first match starts; until then it's live on the predictor
+  const startOf = new Map(ALL.map(h => [h.id, h.when]));
+  const firstStart = r => { try { const t = JSON.parse(r.legs).map(l => startOf.get(l.id)).filter(Boolean);
+    return t.length ? Math.min(...t) : null; } catch (e) { return null; } };
+  const rows = all.filter(r => r.result || (firstStart(r) != null && firstStart(r) <= Date.now()));
+  const live = all.length - rows.length;
+  if (!rows.length){ box.innerHTML = `<div class="empty">No parlays have started yet.${live ? ` ${live} live on the <a href="index.html">predictor</a>.` : ""}</div>`; return; }
   rows.sort((a, b) => b.created.localeCompare(a.created));
   const done = rows.filter(r => r.result === "won" || r.result === "lost");
   const profit = done.reduce((t, r) => t + (r.payout !== "" ? +r.payout - 1 : (r.result === "won" ? +r.odds - 1 : -1)), 0);
   document.getElementById("parlayHint").textContent = done.length
-    ? `${done.filter(r => r.result === "won").length}/${done.length} won · ${units(profit)}` : `${rows.length} logged`;
-  // grouped by the UTC day they were posted: at most three a day
+    ? `${done.filter(r => r.result === "won").length}/${done.length} won · ${units(profit)}` : `${rows.length} started`;
+  // grouped by the UTC day they were posted
   let day = "";
   box.innerHTML = rows.map(r => {
     const d = r.created.slice(0, 10), sameDay = rows.filter(x => x.created.slice(0, 10) === d);

@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-05T00:48:42Z",
+  "updated": "2026-10-05T01:34:30Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "455",
+  "requests_remaining": "452",
   "matches": [
     {
       "id": "7148ceef90fc0bed3564c4d4289389a8",
@@ -18,10 +18,10 @@
         "key": "d-vekic",
         "model": 0.0719,
         "fair_odds": 13.9,
-        "market": 0.1273,
-        "best_odds": 9.4,
-        "book": "Matchbook",
-        "ev": -0.3239,
+        "market": 0.1274,
+        "best_odds": 9.2,
+        "book": "Betfair",
+        "ev": -0.3383,
         "kelly": 0.0
       },
       "b": {
@@ -29,7 +29,7 @@
         "key": "i-swiatek",
         "model": 0.9281,
         "fair_odds": 1.08,
-        "market": 0.8727,
+        "market": 0.8726,
         "best_odds": 1.11,
         "book": "Betfair",
         "ev": 0.0302,
@@ -196,7 +196,8 @@
           2.2
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.5692
     },
     {
       "id": "apit-12168150",
@@ -266,7 +267,8 @@
           2.15
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.5714
     },
     {
       "id": "apit-12168151",
@@ -341,7 +343,8 @@
           1.42
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.3242
     },
     {
       "id": "apit-12168152",
@@ -411,7 +414,8 @@
           4.55
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.8232
     },
     {
       "id": "apit-12168153",
@@ -486,7 +490,8 @@
           3.85
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.7815
     },
     {
       "id": "apit-12168154",
@@ -544,7 +549,7 @@
         ],
         [
           "disagree",
-          "Model and market differ by 24 points"
+          "Model and market differ by 26 points"
         ]
       ],
       "prices": {
@@ -573,7 +578,8 @@
           1.02
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.0868
     },
     {
       "id": "7bc9edc3231f3cc910824bd36c6e2386",
@@ -713,7 +719,7 @@
         "key": "m-bouzkova",
         "model": 0.4949,
         "fair_odds": 2.02,
-        "market": 0.4304,
+        "market": 0.4298,
         "best_odds": 2.36,
         "book": "Betfair",
         "ev": 0.1679,
@@ -724,7 +730,7 @@
         "key": "q-zheng",
         "model": 0.5051,
         "fair_odds": 1.98,
-        "market": 0.5696,
+        "market": 0.5702,
         "best_odds": 1.72,
         "book": "Matchbook",
         "ev": -0.1312,
@@ -801,16 +807,16 @@
           1.66
         ],
         "BetAnything": [
-          2.25,
-          1.69
+          2.3,
+          1.67
         ],
         "Pinnacle": [
           2.28,
           1.69
         ],
         "BetOnline.ag": [
-          2.3,
-          1.67
+          2.32,
+          1.66
         ]
       },
       "court": "beijing",
@@ -891,7 +897,8 @@
           3.05
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.7103
     },
     {
       "id": "apit-12168156",
@@ -982,7 +989,8 @@
           1.44
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.3427
     },
     {
       "id": "apit-12168157",
@@ -1057,7 +1065,8 @@
           1.46
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.3639
     },
     {
       "id": "apit-12168158",
@@ -1102,9 +1111,9 @@
       },
       "flags": [],
       "prices": {
-        "Sbo": [
-          1.58,
-          2.12
+        "1xBet": [
+          1.63,
+          2.15
         ],
         "Marathon": [
           1.61,
@@ -1118,16 +1127,17 @@
           1.64,
           2.31
         ],
-        "1xBet": [
-          1.63,
-          2.15
+        "Sbo": [
+          1.58,
+          2.12
         ],
         "Betano": [
           1.65,
           2.15
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.5848
     },
     {
       "id": "apit-12168159",
@@ -1202,7 +1212,8 @@
           8.25
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.9228
     },
     {
       "id": "apit-12168160",
@@ -1256,9 +1267,9 @@
         ]
       ],
       "prices": {
-        "Sbo": [
-          1.09,
-          5.0
+        "1xBet": [
+          1.1,
+          5.65
         ],
         "Marathon": [
           1.1,
@@ -1272,12 +1283,13 @@
           1.12,
           6.47
         ],
-        "1xBet": [
-          1.1,
-          5.65
+        "Sbo": [
+          1.09,
+          5.0
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.8524
     },
     {
       "id": "10911eaa50b035ec14ce0d680a6a7522",
@@ -1417,7 +1429,7 @@
         "key": "a-de-minaur",
         "model": 0.5998,
         "fair_odds": 1.67,
-        "market": 0.5556,
+        "market": 0.5574,
         "best_odds": 1.79,
         "book": "Betfair",
         "ev": 0.0736,
@@ -1428,10 +1440,10 @@
         "key": "h-hurkacz",
         "model": 0.4002,
         "fair_odds": 2.5,
-        "market": 0.4444,
-        "best_odds": 2.24,
-        "book": "Betfair",
-        "ev": -0.1035,
+        "market": 0.4426,
+        "best_odds": 2.26,
+        "book": "Matchbook",
+        "ev": -0.0955,
         "kelly": 0.0
       },
       "books": 21,
@@ -1441,8 +1453,8 @@
           2.1
         ],
         "1xBet": [
-          1.74,
-          2.16
+          1.69,
+          2.24
         ],
         "Coolbet": [
           1.73,
@@ -1457,8 +1469,8 @@
           2.11
         ],
         "Marathon Bet": [
-          1.71,
-          2.12
+          1.66,
+          2.2
         ],
         "GTbets": [
           1.68,
@@ -1497,8 +1509,8 @@
           2.17
         ],
         "Pinnacle": [
-          1.79,
-          2.12
+          1.78,
+          2.14
         ],
         "Unibet (NL)": [
           1.68,
@@ -1520,7 +1532,7 @@
         "serve": 0.5922,
         "w": 0.55
       },
-      "pinnacle_a": 0.5422,
+      "pinnacle_a": 0.5459,
       "flags": []
     },
     {
@@ -1537,7 +1549,7 @@
         "key": "c-alcaraz",
         "model": 0.8552,
         "fair_odds": 1.17,
-        "market": 0.8592,
+        "market": 0.8598,
         "best_odds": 1.13,
         "book": "Betfair",
         "ev": -0.0337,
@@ -1548,13 +1560,13 @@
         "key": "j-munar",
         "model": 0.1448,
         "fair_odds": 6.9,
-        "market": 0.1408,
+        "market": 0.1402,
         "best_odds": 8.0,
         "book": "Betfair",
         "ev": 0.1586,
         "kelly": 0.0057
       },
-      "books": 20,
+      "books": 19,
       "prices": {
         "Unibet (FR)": [
           1.05,
@@ -1622,11 +1634,7 @@
         ],
         "BetOnline.ag": [
           1.12,
-          6.59
-        ],
-        "BetAnything": [
-          1.11,
-          6.45
+          6.86
         ]
       },
       "court": "tokyo",
@@ -1653,7 +1661,7 @@
         "key": "b-bencic",
         "model": 0.7671,
         "fair_odds": 1.3,
-        "market": 0.6833,
+        "market": 0.6836,
         "best_odds": 1.44,
         "book": "GTbets",
         "ev": 0.1046,
@@ -1664,10 +1672,10 @@
         "key": "a-li",
         "model": 0.2329,
         "fair_odds": 4.29,
-        "market": 0.3167,
-        "best_odds": 3.3,
+        "market": 0.3164,
+        "best_odds": 3.35,
         "book": "Betfair",
-        "ev": -0.2315,
+        "ev": -0.2198,
         "kelly": 0.0
       },
       "books": 22,
@@ -1816,9 +1824,9 @@
         ]
       ],
       "prices": {
-        "Sbo": [
-          3.12,
-          1.25
+        "1xBet": [
+          2.85,
+          1.37
         ],
         "bet365": [
           2.75,
@@ -1832,9 +1840,9 @@
           2.75,
           1.4
         ],
-        "1xBet": [
-          2.85,
-          1.37
+        "Sbo": [
+          3.12,
+          1.25
         ],
         "Betano": [
           2.82,
@@ -1924,7 +1932,8 @@
           2.8
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.6751
     },
     {
       "id": "apit-12168163",
@@ -1994,7 +2003,8 @@
           1.33
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.3011
     },
     {
       "id": "sched-12168164",
@@ -2059,7 +2069,7 @@
         "key": "k-jacquet",
         "model": 0.6887,
         "fair_odds": 1.45,
-        "market": 0.9109,
+        "market": 0.9103,
         "best_odds": 1.05,
         "book": "bet365",
         "ev": -0.2769,
@@ -2070,14 +2080,14 @@
         "key": "new-t-zhang-54172",
         "model": 0.3113,
         "fair_odds": 3.21,
-        "market": 0.0891,
+        "market": 0.0897,
         "best_odds": 16.18,
         "book": "Pncl",
         "ev": 4.037,
         "kelly": 0.0665,
         "new": true
       },
-      "books": 7,
+      "books": 6,
       "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
@@ -2093,13 +2103,13 @@
         ],
         [
           "disagree",
-          "Model and market differ by 22 points"
+          "Model and market differ by 25 points"
         ]
       ],
       "prices": {
-        "WilliamHill": [
-          1.03,
-          11.0
+        "1xBet": [
+          1.02,
+          8.8
         ],
         "bet365": [
           1.05,
@@ -2116,13 +2126,10 @@
         "Sbo": [
           1.02,
           7.25
-        ],
-        "1xBet": [
-          1.02,
-          8.8
         ]
       },
       "odds_source": "api-tennis",
+      "pinnacle_a": 0.9402,
       "new_players": {
         "b": {
           "name": "T. Zhang",
@@ -2216,7 +2223,8 @@
           2.57
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.6361
     },
     {
       "id": "1474ac5f2265d300c1a48ea91b323c09",
@@ -2515,7 +2523,7 @@
       "flags": [
         [
           "disagree",
-          "Model and market differ by 20 points"
+          "Model and market differ by 22 points"
         ]
       ],
       "prices": {
@@ -2544,7 +2552,8 @@
           5.4
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.8619
     },
     {
       "id": "apit-12168168",
@@ -2614,7 +2623,8 @@
           1.14
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.1739
     },
     {
       "id": "apit-12168169",
@@ -2693,7 +2703,8 @@
           1.13
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.1672
     },
     {
       "id": "apit-12168170",
@@ -2768,7 +2779,8 @@
           1.42
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.3235
     },
     {
       "id": "apit-12168171",
@@ -2813,9 +2825,9 @@
       },
       "flags": [],
       "prices": {
-        "Sbo": [
-          2.23,
-          1.51
+        "1xBet": [
+          2.2,
+          1.6
         ],
         "bet365": [
           2.2,
@@ -2833,16 +2845,17 @@
           2.29,
           1.65
         ],
-        "1xBet": [
-          2.2,
-          1.6
+        "Sbo": [
+          2.23,
+          1.51
         ],
         "Betano": [
           2.22,
           1.62
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.4188
     },
     {
       "id": "apit-12168172",
@@ -2921,7 +2934,8 @@
           3.95
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.7659
     },
     {
       "id": "4bfb84fc62ffc5b65c9d7213ee0caf6f",
@@ -2937,7 +2951,7 @@
         "key": "j-lehecka",
         "model": 0.5874,
         "fair_odds": 1.7,
-        "market": 0.6394,
+        "market": 0.6398,
         "best_odds": 1.53,
         "book": "Betfair",
         "ev": -0.1012,
@@ -2948,7 +2962,7 @@
         "key": "v-vacherot",
         "model": 0.4126,
         "fair_odds": 2.42,
-        "market": 0.3606,
+        "market": 0.3602,
         "best_odds": 2.84,
         "book": "Betfair",
         "ev": 0.1717,
@@ -3021,8 +3035,8 @@
           2.79
         ],
         "BetOnline.ag": [
-          1.49,
-          2.72
+          1.48,
+          2.8
         ]
       },
       "court": "tokyo",
@@ -3049,7 +3063,7 @@
         "key": "n-djokovic",
         "model": 0.5222,
         "fair_odds": 1.92,
-        "market": 0.426,
+        "market": 0.4254,
         "best_odds": 2.3,
         "book": "Matchbook",
         "ev": 0.2009,
@@ -3060,10 +3074,10 @@
         "key": "d-medvedev",
         "model": 0.4778,
         "fair_odds": 2.09,
-        "market": 0.574,
-        "best_odds": 1.75,
+        "market": 0.5746,
+        "best_odds": 1.76,
         "book": "Matchbook",
-        "ev": -0.1638,
+        "ev": -0.159,
         "kelly": 0.0
       },
       "books": 21,
@@ -3089,12 +3103,12 @@
           1.63
         ],
         "Marathon Bet": [
-          2.17,
-          1.68
+          2.19,
+          1.67
         ],
         "1xBet": [
-          2.21,
-          1.71
+          2.23,
+          1.7
         ],
         "GTbets": [
           2.28,
@@ -3141,8 +3155,8 @@
           1.74
         ],
         "BetOnline.ag": [
-          2.2,
-          1.71
+          2.25,
+          1.69
         ]
       },
       "court": "beijing",
@@ -3169,7 +3183,7 @@
         "key": "c-gauff",
         "model": 0.9007,
         "fair_odds": 1.11,
-        "market": 0.9167,
+        "market": 0.9157,
         "best_odds": 1.06,
         "book": "Betfair",
         "ev": -0.0452,
@@ -3180,13 +3194,13 @@
         "key": "x-sun",
         "model": 0.0993,
         "fair_odds": 10.07,
-        "market": 0.0833,
+        "market": 0.0843,
         "best_odds": 16.0,
         "book": "Betfair",
         "ev": 0.5885,
         "kelly": 0.0098
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
           1.02,
@@ -3227,6 +3241,10 @@
         "1xBet": [
           1.03,
           11.7
+        ],
+        "Tipico": [
+          1.03,
+          9.0
         ],
         "Unibet (NL)": [
           1.03,
@@ -3504,7 +3522,7 @@
         "key": "l-noskova",
         "model": 0.7307,
         "fair_odds": 1.37,
-        "market": 0.7257,
+        "market": 0.726,
         "best_odds": 1.36,
         "book": "888sport",
         "ev": -0.0063,
@@ -3515,11 +3533,11 @@
         "key": "e-alexandrova",
         "model": 0.2693,
         "fair_odds": 3.71,
-        "market": 0.2743,
-        "best_odds": 4.0,
+        "market": 0.274,
+        "best_odds": 4.1,
         "book": "Betfair",
-        "ev": 0.0774,
-        "kelly": 0.0064
+        "ev": 0.1043,
+        "kelly": 0.0084
       },
       "books": 17,
       "prices": {
@@ -3776,84 +3794,81 @@
   },
   "parlays": [
     {
+      "id": "2fff13d64b68dd5cb7c7269617427ba2:a+4bfb84fc62ffc5b65c9d7213ee0caf6f:b+5b6e5bc4378ca36adad672d8515b2c2c:a",
       "book": "Pinnacle",
       "legs": [
         {
           "id": "2fff13d64b68dd5cb7c7269617427ba2",
           "side": "a",
           "name": "Marie Bouzkova",
+          "odds": 2.28,
           "vs": "Qinwen Zheng",
           "tournament": "WTA China Open",
           "start": "2026-10-05T04:30:00Z",
-          "odds": 2.28,
-          "model": 0.4949,
-          "market": 0.4304
+          "model": 0.4949
         },
         {
           "id": "4bfb84fc62ffc5b65c9d7213ee0caf6f",
           "side": "b",
           "name": "Valentin Vacherot",
+          "odds": 2.79,
           "vs": "Jiri Lehecka",
           "tournament": "ATP Japan Open",
           "start": "2026-10-05T09:00:00Z",
-          "odds": 2.79,
-          "model": 0.4126,
-          "market": 0.3606
+          "model": 0.4126
         },
         {
           "id": "5b6e5bc4378ca36adad672d8515b2c2c",
           "side": "a",
           "name": "Novak Djokovic",
+          "odds": 2.21,
           "vs": "Daniil Medvedev",
           "tournament": "ATP China Open",
           "start": "2026-10-05T11:00:00Z",
-          "odds": 2.21,
-          "model": 0.5222,
-          "market": 0.426
+          "model": 0.5222
         }
       ],
       "odds": 14.06,
-      "model": 0.1066,
-      "market": 0.0661,
-      "ev": 0.499,
-      "kelly": 0.0096,
-      "id": "2fff13d64b68dd5cb7c7269617427ba2:a+4bfb84fc62ffc5b65c9d7213ee0caf6f:b+5b6e5bc4378ca36adad672d8515b2c2c:a"
+      "model": 0.1084,
+      "market": 0.0662,
+      "ev": 0.5236,
+      "kelly": 0.01,
+      "created": "2026-10-05T00:18:20Z",
+      "result": ""
     },
     {
+      "id": "10911eaa50b035ec14ce0d680a6a7522:b+4bfb84fc62ffc5b65c9d7213ee0caf6f:b+5b6e5bc4378ca36adad672d8515b2c2c:a",
       "book": "Pinnacle",
       "legs": [
         {
           "id": "10911eaa50b035ec14ce0d680a6a7522",
           "side": "b",
           "name": "Sonay Kartal",
+          "odds": 1.51,
           "vs": "Alina Charaeva",
           "tournament": "WTA China Open",
           "start": "2026-10-05T06:00:00Z",
-          "odds": 1.51,
-          "model": 0.7225,
-          "market": 0.6293
+          "model": 0.7225
         },
         {
           "id": "4bfb84fc62ffc5b65c9d7213ee0caf6f",
           "side": "b",
           "name": "Valentin Vacherot",
+          "odds": 2.79,
           "vs": "Jiri Lehecka",
           "tournament": "ATP Japan Open",
           "start": "2026-10-05T09:00:00Z",
-          "odds": 2.79,
-          "model": 0.4126,
-          "market": 0.3606
+          "model": 0.4126
         },
         {
           "id": "5b6e5bc4378ca36adad672d8515b2c2c",
           "side": "a",
           "name": "Novak Djokovic",
+          "odds": 2.21,
           "vs": "Daniil Medvedev",
           "tournament": "ATP China Open",
           "start": "2026-10-05T11:00:00Z",
-          "odds": 2.21,
-          "model": 0.5222,
-          "market": 0.426
+          "model": 0.5222
         }
       ],
       "odds": 9.31,
@@ -3861,59 +3876,59 @@
       "market": 0.0967,
       "ev": 0.4494,
       "kelly": 0.0135,
-      "id": "10911eaa50b035ec14ce0d680a6a7522:b+4bfb84fc62ffc5b65c9d7213ee0caf6f:b+5b6e5bc4378ca36adad672d8515b2c2c:a"
+      "created": "2026-10-05T00:48:42Z",
+      "result": ""
     },
     {
+      "id": "2fff13d64b68dd5cb7c7269617427ba2:a+10911eaa50b035ec14ce0d680a6a7522:b+d5f176ea16c34ec6c13647efacd2bb99:a",
       "book": "BetOnline.ag",
       "legs": [
         {
           "id": "2fff13d64b68dd5cb7c7269617427ba2",
           "side": "a",
           "name": "Marie Bouzkova",
+          "odds": 2.32,
           "vs": "Qinwen Zheng",
           "tournament": "WTA China Open",
           "start": "2026-10-05T04:30:00Z",
-          "odds": 2.3,
-          "model": 0.4949,
-          "market": 0.4304
+          "model": 0.4949
         },
         {
           "id": "10911eaa50b035ec14ce0d680a6a7522",
           "side": "b",
           "name": "Sonay Kartal",
+          "odds": 1.53,
           "vs": "Alina Charaeva",
           "tournament": "WTA China Open",
           "start": "2026-10-05T06:00:00Z",
-          "odds": 1.53,
-          "model": 0.7225,
-          "market": 0.6293
+          "model": 0.7225
         },
         {
           "id": "d5f176ea16c34ec6c13647efacd2bb99",
           "side": "a",
           "name": "Alex de Minaur",
+          "odds": 1.78,
           "vs": "Hubert Hurkacz",
           "tournament": "ATP China Open",
           "start": "2026-10-05T07:00:00Z",
-          "odds": 1.78,
-          "model": 0.5998,
-          "market": 0.5556
+          "model": 0.5998
         }
       ],
-      "odds": 6.26,
+      "odds": 6.32,
       "model": 0.2145,
-      "market": 0.1505,
-      "ev": 0.3434,
-      "kelly": 0.0163,
-      "id": "2fff13d64b68dd5cb7c7269617427ba2:a+10911eaa50b035ec14ce0d680a6a7522:b+d5f176ea16c34ec6c13647efacd2bb99:a"
+      "market": 0.1508,
+      "ev": 0.3551,
+      "kelly": 0.0167,
+      "created": "2026-10-05T01:34:30Z",
+      "result": ""
     }
   ],
   "parlay_record": {
-    "settled": 2,
-    "pending": 15,
-    "won": 2,
-    "profit_units": 11.32,
-    "roi": 5.66,
-    "expected_wins": 0.4
+    "settled": 1,
+    "pending": 5,
+    "won": 1,
+    "profit_units": 6.83,
+    "roi": 6.83,
+    "expected_wins": 0.2
   }
 }

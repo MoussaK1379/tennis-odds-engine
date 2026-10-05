@@ -1,8 +1,8 @@
 {
-  "updated": "2026-10-05T00:18:20Z",
+  "updated": "2026-10-05T00:48:42Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "458",
+  "requests_remaining": "455",
   "matches": [
     {
       "id": "7148ceef90fc0bed3564c4d4289389a8",
@@ -129,7 +129,7 @@
       "flags": []
     },
     {
-      "id": "sched-12168149",
+      "id": "apit-12168149",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -143,25 +143,25 @@
         "key": "t-daniel",
         "model": 0.5158,
         "fair_odds": 1.94,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.5661,
+        "best_odds": 1.68,
+        "book": "Pncl",
+        "ev": -0.1334,
+        "kelly": 0.0
       },
       "b": {
         "name": "S. Mochizuki",
         "key": "s-mochizuki",
         "model": 0.4842,
         "fair_odds": 2.07,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.4339,
+        "best_odds": 2.22,
+        "book": "Pncl",
+        "ev": 0.0748,
+        "kelly": 0.0153
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -169,10 +169,37 @@
         "serve": 0.5734,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "1xBet": [
+          1.64,
+          2.13
+        ],
+        "Marathon": [
+          1.62,
+          2.13
+        ],
+        "BetVictor": [
+          1.6,
+          2.2
+        ],
+        "Pncl": [
+          1.68,
+          2.22
+        ],
+        "Sbo": [
+          1.67,
+          2.03
+        ],
+        "Betano": [
+          1.62,
+          2.2
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168150",
+      "id": "apit-12168150",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -186,25 +213,25 @@
         "key": "h-gaston",
         "model": 0.5244,
         "fair_odds": 1.91,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.5696,
+        "best_odds": 1.68,
+        "book": "Pncl",
+        "ev": -0.1191,
+        "kelly": 0.0
       },
       "b": {
         "name": "L. Draxl",
         "key": "l-draxl",
         "model": 0.4756,
         "fair_odds": 2.1,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.4304,
+        "best_odds": 2.24,
+        "book": "Pncl",
+        "ev": 0.0654,
+        "kelly": 0.0132
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -212,10 +239,37 @@
         "serve": 0.5114,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "Sbo": [
+          1.6,
+          2.08
+        ],
+        "Marathon": [
+          1.62,
+          2.13
+        ],
+        "BetVictor": [
+          1.62,
+          2.2
+        ],
+        "Pncl": [
+          1.68,
+          2.24
+        ],
+        "1xBet": [
+          1.64,
+          2.13
+        ],
+        "Betano": [
+          1.65,
+          2.15
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168151",
+      "id": "apit-12168151",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -229,25 +283,25 @@
         "key": "a-ilagan",
         "model": 0.2465,
         "fair_odds": 4.06,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.336,
+        "best_odds": 2.96,
+        "book": "Pncl",
+        "ev": -0.2705,
+        "kelly": 0.0
       },
       "b": {
         "name": "N. Basilashvili",
         "key": "n-basilashvili",
         "model": 0.7535,
         "fair_odds": 1.33,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.664,
+        "best_odds": 1.42,
+        "book": "Pncl",
+        "ev": 0.07,
+        "kelly": 0.0417
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -260,10 +314,37 @@
           "thin",
           "A. Ilagan: only 5 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          2.58,
+          1.36
+        ],
+        "Marathon": [
+          2.76,
+          1.38
+        ],
+        "BetVictor": [
+          2.75,
+          1.4
+        ],
+        "Pncl": [
+          2.96,
+          1.42
+        ],
+        "1xBet": [
+          2.77,
+          1.39
+        ],
+        "Betano": [
+          2.75,
+          1.42
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168152",
+      "id": "apit-12168152",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -277,25 +358,25 @@
         "key": "r-safiullin",
         "model": 0.7727,
         "fair_odds": 1.29,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.8044,
+        "best_odds": 1.18,
+        "book": "BetVictor",
+        "ev": -0.0883,
+        "kelly": 0.0
       },
       "b": {
         "name": "A. Galarneau",
         "key": "a-galarneau",
         "model": 0.2273,
         "fair_odds": 4.4,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.1956,
+        "best_odds": 5.4,
+        "book": "Pncl",
+        "ev": 0.2277,
+        "kelly": 0.0129
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -303,10 +384,37 @@
         "serve": 0.8092,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "1xBet": [
+          1.14,
+          4.75
+        ],
+        "Marathon": [
+          1.14,
+          4.8
+        ],
+        "BetVictor": [
+          1.18,
+          4.33
+        ],
+        "Pncl": [
+          1.16,
+          5.4
+        ],
+        "Sbo": [
+          1.12,
+          4.44
+        ],
+        "Betano": [
+          1.18,
+          4.55
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168153",
+      "id": "apit-12168153",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -320,25 +428,25 @@
         "key": "l-sonego",
         "model": 0.7236,
         "fair_odds": 1.38,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.763,
+        "best_odds": 1.24,
+        "book": "Betano",
+        "ev": -0.1028,
+        "kelly": 0.0
       },
       "b": {
         "name": "A. Dougaz",
         "key": "a-dougaz",
         "model": 0.2764,
         "fair_odds": 3.62,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.237,
+        "best_odds": 4.4,
+        "book": "Pncl",
+        "ev": 0.2163,
+        "kelly": 0.0159
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -351,10 +459,37 @@
           "thin",
           "A. Dougaz: only 9 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          1.19,
+          3.77
+        ],
+        "Marathon": [
+          1.21,
+          3.84
+        ],
+        "BetVictor": [
+          1.22,
+          3.75
+        ],
+        "Pncl": [
+          1.23,
+          4.4
+        ],
+        "1xBet": [
+          1.22,
+          3.84
+        ],
+        "Betano": [
+          1.24,
+          3.85
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168154",
+      "id": "apit-12168154",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -368,25 +503,25 @@
         "key": "l-xiao",
         "model": 0.3436,
         "fair_odds": 2.91,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.0998,
+        "best_odds": 11.05,
+        "book": "Pncl",
+        "ev": 2.7963,
+        "kelly": 0.0696
       },
       "b": {
         "name": "F. Cina",
         "key": "f-cina",
         "model": 0.6564,
         "fair_odds": 1.52,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.9002,
+        "best_odds": 1.05,
+        "book": "bet365",
+        "ev": -0.3107,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -406,8 +541,39 @@
         [
           "specialist",
           "F. Cina: clay-court specialist (52% of matches on clay), now on hard"
+        ],
+        [
+          "disagree",
+          "Model and market differ by 24 points"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          7.66,
+          1.02
+        ],
+        "bet365": [
+          11.0,
+          1.05
+        ],
+        "Marathon": [
+          9.3,
+          1.02
+        ],
+        "BetVictor": [
+          8.0,
+          1.05
+        ],
+        "Pncl": [
+          11.05,
+          1.05
+        ],
+        "1xBet": [
+          9.3,
+          1.02
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
       "id": "7bc9edc3231f3cc910824bd36c6e2386",
@@ -545,23 +711,23 @@
       "a": {
         "name": "Marie Bouzkova",
         "key": "m-bouzkova",
-        "model": 0.503,
-        "fair_odds": 1.99,
-        "market": 0.4307,
-        "best_odds": 2.34,
+        "model": 0.4949,
+        "fair_odds": 2.02,
+        "market": 0.4304,
+        "best_odds": 2.36,
         "book": "Betfair",
-        "ev": 0.1771,
-        "kelly": 0.033
+        "ev": 0.1679,
+        "kelly": 0.0309
       },
       "b": {
         "name": "Qinwen Zheng",
         "key": "q-zheng",
-        "model": 0.497,
-        "fair_odds": 2.01,
-        "market": 0.5693,
-        "best_odds": 1.73,
-        "book": "Betfair",
-        "ev": -0.1402,
+        "model": 0.5051,
+        "fair_odds": 1.98,
+        "market": 0.5696,
+        "best_odds": 1.72,
+        "book": "Matchbook",
+        "ev": -0.1312,
         "kelly": 0.0
       },
       "books": 22,
@@ -650,15 +816,15 @@
       "court": "beijing",
       "model_version": "2026-10-04",
       "parts": {
-        "elo": 0.4727,
-        "serve": 0.5401,
+        "elo": 0.4684,
+        "serve": 0.5273,
         "w": 0.45
       },
       "pinnacle_a": 0.4257,
       "flags": []
     },
     {
-      "id": "sched-12168155",
+      "id": "apit-12168155",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -672,25 +838,25 @@
         "key": "t-atmane",
         "model": 0.6106,
         "fair_odds": 1.64,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.7029,
+        "best_odds": 1.35,
+        "book": "Pncl",
+        "ev": -0.1756,
+        "kelly": 0.0
       },
       "b": {
         "name": "B. Tomic",
         "key": "b-tomic",
         "model": 0.3894,
         "fair_odds": 2.57,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.2971,
+        "best_odds": 3.31,
+        "book": "Pncl",
+        "ev": 0.2888,
+        "kelly": 0.0313
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -698,10 +864,37 @@
         "serve": 0.5621,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "Sbo": [
+          1.27,
+          3.0
+        ],
+        "bet365": [
+          1.33,
+          3.25
+        ],
+        "Marathon": [
+          1.32,
+          3.04
+        ],
+        "BetVictor": [
+          1.33,
+          3.0
+        ],
+        "Pncl": [
+          1.35,
+          3.31
+        ],
+        "1xBet": [
+          1.33,
+          3.05
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168156",
+      "id": "apit-12168156",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -715,25 +908,25 @@
         "key": "l-pavlovic",
         "model": 0.5531,
         "fair_odds": 1.81,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.3479,
+        "best_odds": 2.8,
+        "book": "Pncl",
+        "ev": 0.5487,
+        "kelly": 0.0762
       },
       "b": {
         "name": "I. Simakin",
         "key": "i-simakin",
         "model": 0.4469,
         "fair_odds": 2.24,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.6521,
+        "best_odds": 1.46,
+        "book": "Pncl",
+        "ev": -0.3475,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 8,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -753,11 +946,46 @@
         [
           "surface_few",
           "I. Simakin: few hard matches this year"
+        ],
+        [
+          "disagree",
+          "Model and market differ by 21 points"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          2.53,
+          1.38
+        ],
+        "bet365": [
+          2.62,
+          1.44
+        ],
+        "Marathon": [
+          2.68,
+          1.4
+        ],
+        "BetVictor": [
+          2.6,
+          1.44
+        ],
+        "Pncl": [
+          2.8,
+          1.46
+        ],
+        "1xBet": [
+          2.69,
+          1.41
+        ],
+        "Betano": [
+          2.65,
+          1.44
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168157",
+      "id": "apit-12168157",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -771,25 +999,25 @@
         "key": "t-skatov",
         "model": 0.6335,
         "fair_odds": 1.58,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.3636,
+        "best_odds": 2.75,
+        "book": "Betfair",
+        "ev": 0.7422,
+        "kelly": 0.106
       },
       "b": {
         "name": "S. Sakellaridis",
         "key": "s-sakellaridis",
         "model": 0.3665,
         "fair_odds": 2.73,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.6364,
+        "best_odds": 1.51,
+        "book": "Pncl",
+        "ev": -0.4466,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 6,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -801,11 +1029,38 @@
         [
           "specialist",
           "T. Skatov: clay-court specialist (58% of matches on clay), now on hard"
+        ],
+        [
+          "disagree",
+          "Model and market differ by 27 points"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          2.36,
+          1.45
+        ],
+        "Marathon": [
+          2.51,
+          1.45
+        ],
+        "BetVictor": [
+          2.5,
+          1.45
+        ],
+        "Pncl": [
+          2.64,
+          1.51
+        ],
+        "1xBet": [
+          2.52,
+          1.46
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168158",
+      "id": "apit-12168158",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -819,25 +1074,25 @@
         "key": "c-h-tseng",
         "model": 0.4775,
         "fair_odds": 2.09,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.5756,
+        "best_odds": 1.65,
+        "book": "Betano",
+        "ev": -0.2122,
+        "kelly": 0.0
       },
       "b": {
         "name": "N. Mejia",
         "key": "n-mejia",
         "model": 0.5225,
         "fair_odds": 1.91,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.4244,
+        "best_odds": 2.31,
+        "book": "Pncl",
+        "ev": 0.207,
+        "kelly": 0.0395
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -845,10 +1100,37 @@
         "serve": 0.5981,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "Sbo": [
+          1.58,
+          2.12
+        ],
+        "Marathon": [
+          1.61,
+          2.15
+        ],
+        "BetVictor": [
+          1.62,
+          2.2
+        ],
+        "Pncl": [
+          1.64,
+          2.31
+        ],
+        "1xBet": [
+          1.63,
+          2.15
+        ],
+        "Betano": [
+          1.65,
+          2.15
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168159",
+      "id": "apit-12168159",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -862,25 +1144,25 @@
         "key": "a-walton",
         "model": 0.7914,
         "fair_odds": 1.26,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.8955,
+        "best_odds": 1.05,
+        "book": "Betano",
+        "ev": -0.169,
+        "kelly": 0.0
       },
       "b": {
         "name": "R. Te",
         "key": "r-te",
         "model": 0.2086,
         "fair_odds": 4.79,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.1045,
+        "best_odds": 12.43,
+        "book": "Pncl",
+        "ev": 1.593,
+        "kelly": 0.0348
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -893,10 +1175,37 @@
           "thin",
           "R. Te: only 3 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "1xBet": [
+          1.02,
+          9.0
+        ],
+        "Marathon": [
+          1.02,
+          9.0
+        ],
+        "BetVictor": [
+          1.04,
+          8.5
+        ],
+        "Pncl": [
+          1.04,
+          12.43
+        ],
+        "Sbo": [
+          1.03,
+          6.88
+        ],
+        "Betano": [
+          1.05,
+          8.25
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168160",
+      "id": "apit-12168160",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -910,25 +1219,25 @@
         "key": "m-zheng",
         "model": 0.7998,
         "fair_odds": 1.25,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.8372,
+        "best_odds": 1.12,
+        "book": "BetVictor",
+        "ev": -0.1042,
+        "kelly": 0.0
       },
       "b": {
         "name": "F. A. Gomez",
         "key": "f-a-gomez",
         "model": 0.2002,
         "fair_odds": 4.99,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.1628,
+        "best_odds": 6.47,
+        "book": "Pncl",
+        "ev": 0.2954,
+        "kelly": 0.0135
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 6,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -945,7 +1254,30 @@
           "specialist",
           "F. A. Gomez: clay-court specialist (75% of matches on clay), now on hard"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          1.09,
+          5.0
+        ],
+        "Marathon": [
+          1.1,
+          5.65
+        ],
+        "BetVictor": [
+          1.12,
+          5.5
+        ],
+        "Pncl": [
+          1.12,
+          6.47
+        ],
+        "1xBet": [
+          1.1,
+          5.65
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
       "id": "10911eaa50b035ec14ce0d680a6a7522",
@@ -961,7 +1293,7 @@
         "key": "a-charaeva",
         "model": 0.2775,
         "fair_odds": 3.6,
-        "market": 0.3711,
+        "market": 0.3707,
         "best_odds": 2.78,
         "book": "Betfair",
         "ev": -0.2286,
@@ -972,7 +1304,7 @@
         "key": "s-kartal",
         "model": 0.7225,
         "fair_odds": 1.38,
-        "market": 0.6289,
+        "market": 0.6293,
         "best_odds": 1.56,
         "book": "GTbets",
         "ev": 0.1271,
@@ -997,12 +1329,12 @@
           1.5
         ],
         "1xBet": [
-          2.48,
-          1.54
+          2.5,
+          1.53
         ],
         "Marathon Bet": [
-          2.51,
-          1.52
+          2.54,
+          1.51
         ],
         "GTbets": [
           2.58,
@@ -1085,21 +1417,21 @@
         "key": "a-de-minaur",
         "model": 0.5998,
         "fair_odds": 1.67,
-        "market": 0.555,
-        "best_odds": 1.8,
+        "market": 0.5556,
+        "best_odds": 1.79,
         "book": "Betfair",
-        "ev": 0.0796,
-        "kelly": 0.0249
+        "ev": 0.0736,
+        "kelly": 0.0233
       },
       "b": {
         "name": "Hubert Hurkacz",
         "key": "h-hurkacz",
         "model": 0.4002,
         "fair_odds": 2.5,
-        "market": 0.445,
-        "best_odds": 2.2,
+        "market": 0.4444,
+        "best_odds": 2.24,
         "book": "Betfair",
-        "ev": -0.1195,
+        "ev": -0.1035,
         "kelly": 0.0
       },
       "books": 21,
@@ -1437,7 +1769,7 @@
       ]
     },
     {
-      "id": "sched-12168161",
+      "id": "apit-12168161",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -1451,25 +1783,25 @@
         "key": "j-cui",
         "model": 0.3948,
         "fair_odds": 2.53,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.3231,
+        "best_odds": 3.12,
+        "book": "Sbo",
+        "ev": 0.2318,
+        "kelly": 0.0273
       },
       "b": {
         "name": "A. Vukic",
         "key": "a-vukic",
         "model": 0.6052,
         "fair_odds": 1.65,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.6769,
+        "best_odds": 1.4,
+        "book": "bet365",
+        "ev": -0.1527,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -1482,10 +1814,37 @@
           "thin",
           "J. Cui: only 4 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          3.12,
+          1.25
+        ],
+        "bet365": [
+          2.75,
+          1.4
+        ],
+        "Marathon": [
+          2.84,
+          1.36
+        ],
+        "BetVictor": [
+          2.75,
+          1.4
+        ],
+        "1xBet": [
+          2.85,
+          1.37
+        ],
+        "Betano": [
+          2.82,
+          1.4
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168162",
+      "id": "apit-12168162",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -1499,25 +1858,25 @@
         "key": "m-damm",
         "model": 0.7636,
         "fair_odds": 1.31,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.6639,
+        "best_odds": 1.44,
+        "book": "bet365",
+        "ev": 0.0996,
+        "kelly": 0.0566
       },
       "b": {
         "name": "P. Kotov",
         "key": "p-kotov",
         "model": 0.2364,
         "fair_odds": 4.23,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.3361,
+        "best_odds": 2.95,
+        "book": "Pncl",
+        "ev": -0.3026,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 8,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -1534,10 +1893,41 @@
           "surface_few",
           "P. Kotov: few hard matches this year"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          1.33,
+          2.66
+        ],
+        "bet365": [
+          1.44,
+          2.62
+        ],
+        "Marathon": [
+          1.38,
+          2.76
+        ],
+        "BetVictor": [
+          1.4,
+          2.75
+        ],
+        "Pncl": [
+          1.42,
+          2.95
+        ],
+        "1xBet": [
+          1.39,
+          2.77
+        ],
+        "Betano": [
+          1.4,
+          2.8
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168163",
+      "id": "apit-12168163",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -1551,25 +1941,25 @@
         "key": "b-harris",
         "model": 0.2622,
         "fair_odds": 3.81,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.2968,
+        "best_odds": 3.4,
+        "book": "bet365",
+        "ev": -0.1085,
+        "kelly": 0.0
       },
       "b": {
         "name": "D. Svrcina",
         "key": "d-svrcina",
         "model": 0.7378,
         "fair_odds": 1.36,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.7032,
+        "best_odds": 1.37,
+        "book": "Pncl",
+        "ev": 0.0108,
+        "kelly": 0.0073
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -1577,7 +1967,34 @@
         "serve": 0.2634,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "Sbo": [
+          3.0,
+          1.27
+        ],
+        "bet365": [
+          3.4,
+          1.3
+        ],
+        "Marathon": [
+          3.04,
+          1.32
+        ],
+        "BetVictor": [
+          3.0,
+          1.33
+        ],
+        "Pncl": [
+          3.18,
+          1.37
+        ],
+        "1xBet": [
+          3.05,
+          1.33
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
       "id": "sched-12168164",
@@ -1628,7 +2045,102 @@
       ]
     },
     {
-      "id": "sched-12168166",
+      "id": "apit-12168165",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai (qualifying)",
+      "round": "ATP Shanghai - Semi-finals",
+      "start": "2026-10-05T07:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "K. Jacquet",
+        "key": "k-jacquet",
+        "model": 0.6887,
+        "fair_odds": 1.45,
+        "market": 0.9109,
+        "best_odds": 1.05,
+        "book": "bet365",
+        "ev": -0.2769,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "T. Zhang",
+        "key": "new-t-zhang-54172",
+        "model": 0.3113,
+        "fair_odds": 3.21,
+        "market": 0.0891,
+        "best_odds": 16.18,
+        "book": "Pncl",
+        "ev": 4.037,
+        "kelly": 0.0665,
+        "new": true
+      },
+      "books": 7,
+      "no_odds": false,
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.7291,
+        "serve": 0.6556,
+        "w": 0.55
+      },
+      "flags": [
+        [
+          "thin",
+          "T. Zhang: no matches in our data yet, rated as a first-time qualifier"
+        ],
+        [
+          "disagree",
+          "Model and market differ by 22 points"
+        ]
+      ],
+      "prices": {
+        "WilliamHill": [
+          1.03,
+          11.0
+        ],
+        "bet365": [
+          1.05,
+          11.0
+        ],
+        "Marathon": [
+          1.01,
+          10.75
+        ],
+        "Pncl": [
+          1.03,
+          16.18
+        ],
+        "Sbo": [
+          1.02,
+          7.25
+        ],
+        "1xBet": [
+          1.02,
+          8.8
+        ]
+      },
+      "odds_source": "api-tennis",
+      "new_players": {
+        "b": {
+          "name": "T. Zhang",
+          "tour": "ATP",
+          "elo": {
+            "overall": 1250
+          },
+          "n": 0,
+          "new": true,
+          "info": {
+            "m12": 0,
+            "surf12": {}
+          }
+        }
+      }
+    },
+    {
+      "id": "apit-12168166",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -1642,25 +2154,25 @@
         "key": "a-shevchenko",
         "model": 0.5694,
         "fair_odds": 1.76,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.6374,
+        "best_odds": 1.51,
+        "book": "Pncl",
+        "ev": -0.1402,
+        "kelly": 0.0
       },
       "b": {
         "name": "Y. Nishioka",
         "key": "y-nishioka",
         "model": 0.4306,
         "fair_odds": 2.32,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.3626,
+        "best_odds": 2.64,
+        "book": "Pncl",
+        "ev": 0.1368,
+        "kelly": 0.0208
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 8,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -1673,7 +2185,38 @@
           "thin",
           "Y. Nishioka: only 6 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          1.38,
+          2.53
+        ],
+        "bet365": [
+          1.44,
+          2.62
+        ],
+        "Marathon": [
+          1.47,
+          2.46
+        ],
+        "BetVictor": [
+          1.45,
+          2.5
+        ],
+        "Pncl": [
+          1.51,
+          2.64
+        ],
+        "1xBet": [
+          1.47,
+          2.5
+        ],
+        "Betano": [
+          1.47,
+          2.57
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
       "id": "1474ac5f2265d300c1a48ea91b323c09",
@@ -1689,7 +2232,7 @@
         "key": "m-sakkari",
         "model": 0.267,
         "fair_odds": 3.75,
-        "market": 0.2653,
+        "market": 0.2654,
         "best_odds": 3.9,
         "book": "Matchbook",
         "ev": 0.0412,
@@ -1700,7 +2243,7 @@
         "key": "e-svitolina",
         "model": 0.733,
         "fair_odds": 1.36,
-        "market": 0.7347,
+        "market": 0.7346,
         "best_odds": 1.34,
         "book": "GTbets",
         "ev": -0.0177,
@@ -1777,7 +2320,7 @@
           1.3
         ],
         "Pinnacle": [
-          3.78,
+          3.76,
           1.31
         ],
         "BetOnline.ag": [
@@ -1796,7 +2339,7 @@
         "serve": 0.3022,
         "w": 0.45
       },
-      "pinnacle_a": 0.2574,
+      "pinnacle_a": 0.2584,
       "flags": []
     },
     {
@@ -1813,9 +2356,9 @@
         "key": "j-ostapenko",
         "model": 0.3339,
         "fair_odds": 3.0,
-        "market": 0.3759,
+        "market": 0.3757,
         "best_odds": 2.82,
-        "book": "Matchbook",
+        "book": "Betfair",
         "ev": -0.0585,
         "kelly": 0.0
       },
@@ -1824,11 +2367,11 @@
         "key": "e-mertens",
         "model": 0.6661,
         "fair_odds": 1.5,
-        "market": 0.6241,
-        "best_odds": 1.56,
-        "book": "Pinnacle",
-        "ev": 0.0392,
-        "kelly": 0.0175
+        "market": 0.6243,
+        "best_odds": 1.55,
+        "book": "1xBet",
+        "ev": 0.0325,
+        "kelly": 0.0148
       },
       "books": 22,
       "prices": {
@@ -1897,8 +2440,8 @@
           1.47
         ],
         "Pinnacle": [
-          2.62,
-          1.56
+          2.65,
+          1.55
         ],
         "BetOnline.ag": [
           2.62,
@@ -1920,7 +2463,7 @@
         "serve": 0.2489,
         "w": 0.45
       },
-      "pinnacle_a": 0.3732,
+      "pinnacle_a": 0.369,
       "flags": [
         [
           "retired",
@@ -1929,7 +2472,7 @@
       ]
     },
     {
-      "id": "sched-12168167",
+      "id": "apit-12168167",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -1943,25 +2486,25 @@
         "key": "m-bellucci",
         "model": 0.6391,
         "fair_odds": 1.56,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.8366,
+        "best_odds": 1.13,
+        "book": "Betano",
+        "ev": -0.2778,
+        "kelly": 0.0
       },
       "b": {
         "name": "E. Ymer",
         "key": "e-ymer",
         "model": 0.3609,
         "fair_odds": 2.77,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.1634,
+        "best_odds": 6.93,
+        "book": "Pncl",
+        "ev": 1.5012,
+        "kelly": 0.0633
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -1969,10 +2512,42 @@
         "serve": 0.6795,
         "w": 0.55
       },
-      "flags": []
+      "flags": [
+        [
+          "disagree",
+          "Model and market differ by 20 points"
+        ]
+      ],
+      "prices": {
+        "Sbo": [
+          1.09,
+          5.0
+        ],
+        "Marathon": [
+          1.1,
+          5.6
+        ],
+        "BetVictor": [
+          1.12,
+          5.5
+        ],
+        "Pncl": [
+          1.11,
+          6.93
+        ],
+        "1xBet": [
+          1.1,
+          5.6
+        ],
+        "Betano": [
+          1.13,
+          5.4
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168168",
+      "id": "apit-12168168",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -1986,25 +2561,25 @@
         "key": "a-bolt",
         "model": 0.2177,
         "fair_odds": 4.59,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.186,
+        "best_odds": 5.51,
+        "book": "Pncl",
+        "ev": 0.1993,
+        "kelly": 0.011
       },
       "b": {
         "name": "L. Harris",
         "key": "l-harris",
         "model": 0.7823,
         "fair_odds": 1.28,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.814,
+        "best_odds": 1.16,
+        "book": "Pncl",
+        "ev": -0.0925,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -2012,10 +2587,37 @@
         "serve": 0.223,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "Sbo": [
+          4.33,
+          1.13
+        ],
+        "bet365": [
+          5.5,
+          1.14
+        ],
+        "Marathon": [
+          4.8,
+          1.14
+        ],
+        "BetVictor": [
+          4.75,
+          1.15
+        ],
+        "Pncl": [
+          5.51,
+          1.16
+        ],
+        "1xBet": [
+          4.8,
+          1.14
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168169",
+      "id": "apit-12168169",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -2029,25 +2631,25 @@
         "key": "k-coppejans",
         "model": 0.2818,
         "fair_odds": 3.55,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.1701,
+        "best_odds": 6.0,
+        "book": "bet365",
+        "ev": 0.6905,
+        "kelly": 0.0345
       },
       "b": {
         "name": "N. Basavareddy",
         "key": "n-basavareddy",
         "model": 0.7182,
         "fair_odds": 1.39,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.8299,
+        "best_odds": 1.15,
+        "book": "Pncl",
+        "ev": -0.174,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 8,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -2060,10 +2662,41 @@
           "thin",
           "K. Coppejans: only 9 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          5.0,
+          1.09
+        ],
+        "bet365": [
+          6.0,
+          1.12
+        ],
+        "Marathon": [
+          5.4,
+          1.11
+        ],
+        "BetVictor": [
+          5.0,
+          1.13
+        ],
+        "Pncl": [
+          5.73,
+          1.15
+        ],
+        "1xBet": [
+          5.4,
+          1.11
+        ],
+        "Betano": [
+          5.3,
+          1.13
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168170",
+      "id": "apit-12168170",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -2077,25 +2710,25 @@
         "key": "r-noguchi",
         "model": 0.2736,
         "fair_odds": 3.66,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.3431,
+        "best_odds": 2.97,
+        "book": "Pncl",
+        "ev": -0.1874,
+        "kelly": 0.0
       },
       "b": {
         "name": "A. Muller",
         "key": "a-muller",
         "model": 0.7264,
         "fair_odds": 1.38,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.6569,
+        "best_odds": 1.44,
+        "book": "Betfair",
+        "ev": 0.046,
+        "kelly": 0.0262
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 7,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -2108,10 +2741,37 @@
           "thin",
           "R. Noguchi: only 5 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          2.58,
+          1.36
+        ],
+        "bet365": [
+          2.75,
+          1.4
+        ],
+        "Marathon": [
+          2.58,
+          1.43
+        ],
+        "BetVictor": [
+          2.75,
+          1.4
+        ],
+        "Pncl": [
+          2.97,
+          1.42
+        ],
+        "1xBet": [
+          2.66,
+          1.42
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168171",
+      "id": "apit-12168171",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -2125,25 +2785,25 @@
         "key": "d-sweeny",
         "model": 0.5003,
         "fair_odds": 2.0,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.4173,
+        "best_odds": 2.29,
+        "book": "Pncl",
+        "ev": 0.1458,
+        "kelly": 0.0282
       },
       "b": {
         "name": "T. Schoolkate",
         "key": "t-schoolkate",
         "model": 0.4997,
         "fair_odds": 2.0,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.5827,
+        "best_odds": 1.65,
+        "book": "Pncl",
+        "ev": -0.1755,
+        "kelly": 0.0
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 8,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -2151,10 +2811,41 @@
         "serve": 0.537,
         "w": 0.55
       },
-      "flags": []
+      "flags": [],
+      "prices": {
+        "Sbo": [
+          2.23,
+          1.51
+        ],
+        "bet365": [
+          2.2,
+          1.61
+        ],
+        "Marathon": [
+          2.2,
+          1.58
+        ],
+        "BetVictor": [
+          2.2,
+          1.6
+        ],
+        "Pncl": [
+          2.29,
+          1.65
+        ],
+        "1xBet": [
+          2.2,
+          1.6
+        ],
+        "Betano": [
+          2.22,
+          1.62
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
-      "id": "sched-12168172",
+      "id": "apit-12168172",
       "tour": "ATP",
       "tournament": "ATP Shanghai (qualifying)",
       "round": "ATP Shanghai - Semi-finals",
@@ -2168,25 +2859,25 @@
         "key": "c-wong",
         "model": 0.723,
         "fair_odds": 1.38,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.7637,
+        "best_odds": 1.25,
+        "book": "BetVictor",
+        "ev": -0.0963,
+        "kelly": 0.0
       },
       "b": {
         "name": "C. Hewitt",
         "key": "c-hewitt",
         "model": 0.277,
         "fair_odds": 3.61,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
+        "market": 0.2363,
+        "best_odds": 4.09,
+        "book": "Pncl",
+        "ev": 0.133,
+        "kelly": 0.0108
       },
-      "books": 0,
-      "no_odds": true,
+      "books": 8,
+      "no_odds": false,
       "court": "shanghai",
       "model_version": "2026-10-04",
       "parts": {
@@ -2199,7 +2890,38 @@
           "thin",
           "C. Hewitt: only 8 matches in 12 months"
         ]
-      ]
+      ],
+      "prices": {
+        "Sbo": [
+          1.18,
+          3.7
+        ],
+        "bet365": [
+          1.22,
+          4.0
+        ],
+        "Marathon": [
+          1.19,
+          4.05
+        ],
+        "BetVictor": [
+          1.25,
+          3.6
+        ],
+        "Pncl": [
+          1.25,
+          4.09
+        ],
+        "1xBet": [
+          1.2,
+          4.04
+        ],
+        "Betano": [
+          1.22,
+          3.95
+        ]
+      },
+      "odds_source": "api-tennis"
     },
     {
       "id": "4bfb84fc62ffc5b65c9d7213ee0caf6f",
@@ -2215,7 +2937,7 @@
         "key": "j-lehecka",
         "model": 0.5874,
         "fair_odds": 1.7,
-        "market": 0.6391,
+        "market": 0.6394,
         "best_odds": 1.53,
         "book": "Betfair",
         "ev": -0.1012,
@@ -2226,11 +2948,11 @@
         "key": "v-vacherot",
         "model": 0.4126,
         "fair_odds": 2.42,
-        "market": 0.3609,
-        "best_odds": 2.8,
+        "market": 0.3606,
+        "best_odds": 2.84,
         "book": "Betfair",
-        "ev": 0.1552,
-        "kelly": 0.0216
+        "ev": 0.1717,
+        "kelly": 0.0233
       },
       "books": 19,
       "prices": {
@@ -2327,7 +3049,7 @@
         "key": "n-djokovic",
         "model": 0.5222,
         "fair_odds": 1.92,
-        "market": 0.4257,
+        "market": 0.426,
         "best_odds": 2.3,
         "book": "Matchbook",
         "ev": 0.2009,
@@ -2338,7 +3060,7 @@
         "key": "d-medvedev",
         "model": 0.4778,
         "fair_odds": 2.09,
-        "market": 0.5743,
+        "market": 0.574,
         "best_odds": 1.75,
         "book": "Matchbook",
         "ev": -0.1638,
@@ -2367,12 +3089,12 @@
           1.63
         ],
         "Marathon Bet": [
-          2.19,
-          1.67
+          2.17,
+          1.68
         ],
         "1xBet": [
-          2.23,
-          1.7
+          2.21,
+          1.71
         ],
         "GTbets": [
           2.28,
@@ -2447,7 +3169,7 @@
         "key": "c-gauff",
         "model": 0.9007,
         "fair_odds": 1.11,
-        "market": 0.9165,
+        "market": 0.9167,
         "best_odds": 1.06,
         "book": "Betfair",
         "ev": -0.0452,
@@ -2458,11 +3180,11 @@
         "key": "x-sun",
         "model": 0.0993,
         "fair_odds": 10.07,
-        "market": 0.0835,
-        "best_odds": 15.5,
+        "market": 0.0833,
+        "best_odds": 16.0,
         "book": "Betfair",
-        "ev": 0.5388,
-        "kelly": 0.0093
+        "ev": 0.5885,
+        "kelly": 0.0098
       },
       "books": 19,
       "prices": {
@@ -2984,10 +3706,10 @@
     }
   ],
   "unmatched": [],
-  "scheduled_only": 23,
+  "scheduled_only": 1,
   "record": {
     "settled": 94,
-    "pending": 17,
+    "pending": 40,
     "by_model": {
       "2026-10-03": {
         "settled": 4,
@@ -3008,7 +3730,7 @@
       },
       "2026-10-04": {
         "settled": 12,
-        "pending": 16,
+        "pending": 39,
         "model_right": 0.75,
         "market_right": 0.6667,
         "brier_model": 0.1913,
@@ -3064,8 +3786,8 @@
           "tournament": "WTA China Open",
           "start": "2026-10-05T04:30:00Z",
           "odds": 2.28,
-          "model": 0.503,
-          "market": 0.4307
+          "model": 0.4949,
+          "market": 0.4304
         },
         {
           "id": "4bfb84fc62ffc5b65c9d7213ee0caf6f",
@@ -3076,7 +3798,7 @@
           "start": "2026-10-05T09:00:00Z",
           "odds": 2.79,
           "model": 0.4126,
-          "market": 0.3609
+          "market": 0.3606
         },
         {
           "id": "5b6e5bc4378ca36adad672d8515b2c2c",
@@ -3087,59 +3809,15 @@
           "start": "2026-10-05T11:00:00Z",
           "odds": 2.21,
           "model": 0.5222,
-          "market": 0.4257
+          "market": 0.426
         }
       ],
       "odds": 14.06,
-      "model": 0.1084,
-      "market": 0.0662,
-      "ev": 0.5236,
-      "kelly": 0.01,
+      "model": 0.1066,
+      "market": 0.0661,
+      "ev": 0.499,
+      "kelly": 0.0096,
       "id": "2fff13d64b68dd5cb7c7269617427ba2:a+4bfb84fc62ffc5b65c9d7213ee0caf6f:b+5b6e5bc4378ca36adad672d8515b2c2c:a"
-    },
-    {
-      "book": "BetOnline.ag",
-      "legs": [
-        {
-          "id": "2fff13d64b68dd5cb7c7269617427ba2",
-          "side": "a",
-          "name": "Marie Bouzkova",
-          "vs": "Qinwen Zheng",
-          "tournament": "WTA China Open",
-          "start": "2026-10-05T04:30:00Z",
-          "odds": 2.3,
-          "model": 0.503,
-          "market": 0.4307
-        },
-        {
-          "id": "10911eaa50b035ec14ce0d680a6a7522",
-          "side": "b",
-          "name": "Sonay Kartal",
-          "vs": "Alina Charaeva",
-          "tournament": "WTA China Open",
-          "start": "2026-10-05T06:00:00Z",
-          "odds": 1.53,
-          "model": 0.7225,
-          "market": 0.6289
-        },
-        {
-          "id": "5b6e5bc4378ca36adad672d8515b2c2c",
-          "side": "a",
-          "name": "Novak Djokovic",
-          "vs": "Daniil Medvedev",
-          "tournament": "ATP China Open",
-          "start": "2026-10-05T11:00:00Z",
-          "odds": 2.2,
-          "model": 0.5222,
-          "market": 0.4257
-        }
-      ],
-      "odds": 7.74,
-      "model": 0.1898,
-      "market": 0.1153,
-      "ev": 0.4692,
-      "kelly": 0.0174,
-      "id": "2fff13d64b68dd5cb7c7269617427ba2:a+10911eaa50b035ec14ce0d680a6a7522:b+5b6e5bc4378ca36adad672d8515b2c2c:a"
     },
     {
       "book": "Pinnacle",
@@ -3153,18 +3831,7 @@
           "start": "2026-10-05T06:00:00Z",
           "odds": 1.51,
           "model": 0.7225,
-          "market": 0.6289
-        },
-        {
-          "id": "d5f176ea16c34ec6c13647efacd2bb99",
-          "side": "a",
-          "name": "Alex de Minaur",
-          "vs": "Hubert Hurkacz",
-          "tournament": "ATP China Open",
-          "start": "2026-10-05T07:00:00Z",
-          "odds": 1.79,
-          "model": 0.5998,
-          "market": 0.555
+          "market": 0.6293
         },
         {
           "id": "4bfb84fc62ffc5b65c9d7213ee0caf6f",
@@ -3175,20 +3842,75 @@
           "start": "2026-10-05T09:00:00Z",
           "odds": 2.79,
           "model": 0.4126,
-          "market": 0.3609
+          "market": 0.3606
+        },
+        {
+          "id": "5b6e5bc4378ca36adad672d8515b2c2c",
+          "side": "a",
+          "name": "Novak Djokovic",
+          "vs": "Daniil Medvedev",
+          "tournament": "ATP China Open",
+          "start": "2026-10-05T11:00:00Z",
+          "odds": 2.21,
+          "model": 0.5222,
+          "market": 0.426
         }
       ],
-      "odds": 7.54,
-      "model": 0.1788,
-      "market": 0.126,
-      "ev": 0.3484,
-      "kelly": 0.0133,
-      "id": "10911eaa50b035ec14ce0d680a6a7522:b+d5f176ea16c34ec6c13647efacd2bb99:a+4bfb84fc62ffc5b65c9d7213ee0caf6f:b"
+      "odds": 9.31,
+      "model": 0.1557,
+      "market": 0.0967,
+      "ev": 0.4494,
+      "kelly": 0.0135,
+      "id": "10911eaa50b035ec14ce0d680a6a7522:b+4bfb84fc62ffc5b65c9d7213ee0caf6f:b+5b6e5bc4378ca36adad672d8515b2c2c:a"
+    },
+    {
+      "book": "BetOnline.ag",
+      "legs": [
+        {
+          "id": "2fff13d64b68dd5cb7c7269617427ba2",
+          "side": "a",
+          "name": "Marie Bouzkova",
+          "vs": "Qinwen Zheng",
+          "tournament": "WTA China Open",
+          "start": "2026-10-05T04:30:00Z",
+          "odds": 2.3,
+          "model": 0.4949,
+          "market": 0.4304
+        },
+        {
+          "id": "10911eaa50b035ec14ce0d680a6a7522",
+          "side": "b",
+          "name": "Sonay Kartal",
+          "vs": "Alina Charaeva",
+          "tournament": "WTA China Open",
+          "start": "2026-10-05T06:00:00Z",
+          "odds": 1.53,
+          "model": 0.7225,
+          "market": 0.6293
+        },
+        {
+          "id": "d5f176ea16c34ec6c13647efacd2bb99",
+          "side": "a",
+          "name": "Alex de Minaur",
+          "vs": "Hubert Hurkacz",
+          "tournament": "ATP China Open",
+          "start": "2026-10-05T07:00:00Z",
+          "odds": 1.78,
+          "model": 0.5998,
+          "market": 0.5556
+        }
+      ],
+      "odds": 6.26,
+      "model": 0.2145,
+      "market": 0.1505,
+      "ev": 0.3434,
+      "kelly": 0.0163,
+      "id": "2fff13d64b68dd5cb7c7269617427ba2:a+10911eaa50b035ec14ce0d680a6a7522:b+d5f176ea16c34ec6c13647efacd2bb99:a"
     }
   ],
   "parlay_record": {
     "settled": 2,
-    "pending": 14,
+    "pending": 15,
     "won": 2,
     "profit_units": 11.32,
     "roi": 5.66,

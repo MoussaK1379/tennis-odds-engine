@@ -134,7 +134,7 @@
 
   <section class="box">
     <h3>Past parlays <span class="hint" id="parlayHint"></span></h3>
-    <p class="box__lede">Recommended parlays as they were posted, at most three a day (by UTC date), settled from the results above. Profit is for a 1-unit stake.</p>
+    <p class="box__lede">Recommended parlays as they were posted, at most three a day from bookmakers and three from Kalshi (by UTC date), settled from the results above. Profit is for a 1-unit stake.</p>
     <div id="parlays"></div>
   </section>
 
@@ -337,9 +337,11 @@ function renderParlays(rows){
   // grouped by the UTC day they were posted: at most three a day
   let day = "";
   box.innerHTML = rows.map(r => {
-    const d = r.created.slice(0, 10), n = rows.filter(x => x.created.slice(0, 10) === d).length;
+    const d = r.created.slice(0, 10), sameDay = rows.filter(x => x.created.slice(0, 10) === d);
+    const nk = sameDay.filter(x => x.book === "Kalshi").length, nb = sameDay.length - nk;
+    const counts = [nb ? `${nb} bookmaker` : "", nk ? `${nk} Kalshi` : ""].filter(Boolean).join(" · ");
     const head = d === day ? "" : `<div class="dayhead"><b>${new Date(d + "T12:00:00Z").toLocaleDateString(undefined,
-      { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })}</b> · ${n} parlay${n === 1 ? "" : "s"}</div>`;
+      { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })}</b> · ${counts}</div>`;
     day = d;
     let legs = [];
     try { legs = JSON.parse(r.legs); } catch (e) { /* keep empty */ }

@@ -151,6 +151,8 @@
   .match__extra{ grid-column:2 / -1; font-family:var(--mono); font-size:.7rem; line-height:1.5; }
   .match__pin{ color:var(--faint); }
   .match__flags{ color:var(--clay); }
+  .match__kalshi{ color:var(--mute); }
+  .parlay__legs .who a{ font-family:var(--mono); font-size:.7rem; margin-left:.3rem; }
   .addleg{ width:22px; height:22px; margin-right:.45rem; vertical-align:1px; flex:0 0 auto; cursor:pointer; line-height:1;
     font-family:var(--mono); font-size:.9rem; color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:6px; padding:0; }
   .addleg:hover{ border-color:var(--ball); }
@@ -245,6 +247,14 @@
       Up to three a day (UTC), fixed when first posted: later refreshes keep the same tickets and prices.</p>
     <div id="parlayList"><div class="today__empty">Loading…</div></div>
     <div class="record__note" id="parlayNote"></div>
+  </section>
+
+  <section class="today parlays" id="kparlays">
+    <h3>Kalshi parlays <span class="hint">prediction market</span></h3>
+    <p class="today__lede">The same rules as above, priced at <b>Kalshi</b> (after its trading fee), with their own
+      three a day. Kalshi builds multi-leg bets ("combos") in its app, so each leg links to its Kalshi market; the
+      ticket price here multiplies the legs' prices, and Kalshi's own combo quote may differ a little.</p>
+    <div id="kparlayList"><div class="today__empty">Loading…</div></div>
   </section>
 
   <section class="today" id="builder">
@@ -836,6 +846,12 @@ function matchExtras(m){
   const bits = [];
   if(m.pinnacle_a != null) bits.push(`<div class="match__pin">Pinnacle: ${pct(m.pinnacle_a)} / ${pct(1 - m.pinnacle_a)}</div>`);
   const fl = (m.flags || []).map(f => Array.isArray(f) ? f[1] : f);
+  if(m.kalshi){
+    const k = m.kalshi, cents = c => c != null ? Math.round(c * 100) + "¢" : "—";
+    const kside = (sd, P) => `${esc(P.name)} ${cents(k[sd].cost)}${k[sd].odds ? ` (${OddsFmt.show(k[sd].odds)}` +
+      (k[sd].ev != null ? `, <span class="${k[sd].ev > 0 ? "ev-pos" : "ev-neg"}">EV ${(k[sd].ev >= 0 ? "+" : "") + (k[sd].ev * 100).toFixed(1)}%</span>` : "") + ")" : ""}`;
+    bits.push(`<div class="match__kalshi">Kalshi: ${kside("a", m.a)} · ${kside("b", m.b)} · <a href="${esc(k.url)}" target="_blank" rel="noopener">open on Kalshi ↗</a></div>`);
+  }
   if(m.odds_source === "api-tennis") bits.push(`<div class="match__pin">Odds via api-tennis.com (${m.books} book${m.books === 1 ? "" : "s"})</div>`);
   if(m.no_odds) bits.push(`<div class="match__pin">No odds yet: bookmakers haven't priced this match. Prices appear at the next refresh after they do.</div>`);
   if(fl.length) bits.push(`<div class="match__flags">${fl.map(t => "⚠ " + esc(t)).join("<br>")}</div>`);
@@ -889,22 +905,31 @@ function renderRecord(r){
         (r.value_bets < 300 ? "Under ~300 bets, luck dominates — don't read much into the profit yet." : ""))].join("<br>");
 }
 function renderParlays(j){
-  const list = $("parlayList"), note = $("parlayNote");
-  // today's parlays as logged (at most three a day); they stay listed once play starts
-  const ps = (j && j.parlays) || [];
+  renderParlayList(j, (j && j.parlays) || [], $("parlayList"), false);
+  renderParlayList(j, (j && j.kalshi_parlays) || [], $("kparlayList"), true);
+  const note = $("parlayNote");
+  const r = j && j.parlay_record;
+  note.textContent = r && r.settled
+    ? `Recommended parlays so far: ${r.settled} settled, ${r.won} won (model expected ${r.expected_wins}), ${(r.profit_units>=0?"+":"") + r.profit_units}u at 1 unit each, ${r.pending} pending.`
+    : (r && r.pending ? `${r.pending} recommended parlays waiting for results.` : "");
+}
+function renderParlayList(j, ps, list, kalshi){
+  // today's parlays as logged (at most three a day each); they stay listed once play starts
   const started = c => c.legs.some(l => l.start && new Date(l.start) <= Date.now());
   const status = c => c.result === "won" ? '<span class="badge badge--ev">won</span>'
     : c.result === "lost" ? '<span class="badge" style="background:var(--neg);color:var(--chalk)">lost</span>'
     : c.result === "void" ? '<span class="badge" style="background:var(--ink-3)">void</span>'
     : started(c) ? '<span class="badge" style="background:var(--ink-3);color:var(--chalk)">in play</span>' : "";
-  if(!j || j.status === "no_api_key"){ list.innerHTML = '<div class="today__empty">Needs the odds feed.</div>'; }
-  else if(!ps.length){ list.innerHTML = '<div class="today__empty">No parlay yet today: fewer than two picks pass the rules at the same bookmaker. The next refresh tries again (up to three a day).</div>'; }
+  if(!j || (j.status === "no_api_key" && !kalshi)){ list.innerHTML = '<div class="today__empty">Needs the odds feed.</div>'; }
+  else if(!ps.length){ list.innerHTML = kalshi
+    ? `<div class="today__empty">No Kalshi parlay yet today${j.kalshi_matched ? "" : " (no Kalshi prices matched to today's list)"}: fewer than two picks pass the rules at Kalshi. The next refresh tries again (up to three a day).</div>`
+    : '<div class="today__empty">No parlay yet today: fewer than two picks pass the rules at the same bookmaker. The next refresh tries again (up to three a day).</div>'; }
   else {
     const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
     list.innerHTML = ps.map(c => `<div class="parlay">
       <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(c.odds)}</span> at ${esc(c.book)} · ${c.legs.length} legs${status(c)}</span>
         <span class="parlay__nums">model ${pct(c.model)} · market ${pct(c.market)} · <span class="ev-pos">EV +${(c.ev*100).toFixed(1)}%</span> · ¼-Kelly ${(c.kelly*100).toFixed(1)}%</span></div>
-      <ul class="parlay__legs">${c.legs.map(l => `<li><span class="who">${esc(l.name)} <small>to beat ${esc(l.vs)} · ${esc(l.tournament)} · ${fmt.format(new Date(l.start))}</small></span>
+      <ul class="parlay__legs">${c.legs.map(l => `<li><span class="who">${esc(l.name)}${l.url ? `<a href="${esc(l.url)}" target="_blank" rel="noopener">Kalshi ↗</a>` : ""} <small>to beat ${esc(l.vs)} · ${esc(l.tournament)} · ${fmt.format(new Date(l.start))}</small></span>
         <span class="px">${OddsFmt.show(l.odds)} · ${pct(l.model)}</span></li>`).join("")}</ul>
       ${started(c) ? "" : `<button class="parlay__edit" type="button" data-i="${ps.indexOf(c)}">Open in builder</button>`}</div>`).join("");
     list.querySelectorAll(".parlay__edit").forEach(b => b.addEventListener("click", () => {
@@ -914,10 +939,6 @@ function renderParlays(j){
       $("builder").scrollIntoView({ behavior: "smooth", block: "start" });
     }));
   }
-  const r = j && j.parlay_record;
-  note.textContent = r && r.settled
-    ? `Recommended parlays so far: ${r.settled} settled, ${r.won} won (model expected ${r.expected_wins}), ${(r.profit_units>=0?"+":"") + r.profit_units}u at 1 unit each, ${r.pending} pending.`
-    : (r && r.pending ? `${r.pending} recommended parlays waiting for results.` : "");
 }
 async function loadMatches(){
   try{
@@ -988,21 +1009,26 @@ function pbSyncButtons(){
   document.querySelectorAll(".addleg").forEach(b => b.setAttribute("aria-pressed",
     PB.legs.some(l => l.id === b.dataset.id && l.side === b.dataset.side) ? "true" : "false"));
 }
+// every price for a match: the bookmakers, plus Kalshi (after its fee) when it lists it
+function pbPricesOf(m){
+  const k = m.kalshi;
+  return k && k.a.odds && k.b.odds ? { ...(m.prices || {}), Kalshi: [k.a.odds, k.b.odds] } : (m.prices || {});
+}
 // bookmakers that price every leg, best combined odds first
 function pbBooks(legs){
   if (!legs.length) return [];
-  const names = Object.keys(legs[0].m.prices || {}).filter(bk => legs.every(l => l.m.prices && l.m.prices[bk]));
-  return names.map(bk => ({ book: bk, odds: legs.reduce((t, l) => t * l.m.prices[bk][l.side === "a" ? 0 : 1], 1) }))
+  const names = Object.keys(pbPricesOf(legs[0].m)).filter(bk => legs.every(l => pbPricesOf(l.m)[bk]));
+  return names.map(bk => ({ book: bk, odds: legs.reduce((t, l) => t * pbPricesOf(l.m)[bk][l.side === "a" ? 0 : 1], 1) }))
     .sort((x, y) => y.odds - x.odds);
 }
 function pbBestPrice(l){
-  const px = Object.values(l.m.prices || {}).map(p => p[l.side === "a" ? 0 : 1]).filter(x => x > 1);
+  const px = Object.values(pbPricesOf(l.m)).map(p => p[l.side === "a" ? 0 : 1]).filter(x => x > 1);
   return px.length ? Math.max(...px) : l.m[l.side].best_odds;
 }
 function pbPrice(l, book){
   if (book === "custom") return l.odds > 1 ? l.odds : pbBestPrice(l);
   if (book === "best") return pbBestPrice(l);
-  const p = l.m.prices && l.m.prices[book];
+  const p = pbPricesOf(l.m)[book];
   return p ? p[l.side === "a" ? 0 : 1] : null;
 }
 function pbLegs(){ return PB.legs.map(l => ({ ...l, m: pbMatch(l.id) })).filter(l => l.m); }
@@ -1030,14 +1056,14 @@ function renderBuilder(){
       return `<div class="pb__leg">
         <button class="pb__rm" type="button" data-i="${i}" aria-label="Remove ${esc(me.name)}">×</button>
         <div class="pb__who"><b class="side-${l.side}" style="color:var(--${l.side === "a" ? "A" : "B"})">${esc(me.name)}</b>
-          <small>to beat ${esc(vs.name)} · ${esc(l.m.tournament)} · ${fmt.format(new Date(l.m.start))}</small>
+          <small>to beat ${esc(vs.name)} · ${esc(l.m.tournament)} · ${fmt.format(new Date(l.m.start))}${book === "Kalshi" && l.m.kalshi ? ` · <a href="${esc(l.m.kalshi.url)}" target="_blank" rel="noopener">Kalshi ↗</a>` : ""}</small>
           ${warn.length ? `<small class="warn">⚠ ${warn.map(esc).join(" · ")}</small>` : ""}</div>
         <div class="pb__nums">model ${pct(me.model)} · <span id="pbEv${i}"></span></div>
         <input id="pbOdds${i}" type="text" autocomplete="off" inputmode="${OddsFmt.get() === "american" ? "text" : "decimal"}" aria-label="Odds for ${esc(me.name)}">
       </div>`; }).join("")}</div>
     <div class="pb__opts">
       <label>Bookmaker<select id="pbBook">
-        ${books.map(b => `<option value="${esc(b.book)}">${esc(b.book)} — ${OddsFmt.show(b.odds)}</option>`).join("")}
+        ${books.map(b => `<option value="${esc(b.book)}">${esc(b.book)}${b.book === "Kalshi" ? " (est., after fee)" : ""} — ${OddsFmt.show(b.odds)}</option>`).join("")}
         <option value="best">Best price for each leg (mixes books)</option>
         <option value="custom">My own odds</option>
       </select></label>
@@ -1090,6 +1116,7 @@ function pbTotals(){
     tile("Returns", ok && stake ? (stake * tot).toFixed(2) : "—", stake ? `on ${stake} staked · profit ${ok ? (stake * (tot - 1)).toFixed(2) : "—"}` : "enter a stake");
   const notes = [];
   if (legs.length === 1) notes.push("One leg is a single bet, add another to make a parlay.");
+  if (book === "Kalshi") notes.push("Kalshi builds combos in its app: open each leg with its link. The price here multiplies the legs' prices after Kalshi's fee; Kalshi's own combo quote may differ a little.");
   if (book === "best") notes.push(`<span class="warn">Best prices come from different bookmakers, so you can't place this as one ticket. Pick a bookmaker for a price you can actually get.</span>`);
   if (legs.some(l => (l.m.flags || []).length)) notes.push(`<span class="warn">Some legs carry warnings, where the model is less reliable.</span>`);
   if (legs.some(l => new Date(l.m.start) <= Date.now())) notes.push(`<span class="warn">A leg has already started, so the price has probably moved.</span>`);

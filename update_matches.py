@@ -400,6 +400,29 @@ def log_parlays(rows, parlays, now):
                              "odds": c["odds"], "model": c["model"], "market": c["market"], "ev": c["ev"],
                              "result": "", "settled": "", "payout": ""}
 
+def todays_parlays(rows, hist, matches, now):
+    """The day's recommended parlays, as logged. At most PARLAY_SHOW are logged per
+    UTC day, so what the site shows is always exactly what the log holds."""
+    by_id = {m["id"]: m for m in matches}
+    out = []
+    for r in sorted(rows.values(), key=lambda r: r["created"]):
+        if r["created"][:10] != now.date().isoformat():
+            continue
+        legs = []
+        for l in json.loads(r["legs"]):
+            h, m = hist.get(l["id"]) or {}, by_id.get(l["id"])
+            a_side = l["side"] == "a"
+            legs.append({"id": l["id"], "side": l["side"], "name": l["name"], "odds": float(l["odds"]),
+                         "vs": (m["b" if a_side else "a"]["name"] if m else h.get("player_b" if a_side else "player_a", "")),
+                         "tournament": (m or h).get("tournament", ""), "start": (m or h).get("start", ""),
+                         "model": (m[l["side"]]["model"] if m else
+                                   (float(h["model_a"]) if a_side else 1 - float(h["model_a"])) if h.get("model_a") else 0)})
+        odds, p = float(r["odds"]), float(r["model"])
+        out.append({"id": r["id"], "book": r["book"], "legs": legs, "odds": odds, "model": p,
+                    "market": float(r["market"]), "ev": float(r["ev"]), "kelly": round(kelly_fraction(p, odds), 4),
+                    "created": r["created"], "result": r.get("result", "")})
+    return out
+
 def settle_parlays(rows, hist, now):
     """Settle from the single-match log. A void leg counts as odds 1.0 (usual bookmaker rule)."""
     for r in rows.values():
@@ -670,7 +693,7 @@ def summary_from_books(books):
         low = bk.lower()
         if not any(x in low for x in ("exchange", "betfair", "matchbook", "smarkets", "betdaq")):
             by_book[bk] = [pa, pb]
-        if "pinnacle" in low:
+        if "pinnacle" in low or low == "pncl":      # api-tennis abbreviates it "Pncl"
             pin = ia / (ia + ib)
     return best_a, best_b, statistics.mean(fair), len(fair), pin, by_book
 
@@ -813,9 +836,13 @@ def main():
         save_history(args.history, hist)
         # api-tennis-priced matches can change id when the odds feed picks them up, which
         # would orphan a logged parlay leg, so recommended parlays use the odds feed only
-        out["parlays"] = build_parlays([m for m in priced if m.get("odds_source") != "api-tennis"], now)
+        fresh = build_parlays([m for m in priced if m.get("odds_source") != "api-tennis"], now)
         settle_parlays(parlay_rows, hist, now)
-        log_parlays(parlay_rows, out["parlays"], now)
+        # Three a day: once the day's three are logged, later runs show those same
+        # tickets (at their logged prices) instead of a new set from the latest odds.
+        logged_today = sum(1 for r in parlay_rows.values() if r["created"][:10] == now.date().isoformat())
+        log_parlays(parlay_rows, [c for c in fresh if c["id"] not in parlay_rows][:max(0, PARLAY_SHOW - logged_today)], now)
+        out["parlays"] = todays_parlays(parlay_rows, hist, out["matches"], now)
         out["parlay_record"] = parlay_record(parlay_rows)
         save_parlays(args.parlay_history, parlay_rows)
         with open(args.out, "w", encoding="utf-8") as fh:

@@ -181,6 +181,11 @@ python update_data.py --local-xlsx 2025.xlsx         # offline test, tennis-data
       from api-tennis.com and adds the matches the odds feed doesn't have, with the model's chance and fair
       odds and a "no odds yet" note. Their prices fill in at the next refresh after bookmakers post them.
       These matches aren't logged to the track record or used in parlays until they have odds.</p>
+    <p>For those matches the updater also asks api-tennis.com for bookmaker odds (its <code>get_odds</code>,
+      if your plan includes it), which covers qualifying and smaller events. A match priced this way gets
+      EV, warnings and a place in the track record like any other, marked "odds via api-tennis"; if the odds
+      feed prices it later, that price replaces it. They're left out of the recommended parlays, but you
+      can add them in the parlay builder.</p>
     <pre><code>ODDS_API_KEY=your-key python update_matches.py
 ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code></pre>
     <p>Surface comes from a built-in table of every ATP tournament: Grand Slams, Masters 1000, 500s,

@@ -468,6 +468,14 @@ def save_history(path, hist):
 
 def log_predictions(hist, matches, now):
     """Upsert each not-yet-started match, so the log keeps the last price seen before the start."""
+    # A match first priced from api-tennis and later by the odds feed has two ids;
+    # keep one row, the odds feed's.
+    def same(h):
+        return (h["tour"], (h.get("start") or "")[:10], frozenset((loose_key(h["player_a"]), loose_key(h["player_b"]))))
+    feed = {same({"tour": m["tour"], "start": m["start"], "player_a": m["a"]["name"], "player_b": m["b"]["name"]})
+            for m in matches if not m["id"].startswith("apit-")}
+    for k in [k for k, h in hist.items() if k.startswith("apit-") and not h.get("result") and same(h) in feed]:
+        del hist[k]
     for m in matches:
         st = parse_iso(m["start"])
         if not st or st <= now:
@@ -605,6 +613,67 @@ def fetch_schedule(key, now, hours):
                         "a": a, "a_key": ev.get("first_player_key"), "b": b, "b_key": ev.get("second_player_key")})
     return out
 
+# api-tennis also sells bookmaker odds, covering far more matches (qualifying,
+# smaller events) than the odds feed. Used only for matches the odds feed lacks.
+WIN_MARKETS = ("home/away", "match winner", "to win match", "winner", "1x2")
+
+def fetch_api_tennis_odds(key, now, hours):
+    """{event_key: {bookmaker: [price first player, price second player]}}; {} if unavailable."""
+    from update_data import api_tennis_call
+    end = now + timedelta(hours=hours)
+    try:
+        res = api_tennis_call(key, method="get_odds", date_start=now.date().isoformat(),
+                              date_stop=end.date().isoformat())
+    except Exception as e:                                        # noqa: BLE001
+        print(f"  · api-tennis odds: not available ({e})", file=sys.stderr)
+        return {}
+    if not isinstance(res, dict):
+        print(f"  · api-tennis odds: unexpected reply ({type(res).__name__})", file=sys.stderr)
+        return {}
+    out, markets = {}, {}
+    for ev_key, mk in res.items():
+        if not isinstance(mk, dict):
+            continue
+        for name in mk:
+            markets[name] = markets.get(name, 0) + 1
+        win = next((mk[n] for n in mk if n.strip().lower() in WIN_MARKETS), None)
+        if not isinstance(win, dict):
+            continue
+        sides = {k.strip().lower(): v for k, v in win.items() if isinstance(v, dict)}
+        home, away = sides.get("home") or sides.get("1"), sides.get("away") or sides.get("2")
+        if not (home and away):
+            continue
+        books = {}
+        for bk in home:
+            try:
+                pa, pb = float(home[bk]), float(away.get(bk))
+            except (TypeError, ValueError):
+                continue
+            if pa > 1 and pb > 1:
+                books[bk] = [pa, pb]
+        if books:
+            out[str(ev_key)] = books
+    top = ", ".join(f"{n} ({c})" for n, c in sorted(markets.items(), key=lambda x: -x[1])[:6])
+    print(f"  · api-tennis odds: {len(res)} events, {len(out)} with match-winner prices; markets: {top or 'none'}",
+          file=sys.stderr)
+    return out
+
+def summary_from_books(books):
+    """The odds-feed summary (best prices, de-vigged market, books, Pinnacle, parlay books)
+    from {bookmaker: [price A, price B]}."""
+    best_a, best_b, fair, pin, by_book = (0.0, None), (0.0, None), [], None, {}
+    for bk, (pa, pb) in books.items():
+        if pa > best_a[0]: best_a = (pa, bk)
+        if pb > best_b[0]: best_b = (pb, bk)
+        ia, ib = 1 / pa, 1 / pb
+        fair.append(ia / (ia + ib))
+        low = bk.lower()
+        if not any(x in low for x in ("exchange", "betfair", "matchbook", "smarkets", "betdaq")):
+            by_book[bk] = [pa, pb]
+        if "pinnacle" in low:
+            pin = ia / (ia + ib)
+    return best_a, best_b, statistics.mean(fair), len(fair), pin, by_book
+
 def schedule_pid(name, api_key, players):
     """players.json id for an api-tennis name (the stats come from the same feed)."""
     for pid in (slugify(f"{name} ({api_key})"), slugify(name)):
@@ -625,7 +694,7 @@ def newcomer(name, tour):
     return {"name": name, "tour": tour, "elo": {"overall": elo}, "n": 0, "new": True,
             "info": {"m12": 0, "surf12": {}}}
 
-def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
+def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, odds=None):
     """Add the scheduled matches the odds feed doesn't have, with the model's number only."""
     have = {frozenset((m["a"].get("key"), m["b"].get("key"))): m for m in out["matches"]}
     # If api-tennis ignored the time zone asked for, its times are off by whole hours;
@@ -678,6 +747,15 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
                "court": court_id(f["tournament"], f["tour"], month), "model_version": version,
                "parts": {"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3)},
                "flags": [fl for fl in match_flags(A, B, surf, today, p, p)]}
+        books = (odds or {}).get(f["key"])
+        if books:                          # priced by api-tennis's bookmakers
+            best_a, best_b, mkt_a, n_books, pin_a, by_book = summary_from_books(books)
+            row["a"].update(side(p, mkt_a, *best_a)); row["b"].update(side(1 - p, 1 - mkt_a, *best_b))
+            row.update(books=n_books, prices=by_book, no_odds=False, odds_source="api-tennis",
+                       id="apit-" + f["key"],
+                       flags=match_flags(A, B, surf, today, p, pin_a if pin_a is not None else mkt_a))
+            if pin_a is not None:
+                row["pinnacle_a"] = round(pin_a, 4)
         # the site needs a newcomer's numbers to load the match into the predictor
         new = {s_: P for s_, P in (("a", A), ("b", B)) if P.get("new")}
         if new:
@@ -720,17 +798,22 @@ def main():
         tkey = os.environ.get("TENNIS_API_KEY", "").strip()
         if tkey and players:
             sched = fetch_schedule(tkey, now, args.hours)
-            n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours)
-            out["scheduled_only"] = n
+            odds = fetch_api_tennis_odds(tkey, now, args.hours)
+            n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours, odds)
+            n_priced = sum(1 for m in out["matches"] if m.get("odds_source") == "api-tennis")
+            out["scheduled_only"] = n - n_priced
             n_new = sum(1 for m in out["matches"] if m.get("new_players"))
-            print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added without odds"
-                  f" ({n_new} with a player new to our data)", file=sys.stderr)
+            print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added: {n_priced} priced by "
+                  f"api-tennis, {n - n_priced} without odds ({n_new} with a player new to our data)",
+                  file=sys.stderr)
         priced = [m for m in out["matches"] if not m.get("no_odds")]
         n_settled = settle(hist, results, now)
         log_predictions(hist, priced, now)
         out["record"] = track_record(hist)
         save_history(args.history, hist)
-        out["parlays"] = build_parlays(priced, now)
+        # api-tennis-priced matches can change id when the odds feed picks them up, which
+        # would orphan a logged parlay leg, so recommended parlays use the odds feed only
+        out["parlays"] = build_parlays([m for m in priced if m.get("odds_source") != "api-tennis"], now)
         settle_parlays(parlay_rows, hist, now)
         log_parlays(parlay_rows, out["parlays"], now)
         out["parlay_record"] = parlay_record(parlay_rows)

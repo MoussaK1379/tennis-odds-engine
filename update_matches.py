@@ -326,7 +326,7 @@ PARLAY_MIN_EV = 0.05
 PARLAY_SIZES = (2, 3)
 PARLAY_SHOW = 3
 
-def build_parlays(matches, now):
+def build_parlays(matches, now, show=PARLAY_SHOW):
     from itertools import combinations
     books = {}
     for m in matches:
@@ -368,7 +368,7 @@ def build_parlays(matches, now):
         chosen.append(c)
         for i in ids:
             used[i] = used.get(i, 0) + 1
-        if len(chosen) >= PARLAY_SHOW:
+        if len(chosen) >= show:
             break
     for c in chosen:
         c["id"] = "+".join(f"{l['id']}:{l['side']}" for l in c["legs"])
@@ -403,13 +403,13 @@ def log_parlays(rows, parlays, now):
 def is_kalshi(r):
     return r.get("book") == "Kalshi"
 
-def todays_parlays(rows, hist, matches, now, kalshi=False):
-    """The day's recommended parlays, as logged. At most PARLAY_SHOW are logged per
-    UTC day, so what the site shows is always exactly what the log holds."""
+def live_parlays(rows, hist, matches, now, kalshi=False):
+    """Logged parlays whose matches haven't started: the ones the site shows. Once a
+    parlay's first match starts it leaves this list (and shows in Past predictions)."""
     by_id = {m["id"]: m for m in matches}
     out = []
     for r in sorted(rows.values(), key=lambda r: r["created"]):
-        if r["created"][:10] != now.date().isoformat() or is_kalshi(r) != kalshi:
+        if r.get("result") or is_kalshi(r) != kalshi:
             continue
         legs = []
         for l in json.loads(r["legs"]):
@@ -421,6 +421,8 @@ def todays_parlays(rows, hist, matches, now, kalshi=False):
                          "url": ((m or {}).get("kalshi") or {}).get("url") if kalshi else None,
                          "model": (m[l["side"]]["model"] if m else
                                    (float(h["model_a"]) if a_side else 1 - float(h["model_a"])) if h.get("model_a") else 0)})
+        if not all(parse_iso(l["start"]) and parse_iso(l["start"]) > now for l in legs):
+            continue                                   # a match has started: it's in the past now
         odds, p = float(r["odds"]), float(r["model"])
         out.append({"id": r["id"], "book": r["book"], "legs": legs, "odds": odds, "model": p,
                     "market": float(r["market"]), "ev": float(r["ev"]), "kelly": round(kelly_fraction(p, odds), 4),
@@ -989,22 +991,37 @@ def main():
         save_history(args.history, hist)
         # api-tennis-priced matches can change id when the odds feed picks them up, which
         # would orphan a logged parlay leg, so recommended parlays use the odds feed only
-        fresh = build_parlays([m for m in priced if m.get("odds_source") != "api-tennis"], now)
         settle_parlays(parlay_rows, hist, now)
-        # Three a day: once the day's three are logged, later runs show those same
-        # tickets (at their logged prices) instead of a new set from the latest odds.
-        def logged_today(kal):
-            return sum(1 for r in parlay_rows.values()
-                       if r["created"][:10] == now.date().isoformat() and is_kalshi(r) == kal)
-        log_parlays(parlay_rows, [c for c in fresh if c["id"] not in parlay_rows][:max(0, PARLAY_SHOW - logged_today(False))], now)
-        out["parlays"] = todays_parlays(parlay_rows, hist, out["matches"], now)
-        # Kalshi gets its own three a day, priced at Kalshi (after its fee)
+        def refill(cands, kal):
+            """Up to PARLAY_SHOW live parlays: a posted one stays, unchanged, until its first
+            match starts; then a new one from matches that haven't started takes the slot."""
+            live = live_parlays(parlay_rows, hist, out["matches"], now, kalshi=kal)
+            used = {}
+            for c in live:
+                for l in c["legs"]:
+                    used[l["id"]] = used.get(l["id"], 0) + 1
+            new = []
+            for c in cands:
+                if len(live) + len(new) >= PARLAY_SHOW:
+                    break
+                ids = [l["id"] for l in c["legs"]]
+                if c["id"] in parlay_rows or any(used.get(i, 0) >= 2 for i in ids):
+                    continue                           # posted before, or a match already in two tickets
+                if any(set(ids) == {l["id"] for l in x["legs"]} for x in live + new):
+                    continue
+                new.append(c)
+                for i in ids:
+                    used[i] = used.get(i, 0) + 1
+            log_parlays(parlay_rows, new, now)
+            return live_parlays(parlay_rows, hist, out["matches"], now, kalshi=kal)
+        fresh = build_parlays([m for m in priced if m.get("odds_source") != "api-tennis"], now, show=50)
+        out["parlays"] = refill(fresh, False)
+        # Kalshi gets its own slots, priced at Kalshi (after its fee)
         # (only matches with a lasting id, so a logged leg can always be settled)
-        kfresh = build_parlays(kalshi_parlay_matches([m for m in priced if m.get("odds_source") != "api-tennis"]), now)
+        kfresh = build_parlays(kalshi_parlay_matches([m for m in priced if m.get("odds_source") != "api-tennis"]), now, show=50)
         for c in kfresh:
             c["id"] = "kalshi|" + "+".join(f"{l['id']}:{l['side']}" for l in c["legs"])
-        log_parlays(parlay_rows, [c for c in kfresh if c["id"] not in parlay_rows][:max(0, PARLAY_SHOW - logged_today(True))], now)
-        out["kalshi_parlays"] = todays_parlays(parlay_rows, hist, out["matches"], now, kalshi=True)
+        out["kalshi_parlays"] = refill(kfresh, True)
         out["parlay_record"] = parlay_record(parlay_rows)
         save_parlays(args.parlay_history, parlay_rows)
         with open(args.out, "w", encoding="utf-8") as fh:

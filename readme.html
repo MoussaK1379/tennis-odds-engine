@@ -217,9 +217,10 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       and the backtest then reports how the first-set game scores compare with reality.</p>
 
     <h2>Recommended parlays</h2>
-    <p>Up to three 2- or 3-leg parlays a day (by UTC date), built only from matches with no warnings. The
-      first run that finds qualifying tickets posts and logs them; later refreshes that day keep showing those
-      same tickets at their logged prices, and only fill a slot if fewer than three were posted. Each leg must
+    <p>Up to three 2- or 3-leg parlays live at a time, built only from upcoming matches with no warnings. A
+      posted parlay stays on the predictor, unchanged and at its logged price, until its first match starts;
+      then it moves to <a href="history.html">Past predictions</a> and the next refresh fills the slot with a new
+      ticket from matches that haven't started (no match in more than two live tickets). Each leg must
       be at least +3% EV <em>at the parlay's bookmaker</em> and have a 40%+ chance by the model, and the
       whole ticket at least +5% EV. Every ticket is priced at one bookmaker that offers all its legs,
       because prices from different books can't be combined into one bet. Legs are treated as
@@ -234,7 +235,7 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       needed) and pairs them with the match list by player names. Each player's contract costs 1–99¢ and pays
       $1 if they win; the site shows that price, the decimal odds <em>after Kalshi's trading fee</em>
       (about 7% × p × (1 − p) per contract), the EV at that price, and a link to the market. Kalshi gets its own
-      three recommended parlays a day, built with the same rules as the bookmaker ones but priced at Kalshi, and
+      three live parlay slots, rolling the same way, built with the same rules as the bookmaker ones but priced at Kalshi, and
       logged and settled the same way. Kalshi builds multi-leg bets ("combos") in its app, so each leg links to its
       market; the ticket price on the site multiplies the legs' prices, and Kalshi's own combo quote may differ a
       little. Kalshi is also one of the choices in the parlay builder.</p>

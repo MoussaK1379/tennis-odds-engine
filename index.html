@@ -152,6 +152,13 @@
   .match__pin{ color:var(--faint); }
   .match__flags{ color:var(--clay); }
   .match__kalshi{ color:var(--mute); }
+  .ttabs{ display:flex; gap:6px; overflow-x:auto; padding:2px 0 10px; scrollbar-width:thin; }
+  .ttabs button{ flex:0 0 auto; font-family:var(--display); font-weight:600; font-size:.8rem; color:var(--mute); cursor:pointer;
+    background:var(--ink-3); border:1px solid var(--ink-4); border-radius:999px; padding:.35rem .75rem; white-space:nowrap; }
+  .ttabs button span{ font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-left:.2rem; }
+  .ttabs button[aria-selected="true"]{ background:var(--ball); border-color:var(--ball); color:var(--ink); }
+  .ttabs button[aria-selected="true"] span{ color:var(--ink); }
+  .ttour__head{ font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ball); margin:14px 0 2px; }
   .parlay__legs .who a{ font-family:var(--mono); font-size:.7rem; margin-left:.3rem; }
   .addleg{ width:22px; height:22px; margin-right:.45rem; vertical-align:1px; flex:0 0 auto; cursor:pointer; line-height:1;
     font-family:var(--mono); font-size:.9rem; color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:6px; padding:0; }
@@ -244,7 +251,8 @@
     <p class="today__lede">Built only from value picks with no warnings, each leg at least +3% EV and a 40%+
       chance by the model, priced at <b>one</b> bookmaker that offers every leg. A parlay multiplies the
       bookmaker's margin and the model's mistakes, so treat these as small stakes at most.
-      Up to three a day (UTC), fixed when first posted: later refreshes keep the same tickets and prices.</p>
+      Up to three at a time: a parlay stays, unchanged, until its first match starts, then moves to
+      <a href="history.html">Past predictions</a>, and a new one from upcoming matches takes its place at the next refresh.</p>
     <div id="parlayList"><div class="today__empty">Loading…</div></div>
     <div class="record__note" id="parlayNote"></div>
   </section>
@@ -252,7 +260,7 @@
   <section class="today parlays" id="kparlays">
     <h3>Kalshi parlays <span class="hint">prediction market</span></h3>
     <p class="today__lede">The same rules as above, priced at <b>Kalshi</b> (after its trading fee), with their own
-      three a day. Kalshi builds multi-leg bets ("combos") in its app, so each leg links to its Kalshi market; the
+      three slots that roll the same way. Kalshi builds multi-leg bets ("combos") in its app, so each leg links to its Kalshi market; the
       ticket price here multiplies the legs' prices, and Kalshi's own combo quote may differ a little.</p>
     <div id="kparlayList"><div class="today__empty">Loading…</div></div>
   </section>
@@ -857,6 +865,8 @@ function matchExtras(m){
   if(fl.length) bits.push(`<div class="match__flags">${fl.map(t => "⚠ " + esc(t)).join("<br>")}</div>`);
   return bits.length ? `<div class="match__extra">${bits.join("")}</div>` : "";
 }
+let TODAY_TAB = "";
+try { TODAY_TAB = localStorage.getItem("todayTab") || ""; } catch (e) { /* storage blocked */ }
 function renderToday(j){
   const list = $("todayList");
   if(!j){ list.innerHTML = '<div class="today__empty">No match list yet — it appears after the first daily run.</div>'; return; }
@@ -867,11 +877,26 @@ function renderToday(j){
   const ms = (j.matches || []).filter(m => !m.start || new Date(m.start) > Date.now() - 3*3600e3);
   if(!ms.length){ list.innerHTML = '<div class="today__empty">No priced ATP/WTA matches in the next day and a half.</div>'; return; }
   const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
-  list.innerHTML = ms.map((m,i) => `<div class="match">
+  // one tab per tournament (the remembered one, or All, which groups them)
+  const tours = [...new Set(ms.map(m => m.tournament))];
+  if (TODAY_TAB && !tours.includes(TODAY_TAB)) TODAY_TAB = "";
+  const tabs = `<div class="ttabs" role="tablist">${["", ...tours].map(t => {
+      const n = t ? ms.filter(m => m.tournament === t).length : ms.length;
+      return `<button type="button" role="tab" data-t="${esc(t)}" aria-selected="${t === TODAY_TAB}">${t ? esc(t) : "All"} <span>${n}</span></button>`;
+    }).join("")}</div>`;
+  const card = (m, i) => `<div class="match">
       <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
       <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}</div>
       <button class="match__go" type="button" data-i="${i}">Analyse</button>
-      ${matchExtras(m)}</div>`).join("");
+      ${matchExtras(m)}</div>`;
+  const shown = (TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
+    `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t ? card(m, i) : "").join("")}</div>`).join("");
+  list.innerHTML = tabs + shown;
+  list.querySelectorAll(".ttabs button").forEach(b => b.addEventListener("click", () => {
+    TODAY_TAB = b.dataset.t;
+    try { localStorage.setItem("todayTab", TODAY_TAB); } catch (e) { /* storage blocked */ }
+    renderToday(j);
+  }));
   list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () => loadMatch(ms[+b.dataset.i])));
   list.querySelectorAll(".addleg").forEach(b => b.addEventListener("click", () => pbToggle(b.dataset.id, b.dataset.side)));
   pbSyncButtons();
@@ -914,16 +939,17 @@ function renderParlays(j){
     : (r && r.pending ? `${r.pending} recommended parlays waiting for results.` : "");
 }
 function renderParlayList(j, ps, list, kalshi){
-  // today's parlays as logged (at most three a day each); they stay listed once play starts
+  // up to three live parlays each; once a parlay's first match starts it moves to Past predictions
   const started = c => c.legs.some(l => l.start && new Date(l.start) <= Date.now());
+  ps = ps.filter(c => !started(c));
   const status = c => c.result === "won" ? '<span class="badge badge--ev">won</span>'
     : c.result === "lost" ? '<span class="badge" style="background:var(--neg);color:var(--chalk)">lost</span>'
     : c.result === "void" ? '<span class="badge" style="background:var(--ink-3)">void</span>'
     : started(c) ? '<span class="badge" style="background:var(--ink-3);color:var(--chalk)">in play</span>' : "";
   if(!j || (j.status === "no_api_key" && !kalshi)){ list.innerHTML = '<div class="today__empty">Needs the odds feed.</div>'; }
   else if(!ps.length){ list.innerHTML = kalshi
-    ? `<div class="today__empty">No Kalshi parlay yet today${j.kalshi_matched ? "" : " (no Kalshi prices matched to today's list)"}: fewer than two picks pass the rules at Kalshi. The next refresh tries again (up to three a day).</div>`
-    : '<div class="today__empty">No parlay yet today: fewer than two picks pass the rules at the same bookmaker. The next refresh tries again (up to three a day).</div>'; }
+    ? `<div class="today__empty">No Kalshi parlay right now${j.kalshi_matched ? "" : " (no Kalshi prices matched to the list)"}: fewer than two upcoming picks pass the rules at Kalshi. New ones come in at the next refresh. Started ones are in <a href="history.html">Past predictions</a>.</div>`
+    : '<div class="today__empty">No parlay right now: fewer than two upcoming picks pass the rules at the same bookmaker. New ones come in at the next refresh. Started ones are in <a href="history.html">Past predictions</a>.</div>'; }
   else {
     const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
     list.innerHTML = ps.map(c => `<div class="parlay">

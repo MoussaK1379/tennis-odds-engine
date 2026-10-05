@@ -670,7 +670,7 @@ def summary_from_books(books):
         low = bk.lower()
         if not any(x in low for x in ("exchange", "betfair", "matchbook", "smarkets", "betdaq")):
             by_book[bk] = [pa, pb]
-        if "pinnacle" in low:
+        if "pinnacle" in low or low == "pncl":      # api-tennis abbreviates it "Pncl"
             pin = ia / (ia + ib)
     return best_a, best_b, statistics.mean(fair), len(fair), pin, by_book
 

@@ -611,11 +611,18 @@ KALSHI_FEE = 0.07
 KALSHI_SERIES_FALLBACK = ("KXATPMATCH", "KXWTAMATCH", "KXATPCHALLENGERMATCH", "KXWTACHALLENGERMATCH")
 
 def kalshi_get(path, **params):
+    import time
     q = urllib.parse.urlencode({k: v for k, v in params.items() if v is not None})
     req = urllib.request.Request(f"{KALSHI}{path}?{q}", headers={"Accept": "application/json",
                                                                  "User-Agent": "tennis-odds-engine"})
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        return json.load(resp)
+    for wait in (1, 2, 4, 0):                  # back off when Kalshi rate-limits (HTTP 429)
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                return json.load(resp)
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or not wait:
+                raise
+            time.sleep(wait)
 
 def kalshi_price(m, side):
     """Ask price in dollars for 'yes' or 'no' (newer replies use *_dollars strings)."""
@@ -653,8 +660,11 @@ def fetch_kalshi(now, hours):
         print(f"  · Kalshi: unavailable ({e})", file=sys.stderr)
         return []
     tennis = [x for x in series if "tennis" in json.dumps(x).lower()]
-    match = [x for x in tennis if re.search(r"match|vs|winner", (x.get("title", "") + x.get("ticker", "")), re.I)
-             and not re.search(r"tournament|champion|title|outright|set|game|total", x.get("title", ""), re.I)]
+    # ATP/WTA (and challenger) singles match winners only: not table tennis (ITTF/WTT),
+    # team events, exhibitions, doubles, or set/game markets
+    match = [x for x in tennis
+             if re.search(r"ATP|WTA", x.get("ticker", "")) and "MATCH" in x.get("ticker", "")
+             and not re.search(r"DOUBLE|GAME|SET|ITTF|WTT|CUP|EXHIB", x.get("ticker", ""))]
     if not match:
         match = [{"ticker": t, "title": t} for t in KALSHI_SERIES_FALLBACK]
     print(f"  · Kalshi: {len(tennis)} tennis series, using {[x.get('ticker') for x in match][:8]}", file=sys.stderr)

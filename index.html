@@ -808,6 +808,8 @@ function setSeg(id, v){
   $(id).querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === String(v) ? "true" : "false"));
 }
 function loadMatch(m){
+  // players with no matches in our data come with starter numbers in the match itself
+  for (const [side, P] of Object.entries(m.new_players || {})) if (!DATA.players[m[side].key]) DATA.players[m[side].key] = P;
   state.tour = m.tour; setSeg("segTour", m.tour);
   state.surface = m.surface; setSeg("segSurface", m.surface);
   state.bestOf = m.best_of; setSeg("segFormat", m.best_of);

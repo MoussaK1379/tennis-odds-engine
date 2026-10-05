@@ -279,6 +279,8 @@ DISAGREE = 0.15          # model and market this far apart (15 percentage points
 
 def player_flags(p, surface, today):
     i, out, name = p.get("info") or {}, [], p.get("name", "?")
+    if p.get("new"):
+        return [("thin", f"{name}: no matches in our data yet, rated as a first-time qualifier")]
     if i.get("m12", 0) < THIN_MATCHES:
         out.append(("thin", f"{name}: only {i.get('m12', 0)} matches in 12 months"))
     if i.get("last"):
@@ -610,6 +612,19 @@ def schedule_pid(name, api_key, players):
             return pid
     return None
 
+PLACEHOLDER = re.compile(r"\b(tba|tbd|bye|qualifier|lucky loser|winner)\b|/", re.I)
+
+def newcomer(name, tour):
+    """A player with no matches in the stats yet (often in qualifying): the rating a
+    first-time qualifier starts on, tour-average serve and return, flagged thin."""
+    try:
+        with open("model_params.json", encoding="utf-8") as fh:
+            elo = json.load(fh).get("params", {}).get("init_elo_qual", 1250)
+    except (OSError, ValueError):
+        elo = 1250
+    return {"name": name, "tour": tour, "elo": {"overall": elo}, "n": 0, "new": True,
+            "info": {"m12": 0, "surf12": {}}}
+
 def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
     """Add the scheduled matches the odds feed doesn't have, with the model's number only."""
     have = {frozenset((m["a"].get("key"), m["b"].get("key"))): m for m in out["matches"]}
@@ -619,6 +634,7 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
                    for f in sched
                    for pair in [frozenset((schedule_pid(f["a"], f["a_key"], players), schedule_pid(f["b"], f["b_key"], players)))]
                    if pair in have and parse_iso(have[pair]["start"]))
+    # (newcomers can't be in the odds list under a players.json id, so they don't count here)
     shift = diffs[len(diffs) // 2] if len(diffs) >= 3 and abs(diffs[len(diffs) // 2]) <= 14 else 0
     if shift:
         print(f"  · schedule times are {shift:+d}h from the odds feed's ({len(diffs)} matches in both); corrected",
@@ -627,9 +643,19 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
     now = datetime.now(timezone.utc)
     unmatched = [(name_keys(u["a"]["name"]), name_keys(u["b"]["name"])) for u in out["unmatched"]]
     added = 0
+    extra = {}                             # newcomers, by id, for this run only
     for f in sched:
-        ka, kb = schedule_pid(f["a"], f["a_key"], players), schedule_pid(f["b"], f["b_key"], players)
-        if not (ka and kb) or frozenset((ka, kb)) in have or not (now < f["start"] <= now + timedelta(hours=hours)):
+        if PLACEHOLDER.search(f["a"]) or PLACEHOLDER.search(f["b"]):
+            continue                       # draw slot not filled yet
+        ids = []
+        for name, akey in ((f["a"], f["a_key"]), (f["b"], f["b_key"])):
+            pid = schedule_pid(name, akey, players)
+            if not pid:
+                pid = "new-" + slugify(f"{name} {akey}")
+                extra.setdefault(pid, newcomer(name, f["tour"]))
+            ids.append(pid)
+        ka, kb = ids
+        if frozenset((ka, kb)) in have or not (now < f["start"] <= now + timedelta(hours=hours)):
             continue
         fa, fb = name_keys(f["a"]), name_keys(f["b"])
         if any((ua & fa and ub & fb) or (ua & fb and ub & fa) for ua, ub in unmatched):
@@ -638,7 +664,8 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
         surf, indoor, known = surface_for(f["tournament"], f["tour"], month)
         best_of = 3 if f["qualifying"] else guess_best_of(f["tournament"], f["tour"])
         t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)
-        r = predict_export(players[ka], players[kb], surf, best_of, t_avg, mdl)
+        A, B = players.get(ka) or extra[ka], players.get(kb) or extra[kb]
+        r = predict_export(A, B, surf, best_of, t_avg, mdl)
         p = r["p"]
         def no_odds(name, key, q):
             return {"name": name, "key": key, "model": round(q, 4), "fair_odds": round(1 / q, 2),
@@ -646,11 +673,17 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36):
         title = f"{f['tour']} {f['tournament']}" + (" (qualifying)" if f["qualifying"] else "")
         row = {"id": "sched-" + f["key"], "tour": f["tour"], "tournament": title, "round": f["round"],
                "start": iso(f["start"]), "surface": surf, "indoor": indoor, "surface_known": known,
-               "best_of": best_of, "a": no_odds(players[ka]["name"], ka, p),
-               "b": no_odds(players[kb]["name"], kb, 1 - p), "books": 0, "no_odds": True,
+               "best_of": best_of, "a": no_odds(A["name"], ka, p),
+               "b": no_odds(B["name"], kb, 1 - p), "books": 0, "no_odds": True,
                "court": court_id(f["tournament"], f["tour"], month), "model_version": version,
                "parts": {"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3)},
-               "flags": [fl for fl in match_flags(players[ka], players[kb], surf, today, p, p)]}
+               "flags": [fl for fl in match_flags(A, B, surf, today, p, p)]}
+        # the site needs a newcomer's numbers to load the match into the predictor
+        new = {s_: P for s_, P in (("a", A), ("b", B)) if P.get("new")}
+        if new:
+            row["new_players"] = new
+            for s_, P in new.items():
+                row[s_]["new"] = True
         out["matches"].append(row)
         have[frozenset((ka, kb))] = row
         added += 1
@@ -689,7 +722,9 @@ def main():
             sched = fetch_schedule(tkey, now, args.hours)
             n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours)
             out["scheduled_only"] = n
-            print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added without odds", file=sys.stderr)
+            n_new = sum(1 for m in out["matches"] if m.get("new_players"))
+            print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added without odds"
+                  f" ({n_new} with a player new to our data)", file=sys.stderr)
         priced = [m for m in out["matches"] if not m.get("no_odds")]
         n_settled = settle(hist, results, now)
         log_predictions(hist, priced, now)

@@ -835,6 +835,7 @@ function matchExtras(m){
   const bits = [];
   if(m.pinnacle_a != null) bits.push(`<div class="match__pin">Pinnacle: ${pct(m.pinnacle_a)} / ${pct(1 - m.pinnacle_a)}</div>`);
   const fl = (m.flags || []).map(f => Array.isArray(f) ? f[1] : f);
+  if(m.odds_source === "api-tennis") bits.push(`<div class="match__pin">Odds via api-tennis.com (${m.books} book${m.books === 1 ? "" : "s"})</div>`);
   if(m.no_odds) bits.push(`<div class="match__pin">No odds yet: bookmakers haven't priced this match. Prices appear at the next refresh after they do.</div>`);
   if(fl.length) bits.push(`<div class="match__flags">${fl.map(t => "⚠ " + esc(t)).join("<br>")}</div>`);
   return bits.length ? `<div class="match__extra">${bits.join("")}</div>` : "";

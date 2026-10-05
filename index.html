@@ -241,7 +241,8 @@
     <h3>Recommended parlays <span class="hint" id="parlayStamp"></span></h3>
     <p class="today__lede">Built only from value picks with no warnings, each leg at least +3% EV and a 40%+
       chance by the model, priced at <b>one</b> bookmaker that offers every leg. A parlay multiplies the
-      bookmaker's margin and the model's mistakes, so treat these as small stakes at most.</p>
+      bookmaker's margin and the model's mistakes, so treat these as small stakes at most.
+      Up to three a day (UTC), fixed when first posted: later refreshes keep the same tickets and prices.</p>
     <div id="parlayList"><div class="today__empty">Loading…</div></div>
     <div class="record__note" id="parlayNote"></div>
   </section>
@@ -889,17 +890,23 @@ function renderRecord(r){
 }
 function renderParlays(j){
   const list = $("parlayList"), note = $("parlayNote");
-  const ps = (j && j.parlays || []).filter(c => c.legs.every(l => new Date(l.start) > Date.now()));
+  // today's parlays as logged (at most three a day); they stay listed once play starts
+  const ps = (j && j.parlays) || [];
+  const started = c => c.legs.some(l => l.start && new Date(l.start) <= Date.now());
+  const status = c => c.result === "won" ? '<span class="badge badge--ev">won</span>'
+    : c.result === "lost" ? '<span class="badge" style="background:var(--neg);color:var(--chalk)">lost</span>'
+    : c.result === "void" ? '<span class="badge" style="background:var(--ink-3)">void</span>'
+    : started(c) ? '<span class="badge" style="background:var(--ink-3);color:var(--chalk)">in play</span>' : "";
   if(!j || j.status === "no_api_key"){ list.innerHTML = '<div class="today__empty">Needs the odds feed.</div>'; }
-  else if(!ps.length){ list.innerHTML = '<div class="today__empty">No parlay today: fewer than two picks pass the rules at the same bookmaker.</div>'; }
+  else if(!ps.length){ list.innerHTML = '<div class="today__empty">No parlay yet today: fewer than two picks pass the rules at the same bookmaker. The next refresh tries again (up to three a day).</div>'; }
   else {
     const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
     list.innerHTML = ps.map(c => `<div class="parlay">
-      <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(c.odds)}</span> at ${esc(c.book)} · ${c.legs.length} legs</span>
+      <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(c.odds)}</span> at ${esc(c.book)} · ${c.legs.length} legs${status(c)}</span>
         <span class="parlay__nums">model ${pct(c.model)} · market ${pct(c.market)} · <span class="ev-pos">EV +${(c.ev*100).toFixed(1)}%</span> · ¼-Kelly ${(c.kelly*100).toFixed(1)}%</span></div>
       <ul class="parlay__legs">${c.legs.map(l => `<li><span class="who">${esc(l.name)} <small>to beat ${esc(l.vs)} · ${esc(l.tournament)} · ${fmt.format(new Date(l.start))}</small></span>
         <span class="px">${OddsFmt.show(l.odds)} · ${pct(l.model)}</span></li>`).join("")}</ul>
-      <button class="parlay__edit" type="button" data-i="${ps.indexOf(c)}">Open in builder</button></div>`).join("");
+      ${started(c) ? "" : `<button class="parlay__edit" type="button" data-i="${ps.indexOf(c)}">Open in builder</button>`}</div>`).join("");
     list.querySelectorAll(".parlay__edit").forEach(b => b.addEventListener("click", () => {
       const c = ps[+b.dataset.i];
       PB.legs = c.legs.map(l => ({ id: l.id, side: l.side })); PB.book = c.book;

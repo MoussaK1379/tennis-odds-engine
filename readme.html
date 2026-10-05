@@ -217,7 +217,9 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       and the backtest then reports how the first-set game scores compare with reality.</p>
 
     <h2>Recommended parlays</h2>
-    <p>Up to three 2- or 3-leg parlays a day, built only from matches with no warnings. Each leg must
+    <p>Up to three 2- or 3-leg parlays a day (by UTC date), built only from matches with no warnings. The
+      first run that finds qualifying tickets posts and logs them; later refreshes that day keep showing those
+      same tickets at their logged prices, and only fill a slot if fewer than three were posted. Each leg must
       be at least +3% EV <em>at the parlay's bookmaker</em> and have a 40%+ chance by the model, and the
       whole ticket at least +5% EV. Every ticket is priced at one bookmaker that offers all its legs,
       because prices from different books can't be combined into one bet. Legs are treated as

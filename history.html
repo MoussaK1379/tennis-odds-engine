@@ -134,7 +134,7 @@
 
   <section class="box">
     <h3>Past parlays <span class="hint" id="parlayHint"></span></h3>
-    <p class="box__lede">Recommended parlays as they were posted, settled from the results above. Profit is for a 1-unit stake.</p>
+    <p class="box__lede">Recommended parlays as they were posted, at most three a day (by UTC date), settled from the results above. Profit is for a 1-unit stake.</p>
     <div id="parlays"></div>
   </section>
 
@@ -334,16 +334,22 @@ function renderParlays(rows){
   const profit = done.reduce((t, r) => t + (r.payout !== "" ? +r.payout - 1 : (r.result === "won" ? +r.odds - 1 : -1)), 0);
   document.getElementById("parlayHint").textContent = done.length
     ? `${done.filter(r => r.result === "won").length}/${done.length} won · ${units(profit)}` : `${rows.length} logged`;
+  // grouped by the UTC day they were posted: at most three a day
+  let day = "";
   box.innerHTML = rows.map(r => {
+    const d = r.created.slice(0, 10), n = rows.filter(x => x.created.slice(0, 10) === d).length;
+    const head = d === day ? "" : `<div class="dayhead"><b>${new Date(d + "T12:00:00Z").toLocaleDateString(undefined,
+      { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" })}</b> · ${n} parlay${n === 1 ? "" : "s"}</div>`;
+    day = d;
     let legs = [];
     try { legs = JSON.parse(r.legs); } catch (e) { /* keep empty */ }
     const res = r.result === "won" ? `<span class="tagx tagx--right">won</span>`
       : r.result === "lost" ? `<span class="tagx tagx--wrong">lost</span>`
       : r.result === "void" ? `<span class="tagx tagx--void">void</span>` : `<span class="tagx tagx--pend">pending</span>`;
     const pl = r.payout !== "" && r.result ? ` <span class="${plClass(+r.payout - 1)}">${units(+r.payout - 1)}</span>` : "";
-    const when = new Date(r.created).toLocaleDateString(undefined, { day: "numeric", month: "short", year: "numeric" });
-    return `<div class="parlay">
-      <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(+r.odds)}</span> at ${esc(r.book)} · ${when}</span>
+    const when = new Date(r.created).toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+    return head + `<div class="parlay">
+      <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(+r.odds)}</span> at ${esc(r.book)} · posted ${when}</span>
         <span class="parlay__nums">model ${pct(+r.model)} · mkt ${pct(+r.market)} · EV ${(+r.ev * 100).toFixed(0)}% · ${res}${pl}</span></div>
       <ul class="parlay__legs">${legs.map(l => `<li><span>${esc(l.name)}</span><span class="px">${OddsFmt.show(+l.odds)}</span></li>`).join("")}</ul>
     </div>`;

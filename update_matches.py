@@ -400,13 +400,16 @@ def log_parlays(rows, parlays, now):
                              "odds": c["odds"], "model": c["model"], "market": c["market"], "ev": c["ev"],
                              "result": "", "settled": "", "payout": ""}
 
-def todays_parlays(rows, hist, matches, now):
+def is_kalshi(r):
+    return r.get("book") == "Kalshi"
+
+def todays_parlays(rows, hist, matches, now, kalshi=False):
     """The day's recommended parlays, as logged. At most PARLAY_SHOW are logged per
     UTC day, so what the site shows is always exactly what the log holds."""
     by_id = {m["id"]: m for m in matches}
     out = []
     for r in sorted(rows.values(), key=lambda r: r["created"]):
-        if r["created"][:10] != now.date().isoformat():
+        if r["created"][:10] != now.date().isoformat() or is_kalshi(r) != kalshi:
             continue
         legs = []
         for l in json.loads(r["legs"]):
@@ -415,6 +418,7 @@ def todays_parlays(rows, hist, matches, now):
             legs.append({"id": l["id"], "side": l["side"], "name": l["name"], "odds": float(l["odds"]),
                          "vs": (m["b" if a_side else "a"]["name"] if m else h.get("player_b" if a_side else "player_a", "")),
                          "tournament": (m or h).get("tournament", ""), "start": (m or h).get("start", ""),
+                         "url": ((m or {}).get("kalshi") or {}).get("url") if kalshi else None,
                          "model": (m[l["side"]]["model"] if m else
                                    (float(h["model_a"]) if a_side else 1 - float(h["model_a"])) if h.get("model_a") else 0)})
         odds, p = float(r["odds"]), float(r["model"])
@@ -595,6 +599,141 @@ def track_record(hist, split=True):
         cp += ((oa if pick_a else ob) - 1) if pick_a == (h["result"] == "a") else -1
     rec.update(clean_bets=cb, clean_profit=round(cp, 2))
     return rec
+
+
+# ---------- Kalshi (prediction market) ----------------------------------------
+# Kalshi lists match-winner contracts: one market per player, paying $1 if they
+# win, priced 1-99 cents. Market data is public, so no key is needed. Kalshi takes
+# a trading fee of about 7% x p x (1 - p) per contract, which is folded into the
+# odds shown so EV is what you'd actually get.
+KALSHI = "https://api.elections.kalshi.com/trade-api/v2"
+KALSHI_FEE = 0.07
+KALSHI_SERIES_FALLBACK = ("KXATPMATCH", "KXWTAMATCH", "KXATPCHALLENGERMATCH", "KXWTACHALLENGERMATCH")
+
+def kalshi_get(path, **params):
+    q = urllib.parse.urlencode({k: v for k, v in params.items() if v is not None})
+    req = urllib.request.Request(f"{KALSHI}{path}?{q}", headers={"Accept": "application/json",
+                                                                 "User-Agent": "tennis-odds-engine"})
+    with urllib.request.urlopen(req, timeout=60) as resp:
+        return json.load(resp)
+
+def kalshi_price(m, side):
+    """Ask price in dollars for 'yes' or 'no' (newer replies use *_dollars strings)."""
+    v = m.get(f"{side}_ask_dollars")
+    if v not in (None, ""):
+        try:
+            return float(v)
+        except ValueError:
+            pass
+    v = m.get(f"{side}_ask")
+    return v / 100 if isinstance(v, (int, float)) else None
+
+def kalshi_mid(m):
+    bid, ask = m.get("yes_bid_dollars") or m.get("yes_bid"), kalshi_price(m, "yes")
+    try:
+        bid = float(bid) if isinstance(bid, str) else (bid / 100 if bid is not None else None)
+    except ValueError:
+        bid = None
+    if ask and bid:
+        return (ask + bid) / 2
+    return ask
+
+def kalshi_odds(cost):
+    """Decimal odds after Kalshi's fee for a contract bought at `cost` dollars."""
+    if not cost or not (0 < cost < 1):
+        return None
+    return round(1 / (cost + KALSHI_FEE * cost * (1 - cost)), 3)
+
+def fetch_kalshi(now, hours):
+    """[{tour, event, series, url, close, players: [(name, cost, mid, ticker), ...]}] for open
+    two-player tennis match events; [] if Kalshi can't be reached."""
+    try:
+        series = kalshi_get("/series", category="Sports").get("series") or []
+    except Exception as e:                                        # noqa: BLE001
+        print(f"  · Kalshi: unavailable ({e})", file=sys.stderr)
+        return []
+    tennis = [x for x in series if "tennis" in json.dumps(x).lower()]
+    match = [x for x in tennis if re.search(r"match|vs|winner", (x.get("title", "") + x.get("ticker", "")), re.I)
+             and not re.search(r"tournament|champion|title|outright|set|game|total", x.get("title", ""), re.I)]
+    if not match:
+        match = [{"ticker": t, "title": t} for t in KALSHI_SERIES_FALLBACK]
+    print(f"  · Kalshi: {len(tennis)} tennis series, using {[x.get('ticker') for x in match][:8]}", file=sys.stderr)
+    end = now + timedelta(hours=hours + 24)
+    out = []
+    for sr in match:
+        ticker, title = sr.get("ticker", ""), sr.get("title", "")
+        tour = "WTA" if re.search(r"wta|women", ticker + " " + title, re.I) else "ATP"
+        events, cursor = {}, None
+        for _ in range(10):                                       # pages of up to 1000 markets
+            try:
+                page = kalshi_get("/markets", series_ticker=ticker, status="open", limit=1000, cursor=cursor)
+            except Exception as e:                                # noqa: BLE001
+                print(f"  · Kalshi {ticker}: {e}", file=sys.stderr)
+                break
+            for m in page.get("markets") or []:
+                events.setdefault(m.get("event_ticker"), []).append(m)
+            cursor = page.get("cursor")
+            if not cursor:
+                break
+        for ev, ms in events.items():
+            if len(ms) != 2:
+                continue                                          # not a plain head-to-head
+            close = parse_iso(ms[0].get("expected_expiration_time") or ms[0].get("close_time") or "")
+            if close and close > end + timedelta(days=7):
+                continue
+            players = []
+            for m in ms:
+                name = (m.get("yes_sub_title") or "").strip()
+                players.append((name, kalshi_price(m, "yes"), kalshi_mid(m), m.get("ticker")))
+            if not all(p[0] for p in players):
+                continue
+            slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-") or ticker.lower()
+            out.append({"tour": tour, "event": ev, "series": ticker, "close": close, "players": players,
+                        "url": f"https://kalshi.com/markets/{ticker.lower()}/{slug}/{(ev or '').lower()}"})
+    print(f"  · Kalshi: {len(out)} open head-to-head match events", file=sys.stderr)
+    return out
+
+def attach_kalshi(matches, kal, players, idx):
+    """Add Kalshi prices to the matches they belong to (matched on the two players)."""
+    by_pair = {}
+    for m in matches:
+        by_pair[(m["tour"], frozenset((m["a"].get("key"), m["b"].get("key"))))] = m
+    n = 0
+    for k in kal:
+        (na, ca, ma, ta), (nb, cb, mb, tb) = k["players"]
+        ka, kb = resolve(na, k["tour"], players, idx), resolve(nb, k["tour"], players, idx)
+        m = by_pair.get((k["tour"], frozenset((ka, kb))))
+        if not m or not (ka and kb):
+            continue
+        st = parse_iso(m.get("start"))
+        if st and k["close"] and abs((k["close"] - st).total_seconds()) > 4 * 86400:
+            continue                                              # same players, a different match
+        if ka != m["a"].get("key"):
+            (na, ca, ma, ta), (nb, cb, mb, tb) = (nb, cb, mb, tb), (na, ca, ma, ta)
+        mkt_a = ma / (ma + mb) if ma and mb else None
+        sides = {}
+        for sd, cost, model_p in (("a", ca, m["a"]["model"]), ("b", cb, m["b"]["model"])):
+            odds = kalshi_odds(cost)
+            sides[sd] = {"cost": cost, "odds": odds,
+                         "ev": round(model_p * odds - 1, 4) if odds else None,
+                         "ticker": ta if sd == "a" else tb}
+        m["kalshi"] = {**sides, "market_a": round(mkt_a, 4) if mkt_a else None,
+                       "event": k["event"], "url": k["url"]}
+        n += 1
+    return n
+
+def kalshi_parlay_matches(matches):
+    """The matches as Kalshi-only markets, so build_parlays can price tickets at Kalshi."""
+    out = []
+    for m in matches:
+        k = m.get("kalshi")
+        if not k or not (k["a"]["odds"] and k["b"]["odds"]) or not k.get("market_a"):
+            continue
+        mm = json.loads(json.dumps(m))
+        mm["prices"] = {"Kalshi": [k["a"]["odds"], k["b"]["odds"]]}
+        mm["a"]["market"], mm["b"]["market"] = k["market_a"], 1 - k["market_a"]
+        out.append(mm)
+    return out
 
 
 # ---------- schedule (api-tennis.com) ----------------------------------------
@@ -829,6 +968,10 @@ def main():
             print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added: {n_priced} priced by "
                   f"api-tennis, {n - n_priced} without odds ({n_new} with a player new to our data)",
                   file=sys.stderr)
+        if players:
+            kal = fetch_kalshi(now, args.hours)
+            out["kalshi_matched"] = attach_kalshi(out["matches"], kal, players, idx)
+            print(f"Kalshi: {out['kalshi_matched']} of {len(kal)} Kalshi matches paired with the list", file=sys.stderr)
         priced = [m for m in out["matches"] if not m.get("no_odds")]
         n_settled = settle(hist, results, now)
         log_predictions(hist, priced, now)
@@ -840,9 +983,18 @@ def main():
         settle_parlays(parlay_rows, hist, now)
         # Three a day: once the day's three are logged, later runs show those same
         # tickets (at their logged prices) instead of a new set from the latest odds.
-        logged_today = sum(1 for r in parlay_rows.values() if r["created"][:10] == now.date().isoformat())
-        log_parlays(parlay_rows, [c for c in fresh if c["id"] not in parlay_rows][:max(0, PARLAY_SHOW - logged_today)], now)
+        def logged_today(kal):
+            return sum(1 for r in parlay_rows.values()
+                       if r["created"][:10] == now.date().isoformat() and is_kalshi(r) == kal)
+        log_parlays(parlay_rows, [c for c in fresh if c["id"] not in parlay_rows][:max(0, PARLAY_SHOW - logged_today(False))], now)
         out["parlays"] = todays_parlays(parlay_rows, hist, out["matches"], now)
+        # Kalshi gets its own three a day, priced at Kalshi (after its fee)
+        # (only matches with a lasting id, so a logged leg can always be settled)
+        kfresh = build_parlays(kalshi_parlay_matches([m for m in priced if m.get("odds_source") != "api-tennis"]), now)
+        for c in kfresh:
+            c["id"] = "kalshi|" + "+".join(f"{l['id']}:{l['side']}" for l in c["legs"])
+        log_parlays(parlay_rows, [c for c in kfresh if c["id"] not in parlay_rows][:max(0, PARLAY_SHOW - logged_today(True))], now)
+        out["kalshi_parlays"] = todays_parlays(parlay_rows, hist, out["matches"], now, kalshi=True)
         out["parlay_record"] = parlay_record(parlay_rows)
         save_parlays(args.parlay_history, parlay_rows)
         with open(args.out, "w", encoding="utf-8") as fh:

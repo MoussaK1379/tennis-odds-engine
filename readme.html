@@ -229,6 +229,16 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       A parlay multiplies the bookmaker's margin and any model error, so it needs a real edge on every
       leg; until the single-pick track record shows the model beats the market, treat these as entertainment-sized stakes.</p>
 
+    <h2>Kalshi</h2>
+    <p>The updater also reads <a href="https://kalshi.com">Kalshi</a>'s public tennis match markets (no key
+      needed) and pairs them with the match list by player names. Each player's contract costs 1–99¢ and pays
+      $1 if they win; the site shows that price, the decimal odds <em>after Kalshi's trading fee</em>
+      (about 7% × p × (1 − p) per contract), the EV at that price, and a link to the market. Kalshi gets its own
+      three recommended parlays a day, built with the same rules as the bookmaker ones but priced at Kalshi, and
+      logged and settled the same way. Kalshi builds multi-leg bets ("combos") in its app, so each leg links to its
+      market; the ticket price on the site multiplies the legs' prices, and Kalshi's own combo quote may differ a
+      little. Kalshi is also one of the choices in the parlay builder.</p>
+
     <h2>Parlay builder</h2>
     <p>On the predictor, the <b>+</b> next to each player in Today's matches adds that player to the parlay
       builder (one side per match, up to ten legs); a recommended parlay can be opened there too. Choose a

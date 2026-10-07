@@ -1,142 +1,9 @@
 {
-  "updated": "2026-10-07T13:24:28Z",
+  "updated": "2026-10-07T21:22:29Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "425",
+  "requests_remaining": "423",
   "matches": [
-    {
-      "id": "020e257e15a4271205631c42fc05f671",
-      "tour": "WTA",
-      "tournament": "WTA China Open",
-      "start": "2026-10-07T13:40:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "Ann Li",
-        "key": "a-li",
-        "model": 0.2289,
-        "fair_odds": 4.37,
-        "market": 0.2666,
-        "best_odds": 3.85,
-        "book": "Matchbook",
-        "ev": -0.1189,
-        "kelly": 0.0
-      },
-      "b": {
-        "name": "Elina Svitolina",
-        "key": "e-svitolina",
-        "model": 0.7711,
-        "fair_odds": 1.3,
-        "market": 0.7334,
-        "best_odds": 1.34,
-        "book": "Matchbook",
-        "ev": 0.0333,
-        "kelly": 0.0245
-      },
-      "books": 20,
-      "prices": {
-        "Betclic (FR)": [
-          3.53,
-          1.31
-        ],
-        "Tipico": [
-          3.6,
-          1.25
-        ],
-        "Winamax (DE)": [
-          3.6,
-          1.32
-        ],
-        "Winamax (FR)": [
-          3.5,
-          1.3
-        ],
-        "Nordic Bet": [
-          3.5,
-          1.31
-        ],
-        "1xBet": [
-          3.51,
-          1.31
-        ],
-        "Betsson": [
-          3.5,
-          1.31
-        ],
-        "888sport": [
-          3.5,
-          1.3
-        ],
-        "GTbets": [
-          3.71,
-          1.3
-        ],
-        "William Hill": [
-          3.5,
-          1.3
-        ],
-        "Unibet (FR)": [
-          3.5,
-          1.23
-        ],
-        "LeoVegas (SE)": [
-          3.6,
-          1.29
-        ],
-        "Unibet (NL)": [
-          3.6,
-          1.29
-        ],
-        "PMU (FR)": [
-          3.4,
-          1.24
-        ],
-        "Unibet (SE)": [
-          3.6,
-          1.29
-        ],
-        "Coolbet": [
-          3.55,
-          1.3
-        ],
-        "Pinnacle": [
-          3.63,
-          1.34
-        ],
-        "BetOnline.ag": [
-          3.49,
-          1.32
-        ]
-      },
-      "court": "beijing",
-      "model_version": "2026-10-04",
-      "parts": {
-        "elo": 0.2179,
-        "serve": 0.2423,
-        "w": 0.45
-      },
-      "pinnacle_a": 0.2696,
-      "flags": [],
-      "kalshi": {
-        "a": {
-          "cost": 0.27,
-          "odds": 3.524,
-          "ev": -0.1934,
-          "ticker": "KXWTAMATCH-26OCT06ANNSVI-ANN"
-        },
-        "b": {
-          "cost": 0.75,
-          "odds": 1.31,
-          "ev": 0.0101,
-          "ticker": "KXWTAMATCH-26OCT06ANNSVI-SVI"
-        },
-        "market_a": 0.2624,
-        "event": "KXWTAMATCH-26OCT06ANNSVI",
-        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct06annsvi"
-      }
-    },
     {
       "id": "56cdd8c0fca7ffb399f13d3e090c9dc1",
       "tour": "ATP",
@@ -151,7 +18,7 @@
         "key": "c-ugo-carabelli",
         "model": 0.3891,
         "fair_odds": 2.57,
-        "market": 0.3341,
+        "market": 0.3282,
         "best_odds": 3.05,
         "book": "Matchbook",
         "ev": 0.1869,
@@ -162,17 +29,17 @@
         "key": "i-simakin",
         "model": 0.6109,
         "fair_odds": 1.64,
-        "market": 0.6659,
-        "best_odds": 1.48,
+        "market": 0.6718,
+        "best_odds": 1.47,
         "book": "Matchbook",
-        "ev": -0.0959,
+        "ev": -0.102,
         "kelly": 0.0
       },
-      "books": 15,
+      "books": 16,
       "prices": {
         "Pinnacle": [
-          2.87,
-          1.47
+          2.96,
+          1.45
         ],
         "888sport": [
           2.75,
@@ -187,16 +54,16 @@
           1.4
         ],
         "Winamax (DE)": [
-          2.85,
-          1.46
+          2.95,
+          1.43
         ],
         "Unibet (SE)": [
           2.95,
           1.4
         ],
         "Winamax (FR)": [
-          2.75,
-          1.44
+          2.9,
+          1.41
         ],
         "William Hill": [
           2.75,
@@ -207,20 +74,24 @@
           1.35
         ],
         "BetOnline.ag": [
-          2.84,
-          1.45
+          2.92,
+          1.43
         ],
         "1xBet": [
-          2.84,
-          1.45
+          2.88,
+          1.44
         ],
         "Nordic Bet": [
-          2.8,
-          1.45
+          2.9,
+          1.42
         ],
         "Betsson": [
-          2.8,
-          1.45
+          2.9,
+          1.42
+        ],
+        "BetAnything": [
+          3.0,
+          1.42
         ]
       },
       "court": "shanghai",
@@ -230,7 +101,7 @@
         "serve": 0.2492,
         "w": 0.55
       },
-      "pinnacle_a": 0.3387,
+      "pinnacle_a": 0.3288,
       "flags": [
         [
           "specialist",
@@ -243,9 +114,9 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.34,
-          "odds": 2.811,
-          "ev": 0.0938,
+          "cost": 0.33,
+          "odds": 2.895,
+          "ev": 0.1264,
           "ticker": "KXATPMATCH-26OCT07UGOSIM-UGO"
         },
         "b": {
@@ -254,7 +125,7 @@
           "ev": -0.1215,
           "ticker": "KXATPMATCH-26OCT07UGOSIM-SIM"
         },
-        "market_a": 0.33,
+        "market_a": 0.325,
         "event": "KXATPMATCH-26OCT07UGOSIM",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct07ugosim"
       }
@@ -273,10 +144,10 @@
         "key": "n-borges",
         "model": 0.7457,
         "fair_odds": 1.34,
-        "market": 0.7446,
-        "best_odds": 1.32,
-        "book": "Matchbook",
-        "ev": -0.0157,
+        "market": 0.7398,
+        "best_odds": 1.33,
+        "book": "Pinnacle",
+        "ev": -0.0082,
         "kelly": 0.0
       },
       "b": {
@@ -284,73 +155,73 @@
         "key": "f-diaz-acosta",
         "model": 0.2543,
         "fair_odds": 3.93,
-        "market": 0.2554,
+        "market": 0.2602,
         "best_odds": 3.9,
-        "book": "Matchbook",
+        "book": "Unibet (NL)",
         "ev": -0.0082,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
-          1.24,
-          3.4
+          1.25,
+          3.5
         ],
         "Unibet (NL)": [
-          1.26,
-          3.85
+          1.25,
+          3.9
         ],
         "1xBet": [
-          1.28,
-          3.85
+          1.3,
+          3.65
         ],
         "Unibet (SE)": [
-          1.26,
-          3.85
+          1.25,
+          3.9
         ],
         "Coolbet": [
-          1.28,
-          3.7
+          1.3,
+          3.55
         ],
         "GTbets": [
           1.24,
           3.75
         ],
         "PMU (FR)": [
-          1.22,
-          3.6
+          1.21,
+          3.65
         ],
         "LeoVegas (SE)": [
-          1.26,
-          3.85
+          1.25,
+          3.9
         ],
         "888sport": [
           1.29,
           3.6
         ],
         "Nordic Bet": [
-          1.28,
-          3.75
+          1.3,
+          3.6
         ],
         "Betsson": [
-          1.28,
-          3.75
+          1.3,
+          3.6
         ],
         "Pinnacle": [
-          1.31,
-          3.8
+          1.33,
+          3.58
         ],
         "BetOnline.ag": [
-          1.29,
-          3.68
+          1.32,
+          3.49
         ],
         "Winamax (FR)": [
-          1.27,
-          3.7
+          1.29,
+          3.55
         ],
         "Winamax (DE)": [
-          1.29,
-          3.85
+          1.31,
+          3.7
         ],
         "Tipico": [
           1.27,
@@ -359,6 +230,10 @@
         "William Hill": [
           1.29,
           3.6
+        ],
+        "BetAnything": [
+          1.31,
+          3.5
         ]
       },
       "court": "shanghai",
@@ -368,7 +243,7 @@
         "serve": 0.7249,
         "w": 0.55
       },
-      "pinnacle_a": 0.7436,
+      "pinnacle_a": 0.7291,
       "flags": [
         [
           "surface_few",
@@ -387,12 +262,12 @@
           "ticker": "KXATPMATCH-26OCT06BORDIA-BOR"
         },
         "b": {
-          "cost": 0.25,
-          "odds": 3.8,
-          "ev": -0.0337,
+          "cost": 0.26,
+          "odds": 3.657,
+          "ev": -0.07,
           "ticker": "KXATPMATCH-26OCT06BORDIA-DIA"
         },
-        "market_a": 0.755,
+        "market_a": 0.7475,
         "event": "KXATPMATCH-26OCT06BORDIA",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06bordia"
       }
@@ -411,7 +286,7 @@
         "key": "j-munar",
         "model": 0.6792,
         "fair_odds": 1.47,
-        "market": 0.6119,
+        "market": 0.629,
         "best_odds": 1.58,
         "book": "GTbets",
         "ev": 0.0732,
@@ -422,45 +297,45 @@
         "key": "j-brooksby",
         "model": 0.3208,
         "fair_odds": 3.12,
-        "market": 0.3881,
-        "best_odds": 2.62,
-        "book": "Betfair",
-        "ev": -0.1596,
+        "market": 0.371,
+        "best_odds": 2.77,
+        "book": "BetOnline.ag",
+        "ev": -0.1115,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Nordic Bet": [
-          1.57,
-          2.43
+          1.5,
+          2.6
         ],
         "Unibet (FR)": [
-          1.51,
-          2.3
+          1.46,
+          2.5
         ],
         "Unibet (NL)": [
           1.56,
           2.43
         ],
         "1xBet": [
-          1.57,
-          2.46
+          1.52,
+          2.6
         ],
         "Unibet (SE)": [
           1.56,
           2.43
         ],
         "Betsson": [
-          1.57,
-          2.43
+          1.5,
+          2.6
         ],
         "Coolbet": [
-          1.55,
-          2.47
+          1.5,
+          2.6
         ],
         "GTbets": [
           1.58,
-          2.4
+          2.53
         ],
         "PMU (FR)": [
           1.5,
@@ -475,28 +350,32 @@
           2.5
         ],
         "Pinnacle": [
-          1.57,
-          2.55
+          1.52,
+          2.68
         ],
         "BetOnline.ag": [
-          1.56,
-          2.53
+          1.49,
+          2.77
         ],
         "Winamax (FR)": [
-          1.56,
-          2.4
+          1.49,
+          2.6
         ],
         "Winamax (DE)": [
-          1.58,
-          2.45
+          1.5,
+          2.65
         ],
         "Tipico": [
-          1.52,
-          2.35
+          1.45,
+          2.55
         ],
         "William Hill": [
           1.53,
           2.5
+        ],
+        "BetAnything": [
+          1.5,
+          2.7
         ]
       },
       "court": "shanghai",
@@ -506,22 +385,22 @@
         "serve": 0.6931,
         "w": 0.55
       },
-      "pinnacle_a": 0.6189,
+      "pinnacle_a": 0.6381,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.63,
-          "odds": 1.547,
-          "ev": 0.0507,
+          "cost": 0.66,
+          "odds": 1.48,
+          "ev": 0.0052,
           "ticker": "KXATPMATCH-26OCT06MUNBRO-MUN"
         },
         "b": {
-          "cost": 0.39,
-          "odds": 2.459,
-          "ev": -0.2112,
+          "cost": 0.37,
+          "odds": 2.589,
+          "ev": -0.1694,
           "ticker": "KXATPMATCH-26OCT06MUNBRO-BRO"
         },
-        "market_a": 0.6169,
+        "market_a": 0.6422,
         "event": "KXATPMATCH-26OCT06MUNBRO",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06munbro"
       }
@@ -540,7 +419,7 @@
         "key": "k-coppejans",
         "model": 0.2104,
         "fair_odds": 4.75,
-        "market": 0.114,
+        "market": 0.1141,
         "best_odds": 10.0,
         "book": "Winamax (DE)",
         "ev": 1.1036,
@@ -551,20 +430,20 @@
         "key": "s-tsitsipas",
         "model": 0.7896,
         "fair_odds": 1.27,
-        "market": 0.886,
-        "best_odds": 1.1,
+        "market": 0.8859,
+        "best_odds": 1.11,
         "book": "Matchbook",
-        "ev": -0.1314,
+        "ev": -0.1235,
         "kelly": 0.0
       },
-      "books": 17,
+      "books": 18,
       "prices": {
         "Unibet (FR)": [
-          6.1,
-          1.07
+          7.3,
+          1.05
         ],
         "1xBet": [
-          8.6,
+          8.55,
           1.08
         ],
         "888sport": [
@@ -584,7 +463,7 @@
           1.09
         ],
         "Pinnacle": [
-          9.26,
+          8.63,
           1.08
         ],
         "LeoVegas (SE)": [
@@ -604,8 +483,8 @@
           1.08
         ],
         "BetOnline.ag": [
-          8.9,
-          1.08
+          9.36,
+          1.07
         ],
         "Nordic Bet": [
           8.6,
@@ -618,6 +497,10 @@
         "Betsson": [
           8.6,
           1.07
+        ],
+        "BetAnything": [
+          7.7,
+          1.08
         ]
       },
       "court": "shanghai",
@@ -627,22 +510,22 @@
         "serve": 0.2431,
         "w": 0.55
       },
-      "pinnacle_a": 0.1044,
+      "pinnacle_a": 0.1112,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.1,
-          "odds": 9.407,
-          "ev": 0.9792,
+          "cost": 0.11,
+          "odds": 8.558,
+          "ev": 0.8006,
           "ticker": "KXATPMATCH-26OCT07COPTSI-COP"
         },
         "b": {
-          "cost": 0.91,
-          "odds": 1.092,
-          "ev": -0.1378,
+          "cost": 0.9,
+          "odds": 1.103,
+          "ev": -0.1291,
           "ticker": "KXATPMATCH-26OCT07COPTSI-TSI"
         },
-        "market_a": 0.0955,
+        "market_a": 0.105,
         "event": "KXATPMATCH-26OCT07COPTSI",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct07coptsi"
       }
@@ -661,10 +544,10 @@
         "key": "p-kotov",
         "model": 0.3377,
         "fair_odds": 2.96,
-        "market": 0.3452,
-        "best_odds": 2.86,
-        "book": "Pinnacle",
-        "ev": -0.0342,
+        "market": 0.3455,
+        "best_odds": 2.94,
+        "book": "Betfair",
+        "ev": -0.0072,
         "kelly": 0.0
       },
       "b": {
@@ -672,17 +555,17 @@
         "key": "t-griekspoor",
         "model": 0.6623,
         "fair_odds": 1.51,
-        "market": 0.6548,
+        "market": 0.6545,
         "best_odds": 1.51,
         "book": "Matchbook",
         "ev": 0.0001,
         "kelly": 0.0
       },
-      "books": 18,
+      "books": 19,
       "prices": {
         "Unibet (FR)": [
           2.6,
-          1.4
+          1.41
         ],
         "Winamax (FR)": [
           2.75,
@@ -705,12 +588,12 @@
           1.44
         ],
         "Coolbet": [
-          2.78,
-          1.45
+          2.7,
+          1.47
         ],
         "Pinnacle": [
-          2.86,
-          1.47
+          2.83,
+          1.48
         ],
         "LeoVegas (SE)": [
           2.7,
@@ -729,8 +612,8 @@
           1.45
         ],
         "BetOnline.ag": [
-          2.84,
-          1.45
+          2.8,
+          1.48
         ],
         "Nordic Bet": [
           2.75,
@@ -743,6 +626,10 @@
         "William Hill": [
           2.75,
           1.44
+        ],
+        "BetAnything": [
+          2.8,
+          1.45
         ]
       },
       "court": "shanghai",
@@ -752,7 +639,7 @@
         "serve": 0.396,
         "w": 0.55
       },
-      "pinnacle_a": 0.3395,
+      "pinnacle_a": 0.3434,
       "flags": [
         [
           "thin",
@@ -761,9 +648,9 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.34,
-          "odds": 2.811,
-          "ev": -0.0507,
+          "cost": 0.35,
+          "odds": 2.733,
+          "ev": -0.0771,
           "ticker": "KXATPMATCH-26OCT07KOTGRI-KOT"
         },
         "b": {
@@ -772,7 +659,7 @@
           "ev": -0.0337,
           "ticker": "KXATPMATCH-26OCT07KOTGRI-GRI"
         },
-        "market_a": 0.335,
+        "market_a": 0.34,
         "event": "KXATPMATCH-26OCT07KOTGRI",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct07kotgri"
       }
@@ -791,24 +678,24 @@
         "key": "d-vallejo",
         "model": 0.6467,
         "fair_odds": 1.55,
-        "market": 0.556,
-        "best_odds": 1.75,
-        "book": "Matchbook",
-        "ev": 0.1318,
-        "kelly": 0.0439
+        "market": 0.5496,
+        "best_odds": 1.84,
+        "book": "Betfair",
+        "ev": 0.19,
+        "kelly": 0.0565
       },
       "b": {
         "name": "Valentin Royer",
         "key": "v-royer",
         "model": 0.3533,
         "fair_odds": 2.83,
-        "market": 0.444,
-        "best_odds": 2.26,
-        "book": "Matchbook",
-        "ev": -0.2016,
+        "market": 0.4504,
+        "best_odds": 2.17,
+        "book": "Unibet (NL)",
+        "ev": -0.2334,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
           1.71,
@@ -819,16 +706,16 @@
           2.17
         ],
         "1xBet": [
-          1.72,
-          2.18
+          1.76,
+          2.11
         ],
         "Unibet (SE)": [
           1.68,
           2.17
         ],
         "Coolbet": [
-          1.7,
-          2.17
+          1.73,
+          2.12
         ],
         "GTbets": [
           1.73,
@@ -855,12 +742,12 @@
           2.1
         ],
         "Pinnacle": [
-          1.73,
-          2.22
+          1.78,
+          2.14
         ],
         "BetOnline.ag": [
-          1.74,
-          2.16
+          1.78,
+          2.09
         ],
         "Winamax (FR)": [
           1.72,
@@ -877,6 +764,10 @@
         "William Hill": [
           1.73,
           2.1
+        ],
+        "BetAnything": [
+          1.77,
+          2.0
         ]
       },
       "court": "shanghai",
@@ -886,22 +777,22 @@
         "serve": 0.5831,
         "w": 0.55
       },
-      "pinnacle_a": 0.562,
+      "pinnacle_a": 0.5459,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.56,
-          "odds": 1.732,
-          "ev": 0.1201,
+          "cost": 0.55,
+          "odds": 1.763,
+          "ev": 0.1401,
           "ticker": "KXATPMATCH-26OCT06VALROY-VAL"
         },
         "b": {
-          "cost": 0.45,
-          "odds": 2.14,
-          "ev": -0.2439,
+          "cost": 0.46,
+          "odds": 2.095,
+          "ev": -0.2598,
           "ticker": "KXATPMATCH-26OCT06VALROY-ROY"
         },
-        "market_a": 0.555,
+        "market_a": 0.5427,
         "event": "KXATPMATCH-26OCT06VALROY",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06valroy"
       }
@@ -920,28 +811,28 @@
         "key": "b-tomic",
         "model": 0.4978,
         "fair_odds": 2.01,
-        "market": 0.3421,
-        "best_odds": 2.96,
+        "market": 0.3396,
+        "best_odds": 3.05,
         "book": "Matchbook",
-        "ev": 0.4735,
-        "kelly": 0.0604
+        "ev": 0.5183,
+        "kelly": 0.0632
       },
       "b": {
         "name": "Matteo Arnaldi",
         "key": "m-arnaldi",
         "model": 0.5022,
         "fair_odds": 1.99,
-        "market": 0.6579,
-        "best_odds": 1.53,
-        "book": "GTbets",
-        "ev": -0.2316,
+        "market": 0.6604,
+        "best_odds": 1.48,
+        "book": "Matchbook",
+        "ev": -0.2568,
         "kelly": 0.0
       },
-      "books": 16,
+      "books": 17,
       "prices": {
         "GTbets": [
-          2.68,
-          1.53
+          2.69,
+          1.45
         ],
         "1xBet": [
           2.8,
@@ -956,15 +847,15 @@
           1.44
         ],
         "Winamax (DE)": [
-          2.85,
-          1.46
+          2.8,
+          1.48
         ],
         "Winamax (FR)": [
-          2.8,
-          1.43
+          2.7,
+          1.46
         ],
         "Pinnacle": [
-          2.92,
+          2.9,
           1.46
         ],
         "LeoVegas (SE)": [
@@ -984,16 +875,20 @@
           1.43
         ],
         "BetOnline.ag": [
-          2.84,
+          2.86,
           1.45
         ],
         "Nordic Bet": [
-          2.7,
-          1.47
+          2.8,
+          1.44
         ],
         "Betsson": [
-          2.7,
-          1.47
+          2.8,
+          1.44
+        ],
+        "BetAnything": [
+          2.85,
+          1.44
         ]
       },
       "court": "shanghai",
@@ -1003,7 +898,7 @@
         "serve": 0.5441,
         "w": 0.55
       },
-      "pinnacle_a": 0.3333,
+      "pinnacle_a": 0.3349,
       "flags": [
         [
           "disagree",
@@ -1018,12 +913,12 @@
           "ticker": "KXATPMATCH-26OCT07TOMARN-TOM"
         },
         "b": {
-          "cost": 0.68,
-          "odds": 1.438,
-          "ev": -0.2778,
+          "cost": 0.67,
+          "odds": 1.459,
+          "ev": -0.2673,
           "ticker": "KXATPMATCH-26OCT07TOMARN-ARN"
         },
-        "market_a": 0.33,
+        "market_a": 0.3317,
         "event": "KXATPMATCH-26OCT07TOMARN",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct07tomarn"
       }
@@ -1042,44 +937,44 @@
         "key": "t-a-tirante",
         "model": 0.6598,
         "fair_odds": 1.52,
-        "market": 0.5637,
-        "best_odds": 1.75,
-        "book": "Matchbook",
-        "ev": 0.1547,
-        "kelly": 0.0516
+        "market": 0.5684,
+        "best_odds": 1.77,
+        "book": "Betfair",
+        "ev": 0.1679,
+        "kelly": 0.0545
       },
       "b": {
         "name": "Hamad Medjedovic",
         "key": "h-medjedovic",
         "model": 0.3402,
         "fair_odds": 2.94,
-        "market": 0.4363,
-        "best_odds": 2.3,
+        "market": 0.4316,
+        "best_odds": 2.28,
         "book": "Matchbook",
-        "ev": -0.2176,
+        "ev": -0.2244,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
           1.6,
-          2.1
+          2.15
         ],
         "Unibet (NL)": [
           1.67,
           2.2
         ],
         "1xBet": [
-          1.69,
-          2.22
+          1.68,
+          2.23
         ],
         "Unibet (SE)": [
           1.67,
           2.2
         ],
         "Coolbet": [
-          1.7,
-          2.17
+          1.68,
+          2.2
         ],
         "GTbets": [
           1.67,
@@ -1102,16 +997,16 @@
           2.2
         ],
         "888sport": [
-          1.73,
-          2.1
-        ],
-        "Pinnacle": [
-          1.74,
+          1.67,
           2.2
         ],
+        "Pinnacle": [
+          1.7,
+          2.27
+        ],
         "BetOnline.ag": [
-          1.74,
-          2.16
+          1.68,
+          2.27
         ],
         "Winamax (FR)": [
           1.68,
@@ -1126,8 +1021,12 @@
           2.15
         ],
         "William Hill": [
-          1.73,
-          2.1
+          1.67,
+          2.2
+        ],
+        "BetAnything": [
+          1.67,
+          2.2
         ]
       },
       "court": "shanghai",
@@ -1137,22 +1036,22 @@
         "serve": 0.6891,
         "w": 0.55
       },
-      "pinnacle_a": 0.5584,
+      "pinnacle_a": 0.5718,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.58,
-          "odds": 1.675,
-          "ev": 0.1052,
+          "cost": 0.57,
+          "odds": 1.703,
+          "ev": 0.1236,
           "ticker": "KXATPMATCH-26OCT06TIRMED-TIR"
         },
         "b": {
-          "cost": 0.42,
-          "odds": 2.288,
-          "ev": -0.2216,
+          "cost": 0.43,
+          "odds": 2.236,
+          "ev": -0.2393,
           "ticker": "KXATPMATCH-26OCT06TIRMED-MED"
         },
-        "market_a": 0.5808,
+        "market_a": 0.5707,
         "event": "KXATPMATCH-26OCT06TIRMED",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06tirmed"
       }
@@ -1171,24 +1070,24 @@
         "key": "h-hurkacz",
         "model": 0.7672,
         "fair_odds": 1.3,
-        "market": 0.6674,
-        "best_odds": 1.5,
-        "book": "Matchbook",
-        "ev": 0.1507,
-        "kelly": 0.0754
+        "market": 0.6826,
+        "best_odds": 1.43,
+        "book": "LeoVegas (SE)",
+        "ev": 0.097,
+        "kelly": 0.0564
       },
       "b": {
         "name": "James Duckworth",
         "key": "j-duckworth",
         "model": 0.2328,
         "fair_odds": 4.29,
-        "market": 0.3326,
-        "best_odds": 2.98,
-        "book": "Matchbook",
-        "ev": -0.3061,
+        "market": 0.3174,
+        "best_odds": 3.3,
+        "book": "Betfair",
+        "ev": -0.2316,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "LeoVegas (SE)": [
           1.43,
@@ -1203,60 +1102,64 @@
           2.85
         ],
         "Unibet (FR)": [
-          1.37,
-          2.7
+          1.35,
+          2.9
         ],
         "Betsson": [
-          1.42,
-          2.9
+          1.38,
+          3.05
         ],
         "PMU (FR)": [
           1.38,
           2.7
         ],
         "Nordic Bet": [
-          1.42,
-          2.9
+          1.38,
+          3.05
         ],
         "Coolbet": [
-          1.43,
-          2.85
+          1.4,
+          3.0
         ],
         "GTbets": [
           1.39,
           2.94
         ],
         "1xBet": [
-          1.44,
-          2.88
+          1.42,
+          2.96
         ],
         "888sport": [
-          1.4,
-          2.9
+          1.36,
+          3.1
         ],
         "Pinnacle": [
-          1.46,
-          2.9
+          1.42,
+          3.1
         ],
         "BetOnline.ag": [
-          1.45,
-          2.86
+          1.4,
+          3.03
         ],
         "Winamax (FR)": [
-          1.44,
-          2.8
+          1.4,
+          2.95
         ],
         "Winamax (DE)": [
-          1.46,
-          2.85
+          1.42,
+          3.05
         ],
         "Tipico": [
-          1.37,
-          2.85
+          1.35,
+          2.95
         ],
         "William Hill": [
-          1.4,
-          2.9
+          1.36,
+          3.1
+        ],
+        "BetAnything": [
+          1.38,
+          3.1
         ]
       },
       "court": "shanghai",
@@ -1266,7 +1169,7 @@
         "serve": 0.7447,
         "w": 0.55
       },
-      "pinnacle_a": 0.6651,
+      "pinnacle_a": 0.6858,
       "flags": [
         [
           "retired",
@@ -1279,18 +1182,18 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.68,
-          "odds": 1.438,
-          "ev": 0.1032,
+          "cost": 0.7,
+          "odds": 1.399,
+          "ev": 0.0733,
           "ticker": "KXATPMATCH-26OCT06HURDUC-HUR"
         },
         "b": {
-          "cost": 0.33,
-          "odds": 2.895,
-          "ev": -0.326,
+          "cost": 0.31,
+          "odds": 3.077,
+          "ev": -0.2837,
           "ticker": "KXATPMATCH-26OCT06HURDUC-DUC"
         },
-        "market_a": 0.675,
+        "market_a": 0.695,
         "event": "KXATPMATCH-26OCT06HURDUC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06hurduc"
       }
@@ -1309,10 +1212,10 @@
         "key": "m-navone",
         "model": 0.5403,
         "fair_odds": 1.85,
-        "market": 0.5473,
-        "best_odds": 1.81,
+        "market": 0.5687,
+        "best_odds": 1.73,
         "book": "Betfair",
-        "ev": -0.0221,
+        "ev": -0.0653,
         "kelly": 0.0
       },
       "b": {
@@ -1320,81 +1223,85 @@
         "key": "p-carreno-busta",
         "model": 0.4597,
         "fair_odds": 2.18,
-        "market": 0.4527,
-        "best_odds": 2.24,
+        "market": 0.4313,
+        "best_odds": 2.4,
         "book": "BetOnline.ag",
-        "ev": 0.0298,
-        "kelly": 0.006
+        "ev": 0.1034,
+        "kelly": 0.0185
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
-          1.67,
-          1.99
+          1.63,
+          2.1
         ],
         "Unibet (NL)": [
-          1.74,
-          2.08
-        ],
-        "1xBet": [
-          1.74,
-          2.14
-        ],
-        "Unibet (SE)": [
-          1.74,
-          2.08
-        ],
-        "Coolbet": [
-          1.73,
-          2.12
-        ],
-        "GTbets": [
-          1.79,
-          2.04
-        ],
-        "PMU (FR)": [
-          1.67,
-          2.0
-        ],
-        "LeoVegas (SE)": [
-          1.74,
-          2.08
-        ],
-        "888sport": [
-          1.73,
-          2.1
-        ],
-        "Betsson": [
-          1.75,
-          2.09
-        ],
-        "Nordic Bet": [
-          1.75,
-          2.09
-        ],
-        "Pinnacle": [
-          1.76,
+          1.68,
           2.18
         ],
-        "BetOnline.ag": [
+        "1xBet": [
+          1.68,
+          2.23
+        ],
+        "Unibet (SE)": [
+          1.68,
+          2.18
+        ],
+        "Coolbet": [
+          1.66,
+          2.23
+        ],
+        "GTbets": [
+          1.68,
+          2.16
+        ],
+        "PMU (FR)": [
+          1.62,
+          2.08
+        ],
+        "LeoVegas (SE)": [
+          1.68,
+          2.18
+        ],
+        "888sport": [
+          1.67,
+          2.2
+        ],
+        "Betsson": [
+          1.68,
+          2.2
+        ],
+        "Nordic Bet": [
+          1.68,
+          2.2
+        ],
+        "Pinnacle": [
           1.69,
-          2.24
+          2.28
+        ],
+        "BetOnline.ag": [
+          1.62,
+          2.4
         ],
         "Winamax (FR)": [
-          1.74,
-          2.05
+          1.68,
+          2.15
         ],
         "Winamax (DE)": [
-          1.76,
-          2.1
+          1.7,
+          2.2
         ],
         "Tipico": [
           1.7,
           2.05
         ],
         "William Hill": [
-          1.73,
-          2.1
+          1.67,
+          2.2
+        ],
+        "BetAnything": [
+          1.67,
+          2.3
         ]
       },
       "court": "shanghai",
@@ -1404,7 +1311,7 @@
         "serve": 0.5768,
         "w": 0.55
       },
-      "pinnacle_a": 0.5533,
+      "pinnacle_a": 0.5743,
       "flags": [
         [
           "specialist",
@@ -1417,18 +1324,18 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.56,
-          "odds": 1.732,
-          "ev": -0.0642,
+          "cost": 0.59,
+          "odds": 1.648,
+          "ev": -0.1096,
           "ticker": "KXATPMATCH-26OCT06NAVCAR-NAV"
         },
         "b": {
-          "cost": 0.45,
-          "odds": 2.14,
-          "ev": -0.0162,
+          "cost": 0.43,
+          "odds": 2.236,
+          "ev": 0.0279,
           "ticker": "KXATPMATCH-26OCT06NAVCAR-CAR"
         },
-        "market_a": 0.555,
+        "market_a": 0.5792,
         "event": "KXATPMATCH-26OCT06NAVCAR",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06navcar"
       }
@@ -1447,10 +1354,10 @@
         "key": "f-marozsan",
         "model": 0.5249,
         "fair_odds": 1.91,
-        "market": 0.5241,
-        "best_odds": 1.88,
-        "book": "BetOnline.ag",
-        "ev": -0.0132,
+        "market": 0.5446,
+        "best_odds": 1.81,
+        "book": "GTbets",
+        "ev": -0.0499,
         "kelly": 0.0
       },
       "b": {
@@ -1458,33 +1365,33 @@
         "key": "z-svajda",
         "model": 0.4751,
         "fair_odds": 2.1,
-        "market": 0.4759,
-        "best_odds": 2.12,
+        "market": 0.4554,
+        "best_odds": 2.22,
         "book": "Matchbook",
-        "ev": 0.0072,
-        "kelly": 0.0016
+        "ev": 0.0547,
+        "kelly": 0.0112
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
-          1.78,
-          1.86
+          1.68,
+          2.0
         ],
         "Unibet (NL)": [
           1.78,
           2.02
         ],
         "1xBet": [
-          1.85,
-          2.0
+          1.75,
+          2.12
         ],
         "Unibet (SE)": [
           1.78,
           2.02
         ],
         "Coolbet": [
-          1.82,
-          2.0
+          1.75,
+          2.1
         ],
         "GTbets": [
           1.81,
@@ -1499,40 +1406,44 @@
           2.02
         ],
         "888sport": [
-          1.8,
-          2.0
+          1.73,
+          2.1
         ],
         "Pinnacle": [
-          1.83,
-          2.07
+          1.76,
+          2.17
         ],
         "BetOnline.ag": [
-          1.88,
-          1.94
+          1.74,
+          2.16
         ],
         "Nordic Bet": [
-          1.86,
-          1.95
+          1.74,
+          2.1
         ],
         "Betsson": [
-          1.86,
-          1.95
+          1.74,
+          2.1
         ],
         "Winamax (FR)": [
-          1.8,
-          2.0
+          1.72,
+          2.1
         ],
         "Winamax (DE)": [
-          1.84,
-          2.0
+          1.76,
+          2.15
         ],
         "Tipico": [
-          1.75,
-          1.95
+          1.7,
+          2.05
         ],
         "William Hill": [
-          1.8,
-          2.0
+          1.73,
+          2.1
+        ],
+        "BetAnything": [
+          1.71,
+          2.1
         ]
       },
       "court": "shanghai",
@@ -1542,22 +1453,22 @@
         "serve": 0.5124,
         "w": 0.55
       },
-      "pinnacle_a": 0.5308,
+      "pinnacle_a": 0.5522,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.53,
-          "odds": 1.827,
-          "ev": -0.041,
+          "cost": 0.56,
+          "odds": 1.732,
+          "ev": -0.0909,
           "ticker": "KXATPMATCH-26OCT06MARSVA-MAR"
         },
         "b": {
-          "cost": 0.48,
-          "odds": 2.01,
-          "ev": -0.045,
+          "cost": 0.46,
+          "odds": 2.095,
+          "ev": -0.0047,
           "ticker": "KXATPMATCH-26OCT06MARSVA-SVA"
         },
-        "market_a": 0.5276,
+        "market_a": 0.5495,
         "event": "KXATPMATCH-26OCT06MARSVA",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06marsva"
       }
@@ -1576,10 +1487,10 @@
         "key": "m-landaluce",
         "model": 0.4316,
         "fair_odds": 2.32,
-        "market": 0.517,
-        "best_odds": 1.96,
+        "market": 0.5044,
+        "best_odds": 2.02,
         "book": "Betfair",
-        "ev": -0.154,
+        "ev": -0.1281,
         "kelly": 0.0
       },
       "b": {
@@ -1587,81 +1498,85 @@
         "key": "j-l-struff",
         "model": 0.5684,
         "fair_odds": 1.76,
-        "market": 0.483,
-        "best_odds": 2.02,
-        "book": "Unibet (NL)",
-        "ev": 0.1481,
-        "kelly": 0.0363
+        "market": 0.4956,
+        "best_odds": 2.0,
+        "book": "GTbets",
+        "ev": 0.1367,
+        "kelly": 0.0342
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
-          1.75,
+          1.81,
           1.86
         ],
         "Unibet (NL)": [
-          1.79,
-          2.02
+          1.85,
+          1.95
         ],
         "1xBet": [
-          1.85,
-          2.0
+          1.92,
+          1.93
         ],
         "Unibet (SE)": [
-          1.79,
-          2.02
+          1.85,
+          1.95
         ],
         "Coolbet": [
-          1.85,
-          1.96
+          1.89,
+          1.92
         ],
         "GTbets": [
           1.81,
           2.0
         ],
         "PMU (FR)": [
-          1.71,
-          1.93
+          1.77,
+          1.87
         ],
         "LeoVegas (SE)": [
-          1.79,
-          2.02
+          1.85,
+          1.95
         ],
         "Betsson": [
-          1.84,
-          1.97
+          1.88,
+          1.93
         ],
         "Nordic Bet": [
-          1.84,
-          1.97
+          1.88,
+          1.93
         ],
         "888sport": [
-          1.85,
-          1.95
+          1.91,
+          1.91
         ],
         "Pinnacle": [
-          1.88,
-          2.0
-        ],
-        "BetOnline.ag": [
-          1.86,
-          1.96
-        ],
-        "Winamax (FR)": [
-          1.86,
+          1.94,
           1.94
         ],
-        "Winamax (DE)": [
+        "BetOnline.ag": [
+          1.91,
+          1.91
+        ],
+        "Winamax (FR)": [
           1.88,
-          1.98
+          1.92
+        ],
+        "Winamax (DE)": [
+          1.9,
+          1.96
         ],
         "Tipico": [
-          1.85,
-          1.85
+          1.9,
+          1.8
         ],
         "William Hill": [
-          1.85,
-          1.95
+          1.91,
+          1.91
+        ],
+        "BetAnything": [
+          1.87,
+          1.87
         ]
       },
       "court": "shanghai",
@@ -1671,22 +1586,22 @@
         "serve": 0.4284,
         "w": 0.55
       },
-      "pinnacle_a": 0.5155,
+      "pinnacle_a": 0.5,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.52,
-          "odds": 1.861,
-          "ev": -0.1968,
+          "cost": 0.51,
+          "odds": 1.896,
+          "ev": -0.1817,
           "ticker": "KXATPMATCH-26OCT06LANSTR-LAN"
         },
         "b": {
-          "cost": 0.49,
-          "odds": 1.97,
-          "ev": 0.1197,
+          "cost": 0.5,
+          "odds": 1.932,
+          "ev": 0.0981,
           "ticker": "KXATPMATCH-26OCT06LANSTR-STR"
         },
-        "market_a": 0.5126,
+        "market_a": 0.505,
         "event": "KXATPMATCH-26OCT06LANSTR",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06lanstr"
       }
@@ -1705,7 +1620,7 @@
         "key": "j-m-cerundolo",
         "model": 0.5829,
         "fair_odds": 1.72,
-        "market": 0.6498,
+        "market": 0.6502,
         "best_odds": 1.5,
         "book": "William Hill",
         "ev": -0.1257,
@@ -1716,33 +1631,33 @@
         "key": "n-mejia",
         "model": 0.4171,
         "fair_odds": 2.4,
-        "market": 0.3502,
+        "market": 0.3498,
         "best_odds": 3.0,
         "book": "Matchbook",
         "ev": 0.2514,
         "kelly": 0.0314
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
           1.41,
-          2.55
-        ],
-        "Winamax (FR)": [
-          1.47,
           2.65
         ],
+        "Winamax (FR)": [
+          1.46,
+          2.7
+        ],
         "Winamax (DE)": [
-          1.49,
-          2.75
+          1.48,
+          2.8
         ],
         "1xBet": [
           1.48,
           2.73
         ],
         "Tipico": [
-          1.42,
-          2.65
+          1.4,
+          2.7
         ],
         "GTbets": [
           1.45,
@@ -1762,35 +1677,39 @@
         ],
         "Pinnacle": [
           1.48,
-          2.84
+          2.82
         ],
         "PMU (FR)": [
-          1.41,
-          2.6
+          1.43,
+          2.5
         ],
         "Unibet (SE)": [
-          1.45,
-          2.7
+          1.48,
+          2.63
         ],
         "Unibet (NL)": [
-          1.45,
-          2.7
+          1.48,
+          2.63
         ],
         "LeoVegas (SE)": [
-          1.45,
-          2.7
+          1.48,
+          2.63
         ],
         "BetOnline.ag": [
-          1.48,
-          2.8
+          1.47,
+          2.83
         ],
         "Betsson": [
-          1.48,
-          2.7
+          1.46,
+          2.75
         ],
         "Nordic Bet": [
-          1.48,
-          2.7
+          1.46,
+          2.75
+        ],
+        "BetAnything": [
+          1.45,
+          2.8
         ]
       },
       "court": "shanghai",
@@ -1800,7 +1719,7 @@
         "serve": 0.6154,
         "w": 0.55
       },
-      "pinnacle_a": 0.6574,
+      "pinnacle_a": 0.6558,
       "flags": [
         [
           "specialist",
@@ -1839,44 +1758,44 @@
         "key": "m-giron",
         "model": 0.5186,
         "fair_odds": 1.93,
-        "market": 0.4529,
-        "best_odds": 2.2,
-        "book": "Matchbook",
-        "ev": 0.141,
-        "kelly": 0.0294
+        "market": 0.4582,
+        "best_odds": 2.15,
+        "book": "Winamax (DE)",
+        "ev": 0.115,
+        "kelly": 0.025
       },
       "b": {
         "name": "Sebastian Baez",
         "key": "s-baez",
         "model": 0.4814,
         "fair_odds": 2.08,
-        "market": 0.5471,
-        "best_odds": 1.81,
-        "book": "GTbets",
-        "ev": -0.1287,
+        "market": 0.5418,
+        "best_odds": 1.87,
+        "book": "Betfair",
+        "ev": -0.0998,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
           2.0,
-          1.67
+          1.68
         ],
         "Unibet (NL)": [
           2.1,
           1.73
         ],
         "1xBet": [
-          2.11,
-          1.76
+          2.09,
+          1.77
         ],
         "Unibet (SE)": [
           2.1,
           1.73
         ],
         "Coolbet": [
-          2.1,
-          1.75
+          2.08,
+          1.76
         ],
         "GTbets": [
           2.01,
@@ -1903,12 +1822,12 @@
           1.74
         ],
         "Pinnacle": [
-          2.16,
-          1.76
+          2.09,
+          1.82
         ],
         "BetOnline.ag": [
-          2.16,
-          1.74
+          2.02,
+          1.82
         ],
         "Winamax (FR)": [
           2.1,
@@ -1925,6 +1844,10 @@
         "William Hill": [
           2.1,
           1.73
+        ],
+        "BetAnything": [
+          2.0,
+          1.77
         ]
       },
       "court": "shanghai",
@@ -1934,7 +1857,7 @@
         "serve": 0.6038,
         "w": 0.55
       },
-      "pinnacle_a": 0.449,
+      "pinnacle_a": 0.4655,
       "flags": [
         [
           "retired",
@@ -1973,24 +1896,24 @@
         "key": "k-muchova",
         "model": 0.7413,
         "fair_odds": 1.35,
-        "market": 0.6799,
-        "best_odds": 1.44,
+        "market": 0.6937,
+        "best_odds": 1.4,
         "book": "Betfair",
-        "ev": 0.0674,
-        "kelly": 0.0383
+        "ev": 0.0378,
+        "kelly": 0.0236
       },
       "b": {
         "name": "Nikola Bartunkova",
         "key": "n-bartunkova",
         "model": 0.2587,
         "fair_odds": 3.87,
-        "market": 0.3201,
-        "best_odds": 3.2,
+        "market": 0.3063,
+        "best_odds": 3.4,
         "book": "Betfair",
-        "ev": -0.1721,
+        "ev": -0.1204,
         "kelly": 0.0
       },
-      "books": 20,
+      "books": 21,
       "prices": {
         "PMU (FR)": [
           1.35,
@@ -2009,60 +1932,64 @@
           2.95
         ],
         "1xBet": [
-          1.41,
-          2.95
+          1.38,
+          3.12
         ],
         "GTbets": [
           1.38,
           2.99
         ],
         "William Hill": [
-          1.4,
-          2.9
-        ],
-        "888sport": [
-          1.4,
-          2.9
-        ],
-        "Unibet (FR)": [
           1.36,
-          2.75
-        ],
-        "Betclic (FR)": [
-          1.39,
-          2.95
-        ],
-        "Betsson": [
-          1.4,
-          3.0
-        ],
-        "Nordic Bet": [
-          1.4,
-          3.0
-        ],
-        "Winamax (FR)": [
-          1.39,
-          2.95
-        ],
-        "Winamax (DE)": [
-          1.41,
-          3.05
-        ],
-        "Tipico": [
-          1.4,
-          2.9
-        ],
-        "Pinnacle": [
-          1.43,
           3.1
         ],
+        "888sport": [
+          1.36,
+          3.1
+        ],
+        "Unibet (FR)": [
+          1.33,
+          2.9
+        ],
+        "Betclic (FR)": [
+          1.37,
+          3.15
+        ],
+        "Betsson": [
+          1.37,
+          3.15
+        ],
+        "Nordic Bet": [
+          1.37,
+          3.15
+        ],
+        "Winamax (FR)": [
+          1.36,
+          3.1
+        ],
+        "Winamax (DE)": [
+          1.38,
+          3.2
+        ],
+        "Tipico": [
+          1.33,
+          3.2
+        ],
+        "Pinnacle": [
+          1.39,
+          3.27
+        ],
         "Coolbet": [
-          1.4,
-          3.0
+          1.37,
+          3.1
         ],
         "BetOnline.ag": [
-          1.41,
-          3.03
+          1.37,
+          3.22
+        ],
+        "BetAnything": [
+          1.37,
+          3.2
         ]
       },
       "court": "beijing",
@@ -2072,22 +1999,22 @@
         "serve": 0.6999,
         "w": 0.45
       },
-      "pinnacle_a": 0.6843,
+      "pinnacle_a": 0.7017,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.69,
-          "odds": 1.418,
-          "ev": 0.0512,
+          "cost": 0.71,
+          "odds": 1.38,
+          "ev": 0.023,
           "ticker": "KXWTAMATCH-26OCT07MUCBAR-MUC"
         },
         "b": {
-          "cost": 0.32,
-          "odds": 2.983,
-          "ev": -0.2283,
+          "cost": 0.29,
+          "odds": 3.285,
+          "ev": -0.1502,
           "ticker": "KXWTAMATCH-26OCT07MUCBAR-BAR"
         },
-        "market_a": 0.6884,
+        "market_a": 0.7121,
         "event": "KXWTAMATCH-26OCT07MUCBAR",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct07mucbar"
       }
@@ -2106,10 +2033,10 @@
         "key": "b-van-de-zandschulp",
         "model": 0.4566,
         "fair_odds": 2.19,
-        "market": 0.4884,
-        "best_odds": 2.02,
-        "book": "Matchbook",
-        "ev": -0.0776,
+        "market": 0.4965,
+        "best_odds": 2.0,
+        "book": "GTbets",
+        "ev": -0.0867,
         "kelly": 0.0
       },
       "b": {
@@ -2117,33 +2044,33 @@
         "key": "d-merida-aguilar",
         "model": 0.5434,
         "fair_odds": 1.84,
-        "market": 0.5116,
-        "best_odds": 1.94,
-        "book": "Matchbook",
-        "ev": 0.0541,
-        "kelly": 0.0144
+        "market": 0.5035,
+        "best_odds": 2.0,
+        "book": "Betfair",
+        "ev": 0.0867,
+        "kelly": 0.0217
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
-          1.85,
-          1.79
+          1.84,
+          1.83
         ],
         "Unibet (NL)": [
           1.94,
           1.85
         ],
         "1xBet": [
-          1.97,
-          1.88
+          1.95,
+          1.9
         ],
         "Unibet (SE)": [
           1.94,
           1.85
         ],
         "Coolbet": [
-          1.95,
-          1.87
+          1.91,
+          1.91
         ],
         "GTbets": [
           2.0,
@@ -2158,40 +2085,44 @@
           1.85
         ],
         "888sport": [
-          1.95,
-          1.85
+          1.85,
+          1.95
         ],
         "Betsson": [
-          1.94,
-          1.87
+          1.91,
+          1.9
         ],
         "Nordic Bet": [
-          1.94,
-          1.87
+          1.91,
+          1.9
         ],
         "Pinnacle": [
-          1.97,
-          1.92
+          1.93,
+          1.96
         ],
         "BetOnline.ag": [
           1.91,
           1.91
         ],
         "Winamax (FR)": [
-          1.94,
-          1.86
+          1.9,
+          1.88
         ],
         "Winamax (DE)": [
-          1.96,
-          1.9
+          1.94,
+          1.92
         ],
         "Tipico": [
-          1.95,
-          1.75
+          1.9,
+          1.8
         ],
         "William Hill": [
-          1.95,
-          1.85
+          1.85,
+          1.95
+        ],
+        "BetAnything": [
+          1.91,
+          1.91
         ]
       },
       "court": "shanghai",
@@ -2201,7 +2132,7 @@
         "serve": 0.4979,
         "w": 0.55
       },
-      "pinnacle_a": 0.4936,
+      "pinnacle_a": 0.5039,
       "flags": [
         [
           "specialist",
@@ -2223,24 +2154,24 @@
         "key": "v-kopriva",
         "model": 0.332,
         "fair_odds": 3.01,
-        "market": 0.3016,
-        "best_odds": 3.3,
-        "book": "Matchbook",
-        "ev": 0.0957,
-        "kelly": 0.0104
+        "market": 0.3007,
+        "best_odds": 3.45,
+        "book": "Betfair",
+        "ev": 0.1455,
+        "kelly": 0.0148
       },
       "b": {
         "name": "Zizou Bergs",
         "key": "z-bergs",
         "model": 0.668,
         "fair_odds": 1.5,
-        "market": 0.6984,
+        "market": 0.6993,
         "best_odds": 1.4,
         "book": "888sport",
         "ev": -0.0648,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Nordic Bet": [
           3.2,
@@ -2255,8 +2186,8 @@
           1.36
         ],
         "1xBet": [
-          3.22,
-          1.37
+          3.17,
+          1.38
         ],
         "Unibet (SE)": [
           3.15,
@@ -2291,8 +2222,8 @@
           1.39
         ],
         "BetOnline.ag": [
-          3.22,
-          1.37
+          3.26,
+          1.36
         ],
         "Winamax (FR)": [
           3.2,
@@ -2309,6 +2240,10 @@
         "William Hill": [
           2.9,
           1.4
+        ],
+        "BetAnything": [
+          3.25,
+          1.36
         ]
       },
       "court": "shanghai",
@@ -2333,7 +2268,7 @@
           "ev": -0.0902,
           "ticker": "KXATPMATCH-26OCT06KOPBER-BER"
         },
-        "market_a": 0.29,
+        "market_a": 0.2886,
         "event": "KXATPMATCH-26OCT06KOPBER",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct06kopber"
       }
@@ -2352,48 +2287,48 @@
         "key": "l-van-assche",
         "model": 0.4721,
         "fair_odds": 2.12,
-        "market": 0.4116,
-        "best_odds": 2.4,
-        "book": "GTbets",
-        "ev": 0.1331,
-        "kelly": 0.0238
+        "market": 0.4189,
+        "best_odds": 2.42,
+        "book": "Betfair",
+        "ev": 0.1426,
+        "kelly": 0.0251
       },
       "b": {
         "name": "Bu Yunchaokete",
         "key": "y-bu",
         "model": 0.5279,
         "fair_odds": 1.89,
-        "market": 0.5884,
-        "best_odds": 1.7,
-        "book": "Matchbook",
-        "ev": -0.1026,
+        "market": 0.5811,
+        "best_odds": 1.69,
+        "book": "Pinnacle",
+        "ev": -0.1079,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
-          2.35,
-          1.57
+          2.25,
+          1.62
         ],
         "Unibet (NL)": [
           2.3,
           1.61
         ],
         "1xBet": [
-          2.37,
-          1.61
+          2.33,
+          1.63
         ],
         "Unibet (SE)": [
           2.3,
           1.61
         ],
         "Coolbet": [
-          2.3,
-          1.62
+          2.25,
+          1.65
         ],
         "GTbets": [
-          2.4,
-          1.54
+          2.25,
+          1.62
         ],
         "PMU (FR)": [
           2.2,
@@ -2408,16 +2343,16 @@
           1.67
         ],
         "Betsson": [
-          2.37,
-          1.59
+          2.26,
+          1.65
         ],
         "Nordic Bet": [
-          2.37,
-          1.59
+          2.26,
+          1.65
         ],
         "Pinnacle": [
-          2.31,
-          1.68
+          2.29,
+          1.69
         ],
         "BetOnline.ag": [
           2.28,
@@ -2425,18 +2360,22 @@
         ],
         "Winamax (FR)": [
           2.25,
-          1.62
-        ],
-        "Winamax (DE)": [
-          2.35,
           1.64
         ],
+        "Winamax (DE)": [
+          2.3,
+          1.66
+        ],
         "Tipico": [
-          2.35,
-          1.52
+          2.25,
+          1.57
         ],
         "William Hill": [
           2.2,
+          1.67
+        ],
+        "BetAnything": [
+          2.3,
           1.67
         ]
       },
@@ -2447,7 +2386,7 @@
         "serve": 0.4282,
         "w": 0.55
       },
-      "pinnacle_a": 0.4211,
+      "pinnacle_a": 0.4246,
       "flags": [],
       "kalshi": {
         "a": {
@@ -2481,7 +2420,7 @@
         "key": "e-alexandrova",
         "model": 0.2408,
         "fair_odds": 4.15,
-        "market": 0.2618,
+        "market": 0.2578,
         "best_odds": 4.0,
         "book": "Betfair",
         "ev": -0.0367,
@@ -2492,13 +2431,13 @@
         "key": "m-andreeva",
         "model": 0.7592,
         "fair_odds": 1.32,
-        "market": 0.7382,
-        "best_odds": 1.31,
+        "market": 0.7422,
+        "best_odds": 1.32,
         "book": "Betfair",
-        "ev": -0.0055,
-        "kelly": 0.0
+        "ev": 0.0021,
+        "kelly": 0.0016
       },
-      "books": 20,
+      "books": 21,
       "prices": {
         "Unibet (NL)": [
           3.6,
@@ -2509,12 +2448,12 @@
           1.29
         ],
         "William Hill": [
-          3.5,
-          1.3
+          3.6,
+          1.29
         ],
         "888sport": [
-          3.5,
-          1.3
+          3.6,
+          1.29
         ],
         "Unibet (SE)": [
           3.6,
@@ -2525,51 +2464,55 @@
           1.24
         ],
         "1xBet": [
-          3.67,
-          1.29
+          3.63,
+          1.3
         ],
         "GTbets": [
           3.7,
           1.25
         ],
         "Betclic (FR)": [
-          3.55,
+          3.7,
           1.28
         ],
         "Nordic Bet": [
-          3.6,
-          1.29
-        ],
-        "Winamax (DE)": [
-          3.75,
-          1.3
-        ],
-        "Winamax (FR)": [
-          3.6,
-          1.29
-        ],
-        "Betsson": [
-          3.6,
-          1.29
-        ],
-        "Unibet (FR)": [
-          3.3,
-          1.26
-        ],
-        "Pinnacle": [
-          3.84,
-          1.31
-        ],
-        "Tipico": [
-          3.6,
+          3.7,
           1.28
         ],
-        "BetOnline.ag": [
-          3.68,
+        "Winamax (DE)": [
+          3.85,
+          1.29
+        ],
+        "Winamax (FR)": [
+          3.7,
+          1.28
+        ],
+        "Betsson": [
+          3.7,
+          1.28
+        ],
+        "Unibet (FR)": [
+          3.35,
+          1.25
+        ],
+        "Pinnacle": [
+          3.95,
           1.3
         ],
+        "Tipico": [
+          3.8,
+          1.25
+        ],
+        "BetOnline.ag": [
+          3.74,
+          1.29
+        ],
         "Coolbet": [
-          3.65,
+          3.7,
+          1.28
+        ],
+        "BetAnything": [
+          3.75,
           1.29
         ]
       },
@@ -2580,13 +2523,13 @@
         "serve": 0.1999,
         "w": 0.45
       },
-      "pinnacle_a": 0.2544,
+      "pinnacle_a": 0.2476,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.26,
-          "odds": 3.657,
-          "ev": -0.1194,
+          "cost": 0.25,
+          "odds": 3.8,
+          "ev": -0.085,
           "ticker": "KXWTAMATCH-26OCT07ALEAND-ALE"
         },
         "b": {
@@ -2595,7 +2538,7 @@
           "ev": -0.0176,
           "ticker": "KXWTAMATCH-26OCT07ALEAND-AND"
         },
-        "market_a": 0.2525,
+        "market_a": 0.245,
         "event": "KXWTAMATCH-26OCT07ALEAND",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct07aleand"
       }
@@ -2614,10 +2557,10 @@
         "key": "c-norrie",
         "model": 0.5856,
         "fair_odds": 1.71,
-        "market": 0.6384,
-        "best_odds": 1.54,
+        "market": 0.6196,
+        "best_odds": 1.58,
         "book": "Betfair",
-        "ev": -0.0981,
+        "ev": -0.0747,
         "kelly": 0.0
       },
       "b": {
@@ -2625,81 +2568,85 @@
         "key": "d-svrcina",
         "model": 0.4144,
         "fair_odds": 2.41,
-        "market": 0.3616,
-        "best_odds": 2.78,
+        "market": 0.3804,
+        "best_odds": 2.68,
         "book": "Betfair",
-        "ev": 0.152,
-        "kelly": 0.0213
+        "ev": 0.1105,
+        "kelly": 0.0164
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (FR)": [
-          1.45,
-          2.45
+          1.5,
+          2.35
         ],
         "Winamax (FR)": [
-          1.49,
-          2.6
+          1.54,
+          2.45
         ],
         "Winamax (DE)": [
-          1.52,
-          2.65
+          1.56,
+          2.5
         ],
         "1xBet": [
-          1.5,
-          2.66
+          1.54,
+          2.54
         ],
         "GTbets": [
           1.51,
-          2.69
+          2.52
         ],
         "Tipico": [
-          1.45,
-          2.55
+          1.47,
+          2.5
         ],
         "888sport": [
-          1.5,
-          2.6
+          1.53,
+          2.5
         ],
         "William Hill": [
-          1.5,
-          2.6
+          1.53,
+          2.5
         ],
         "Unibet (NL)": [
-          1.47,
-          2.7
+          1.55,
+          2.43
         ],
         "PMU (FR)": [
-          1.41,
-          2.55
+          1.49,
+          2.33
         ],
         "LeoVegas (SE)": [
-          1.47,
-          2.7
+          1.55,
+          2.43
         ],
         "Unibet (SE)": [
-          1.47,
-          2.7
+          1.55,
+          2.43
         ],
         "Pinnacle": [
-          1.52,
-          2.67
+          1.56,
+          2.59
         ],
         "Coolbet": [
-          1.5,
-          2.6
+          1.53,
+          2.52
         ],
         "BetOnline.ag": [
-          1.53,
-          2.62
+          1.54,
+          2.61
         ],
         "Betsson": [
-          1.5,
-          2.6
+          1.54,
+          2.49
         ],
         "Nordic Bet": [
-          1.5,
-          2.6
+          1.54,
+          2.49
+        ],
+        "BetAnything": [
+          1.54,
+          2.55
         ]
       },
       "court": "shanghai",
@@ -2709,33 +2656,1612 @@
         "serve": 0.5073,
         "w": 0.55
       },
-      "pinnacle_a": 0.6372,
+      "pinnacle_a": 0.6241,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.65,
-          "odds": 1.502,
-          "ev": -0.1204,
+          "cost": 0.64,
+          "odds": 1.524,
+          "ev": -0.1075,
           "ticker": "KXATPMATCH-26OCT08NORSVR-NOR"
         },
         "b": {
-          "cost": 0.35,
-          "odds": 2.733,
-          "ev": 0.1326,
+          "cost": 0.38,
+          "odds": 2.522,
+          "ev": 0.0451,
           "ticker": "KXATPMATCH-26OCT08NORSVR-SVR"
         },
-        "market_a": 0.6515,
+        "market_a": 0.6269,
         "event": "KXATPMATCH-26OCT08NORSVR",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct08norsvr"
+      }
+    },
+    {
+      "id": "f9f1baac19e915d28a83329e53af0ac8",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Adrian Mannarino",
+        "key": "a-mannarino",
+        "model": 0.3797,
+        "fair_odds": 2.63,
+        "market": 0.3426,
+        "best_odds": 2.85,
+        "book": "Unibet (SE)",
+        "ev": 0.082,
+        "kelly": 0.0111
+      },
+      "b": {
+        "name": "Flavio Cobolli",
+        "key": "f-cobolli",
+        "model": 0.6203,
+        "fair_odds": 1.61,
+        "market": 0.6574,
+        "best_odds": 1.54,
+        "book": "Betfair",
+        "ev": -0.0447,
+        "kelly": 0.0
+      },
+      "books": 17,
+      "prices": {
+        "1xBet": [
+          2.8,
+          1.46
+        ],
+        "GTbets": [
+          2.81,
+          1.39
+        ],
+        "Unibet (FR)": [
+          2.5,
+          1.39
+        ],
+        "Winamax (DE)": [
+          2.8,
+          1.48
+        ],
+        "Winamax (FR)": [
+          2.7,
+          1.46
+        ],
+        "PMU (FR)": [
+          2.7,
+          1.36
+        ],
+        "Unibet (SE)": [
+          2.85,
+          1.43
+        ],
+        "Unibet (NL)": [
+          2.85,
+          1.43
+        ],
+        "LeoVegas (SE)": [
+          2.85,
+          1.43
+        ],
+        "Tipico": [
+          2.7,
+          1.4
+        ],
+        "888sport": [
+          2.75,
+          1.44
+        ],
+        "Nordic Bet": [
+          2.75,
+          1.46
+        ],
+        "Betsson": [
+          2.75,
+          1.46
+        ],
+        "William Hill": [
+          2.75,
+          1.44
+        ],
+        "Pinnacle": [
+          2.85,
+          1.46
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.2883,
+        "serve": 0.4544,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.3387,
+      "flags": []
+    },
+    {
+      "id": "7fa3afd6824f6f399b190a8b95e17b57",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Alex de Minaur",
+        "key": "a-de-minaur",
+        "model": 0.7054,
+        "fair_odds": 1.42,
+        "market": 0.7416,
+        "best_odds": 1.31,
+        "book": "Betfair",
+        "ev": -0.0759,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Alex Molcan",
+        "key": "a-molcan",
+        "model": 0.2946,
+        "fair_odds": 3.39,
+        "market": 0.2584,
+        "best_odds": 3.89,
+        "book": "Pinnacle",
+        "ev": 0.1459,
+        "kelly": 0.0126
+      },
+      "books": 13,
+      "prices": {
+        "GTbets": [
+          1.26,
+          3.86
+        ],
+        "Unibet (FR)": [
+          1.23,
+          3.3
+        ],
+        "888sport": [
+          1.29,
+          3.6
+        ],
+        "1xBet": [
+          1.3,
+          3.69
+        ],
+        "Tipico": [
+          1.25,
+          3.6
+        ],
+        "Pinnacle": [
+          1.29,
+          3.89
+        ],
+        "William Hill": [
+          1.29,
+          3.6
+        ],
+        "Unibet (SE)": [
+          1.28,
+          3.65
+        ],
+        "LeoVegas (SE)": [
+          1.28,
+          3.65
+        ],
+        "PMU (FR)": [
+          1.23,
+          3.45
+        ],
+        "Unibet (NL)": [
+          1.28,
+          3.65
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.7022,
+        "serve": 0.7081,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.751,
+      "flags": [
+        [
+          "retired",
+          "A. De Minaur: retired from a match 1 days ago"
+        ],
+        [
+          "specialist",
+          "A. Molcan: clay-court specialist (51% of matches on clay), now on hard"
+        ]
+      ]
+    },
+    {
+      "id": "4e2c5a5395b42d51415ecd6dcbb351fa",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Quentin Halys",
+        "key": "q-halys",
+        "model": 0.441,
+        "fair_odds": 2.27,
+        "market": 0.4284,
+        "best_odds": 2.31,
+        "book": "Pinnacle",
+        "ev": 0.0187,
+        "kelly": 0.0036
+      },
+      "b": {
+        "name": "Alexander Blockx",
+        "key": "a-blockx",
+        "model": 0.559,
+        "fair_odds": 1.79,
+        "market": 0.5716,
+        "best_odds": 1.74,
+        "book": "Betfair",
+        "ev": -0.0273,
+        "kelly": 0.0
+      },
+      "books": 14,
+      "prices": {
+        "GTbets": [
+          2.29,
+          1.63
+        ],
+        "1xBet": [
+          2.23,
+          1.68
+        ],
+        "888sport": [
+          2.3,
+          1.61
+        ],
+        "Unibet (FR)": [
+          2.05,
+          1.59
+        ],
+        "LeoVegas (SE)": [
+          2.23,
+          1.65
+        ],
+        "PMU (FR)": [
+          2.14,
+          1.57
+        ],
+        "Unibet (SE)": [
+          2.23,
+          1.65
+        ],
+        "Unibet (NL)": [
+          2.23,
+          1.65
+        ],
+        "Pinnacle": [
+          2.31,
+          1.66
+        ],
+        "Winamax (FR)": [
+          2.2,
+          1.64
+        ],
+        "Winamax (DE)": [
+          2.25,
+          1.68
+        ],
+        "Tipico": [
+          2.05,
+          1.7
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.4243,
+        "serve": 0.4546,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.4181,
+      "flags": [
+        [
+          "retired",
+          "A. Blockx: retired from a match 28 days ago"
+        ]
+      ]
+    },
+    {
+      "id": "7a32c48cac88a3d55ff9303c25cb94f2",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Alexander Bublik",
+        "key": "a-bublik",
+        "model": 0.6294,
+        "fair_odds": 1.59,
+        "market": 0.6075,
+        "best_odds": 1.57,
+        "book": "1xBet",
+        "ev": -0.0118,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Tomas Machac",
+        "key": "t-machac",
+        "model": 0.3706,
+        "fair_odds": 2.7,
+        "market": 0.3925,
+        "best_odds": 2.56,
+        "book": "Betfair",
+        "ev": -0.0513,
+        "kelly": 0.0
+      },
+      "books": 15,
+      "prices": {
+        "1xBet": [
+          1.57,
+          2.46
+        ],
+        "Unibet (FR)": [
+          1.47,
+          2.25
+        ],
+        "GTbets": [
+          1.53,
+          2.38
+        ],
+        "Tipico": [
+          1.57,
+          2.25
+        ],
+        "Unibet (NL)": [
+          1.57,
+          2.38
+        ],
+        "PMU (FR)": [
+          1.51,
+          2.28
+        ],
+        "Unibet (SE)": [
+          1.57,
+          2.38
+        ],
+        "LeoVegas (SE)": [
+          1.57,
+          2.38
+        ],
+        "Pinnacle": [
+          1.56,
+          2.54
+        ],
+        "888sport": [
+          1.57,
+          2.38
+        ],
+        "Winamax (FR)": [
+          1.54,
+          2.45
+        ],
+        "Winamax (DE)": [
+          1.56,
+          2.5
+        ],
+        "BetOnline.ag": [
+          1.57,
+          2.53
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5259,
+        "serve": 0.7141,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.6195,
+      "flags": []
+    },
+    {
+      "id": "9e9da1a2604439de365a38815946c567",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Alexander Zverev",
+        "key": "a-zverev",
+        "model": 0.8648,
+        "fair_odds": 1.16,
+        "market": 0.8726,
+        "best_odds": 1.1,
+        "book": "Betfair",
+        "ev": -0.0487,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Wu Yibing",
+        "key": "y-wu",
+        "model": 0.1352,
+        "fair_odds": 7.4,
+        "market": 0.1274,
+        "best_odds": 8.88,
+        "book": "Pinnacle",
+        "ev": 0.2003,
+        "kelly": 0.0064
+      },
+      "books": 14,
+      "prices": {
+        "1xBet": [
+          1.09,
+          8.0
+        ],
+        "GTbets": [
+          1.1,
+          7.51
+        ],
+        "888sport": [
+          1.06,
+          8.0
+        ],
+        "Unibet (FR)": [
+          1.06,
+          5.6
+        ],
+        "Tipico": [
+          1.06,
+          7.2
+        ],
+        "Unibet (SE)": [
+          1.09,
+          7.5
+        ],
+        "PMU (FR)": [
+          1.05,
+          6.75
+        ],
+        "Unibet (NL)": [
+          1.09,
+          7.5
+        ],
+        "LeoVegas (SE)": [
+          1.09,
+          7.5
+        ],
+        "Winamax (FR)": [
+          1.09,
+          7.0
+        ],
+        "Winamax (DE)": [
+          1.1,
+          7.75
+        ],
+        "Pinnacle": [
+          1.08,
+          8.88
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.8799,
+        "serve": 0.8525,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.8916,
+      "flags": []
+    },
+    {
+      "id": "09f619967e342f686cf7f54e12a2c3b8",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Rei Sakamoto",
+        "key": "r-sakamoto",
+        "model": 0.3626,
+        "fair_odds": 2.76,
+        "market": 0.2952,
+        "best_odds": 3.4,
+        "book": "Betfair",
+        "ev": 0.2327,
+        "kelly": 0.0242
+      },
+      "b": {
+        "name": "Andrey Rublev",
+        "key": "a-rublev",
+        "model": 0.6374,
+        "fair_odds": 1.57,
+        "market": 0.7048,
+        "best_odds": 1.39,
+        "book": "Betfair",
+        "ev": -0.114,
+        "kelly": 0.0
+      },
+      "books": 13,
+      "prices": {
+        "PMU (FR)": [
+          3.1,
+          1.28
+        ],
+        "Unibet (NL)": [
+          3.3,
+          1.33
+        ],
+        "Unibet (SE)": [
+          3.3,
+          1.33
+        ],
+        "LeoVegas (SE)": [
+          3.3,
+          1.33
+        ],
+        "Winamax (FR)": [
+          3.15,
+          1.35
+        ],
+        "1xBet": [
+          3.17,
+          1.38
+        ],
+        "Tipico": [
+          3.2,
+          1.3
+        ],
+        "GTbets": [
+          3.26,
+          1.37
+        ],
+        "Winamax (DE)": [
+          3.25,
+          1.37
+        ],
+        "888sport": [
+          3.1,
+          1.36
+        ],
+        "Pinnacle": [
+          3.24,
+          1.38
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3442,
+        "serve": 0.3776,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.2987,
+      "flags": []
+    },
+    {
+      "id": "bd351fd9f9a56cd0cc2878d9ec9cda89",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Karen Khachanov",
+        "key": "k-khachanov",
+        "model": 0.598,
+        "fair_odds": 1.67,
+        "market": 0.6904,
+        "best_odds": 1.37,
+        "book": "1xBet",
+        "ev": -0.1808,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Arthur Fery",
+        "key": "a-fery",
+        "model": 0.402,
+        "fair_odds": 2.49,
+        "market": 0.3096,
+        "best_odds": 3.22,
+        "book": "1xBet",
+        "ev": 0.2945,
+        "kelly": 0.0332
+      },
+      "books": 13,
+      "prices": {
+        "1xBet": [
+          1.37,
+          3.22
+        ],
+        "Unibet (FR)": [
+          1.31,
+          2.8
+        ],
+        "Tipico": [
+          1.35,
+          2.95
+        ],
+        "Winamax (DE)": [
+          1.36,
+          3.1
+        ],
+        "Winamax (FR)": [
+          1.31,
+          2.8
+        ],
+        "GTbets": [
+          1.36,
+          3.19
+        ],
+        "888sport": [
+          1.36,
+          3.1
+        ],
+        "Unibet (NL)": [
+          1.36,
+          3.15
+        ],
+        "Unibet (SE)": [
+          1.36,
+          3.15
+        ],
+        "LeoVegas (SE)": [
+          1.36,
+          3.15
+        ],
+        "PMU (FR)": [
+          1.32,
+          2.95
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5014,
+        "serve": 0.677,
+        "w": 0.55
+      },
+      "flags": []
+    },
+    {
+      "id": "eb1e0b228ed44a2ea7cd0398f92f30f5",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Arthur Gea",
+        "key": "a-gea",
+        "model": 0.5906,
+        "fair_odds": 1.69,
+        "market": 0.5414,
+        "best_odds": 1.81,
+        "book": "Betfair",
+        "ev": 0.0691,
+        "kelly": 0.0213
+      },
+      "b": {
+        "name": "Ugo Humbert",
+        "key": "u-humbert",
+        "model": 0.4094,
+        "fair_odds": 2.44,
+        "market": 0.4586,
+        "best_odds": 2.12,
+        "book": "LeoVegas (SE)",
+        "ev": -0.1322,
+        "kelly": 0.0
+      },
+      "books": 14,
+      "prices": {
+        "1xBet": [
+          1.76,
+          2.11
+        ],
+        "GTbets": [
+          1.75,
+          2.09
+        ],
+        "Unibet (FR)": [
+          1.65,
+          1.95
+        ],
+        "Winamax (DE)": [
+          1.76,
+          2.1
+        ],
+        "Winamax (FR)": [
+          1.74,
+          2.05
+        ],
+        "LeoVegas (SE)": [
+          1.72,
+          2.12
+        ],
+        "PMU (FR)": [
+          1.65,
+          2.04
+        ],
+        "Unibet (SE)": [
+          1.72,
+          2.12
+        ],
+        "Unibet (NL)": [
+          1.72,
+          2.12
+        ],
+        "Tipico": [
+          1.75,
+          1.97
+        ],
+        "Pinnacle": [
+          1.81,
+          2.07
+        ],
+        "888sport": [
+          1.8,
+          2.0
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5402,
+        "serve": 0.6319,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.5335,
+      "flags": []
+    },
+    {
+      "id": "1c50f0f54375e316e823480ca6ccf537",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Ben Shelton",
+        "key": "b-shelton",
+        "model": 0.8824,
+        "fair_odds": 1.13,
+        "market": 0.8598,
+        "best_odds": 1.12,
+        "book": "GTbets",
+        "ev": -0.0117,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Daniel Altmaier",
+        "key": "d-altmaier",
+        "model": 0.1176,
+        "fair_odds": 8.5,
+        "market": 0.1402,
+        "best_odds": 7.5,
+        "book": "888sport",
+        "ev": -0.1181,
+        "kelly": 0.0
+      },
+      "books": 13,
+      "prices": {
+        "Unibet (FR)": [
+          1.07,
+          5.3
+        ],
+        "GTbets": [
+          1.12,
+          7.06
+        ],
+        "1xBet": [
+          1.11,
+          7.24
+        ],
+        "Winamax (FR)": [
+          1.07,
+          5.5
+        ],
+        "Winamax (DE)": [
+          1.1,
+          7.0
+        ],
+        "Tipico": [
+          1.06,
+          7.2
+        ],
+        "888sport": [
+          1.08,
+          7.5
+        ],
+        "Unibet (SE)": [
+          1.09,
+          7.5
+        ],
+        "LeoVegas (SE)": [
+          1.09,
+          7.5
+        ],
+        "Unibet (NL)": [
+          1.09,
+          7.5
+        ],
+        "PMU (FR)": [
+          1.05,
+          6.75
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.8698,
+        "serve": 0.8927,
+        "w": 0.55
+      },
+      "flags": [],
+      "kalshi": {
+        "a": {
+          "cost": 0.88,
+          "odds": 1.127,
+          "ev": -0.0055,
+          "ticker": "KXATPMATCH-26OCT07SHEALT-SHE"
+        },
+        "b": {
+          "cost": 0.13,
+          "odds": 7.251,
+          "ev": -0.1473,
+          "ticker": "KXATPMATCH-26OCT07SHEALT-ALT"
+        },
+        "market_a": 0.8794,
+        "event": "KXATPMATCH-26OCT07SHEALT",
+        "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct07shealt"
+      }
+    },
+    {
+      "id": "42f0f2c2a0b4f7cf927b8b00a6089279",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Matteo Berrettini",
+        "key": "m-berrettini",
+        "model": 0.3931,
+        "fair_odds": 2.54,
+        "market": 0.4062,
+        "best_odds": 2.4,
+        "book": "Winamax (DE)",
+        "ev": -0.0566,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Brandon Nakashima",
+        "key": "b-nakashima",
+        "model": 0.6069,
+        "fair_odds": 1.65,
+        "market": 0.5938,
+        "best_odds": 1.69,
+        "book": "BetOnline.ag",
+        "ev": 0.0257,
+        "kelly": 0.0093
+      },
+      "books": 17,
+      "prices": {
+        "1xBet": [
+          2.37,
+          1.61
+        ],
+        "GTbets": [
+          2.36,
+          1.63
+        ],
+        "Unibet (FR)": [
+          2.15,
+          1.52
+        ],
+        "Winamax (DE)": [
+          2.4,
+          1.62
+        ],
+        "Winamax (FR)": [
+          2.3,
+          1.6
+        ],
+        "LeoVegas (SE)": [
+          2.35,
+          1.57
+        ],
+        "PMU (FR)": [
+          2.25,
+          1.53
+        ],
+        "Unibet (SE)": [
+          2.35,
+          1.57
+        ],
+        "Unibet (NL)": [
+          2.35,
+          1.57
+        ],
+        "Tipico": [
+          2.35,
+          1.52
+        ],
+        "Pinnacle": [
+          2.28,
+          1.68
+        ],
+        "888sport": [
+          2.2,
+          1.67
+        ],
+        "Betsson": [
+          2.35,
+          1.6
+        ],
+        "Nordic Bet": [
+          2.35,
+          1.6
+        ],
+        "BetOnline.ag": [
+          2.25,
+          1.69
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3869,
+        "serve": 0.3982,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.4242,
+      "flags": []
+    },
+    {
+      "id": "39b35a80c6dcdf3022287f85ce86188f",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Yannick Hanfmann",
+        "key": "y-hanfmann",
+        "model": 0.3417,
+        "fair_odds": 2.93,
+        "market": 0.3147,
+        "best_odds": 3.1,
+        "book": "Unibet (NL)",
+        "ev": 0.0594,
+        "kelly": 0.0071
+      },
+      "b": {
+        "name": "Frances Tiafoe",
+        "key": "f-tiafoe",
+        "model": 0.6583,
+        "fair_odds": 1.52,
+        "market": 0.6853,
+        "best_odds": 1.41,
+        "book": "Pinnacle",
+        "ev": -0.0719,
+        "kelly": 0.0
+      },
+      "books": 14,
+      "prices": {
+        "Pinnacle": [
+          3.06,
+          1.41
+        ],
+        "Unibet (FR)": [
+          2.7,
+          1.33
+        ],
+        "1xBet": [
+          3.01,
+          1.41
+        ],
+        "Tipico": [
+          2.95,
+          1.35
+        ],
+        "888sport": [
+          2.9,
+          1.4
+        ],
+        "GTbets": [
+          3.09,
+          1.38
+        ],
+        "Unibet (NL)": [
+          3.1,
+          1.36
+        ],
+        "Unibet (SE)": [
+          3.1,
+          1.36
+        ],
+        "PMU (FR)": [
+          2.95,
+          1.32
+        ],
+        "LeoVegas (SE)": [
+          3.1,
+          1.36
+        ],
+        "Winamax (FR)": [
+          3.0,
+          1.39
+        ],
+        "Winamax (DE)": [
+          3.1,
+          1.41
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.2542,
+        "serve": 0.4134,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.3154,
+      "flags": []
+    },
+    {
+      "id": "9195be0514275073aba14213083da83a",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Francisco Cerundolo",
+        "key": "f-cerundolo",
+        "model": 0.5413,
+        "fair_odds": 1.85,
+        "market": 0.4934,
+        "best_odds": 1.99,
+        "book": "Betfair",
+        "ev": 0.0771,
+        "kelly": 0.0195
+      },
+      "b": {
+        "name": "Roman Safiullin",
+        "key": "r-safiullin",
+        "model": 0.4587,
+        "fair_odds": 2.18,
+        "market": 0.5066,
+        "best_odds": 1.97,
+        "book": "Betfair",
+        "ev": -0.0963,
+        "kelly": 0.0
+      },
+      "books": 15,
+      "prices": {
+        "1xBet": [
+          1.95,
+          1.9
+        ],
+        "Pinnacle": [
+          1.94,
+          1.93
+        ],
+        "Unibet (FR)": [
+          1.82,
+          1.76
+        ],
+        "888sport": [
+          1.91,
+          1.91
+        ],
+        "GTbets": [
+          1.95,
+          1.85
+        ],
+        "Unibet (NL)": [
+          1.95,
+          1.85
+        ],
+        "PMU (FR)": [
+          1.87,
+          1.77
+        ],
+        "Unibet (SE)": [
+          1.95,
+          1.85
+        ],
+        "LeoVegas (SE)": [
+          1.95,
+          1.85
+        ],
+        "Winamax (FR)": [
+          1.94,
+          1.86
+        ],
+        "Winamax (DE)": [
+          1.98,
+          1.88
+        ],
+        "Tipico": [
+          1.85,
+          1.85
+        ],
+        "BetOnline.ag": [
+          1.91,
+          1.91
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.628,
+        "serve": 0.4702,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.4987,
+      "flags": []
+    },
+    {
+      "id": "6f099b10621643e85800f00fb324d82c",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Miomir Kecmanovic",
+        "key": "m-kecmanovic",
+        "model": 0.2435,
+        "fair_odds": 4.11,
+        "market": 0.2796,
+        "best_odds": 3.75,
+        "book": "Betfair",
+        "ev": -0.087,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Jakub Mensik",
+        "key": "j-mensik",
+        "model": 0.7565,
+        "fair_odds": 1.32,
+        "market": 0.7204,
+        "best_odds": 1.35,
+        "book": "Winamax (DE)",
+        "ev": 0.0213,
+        "kelly": 0.0152
+      },
+      "books": 14,
+      "prices": {
+        "PMU (FR)": [
+          3.25,
+          1.27
+        ],
+        "LeoVegas (SE)": [
+          3.45,
+          1.3
+        ],
+        "Unibet (NL)": [
+          3.45,
+          1.3
+        ],
+        "Unibet (SE)": [
+          3.45,
+          1.3
+        ],
+        "Unibet (FR)": [
+          2.95,
+          1.28
+        ],
+        "Winamax (DE)": [
+          3.4,
+          1.35
+        ],
+        "Tipico": [
+          3.4,
+          1.27
+        ],
+        "Winamax (FR)": [
+          3.3,
+          1.33
+        ],
+        "1xBet": [
+          3.38,
+          1.34
+        ],
+        "GTbets": [
+          3.46,
+          1.27
+        ],
+        "Pinnacle": [
+          3.47,
+          1.34
+        ],
+        "888sport": [
+          3.3,
+          1.33
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.214,
+        "serve": 0.2676,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.2786,
+      "flags": []
+    },
+    {
+      "id": "28d2881b2a6fd12a3dd67402513f1793",
+      "tour": "ATP",
+      "tournament": "ATP Shanghai Masters",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Yi Zhou",
+        "key": "y-zhou",
+        "model": 0.1422,
+        "fair_odds": 7.03,
+        "market": 0.1877,
+        "best_odds": 5.4,
+        "book": "Winamax (DE)",
+        "ev": -0.2321,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Lorenzo Musetti",
+        "key": "l-musetti",
+        "model": 0.8578,
+        "fair_odds": 1.17,
+        "market": 0.8123,
+        "best_odds": 1.21,
+        "book": "Betfair",
+        "ev": 0.0379,
+        "kelly": 0.0452
+      },
+      "books": 13,
+      "prices": {
+        "1xBet": [
+          5.11,
+          1.18
+        ],
+        "Unibet (FR)": [
+          4.25,
+          1.13
+        ],
+        "GTbets": [
+          5.3,
+          1.18
+        ],
+        "Winamax (FR)": [
+          5.1,
+          1.16
+        ],
+        "Winamax (DE)": [
+          5.4,
+          1.18
+        ],
+        "Pinnacle": [
+          5.21,
+          1.19
+        ],
+        "888sport": [
+          4.5,
+          1.2
+        ],
+        "LeoVegas (SE)": [
+          5.3,
+          1.15
+        ],
+        "Unibet (SE)": [
+          5.3,
+          1.15
+        ],
+        "PMU (FR)": [
+          4.9,
+          1.12
+        ],
+        "Unibet (NL)": [
+          5.3,
+          1.15
+        ]
+      },
+      "court": "shanghai",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.1452,
+        "serve": 0.1398,
+        "w": 0.55
+      },
+      "pinnacle_a": 0.1859,
+      "flags": [
+        [
+          "thin",
+          "Y. Zhou: only 9 matches in 12 months"
+        ]
+      ]
+    },
+    {
+      "id": "10ff295353bc42df59a57a02170e241d",
+      "tour": "WTA",
+      "tournament": "WTA China Open",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Qinwen Zheng",
+        "key": "q-zheng",
+        "model": 0.3604,
+        "fair_odds": 2.77,
+        "market": 0.4174,
+        "best_odds": 2.35,
+        "book": "Tipico",
+        "ev": -0.153,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Elina Svitolina",
+        "key": "e-svitolina",
+        "model": 0.6396,
+        "fair_odds": 1.56,
+        "market": 0.5826,
+        "best_odds": 1.66,
+        "book": "Pinnacle",
+        "ev": 0.0617,
+        "kelly": 0.0234
+      },
+      "books": 19,
+      "prices": {
+        "Coolbet": [
+          2.3,
+          1.62
+        ],
+        "Unibet (FR)": [
+          2.1,
+          1.54
+        ],
+        "Betsson": [
+          2.3,
+          1.63
+        ],
+        "Betclic (FR)": [
+          2.3,
+          1.63
+        ],
+        "Nordic Bet": [
+          2.3,
+          1.63
+        ],
+        "888sport": [
+          2.3,
+          1.61
+        ],
+        "William Hill": [
+          2.3,
+          1.62
+        ],
+        "Tipico": [
+          2.35,
+          1.57
+        ],
+        "1xBet": [
+          2.3,
+          1.63
+        ],
+        "Winamax (FR)": [
+          2.1,
+          1.54
+        ],
+        "Winamax (DE)": [
+          2.25,
+          1.62
+        ],
+        "GTbets": [
+          2.29,
+          1.63
+        ],
+        "Pinnacle": [
+          2.35,
+          1.66
+        ],
+        "Unibet (SE)": [
+          2.23,
+          1.66
+        ],
+        "Unibet (NL)": [
+          2.23,
+          1.66
+        ],
+        "PMU (FR)": [
+          2.12,
+          1.6
+        ],
+        "LeoVegas (SE)": [
+          2.23,
+          1.66
+        ]
+      },
+      "court": "beijing",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3586,
+        "serve": 0.3626,
+        "w": 0.45
+      },
+      "pinnacle_a": 0.414,
+      "flags": []
+    },
+    {
+      "id": "ffe256b7d5ecc81af36b822714191ded",
+      "tour": "WTA",
+      "tournament": "WTA China Open",
+      "start": "2026-10-09T04:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Elise Mertens",
+        "key": "e-mertens",
+        "model": 0.2322,
+        "fair_odds": 4.31,
+        "market": 0.2173,
+        "best_odds": 4.75,
+        "book": "GTbets",
+        "ev": 0.1028,
+        "kelly": 0.0069
+      },
+      "b": {
+        "name": "Iga Swiatek",
+        "key": "i-swiatek",
+        "model": 0.7678,
+        "fair_odds": 1.3,
+        "market": 0.7827,
+        "best_odds": 1.27,
+        "book": "Matchbook",
+        "ev": -0.0249,
+        "kelly": 0.0
+      },
+      "books": 20,
+      "prices": {
+        "1xBet": [
+          3.94,
+          1.26
+        ],
+        "888sport": [
+          4.2,
+          1.22
+        ],
+        "William Hill": [
+          4.2,
+          1.22
+        ],
+        "GTbets": [
+          4.75,
+          1.22
+        ],
+        "Coolbet": [
+          4.3,
+          1.22
+        ],
+        "Tipico": [
+          4.4,
+          1.2
+        ],
+        "Unibet (FR)": [
+          3.85,
+          1.19
+        ],
+        "Betclic (FR)": [
+          4.3,
+          1.22
+        ],
+        "Nordic Bet": [
+          4.3,
+          1.22
+        ],
+        "Betsson": [
+          4.3,
+          1.22
+        ],
+        "Winamax (FR)": [
+          4.3,
+          1.22
+        ],
+        "Winamax (DE)": [
+          4.5,
+          1.23
+        ],
+        "PMU (FR)": [
+          4.35,
+          1.15
+        ],
+        "Unibet (SE)": [
+          4.7,
+          1.19
+        ],
+        "LeoVegas (SE)": [
+          4.7,
+          1.19
+        ],
+        "Unibet (NL)": [
+          4.7,
+          1.19
+        ],
+        "Pinnacle": [
+          4.61,
+          1.23
+        ],
+        "BetOnline.ag": [
+          4.41,
+          1.22
+        ]
+      },
+      "court": "beijing",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.2608,
+        "serve": 0.1972,
+        "w": 0.45
+      },
+      "pinnacle_a": 0.2106,
+      "flags": [],
+      "kalshi": {
+        "a": {
+          "cost": 0.21,
+          "odds": 4.512,
+          "ev": 0.0477,
+          "ticker": "KXWTAMATCH-26OCT07MERSWI-MER"
+        },
+        "b": {
+          "cost": 0.81,
+          "odds": 1.218,
+          "ev": -0.0648,
+          "ticker": "KXWTAMATCH-26OCT07MERSWI-SWI"
+        },
+        "market_a": 0.199,
+        "event": "KXWTAMATCH-26OCT07MERSWI",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct07merswi"
       }
     }
   ],
   "unmatched": [],
   "scheduled_only": 0,
-  "kalshi_matched": 20,
+  "kalshi_matched": 21,
   "record": {
-    "settled": 160,
-    "pending": 40,
+    "settled": 161,
+    "pending": 55,
     "by_model": {
       "2026-10-03": {
         "settled": 4,
@@ -2755,21 +4281,21 @@
         "clean_profit": 6.12
       },
       "2026-10-04": {
-        "settled": 78,
-        "pending": 39,
-        "model_right": 0.6923,
-        "market_right": 0.6795,
-        "brier_model": 0.214,
-        "brier_market": 0.2165,
-        "value_bets": 75,
+        "settled": 79,
+        "pending": 54,
+        "model_right": 0.6962,
+        "market_right": 0.6835,
+        "brier_model": 0.2122,
+        "brier_market": 0.2145,
+        "value_bets": 76,
         "value_wins": 36,
-        "profit_units": 22.53,
-        "roi": 0.3004,
-        "pinnacle_n": 73,
-        "brier_model_pin": 0.2097,
-        "brier_pinnacle": 0.2178,
-        "clean_bets": 49,
-        "clean_profit": 5.88
+        "profit_units": 21.53,
+        "roi": 0.2833,
+        "pinnacle_n": 74,
+        "brier_model_pin": 0.2077,
+        "brier_pinnacle": 0.2157,
+        "clean_bets": 50,
+        "clean_profit": 4.88
       },
       "original": {
         "settled": 78,
@@ -2786,19 +4312,19 @@
         "clean_profit": 0
       }
     },
-    "model_right": 0.675,
-    "market_right": 0.6687,
-    "brier_model": 0.2127,
-    "brier_market": 0.2113,
-    "value_bets": 153,
+    "model_right": 0.677,
+    "market_right": 0.6708,
+    "brier_model": 0.2118,
+    "brier_market": 0.2103,
+    "value_bets": 154,
     "value_wins": 72,
-    "profit_units": 25.73,
-    "roi": 0.1682,
-    "pinnacle_n": 77,
-    "brier_model_pin": 0.2127,
-    "brier_pinnacle": 0.2247,
-    "clean_bets": 51,
-    "clean_profit": 12.0
+    "profit_units": 24.73,
+    "roi": 0.1606,
+    "pinnacle_n": 78,
+    "brier_model_pin": 0.2109,
+    "brier_pinnacle": 0.2226,
+    "clean_bets": 52,
+    "clean_profit": 11.0
   },
   "parlays": [
     {

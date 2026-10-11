@@ -1,9 +1,389 @@
 {
-  "updated": "2026-10-10T20:10:13Z",
+  "updated": "2026-10-11T00:16:15Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "406",
+  "requests_remaining": "403",
   "matches": [
+    {
+      "id": "apit-12169809",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T03:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "M. Frech",
+        "key": "m-frech",
+        "model": 0.6939,
+        "fair_odds": 1.44,
+        "market": 0.7247,
+        "best_odds": 1.3,
+        "book": "bet365",
+        "ev": -0.0979,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "A. Ito",
+        "key": "a-ito",
+        "model": 0.3061,
+        "fair_odds": 3.27,
+        "market": 0.2753,
+        "best_odds": 3.74,
+        "book": "Pncl",
+        "ev": 0.1447,
+        "kelly": 0.0132
+      },
+      "books": 8,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.6493,
+        "serve": 0.7485,
+        "w": 0.45
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          1.29,
+          3.5
+        ],
+        "bet365": [
+          1.3,
+          3.4
+        ],
+        "Marathon": [
+          1.28,
+          3.26
+        ],
+        "BetVictor": [
+          1.29,
+          3.25
+        ],
+        "Sbo": [
+          1.24,
+          3.43
+        ],
+        "1xBet": [
+          1.29,
+          3.27
+        ],
+        "Pncl": [
+          1.3,
+          3.74
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.7421,
+      "kalshi": {
+        "a": {
+          "cost": 0.75,
+          "odds": 1.31,
+          "ev": -0.091,
+          "ticker": "KXWTAMATCH-26OCT10FREITO-FRE"
+        },
+        "b": {
+          "cost": 0.26,
+          "odds": 3.657,
+          "ev": 0.1194,
+          "ticker": "KXWTAMATCH-26OCT10FREITO-ITO"
+        },
+        "market_a": 0.745,
+        "event": "KXWTAMATCH-26OCT10FREITO",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct10freito"
+      }
+    },
+    {
+      "id": "apit-12169813",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T03:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "S. Sorribes Tormo",
+        "key": "s-sorribes-tormo",
+        "model": 0.4473,
+        "fair_odds": 2.24,
+        "market": 0.3855,
+        "best_odds": 2.54,
+        "book": "Pncl",
+        "ev": 0.1362,
+        "kelly": 0.0221
+      },
+      "b": {
+        "name": "D. Kasatkina",
+        "key": "d-kasatkina",
+        "model": 0.5527,
+        "fair_odds": 1.81,
+        "market": 0.6145,
+        "best_odds": 1.55,
+        "book": "Pncl",
+        "ev": -0.1433,
+        "kelly": 0.0
+      },
+      "books": 9,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.4187,
+        "serve": 0.4823,
+        "w": 0.45
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          2.38,
+          1.53
+        ],
+        "bet365": [
+          2.37,
+          1.53
+        ],
+        "Marathon": [
+          2.4,
+          1.49
+        ],
+        "BetVictor": [
+          2.4,
+          1.5
+        ],
+        "Sbo": [
+          2.29,
+          1.48
+        ],
+        "1xBet": [
+          2.42,
+          1.5
+        ],
+        "Betano": [
+          2.4,
+          1.53
+        ],
+        "Pncl": [
+          2.54,
+          1.55
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.379,
+      "kalshi": {
+        "a": {
+          "cost": 0.37,
+          "odds": 2.589,
+          "ev": 0.1581,
+          "ticker": "KXWTAMATCH-26OCT10SORKAS-SOR"
+        },
+        "b": {
+          "cost": 0.64,
+          "odds": 1.524,
+          "ev": -0.1577,
+          "ticker": "KXWTAMATCH-26OCT10SORKAS-KAS"
+        },
+        "market_a": 0.365,
+        "event": "KXWTAMATCH-26OCT10SORKAS",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct10sorkas"
+      }
+    },
+    {
+      "id": "apit-12169817",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T03:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Y. Putintseva",
+        "key": "y-putintseva",
+        "model": 0.5549,
+        "fair_odds": 1.8,
+        "market": 0.4907,
+        "best_odds": 1.95,
+        "book": "Marathon",
+        "ev": 0.082,
+        "kelly": 0.0216
+      },
+      "b": {
+        "name": "A. Krueger",
+        "key": "a-krueger",
+        "model": 0.4451,
+        "fair_odds": 2.25,
+        "market": 0.5093,
+        "best_odds": 1.93,
+        "book": "Pncl",
+        "ev": -0.1409,
+        "kelly": 0.0
+      },
+      "books": 9,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.4612,
+        "serve": 0.6694,
+        "w": 0.45
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          1.83,
+          1.83
+        ],
+        "bet365": [
+          1.83,
+          1.83
+        ],
+        "Marathon": [
+          1.95,
+          1.74
+        ],
+        "BetVictor": [
+          1.9,
+          1.8
+        ],
+        "Sbo": [
+          1.87,
+          1.83
+        ],
+        "1xBet": [
+          1.87,
+          1.79
+        ],
+        "Betano": [
+          1.91,
+          1.83
+        ],
+        "Pncl": [
+          1.93,
+          1.93
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.5,
+      "kalshi": {
+        "a": {
+          "cost": 0.51,
+          "odds": 1.896,
+          "ev": 0.0521,
+          "ticker": "KXWTAMATCH-26OCT10PUTKRU-PUT"
+        },
+        "b": {
+          "cost": 0.5,
+          "odds": 1.932,
+          "ev": -0.1401,
+          "ticker": "KXWTAMATCH-26OCT10PUTKRU-KRU"
+        },
+        "market_a": 0.5025,
+        "event": "KXWTAMATCH-26OCT10PUTKRU",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct10putkru"
+      }
+    },
+    {
+      "id": "apit-12169822",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T03:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Z. Sonmez",
+        "key": "z-sonmez",
+        "model": 0.5584,
+        "fair_odds": 1.79,
+        "market": 0.5938,
+        "best_odds": 1.6,
+        "book": "Pncl",
+        "ev": -0.1065,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "S. Kraus",
+        "key": "s-kraus",
+        "model": 0.4416,
+        "fair_odds": 2.26,
+        "market": 0.4062,
+        "best_odds": 2.41,
+        "book": "Pncl",
+        "ev": 0.0642,
+        "kelly": 0.0114
+      },
+      "books": 9,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5715,
+        "serve": 0.5425,
+        "w": 0.45
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          1.57,
+          2.25
+        ],
+        "bet365": [
+          1.57,
+          2.25
+        ],
+        "Marathon": [
+          1.54,
+          2.28
+        ],
+        "BetVictor": [
+          1.57,
+          2.25
+        ],
+        "Sbo": [
+          1.55,
+          2.26
+        ],
+        "1xBet": [
+          1.56,
+          2.27
+        ],
+        "Betano": [
+          1.55,
+          2.37
+        ],
+        "Pncl": [
+          1.6,
+          2.41
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.601,
+      "kalshi": {
+        "a": {
+          "cost": 0.61,
+          "odds": 1.596,
+          "ev": -0.1088,
+          "ticker": "KXWTAMATCH-26OCT10SONKRA-SON"
+        },
+        "b": {
+          "cost": 0.4,
+          "odds": 2.399,
+          "ev": 0.0594,
+          "ticker": "KXWTAMATCH-26OCT10SONKRA-KRA"
+        },
+        "market_a": 0.605,
+        "event": "KXWTAMATCH-26OCT10SONKRA",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct10sonkra"
+      }
+    },
     {
       "id": "52d52225f4c13f3a96b8bff7a3a53de9",
       "tour": "ATP",
@@ -18,10 +398,10 @@
         "key": "k-khachanov",
         "model": 0.7167,
         "fair_odds": 1.4,
-        "market": 0.7263,
-        "best_odds": 1.34,
-        "book": "Unibet (NL)",
-        "ev": -0.0397,
+        "market": 0.7353,
+        "best_odds": 1.33,
+        "book": "Betfair",
+        "ev": -0.0469,
         "kelly": 0.0
       },
       "b": {
@@ -29,85 +409,85 @@
         "key": "a-mannarino",
         "model": 0.2833,
         "fair_odds": 3.53,
-        "market": 0.2737,
-        "best_odds": 3.9,
+        "market": 0.2647,
+        "best_odds": 3.95,
         "book": "Betfair",
-        "ev": 0.1051,
-        "kelly": 0.0091
+        "ev": 0.1192,
+        "kelly": 0.0101
       },
       "books": 20,
       "prices": {
         "Unibet (NL)": [
-          1.34,
-          3.3
+          1.3,
+          3.45
         ],
         "Unibet (SE)": [
-          1.34,
-          3.3
+          1.3,
+          3.45
         ],
         "PMU (FR)": [
-          1.28,
-          3.1
+          1.26,
+          3.25
         ],
         "LeoVegas (SE)": [
-          1.34,
-          3.3
+          1.3,
+          3.45
         ],
         "1xBet": [
-          1.33,
-          3.46
+          1.32,
+          3.53
         ],
         "GTbets": [
           1.28,
           3.45
         ],
         "Winamax (DE)": [
-          1.32,
-          3.6
+          1.31,
+          3.65
         ],
         "Winamax (FR)": [
-          1.31,
-          3.45
+          1.3,
+          3.5
         ],
         "Unibet (FR)": [
-          1.28,
-          3.25
+          1.27,
+          3.3
         ],
         "Tipico": [
           1.25,
           3.6
         ],
         "Pinnacle": [
-          1.34,
-          3.59
+          1.3,
+          3.95
         ],
         "BetOnline.ag": [
-          1.31,
-          3.52
+          1.28,
+          3.83
         ],
         "888sport": [
-          1.3,
-          3.5
+          1.29,
+          3.6
         ],
         "Nordic Bet": [
-          1.31,
-          3.5
-        ],
-        "Betsson": [
-          1.31,
-          3.5
-        ],
-        "William Hill": [
-          1.3,
-          3.5
-        ],
-        "Coolbet": [
           1.3,
           3.55
         ],
+        "Betsson": [
+          1.3,
+          3.55
+        ],
+        "William Hill": [
+          1.29,
+          3.6
+        ],
+        "Coolbet": [
+          1.29,
+          3.65
+        ],
         "BetAnything": [
-          1.31,
-          3.47
+          1.28,
+          3.75
         ]
       },
       "court": "shanghai",
@@ -117,22 +497,22 @@
         "serve": 0.7569,
         "w": 0.55
       },
-      "pinnacle_a": 0.7282,
+      "pinnacle_a": 0.7524,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.74,
-          "odds": 1.327,
-          "ev": -0.0489,
+          "cost": 0.75,
+          "odds": 1.31,
+          "ev": -0.0611,
           "ticker": "KXATPMATCH-26OCT11KHAMAN-KHA"
         },
         "b": {
-          "cost": 0.27,
-          "odds": 3.524,
-          "ev": -0.0017,
+          "cost": 0.26,
+          "odds": 3.657,
+          "ev": 0.036,
           "ticker": "KXATPMATCH-26OCT11KHAMAN-MAN"
         },
-        "market_a": 0.735,
+        "market_a": 0.745,
         "event": "KXATPMATCH-26OCT11KHAMAN",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct11khaman"
       }
@@ -151,10 +531,10 @@
         "key": "b-shelton",
         "model": 0.6193,
         "fair_odds": 1.61,
-        "market": 0.707,
-        "best_odds": 1.39,
+        "market": 0.7104,
+        "best_odds": 1.38,
         "book": "Betfair",
-        "ev": -0.1391,
+        "ev": -0.1453,
         "kelly": 0.0
       },
       "b": {
@@ -162,25 +542,25 @@
         "key": "a-gea",
         "model": 0.3807,
         "fair_odds": 2.63,
-        "market": 0.293,
-        "best_odds": 3.5,
+        "market": 0.2896,
+        "best_odds": 3.55,
         "book": "Betfair",
-        "ev": 0.3323,
-        "kelly": 0.0332
+        "ev": 0.3513,
+        "kelly": 0.0344
       },
       "books": 20,
       "prices": {
         "Unibet (FR)": [
-          1.33,
-          3.15
+          1.34,
+          3.3
         ],
         "GTbets": [
           1.35,
           3.32
         ],
         "1xBet": [
-          1.37,
-          3.22
+          1.36,
+          3.27
         ],
         "Tipico": [
           1.3,
@@ -211,12 +591,12 @@
           3.2
         ],
         "Pinnacle": [
-          1.38,
-          3.36
+          1.35,
+          3.51
         ],
         "888sport": [
-          1.36,
-          3.1
+          1.33,
+          3.3
         ],
         "Nordic Bet": [
           1.35,
@@ -227,16 +607,16 @@
           3.25
         ],
         "William Hill": [
-          1.36,
-          3.1
+          1.33,
+          3.3
         ],
         "BetOnline.ag": [
-          1.34,
-          3.37
+          1.36,
+          3.3
         ],
         "Coolbet": [
-          1.35,
-          3.25
+          1.34,
+          3.3
         ],
         "BetAnything": [
           1.34,
@@ -250,7 +630,7 @@
         "serve": 0.5717,
         "w": 0.55
       },
-      "pinnacle_a": 0.7089,
+      "pinnacle_a": 0.7222,
       "flags": [],
       "kalshi": {
         "a": {
@@ -271,6 +651,359 @@
       }
     },
     {
+      "id": "sched-12169818",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T04:30:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "H. Shi",
+        "key": "h-shi",
+        "model": 0.3462,
+        "fair_odds": 2.89,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "b": {
+        "name": "K. Rakhimova",
+        "key": "k-rakhimova",
+        "model": 0.6538,
+        "fair_odds": 1.53,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "books": 0,
+      "no_odds": true,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3014,
+        "serve": 0.4008,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "thin",
+          "H. Shi: only 6 matches in 12 months"
+        ]
+      ],
+      "kalshi": {
+        "a": {
+          "cost": 0.27,
+          "odds": 3.524,
+          "ev": 0.22,
+          "ticker": "KXWTAMATCH-26OCT10SHIRAK-SHI"
+        },
+        "b": {
+          "cost": 0.75,
+          "odds": 1.31,
+          "ev": -0.1435,
+          "ticker": "KXWTAMATCH-26OCT10SHIRAK-RAK"
+        },
+        "market_a": 0.2624,
+        "event": "KXWTAMATCH-26OCT10SHIRAK",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct10shirak"
+      }
+    },
+    {
+      "id": "apit-12169836",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T04:30:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "L. Tararudee",
+        "key": "l-tararudee",
+        "model": 0.4282,
+        "fair_odds": 2.34,
+        "market": 0.4535,
+        "best_odds": 2.11,
+        "book": "Pncl",
+        "ev": -0.0965,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "C. McNally",
+        "key": "c-mcnally",
+        "model": 0.5718,
+        "fair_odds": 1.75,
+        "market": 0.5465,
+        "best_odds": 1.75,
+        "book": "Pncl",
+        "ev": 0.0007,
+        "kelly": 0.0002
+      },
+      "books": 9,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.4117,
+        "serve": 0.4484,
+        "w": 0.45
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          2.0,
+          1.73
+        ],
+        "bet365": [
+          2.1,
+          1.66
+        ],
+        "Marathon": [
+          2.01,
+          1.7
+        ],
+        "BetVictor": [
+          2.05,
+          1.7
+        ],
+        "Pncl": [
+          2.11,
+          1.75
+        ],
+        "Sbo": [
+          1.98,
+          1.7
+        ],
+        "1xBet": [
+          2.02,
+          1.69
+        ],
+        "Betano": [
+          2.07,
+          1.7
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.4534,
+      "kalshi": {
+        "a": {
+          "cost": 0.46,
+          "odds": 2.095,
+          "ev": -0.1029,
+          "ticker": "KXWTAMATCH-26OCT11TARMCC-TAR"
+        },
+        "b": {
+          "cost": 0.55,
+          "odds": 1.763,
+          "ev": 0.0081,
+          "ticker": "KXWTAMATCH-26OCT11TARMCC-MCC"
+        },
+        "market_a": 0.4523,
+        "event": "KXWTAMATCH-26OCT11TARMCC",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct11tarmcc"
+      }
+    },
+    {
+      "id": "apit-12169840",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T04:30:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "A. Bondar",
+        "key": "a-bondar",
+        "model": 0.5201,
+        "fair_odds": 1.92,
+        "market": 0.5427,
+        "best_odds": 1.75,
+        "book": "Pncl",
+        "ev": -0.0899,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "M. Sawangkaew",
+        "key": "m-sawangkaew",
+        "model": 0.4799,
+        "fair_odds": 2.08,
+        "market": 0.4573,
+        "best_odds": 2.12,
+        "book": "Pncl",
+        "ev": 0.0174,
+        "kelly": 0.0039
+      },
+      "books": 9,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5158,
+        "serve": 0.5253,
+        "w": 0.45
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          1.73,
+          2.0
+        ],
+        "Marathon": [
+          1.69,
+          2.02
+        ],
+        "BetVictor": [
+          1.73,
+          2.0
+        ],
+        "Pncl": [
+          1.75,
+          2.12
+        ],
+        "Sbo": [
+          1.71,
+          1.98
+        ],
+        "1xBet": [
+          1.69,
+          2.02
+        ],
+        "bet365": [
+          1.72,
+          2.0
+        ],
+        "Betano": [
+          1.72,
+          2.05
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.5478,
+      "kalshi": {
+        "a": {
+          "cost": 0.55,
+          "odds": 1.763,
+          "ev": -0.0831,
+          "ticker": "KXWTAMATCH-26OCT11BONSAW-BON"
+        },
+        "b": {
+          "cost": 0.46,
+          "odds": 2.095,
+          "ev": 0.0054,
+          "ticker": "KXWTAMATCH-26OCT11BONSAW-SAW"
+        },
+        "market_a": 0.5477,
+        "event": "KXWTAMATCH-26OCT11BONSAW",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct11bonsaw"
+      }
+    },
+    {
+      "id": "apit-12169847",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan (qualifying)",
+      "round": "WTA Wuhan - Final",
+      "start": "2026-10-11T04:30:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "C. Osorio",
+        "key": "c-osorio",
+        "model": 0.478,
+        "fair_odds": 2.09,
+        "market": 0.4262,
+        "best_odds": 2.31,
+        "book": "Pncl",
+        "ev": 0.1041,
+        "kelly": 0.0199
+      },
+      "b": {
+        "name": "K. Volynets",
+        "key": "k-volynets",
+        "model": 0.522,
+        "fair_odds": 1.92,
+        "market": 0.5738,
+        "best_odds": 1.67,
+        "book": "Betfair",
+        "ev": -0.1282,
+        "kelly": 0.0
+      },
+      "books": 9,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.4914,
+        "serve": 0.4616,
+        "w": 0.45
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          2.2,
+          1.62
+        ],
+        "Marathon": [
+          2.14,
+          1.62
+        ],
+        "BetVictor": [
+          2.2,
+          1.62
+        ],
+        "Pncl": [
+          2.31,
+          1.64
+        ],
+        "1xBet": [
+          2.14,
+          1.64
+        ],
+        "Sbo": [
+          2.19,
+          1.59
+        ],
+        "Betano": [
+          2.22,
+          1.62
+        ],
+        "bet365": [
+          2.2,
+          1.61
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.4152,
+      "kalshi": {
+        "a": {
+          "cost": 0.43,
+          "odds": 2.236,
+          "ev": 0.0688,
+          "ticker": "KXWTAMATCH-26OCT11OSOVOL-OSO"
+        },
+        "b": {
+          "cost": 0.58,
+          "odds": 1.675,
+          "ev": -0.1256,
+          "ticker": "KXWTAMATCH-26OCT11OSOVOL-VOL"
+        },
+        "market_a": 0.425,
+        "event": "KXWTAMATCH-26OCT11OSOVOL",
+        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct11osovol"
+      }
+    },
+    {
       "id": "ed0f82f195d0edeb15e0672bf51496a0",
       "tour": "ATP",
       "tournament": "ATP Shanghai Masters",
@@ -284,21 +1017,21 @@
         "key": "a-de-minaur",
         "model": 0.7352,
         "fair_odds": 1.36,
-        "market": 0.6955,
-        "best_odds": 1.42,
-        "book": "Betfair",
-        "ev": 0.044,
-        "kelly": 0.0262
+        "market": 0.6984,
+        "best_odds": 1.43,
+        "book": "Matchbook",
+        "ev": 0.0513,
+        "kelly": 0.0298
       },
       "b": {
         "name": "Rei Sakamoto",
         "key": "r-sakamoto",
         "model": 0.2648,
         "fair_odds": 3.78,
-        "market": 0.3045,
-        "best_odds": 3.34,
-        "book": "BetOnline.ag",
-        "ev": -0.1155,
+        "market": 0.3016,
+        "best_odds": 3.3,
+        "book": "Betfair",
+        "ev": -0.1261,
         "kelly": 0.0
       },
       "books": 18,
@@ -308,19 +1041,19 @@
           3.26
         ],
         "1xBet": [
-          1.39,
-          3.1
+          1.38,
+          3.14
         ],
         "Tipico": [
-          1.35,
-          2.95
+          1.32,
+          3.1
         ],
         "Winamax (FR)": [
-          1.39,
+          1.38,
           3.0
         ],
         "Winamax (DE)": [
-          1.41,
+          1.4,
           3.1
         ],
         "LeoVegas (SE)": [
@@ -340,32 +1073,32 @@
           3.3
         ],
         "888sport": [
-          1.4,
-          2.9
+          1.36,
+          3.1
         ],
         "Nordic Bet": [
           1.39,
-          3.0
+          3.05
         ],
         "Betsson": [
           1.39,
-          3.0
+          3.05
         ],
         "William Hill": [
-          1.4,
-          2.9
+          1.36,
+          3.1
         ],
         "Pinnacle": [
-          1.42,
-          3.14
+          1.4,
+          3.21
         ],
         "BetOnline.ag": [
-          1.35,
-          3.34
+          1.38,
+          3.14
         ],
         "BetAnything": [
-          1.38,
-          3.15
+          1.39,
+          3.05
         ]
       },
       "court": "shanghai",
@@ -375,18 +1108,18 @@
         "serve": 0.7168,
         "w": 0.55
       },
-      "pinnacle_a": 0.6886,
+      "pinnacle_a": 0.6963,
       "flags": [
         [
           "retired",
-          "A. De Minaur: retired from a match 4 days ago"
+          "A. De Minaur: retired from a match 5 days ago"
         ]
       ],
       "kalshi": {
         "a": {
-          "cost": 0.7,
-          "odds": 1.399,
-          "ev": 0.0285,
+          "cost": 0.71,
+          "odds": 1.38,
+          "ev": 0.0146,
           "ticker": "KXATPMATCH-26OCT09DESAK-DE"
         },
         "b": {
@@ -395,7 +1128,7 @@
           "ev": -0.1852,
           "ticker": "KXATPMATCH-26OCT09DESAK-SAK"
         },
-        "market_a": 0.695,
+        "market_a": 0.698,
         "event": "KXATPMATCH-26OCT09DESAK",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct09desak"
       }
@@ -414,7 +1147,7 @@
         "key": "h-hurkacz",
         "model": 0.8434,
         "fair_odds": 1.19,
-        "market": 0.8426,
+        "market": 0.8429,
         "best_odds": 1.16,
         "book": "Betfair",
         "ev": -0.0217,
@@ -425,11 +1158,11 @@
         "key": "y-zhou",
         "model": 0.1566,
         "fair_odds": 6.38,
-        "market": 0.1574,
-        "best_odds": 6.8,
-        "book": "Betfair",
-        "ev": 0.0651,
-        "kelly": 0.0028
+        "market": 0.1571,
+        "best_odds": 6.89,
+        "book": "Pinnacle",
+        "ev": 0.0792,
+        "kelly": 0.0034
       },
       "books": 18,
       "prices": {
@@ -447,7 +1180,7 @@
         ],
         "1xBet": [
           1.14,
-          6.08
+          6.12
         ],
         "LeoVegas (SE)": [
           1.13,
@@ -466,8 +1199,8 @@
           5.8
         ],
         "Pinnacle": [
-          1.14,
-          6.72
+          1.13,
+          6.89
         ],
         "888sport": [
           1.12,
@@ -490,12 +1223,12 @@
           6.1
         ],
         "BetOnline.ag": [
-          1.13,
-          6.16
+          1.14,
+          5.96
         ],
         "BetAnything": [
           1.12,
-          6.0
+          6.25
         ]
       },
       "court": "shanghai",
@@ -505,11 +1238,11 @@
         "serve": 0.8513,
         "w": 0.55
       },
-      "pinnacle_a": 0.855,
+      "pinnacle_a": 0.8591,
       "flags": [
         [
           "retired",
-          "H. Hurkacz: retired from a match 5 days ago (2 in 6 months)"
+          "H. Hurkacz: retired from a match 6 days ago (2 in 6 months)"
         ]
       ],
       "kalshi": {
@@ -520,12 +1253,12 @@
           "ticker": "KXATPMATCH-26OCT11HURZHO-HUR"
         },
         "b": {
-          "cost": 0.15,
-          "odds": 6.292,
-          "ev": -0.0147,
+          "cost": 0.14,
+          "odds": 6.737,
+          "ev": 0.055,
           "ticker": "KXATPMATCH-26OCT11HURZHO-ZHO"
         },
-        "market_a": 0.8607,
+        "market_a": 0.8643,
         "event": "KXATPMATCH-26OCT11HURZHO",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct11hurzho"
       }
@@ -544,21 +1277,21 @@
         "key": "f-cerundolo",
         "model": 0.5024,
         "fair_odds": 1.99,
-        "market": 0.4189,
-        "best_odds": 2.36,
+        "market": 0.4195,
+        "best_odds": 2.38,
         "book": "Betfair",
-        "ev": 0.1856,
-        "kelly": 0.0341
+        "ev": 0.1957,
+        "kelly": 0.0354
       },
       "b": {
         "name": "Jakub Mensik",
         "key": "j-mensik",
         "model": 0.4976,
         "fair_odds": 2.01,
-        "market": 0.5811,
-        "best_odds": 1.73,
+        "market": 0.5805,
+        "best_odds": 1.71,
         "book": "Betfair",
-        "ev": -0.1391,
+        "ev": -0.1491,
         "kelly": 0.0
       },
       "books": 20,
@@ -604,12 +1337,12 @@
           1.62
         ],
         "Pinnacle": [
-          2.36,
-          1.67
+          2.32,
+          1.68
         ],
         "BetOnline.ag": [
-          2.35,
-          1.65
+          2.3,
+          1.67
         ],
         "888sport": [
           2.2,
@@ -632,8 +1365,8 @@
           1.64
         ],
         "BetAnything": [
-          2.35,
-          1.65
+          2.3,
+          1.67
         ]
       },
       "court": "shanghai",
@@ -643,7 +1376,7 @@
         "serve": 0.509,
         "w": 0.55
       },
-      "pinnacle_a": 0.4144,
+      "pinnacle_a": 0.42,
       "flags": [],
       "kalshi": {
         "a": {
@@ -677,10 +1410,10 @@
         "key": "a-bublik",
         "model": 0.3979,
         "fair_odds": 2.51,
-        "market": 0.45,
-        "best_odds": 2.26,
+        "market": 0.4556,
+        "best_odds": 2.15,
         "book": "GTbets",
-        "ev": -0.1007,
+        "ev": -0.1444,
         "kelly": 0.0
       },
       "b": {
@@ -688,7 +1421,7 @@
         "key": "b-nakashima",
         "model": 0.6021,
         "fair_odds": 1.66,
-        "market": 0.55,
+        "market": 0.5444,
         "best_odds": 1.86,
         "book": "Betfair",
         "ev": 0.1198,
@@ -713,16 +1446,16 @@
           1.72
         ],
         "1xBet": [
-          2.13,
-          1.75
+          2.09,
+          1.77
         ],
         "GTbets": [
-          2.26,
+          2.15,
           1.64
         ],
         "Unibet (FR)": [
-          2.1,
-          1.64
+          2.05,
+          1.68
         ],
         "Winamax (FR)": [
           2.1,
@@ -733,16 +1466,16 @@
           1.76
         ],
         "Pinnacle": [
-          2.16,
-          1.78
+          2.06,
+          1.85
         ],
         "BetOnline.ag": [
-          2.07,
-          1.79
+          2.02,
+          1.82
         ],
         "Tipico": [
-          2.05,
-          1.7
+          2.0,
+          1.72
         ],
         "888sport": [
           2.1,
@@ -753,20 +1486,20 @@
           1.73
         ],
         "Betsson": [
-          2.17,
-          1.7
-        ],
-        "Nordic Bet": [
-          2.17,
-          1.7
-        ],
-        "Coolbet": [
           2.12,
           1.73
         ],
+        "Nordic Bet": [
+          2.12,
+          1.73
+        ],
+        "Coolbet": [
+          2.08,
+          1.76
+        ],
         "BetAnything": [
-          2.0,
-          1.77
+          1.95,
+          1.8
         ]
       },
       "court": "shanghai",
@@ -776,13 +1509,13 @@
         "serve": 0.4081,
         "w": 0.55
       },
-      "pinnacle_a": 0.4518,
+      "pinnacle_a": 0.4731,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.46,
-          "odds": 2.095,
-          "ev": -0.1664,
+          "cost": 0.47,
+          "odds": 2.052,
+          "ev": -0.1835,
           "ticker": "KXATPMATCH-26OCT09BUBNAK-BUB"
         },
         "b": {
@@ -791,7 +1524,7 @@
           "ev": 0.0802,
           "ticker": "KXATPMATCH-26OCT09BUBNAK-NAK"
         },
-        "market_a": 0.4596,
+        "market_a": 0.465,
         "event": "KXATPMATCH-26OCT09BUBNAK",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct09bubnak"
       }
@@ -810,10 +1543,10 @@
         "key": "a-zverev",
         "model": 0.8207,
         "fair_odds": 1.22,
-        "market": 0.8424,
-        "best_odds": 1.16,
+        "market": 0.8417,
+        "best_odds": 1.17,
         "book": "Betfair",
-        "ev": -0.048,
+        "ev": -0.0398,
         "kelly": 0.0
       },
       "b": {
@@ -821,9 +1554,9 @@
         "key": "q-halys",
         "model": 0.1793,
         "fair_odds": 5.58,
-        "market": 0.1576,
+        "market": 0.1583,
         "best_odds": 7.0,
-        "book": "Betfair",
+        "book": "888sport",
         "ev": 0.2552,
         "kelly": 0.0106
       },
@@ -831,7 +1564,7 @@
       "prices": {
         "1xBet": [
           1.15,
-          5.9
+          5.93
         ],
         "Unibet (FR)": [
           1.11,
@@ -859,7 +1592,7 @@
         ],
         "Pinnacle": [
           1.15,
-          6.33
+          6.39
         ],
         "Winamax (DE)": [
           1.13,
@@ -909,7 +1642,7 @@
         "serve": 0.8043,
         "w": 0.55
       },
-      "pinnacle_a": 0.8463,
+      "pinnacle_a": 0.8475,
       "flags": [],
       "kalshi": {
         "a": {
@@ -943,7 +1676,7 @@
         "key": "a-davidovich-fokina",
         "model": 0.4727,
         "fair_odds": 2.12,
-        "market": 0.4981,
+        "market": 0.4993,
         "best_odds": 1.97,
         "book": "Betfair",
         "ev": -0.0689,
@@ -954,7 +1687,7 @@
         "key": "f-tiafoe",
         "model": 0.5273,
         "fair_odds": 1.9,
-        "market": 0.5019,
+        "market": 0.5007,
         "best_odds": 2.0,
         "book": "Betfair",
         "ev": 0.0547,
@@ -1023,16 +1756,16 @@
           1.9
         ],
         "BetOnline.ag": [
-          1.91,
-          1.91
+          1.86,
+          1.96
         ],
         "Coolbet": [
           1.89,
           1.92
         ],
         "BetAnything": [
-          1.91,
-          1.83
+          1.87,
+          1.87
         ]
       },
       "court": "shanghai",
@@ -1076,9 +1809,9 @@
         "key": "q-zheng",
         "model": 0.3078,
         "fair_odds": 3.25,
-        "market": 0.3737,
+        "market": 0.3738,
         "best_odds": 2.66,
-        "book": "Matchbook",
+        "book": "Betfair",
         "ev": -0.1813,
         "kelly": 0.0
       },
@@ -1087,11 +1820,11 @@
         "key": "m-andreeva",
         "model": 0.6922,
         "fair_odds": 1.44,
-        "market": 0.6263,
-        "best_odds": 1.6,
+        "market": 0.6262,
+        "best_odds": 1.59,
         "book": "Betfair",
-        "ev": 0.1075,
-        "kelly": 0.0448
+        "ev": 0.1006,
+        "kelly": 0.0426
       },
       "books": 20,
       "prices": {
@@ -1112,7 +1845,7 @@
           1.53
         ],
         "1xBet": [
-          2.52,
+          2.5,
           1.54
         ],
         "Betsson": [
@@ -1164,8 +1897,8 @@
           1.53
         ],
         "BetOnline.ag": [
-          2.61,
-          1.54
+          2.57,
+          1.56
         ]
       },
       "court": "beijing",
@@ -1196,6 +1929,1219 @@
       }
     },
     {
+      "id": "7d1f6f53111d38457872593fce36069b",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Anhelina Kalinina",
+        "key": "a-kalinina",
+        "model": 0.3428,
+        "fair_odds": 2.92,
+        "market": 0.3675,
+        "best_odds": 2.63,
+        "book": "Unibet (NL)",
+        "ev": -0.0983,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Sonay Kartal",
+        "key": "s-kartal",
+        "model": 0.6572,
+        "fair_odds": 1.52,
+        "market": 0.6325,
+        "best_odds": 1.53,
+        "book": "888sport",
+        "ev": 0.0055,
+        "kelly": 0.0026
+      },
+      "books": 6,
+      "prices": {
+        "Unibet (NL)": [
+          2.63,
+          1.49
+        ],
+        "Coolbet": [
+          2.6,
+          1.5
+        ],
+        "888sport": [
+          2.5,
+          1.53
+        ],
+        "Unibet (FR)": [
+          2.4,
+          1.42
+        ],
+        "PMU (FR)": [
+          2.5,
+          1.43
+        ],
+        "1xBet": [
+          2.62,
+          1.49
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3199,
+        "serve": 0.3708,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "specialist",
+          "A. Kalinina: clay-court specialist (54% of matches on clay), now on hard"
+        ]
+      ]
+    },
+    {
+      "id": "97d66b459517d34fc704b84d724d1fc9",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Ann Li",
+        "key": "a-li",
+        "model": 0.3173,
+        "fair_odds": 3.15,
+        "market": 0.322,
+        "best_odds": 3.05,
+        "book": "Betsson",
+        "ev": -0.0322,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Qinwen Zheng",
+        "key": "q-zheng",
+        "model": 0.6827,
+        "fair_odds": 1.46,
+        "market": 0.678,
+        "best_odds": 1.41,
+        "book": "Unibet (NL)",
+        "ev": -0.0374,
+        "kelly": 0.0
+      },
+      "books": 8,
+      "prices": {
+        "Unibet (NL)": [
+          2.9,
+          1.41
+        ],
+        "Betsson": [
+          3.05,
+          1.39
+        ],
+        "Coolbet": [
+          3.03,
+          1.39
+        ],
+        "Nordic Bet": [
+          3.05,
+          1.39
+        ],
+        "888sport": [
+          2.9,
+          1.4
+        ],
+        "Unibet (FR)": [
+          2.7,
+          1.33
+        ],
+        "PMU (FR)": [
+          2.75,
+          1.36
+        ],
+        "1xBet": [
+          2.95,
+          1.4
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3027,
+        "serve": 0.3352,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "30d197741d23f347100f873e4d1433d7",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Diane Parry",
+        "key": "d-parry",
+        "model": 0.3255,
+        "fair_odds": 3.07,
+        "market": 0.3412,
+        "best_odds": 2.8,
+        "book": "Unibet (NL)",
+        "ev": -0.0886,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Anna Kalinskaya",
+        "key": "a-kalinskaya",
+        "model": 0.6745,
+        "fair_odds": 1.48,
+        "market": 0.6588,
+        "best_odds": 1.45,
+        "book": "1xBet",
+        "ev": -0.022,
+        "kelly": 0.0
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          2.8,
+          1.43
+        ],
+        "Betsson": [
+          2.8,
+          1.44
+        ],
+        "Coolbet": [
+          2.8,
+          1.44
+        ],
+        "Nordic Bet": [
+          2.8,
+          1.44
+        ],
+        "Unibet (FR)": [
+          2.55,
+          1.38
+        ],
+        "PMU (FR)": [
+          2.7,
+          1.36
+        ],
+        "1xBet": [
+          2.75,
+          1.45
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.2906,
+        "serve": 0.3681,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "retired",
+          "A. Kalinskaya: retired from a match 8 days ago (3 in 6 months)"
+        ]
+      ]
+    },
+    {
+      "id": "07ed704dea4dc8fe57d666b30315d078",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Belinda Bencic",
+        "key": "b-bencic",
+        "model": 0.81,
+        "fair_odds": 1.23,
+        "market": 0.7707,
+        "best_odds": 1.26,
+        "book": "1xBet",
+        "ev": 0.0206,
+        "kelly": 0.0198
+      },
+      "b": {
+        "name": "Shuai Zhang",
+        "key": "s-zhang",
+        "model": 0.19,
+        "fair_odds": 5.26,
+        "market": 0.2293,
+        "best_odds": 4.5,
+        "book": "Coolbet",
+        "ev": -0.1449,
+        "kelly": 0.0
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          1.23,
+          4.2
+        ],
+        "Betsson": [
+          1.22,
+          4.3
+        ],
+        "Coolbet": [
+          1.21,
+          4.5
+        ],
+        "Nordic Bet": [
+          1.22,
+          4.3
+        ],
+        "Unibet (FR)": [
+          1.18,
+          3.65
+        ],
+        "PMU (FR)": [
+          1.19,
+          3.9
+        ],
+        "1xBet": [
+          1.26,
+          3.85
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.8345,
+        "serve": 0.7801,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "retired",
+          "B. Bencic: retired from a match 56 days ago"
+        ]
+      ]
+    },
+    {
+      "id": "3b1a4c9abfd1c51ab97cef7443137a3a",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Clara Tauson",
+        "key": "c-tauson",
+        "model": 0.3208,
+        "fair_odds": 3.12,
+        "market": 0.2964,
+        "best_odds": 3.4,
+        "book": "Unibet (NL)",
+        "ev": 0.0908,
+        "kelly": 0.0095
+      },
+      "b": {
+        "name": "Marie Bouzkova",
+        "key": "m-bouzkova",
+        "model": 0.6792,
+        "fair_odds": 1.47,
+        "market": 0.7036,
+        "best_odds": 1.36,
+        "book": "Betsson",
+        "ev": -0.0763,
+        "kelly": 0.0
+      },
+      "books": 8,
+      "prices": {
+        "Unibet (NL)": [
+          3.4,
+          1.32
+        ],
+        "Betsson": [
+          3.15,
+          1.36
+        ],
+        "Coolbet": [
+          3.25,
+          1.35
+        ],
+        "Nordic Bet": [
+          3.15,
+          1.36
+        ],
+        "888sport": [
+          3.1,
+          1.36
+        ],
+        "Unibet (FR)": [
+          2.85,
+          1.3
+        ],
+        "PMU (FR)": [
+          3.25,
+          1.26
+        ],
+        "1xBet": [
+          3.19,
+          1.35
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3455,
+        "serve": 0.2907,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "58a05f658522b6d5023cf97d25398dd0",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Dayana Yastremska",
+        "key": "d-yastremska",
+        "model": 0.4203,
+        "fair_odds": 2.38,
+        "market": 0.5557,
+        "best_odds": 1.72,
+        "book": "Betsson",
+        "ev": -0.2771,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Cristina Bucsa",
+        "key": "c-bucsa",
+        "model": 0.5797,
+        "fair_odds": 1.73,
+        "market": 0.4443,
+        "best_odds": 2.17,
+        "book": "Unibet (NL)",
+        "ev": 0.2579,
+        "kelly": 0.0551
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          1.68,
+          2.17
+        ],
+        "Betsson": [
+          1.72,
+          2.13
+        ],
+        "Coolbet": [
+          1.71,
+          2.15
+        ],
+        "Nordic Bet": [
+          1.72,
+          2.13
+        ],
+        "Unibet (FR)": [
+          1.63,
+          1.98
+        ],
+        "PMU (FR)": [
+          1.61,
+          2.07
+        ],
+        "1xBet": [
+          1.72,
+          2.12
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.4299,
+        "serve": 0.4085,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "6249729c3a053b2b04a71c7ebb8a5592",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Daria Snigur",
+        "key": "d-snigur",
+        "model": 0.3616,
+        "fair_odds": 2.77,
+        "market": 0.3177,
+        "best_odds": 3.1,
+        "book": "Unibet (NL)",
+        "ev": 0.121,
+        "kelly": 0.0144
+      },
+      "b": {
+        "name": "Elise Mertens",
+        "key": "e-mertens",
+        "model": 0.6384,
+        "fair_odds": 1.57,
+        "market": 0.6823,
+        "best_odds": 1.41,
+        "book": "1xBet",
+        "ev": -0.0999,
+        "kelly": 0.0
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          3.1,
+          1.36
+        ],
+        "Betsson": [
+          3.0,
+          1.4
+        ],
+        "Coolbet": [
+          3.03,
+          1.39
+        ],
+        "Nordic Bet": [
+          3.0,
+          1.4
+        ],
+        "Unibet (FR)": [
+          2.7,
+          1.34
+        ],
+        "PMU (FR)": [
+          2.95,
+          1.32
+        ],
+        "1xBet": [
+          2.9,
+          1.41
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3923,
+        "serve": 0.3241,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "edb71f781bacf9149fb99fe258f18a77",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Katie Boulter",
+        "key": "k-boulter",
+        "model": 0.2407,
+        "fair_odds": 4.15,
+        "market": 0.2617,
+        "best_odds": 3.85,
+        "book": "Unibet (NL)",
+        "ev": -0.0734,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Diana Shnaider",
+        "key": "d-shnaider",
+        "model": 0.7593,
+        "fair_odds": 1.32,
+        "market": 0.7383,
+        "best_odds": 1.3,
+        "book": "1xBet",
+        "ev": -0.0129,
+        "kelly": 0.0
+      },
+      "books": 5,
+      "prices": {
+        "Unibet (NL)": [
+          3.85,
+          1.26
+        ],
+        "Coolbet": [
+          3.65,
+          1.29
+        ],
+        "Unibet (FR)": [
+          3.2,
+          1.24
+        ],
+        "PMU (FR)": [
+          3.6,
+          1.21
+        ],
+        "1xBet": [
+          3.52,
+          1.3
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.2906,
+        "serve": 0.1796,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "60942cefceead65ac71ce9b5626189da",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Maria Sakkari",
+        "key": "m-sakkari",
+        "model": 0.6896,
+        "fair_odds": 1.45,
+        "market": 0.6218,
+        "best_odds": 1.57,
+        "book": "1xBet",
+        "ev": 0.0827,
+        "kelly": 0.0363
+      },
+      "b": {
+        "name": "Donna Vekic",
+        "key": "d-vekic",
+        "model": 0.3104,
+        "fair_odds": 3.22,
+        "market": 0.3782,
+        "best_odds": 2.6,
+        "book": "Unibet (NL)",
+        "ev": -0.1929,
+        "kelly": 0.0
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          1.5,
+          2.6
+        ],
+        "Betsson": [
+          1.53,
+          2.55
+        ],
+        "Coolbet": [
+          1.54,
+          2.5
+        ],
+        "Nordic Bet": [
+          1.53,
+          2.55
+        ],
+        "Unibet (FR)": [
+          1.45,
+          2.3
+        ],
+        "PMU (FR)": [
+          1.43,
+          2.45
+        ],
+        "1xBet": [
+          1.57,
+          2.4
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.6649,
+        "serve": 0.7198,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "fd98debe847b0a1e0eb6de258518fba3",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Ekaterina Alexandrova",
+        "key": "e-alexandrova",
+        "model": 0.5029,
+        "fair_odds": 1.99,
+        "market": 0.5273,
+        "best_odds": 1.85,
+        "book": "Coolbet",
+        "ev": -0.0696,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Leylah Fernandez",
+        "key": "l-fernandez",
+        "model": 0.4971,
+        "fair_odds": 2.01,
+        "market": 0.4727,
+        "best_odds": 2.06,
+        "book": "Unibet (NL)",
+        "ev": 0.024,
+        "kelly": 0.0057
+      },
+      "books": 5,
+      "prices": {
+        "Unibet (NL)": [
+          1.77,
+          2.06
+        ],
+        "Coolbet": [
+          1.85,
+          1.96
+        ],
+        "Unibet (FR)": [
+          1.72,
+          1.86
+        ],
+        "PMU (FR)": [
+          1.7,
+          1.96
+        ],
+        "1xBet": [
+          1.79,
+          2.01
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5129,
+        "serve": 0.4906,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "b656aa0b1d9d8a618a4fea56f0f42777",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Guo Hanyu",
+        "key": "h-guo",
+        "model": 0.0935,
+        "fair_odds": 10.69,
+        "market": 0.1486,
+        "best_odds": 7.5,
+        "book": "Unibet (NL)",
+        "ev": -0.2985,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Sorana Cirstea",
+        "key": "s-cirstea",
+        "model": 0.9065,
+        "fair_odds": 1.1,
+        "market": 0.8514,
+        "best_odds": 1.12,
+        "book": "Betsson",
+        "ev": 0.0152,
+        "kelly": 0.0318
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          7.5,
+          1.09
+        ],
+        "Betsson": [
+          6.2,
+          1.12
+        ],
+        "Coolbet": [
+          6.4,
+          1.12
+        ],
+        "Nordic Bet": [
+          6.2,
+          1.12
+        ],
+        "Unibet (FR)": [
+          4.9,
+          1.09
+        ],
+        "PMU (FR)": [
+          6.75,
+          1.05
+        ],
+        "1xBet": [
+          6.65,
+          1.1
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.0919,
+        "serve": 0.0956,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "layoff",
+          "H. Guo: first match in 46 days"
+        ]
+      ]
+    },
+    {
+      "id": "1356943371df609938b43fc463f52d22",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Janice Tjen",
+        "key": "j-tjen",
+        "model": 0.564,
+        "fair_odds": 1.77,
+        "market": 0.7182,
+        "best_odds": 1.34,
+        "book": "1xBet",
+        "ev": -0.2442,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Oleksandra Oliynykova",
+        "key": "o-oliynykova",
+        "model": 0.436,
+        "fair_odds": 2.29,
+        "market": 0.2818,
+        "best_odds": 3.55,
+        "book": "Coolbet",
+        "ev": 0.5477,
+        "kelly": 0.0537
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          1.32,
+          3.4
+        ],
+        "Betsson": [
+          1.32,
+          3.45
+        ],
+        "Coolbet": [
+          1.3,
+          3.55
+        ],
+        "Nordic Bet": [
+          1.32,
+          3.45
+        ],
+        "Unibet (FR)": [
+          1.27,
+          3.05
+        ],
+        "PMU (FR)": [
+          1.27,
+          3.2
+        ],
+        "1xBet": [
+          1.34,
+          3.23
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5502,
+        "serve": 0.5809,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "specialist",
+          "O. Oliynykova: clay-court specialist (54% of matches on clay), now on hard"
+        ],
+        [
+          "disagree",
+          "Model and market differ by 15 points"
+        ]
+      ]
+    },
+    {
+      "id": "1d9a29a804b4347c15e129def9d5991a",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Jasmine Paolini",
+        "key": "j-paolini",
+        "model": 0.4717,
+        "fair_odds": 2.12,
+        "market": 0.4979,
+        "best_odds": 1.92,
+        "book": "Coolbet",
+        "ev": -0.0943,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Sara Bejlek",
+        "key": "s-bejlek",
+        "model": 0.5283,
+        "fair_odds": 1.89,
+        "market": 0.5021,
+        "best_odds": 1.89,
+        "book": "Unibet (NL)",
+        "ev": -0.0016,
+        "kelly": 0.0
+      },
+      "books": 5,
+      "prices": {
+        "Unibet (NL)": [
+          1.89,
+          1.89
+        ],
+        "Coolbet": [
+          1.92,
+          1.89
+        ],
+        "Unibet (FR)": [
+          1.8,
+          1.78
+        ],
+        "PMU (FR)": [
+          1.82,
+          1.82
+        ],
+        "1xBet": [
+          1.91,
+          1.88
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5173,
+        "serve": 0.4161,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "151c74daf0dab5e36cb9e4534b7ee96e",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Katerina Siniakova",
+        "key": "k-siniakova",
+        "model": 0.5417,
+        "fair_odds": 1.85,
+        "market": 0.4556,
+        "best_odds": 2.17,
+        "book": "Unibet (NL)",
+        "ev": 0.1754,
+        "kelly": 0.0375
+      },
+      "b": {
+        "name": "Liudmila Samsonova",
+        "key": "l-samsonova",
+        "model": 0.4583,
+        "fair_odds": 2.18,
+        "market": 0.5444,
+        "best_odds": 1.78,
+        "book": "Betsson",
+        "ev": -0.1842,
+        "kelly": 0.0
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          2.17,
+          1.68
+        ],
+        "Betsson": [
+          2.05,
+          1.78
+        ],
+        "Coolbet": [
+          2.05,
+          1.78
+        ],
+        "Nordic Bet": [
+          2.05,
+          1.78
+        ],
+        "Unibet (FR)": [
+          1.91,
+          1.68
+        ],
+        "PMU (FR)": [
+          2.08,
+          1.62
+        ],
+        "1xBet": [
+          2.09,
+          1.73
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.5431,
+        "serve": 0.54,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "ca8f67b4ba7f6878893aa698d93db921",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Lilli Tagger",
+        "key": "l-tagger",
+        "model": 0.323,
+        "fair_odds": 3.1,
+        "market": 0.3257,
+        "best_odds": 3.05,
+        "book": "Unibet (NL)",
+        "ev": -0.0147,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Nikola Bartunkova",
+        "key": "n-bartunkova",
+        "model": 0.677,
+        "fair_odds": 1.48,
+        "market": 0.6743,
+        "best_odds": 1.45,
+        "book": "1xBet",
+        "ev": -0.0184,
+        "kelly": 0.0
+      },
+      "books": 5,
+      "prices": {
+        "Unibet (NL)": [
+          3.05,
+          1.38
+        ],
+        "Coolbet": [
+          3.0,
+          1.4
+        ],
+        "Unibet (FR)": [
+          2.65,
+          1.35
+        ],
+        "PMU (FR)": [
+          2.88,
+          1.33
+        ],
+        "1xBet": [
+          2.75,
+          1.45
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.293,
+        "serve": 0.3597,
+        "w": 0.45
+      },
+      "flags": []
+    },
+    {
+      "id": "b47ce561a7388026c9ba2f638d8612da",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Mayar Sherif",
+        "key": "m-sherif",
+        "model": 0.3009,
+        "fair_odds": 3.32,
+        "market": 0.2206,
+        "best_odds": 4.5,
+        "book": "Betsson",
+        "ev": 0.3541,
+        "kelly": 0.0253
+      },
+      "b": {
+        "name": "Maja Chwalinska",
+        "key": "m-chwalinska",
+        "model": 0.6991,
+        "fair_odds": 1.43,
+        "market": 0.7794,
+        "best_odds": 1.23,
+        "book": "1xBet",
+        "ev": -0.1401,
+        "kelly": 0.0
+      },
+      "books": 7,
+      "prices": {
+        "Unibet (NL)": [
+          4.4,
+          1.21
+        ],
+        "Betsson": [
+          4.5,
+          1.21
+        ],
+        "Coolbet": [
+          4.3,
+          1.22
+        ],
+        "Nordic Bet": [
+          4.5,
+          1.21
+        ],
+        "Unibet (FR)": [
+          3.8,
+          1.17
+        ],
+        "PMU (FR)": [
+          4.1,
+          1.16
+        ],
+        "1xBet": [
+          4.17,
+          1.23
+        ]
+      },
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.3051,
+        "serve": 0.2958,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "specialist",
+          "M. Sherif: clay-court specialist (77% of matches on clay), now on hard"
+        ]
+      ]
+    },
+    {
+      "id": "apit-12169858",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan",
+      "round": "WTA Wuhan - 1/32-finals",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "I. Jovic",
+        "key": "i-jovic",
+        "model": 0.8431,
+        "fair_odds": 1.19,
+        "market": 0.8312,
+        "best_odds": 1.14,
+        "book": "bet365",
+        "ev": -0.0389,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "M. Pohankova",
+        "key": "m-pohankova",
+        "model": 0.1569,
+        "fair_odds": 6.37,
+        "market": 0.1688,
+        "best_odds": 5.8,
+        "book": "Marathon",
+        "ev": -0.0898,
+        "kelly": 0.0
+      },
+      "books": 5,
+      "no_odds": false,
+      "court": "wuhan",
+      "model_version": "2026-10-04",
+      "parts": {
+        "elo": 0.8304,
+        "serve": 0.8585,
+        "w": 0.45
+      },
+      "flags": [
+        [
+          "layoff",
+          "M. Pohankova: first match in 110 days"
+        ]
+      ],
+      "prices": {
+        "bet365": [
+          1.14,
+          5.5
+        ],
+        "Marathon": [
+          1.13,
+          5.8
+        ],
+        "Sbo": [
+          1.07,
+          5.54
+        ],
+        "1xBet": [
+          1.13,
+          5.8
+        ],
+        "BetVictor": [
+          1.13,
+          5.0
+        ]
+      },
+      "odds_source": "api-tennis"
+    },
+    {
       "id": "f11e01ff73395ec9eaee7743f8e46586",
       "tour": "ATP",
       "tournament": "ATP Shanghai Masters",
@@ -1209,9 +3155,9 @@
         "key": "a-fils",
         "model": 0.7681,
         "fair_odds": 1.3,
-        "market": 0.7757,
+        "market": 0.7763,
         "best_odds": 1.25,
-        "book": "Matchbook",
+        "book": "Betfair",
         "ev": -0.0399,
         "kelly": 0.0
       },
@@ -1220,11 +3166,11 @@
         "key": "b-van-de-zandschulp",
         "model": 0.2319,
         "fair_odds": 4.31,
-        "market": 0.2243,
-        "best_odds": 4.5,
-        "book": "Matchbook",
-        "ev": 0.0435,
-        "kelly": 0.0031
+        "market": 0.2237,
+        "best_odds": 4.51,
+        "book": "Pinnacle",
+        "ev": 0.0458,
+        "kelly": 0.0033
       },
       "books": 17,
       "prices": {
@@ -1266,11 +3212,11 @@
         ],
         "Pinnacle": [
           1.24,
-          4.47
+          4.51
         ],
         "BetOnline.ag": [
-          1.24,
-          4.34
+          1.23,
+          4.27
         ],
         "PMU (FR)": [
           1.18,
@@ -1296,13 +3242,13 @@
         "serve": 0.7527,
         "w": 0.55
       },
-      "pinnacle_a": 0.7828,
+      "pinnacle_a": 0.7843,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.81,
-          "odds": 1.218,
-          "ev": -0.0645,
+          "cost": 0.8,
+          "odds": 1.233,
+          "ev": -0.0529,
           "ticker": "KXATPMATCH-26OCT10FILVAN-FIL"
         },
         "b": {
@@ -1311,7 +3257,7 @@
           "ev": -0.0005,
           "ticker": "KXATPMATCH-26OCT10FILVAN-VAN"
         },
-        "market_a": 0.7871,
+        "market_a": 0.7861,
         "event": "KXATPMATCH-26OCT10FILVAN",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct10filvan"
       }
@@ -1330,7 +3276,7 @@
         "key": "z-bergs",
         "model": 0.0775,
         "fair_odds": 12.9,
-        "market": 0.1033,
+        "market": 0.1029,
         "best_odds": 11.0,
         "book": "Matchbook",
         "ev": -0.1473,
@@ -1341,7 +3287,7 @@
         "key": "c-alcaraz",
         "model": 0.9225,
         "fair_odds": 1.08,
-        "market": 0.8967,
+        "market": 0.8971,
         "best_odds": 1.09,
         "book": "Betfair",
         "ev": 0.0055,
@@ -1386,12 +3332,12 @@
           1.06
         ],
         "Pinnacle": [
-          10.84,
+          10.88,
           1.06
         ],
         "BetOnline.ag": [
-          8.78,
-          1.07
+          9.17,
+          1.06
         ],
         "PMU (FR)": [
           8.5,
@@ -1410,7 +3356,7 @@
           1.05
         ],
         "BetAnything": [
-          8.95,
+          9.2,
           1.06
         ]
       },
@@ -1421,7 +3367,7 @@
         "serve": 0.0886,
         "w": 0.55
       },
-      "pinnacle_a": 0.0891,
+      "pinnacle_a": 0.0888,
       "flags": [],
       "kalshi": {
         "a": {
@@ -1436,7 +3382,7 @@
           "ev": -0.0129,
           "ticker": "KXATPMATCH-26OCT10BERALC-ALC"
         },
-        "market_a": 0.08,
+        "market_a": 0.0796,
         "event": "KXATPMATCH-26OCT10BERALC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct10beralc"
       }
@@ -1455,9 +3401,9 @@
         "key": "l-tien",
         "model": 0.4558,
         "fair_odds": 2.19,
-        "market": 0.5614,
+        "market": 0.5618,
         "best_odds": 1.72,
-        "book": "GTbets",
+        "book": "Betfair",
         "ev": -0.2161,
         "kelly": 0.0
       },
@@ -1466,11 +3412,11 @@
         "key": "c-ruud",
         "model": 0.5442,
         "fair_odds": 1.84,
-        "market": 0.4386,
-        "best_odds": 2.34,
-        "book": "Betfair",
-        "ev": 0.2735,
-        "kelly": 0.051
+        "market": 0.4382,
+        "best_odds": 2.36,
+        "book": "Matchbook",
+        "ev": 0.2844,
+        "kelly": 0.0523
       },
       "books": 18,
       "prices": {
@@ -1550,7 +3496,7 @@
       "flags": [
         [
           "retired",
-          "C. Ruud: retired from a match 55 days ago"
+          "C. Ruud: retired from a match 56 days ago"
         ]
       ]
     },
@@ -1568,10 +3514,10 @@
         "key": "d-medvedev",
         "model": 0.8021,
         "fair_odds": 1.25,
-        "market": 0.8229,
-        "best_odds": 1.17,
-        "book": "888sport",
-        "ev": -0.0615,
+        "market": 0.8211,
+        "best_odds": 1.18,
+        "book": "Pinnacle",
+        "ev": -0.0535,
         "kelly": 0.0
       },
       "b": {
@@ -1579,7 +3525,7 @@
         "key": "d-svrcina",
         "model": 0.1979,
         "fair_odds": 5.05,
-        "market": 0.1771,
+        "market": 0.1789,
         "best_odds": 6.0,
         "book": "Betfair",
         "ev": 0.1872,
@@ -1589,11 +3535,11 @@
       "prices": {
         "Nordic Bet": [
           1.15,
-          5.6
+          5.4
         ],
         "Betsson": [
           1.15,
-          5.6
+          5.4
         ],
         "888sport": [
           1.17,
@@ -1609,31 +3555,31 @@
         ],
         "1xBet": [
           1.16,
-          5.55
+          5.48
         ],
         "Unibet (FR)": [
-          1.11,
-          4.5
+          1.12,
+          4.45
         ],
         "Winamax (DE)": [
-          1.14,
-          5.5
+          1.15,
+          5.4
         ],
         "Winamax (FR)": [
-          1.11,
-          4.6
+          1.12,
+          4.5
         ],
         "Tipico": [
           1.1,
           5.7
         ],
         "Pinnacle": [
-          1.17,
-          5.68
+          1.18,
+          5.63
         ],
         "BetOnline.ag": [
-          1.15,
-          5.67
+          1.16,
+          5.43
         ],
         "LeoVegas (SE)": [
           1.16,
@@ -1652,7 +3598,7 @@
           5.2
         ],
         "BetAnything": [
-          1.14,
+          1.15,
           5.5
         ]
       },
@@ -1663,13 +3609,13 @@
         "serve": 0.7978,
         "w": 0.55
       },
-      "pinnacle_a": 0.8292,
+      "pinnacle_a": 0.8267,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.85,
-          "odds": 1.164,
-          "ev": -0.0664,
+          "cost": 0.84,
+          "odds": 1.177,
+          "ev": -0.0559,
           "ticker": "KXATPMATCH-26OCT10MEDSVR-MED"
         },
         "b": {
@@ -1678,7 +3624,7 @@
           "ev": 0.1682,
           "ticker": "KXATPMATCH-26OCT10MEDSVR-SVR"
         },
-        "market_a": 0.8442,
+        "market_a": 0.8434,
         "event": "KXATPMATCH-26OCT10MEDSVR",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct10medsvr"
       }
@@ -1697,10 +3643,10 @@
         "key": "p-carreno-busta",
         "model": 0.2498,
         "fair_odds": 4.0,
-        "market": 0.2649,
-        "best_odds": 3.8,
-        "book": "Matchbook",
-        "ev": -0.0507,
+        "market": 0.2625,
+        "best_odds": 3.83,
+        "book": "BetOnline.ag",
+        "ev": -0.0432,
         "kelly": 0.0
       },
       "b": {
@@ -1708,10 +3654,10 @@
         "key": "f-auger-aliassime",
         "model": 0.7502,
         "fair_odds": 1.33,
-        "market": 0.7351,
-        "best_odds": 1.32,
+        "market": 0.7375,
+        "best_odds": 1.33,
         "book": "Betfair",
-        "ev": -0.0098,
+        "ev": -0.0023,
         "kelly": 0.0
       },
       "books": 19,
@@ -1733,23 +3679,23 @@
           1.29
         ],
         "Betsson": [
-          3.6,
+          3.7,
           1.29
         ],
         "Unibet (FR)": [
-          3.15,
+          3.2,
           1.24
         ],
         "Nordic Bet": [
-          3.6,
+          3.7,
           1.29
         ],
         "Winamax (DE)": [
-          3.6,
-          1.29
+          3.65,
+          1.28
         ],
         "Winamax (FR)": [
-          3.2,
+          3.25,
           1.24
         ],
         "Tipico": [
@@ -1757,7 +3703,7 @@
           1.25
         ],
         "Pinnacle": [
-          3.74,
+          3.76,
           1.31
         ],
         "Unibet (SE)": [
@@ -1777,12 +3723,12 @@
           1.25
         ],
         "BetOnline.ag": [
-          3.63,
-          1.31
+          3.83,
+          1.28
         ],
         "BetAnything": [
-          3.55,
-          1.3
+          3.7,
+          1.29
         ]
       },
       "court": "shanghai",
@@ -1792,11 +3738,11 @@
         "serve": 0.2661,
         "w": 0.55
       },
-      "pinnacle_a": 0.2594,
+      "pinnacle_a": 0.2584,
       "flags": [
         [
           "retired",
-          "P. Carreno-Busta: retired from a match 47 days ago"
+          "P. Carreno-Busta: retired from a match 48 days ago"
         ]
       ],
       "kalshi": {
@@ -1831,7 +3777,7 @@
         "key": "j-lehecka",
         "model": 0.5526,
         "fair_odds": 1.81,
-        "market": 0.5481,
+        "market": 0.5488,
         "best_odds": 1.76,
         "book": "Betfair",
         "ev": -0.0274,
@@ -1842,7 +3788,7 @@
         "key": "r-jodar",
         "model": 0.4474,
         "fair_odds": 2.24,
-        "market": 0.4519,
+        "market": 0.4512,
         "best_odds": 2.28,
         "book": "Betfair",
         "ev": 0.02,
@@ -1879,8 +3825,8 @@
           2.05
         ],
         "Tipico": [
-          1.72,
-          2.0
+          1.7,
+          2.05
         ],
         "888sport": [
           1.73,
@@ -1895,8 +3841,8 @@
           2.18
         ],
         "BetOnline.ag": [
-          1.75,
-          2.14
+          1.74,
+          2.16
         ],
         "PMU (FR)": [
           1.65,
@@ -1936,12 +3882,12 @@
           "ticker": "KXATPMATCH-26OCT11LEHJOD-LEH"
         },
         "b": {
-          "cost": 0.46,
-          "odds": 2.095,
-          "ev": -0.0627,
+          "cost": 0.45,
+          "odds": 2.14,
+          "ev": -0.0426,
           "ticker": "KXATPMATCH-26OCT11LEHJOD-JOD"
         },
-        "market_a": 0.5522,
+        "market_a": 0.555,
         "event": "KXATPMATCH-26OCT11LEHJOD",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct11lehjod"
       }
@@ -1960,7 +3906,7 @@
         "key": "s-tsitsipas",
         "model": 0.3946,
         "fair_odds": 2.53,
-        "market": 0.3985,
+        "market": 0.3964,
         "best_odds": 2.55,
         "book": "LeoVegas (SE)",
         "ev": 0.0062,
@@ -1971,10 +3917,10 @@
         "key": "t-fritz",
         "model": 0.6054,
         "fair_odds": 1.65,
-        "market": 0.6015,
-        "best_odds": 1.63,
+        "market": 0.6036,
+        "best_odds": 1.62,
         "book": "Betfair",
-        "ev": -0.0132,
+        "ev": -0.0192,
         "kelly": 0.0
       },
       "books": 18,
@@ -1984,8 +3930,8 @@
           1.6
         ],
         "1xBet": [
-          2.35,
-          1.62
+          2.37,
+          1.61
         ],
         "GTbets": [
           2.38,
@@ -2016,12 +3962,12 @@
           1.58
         ],
         "Pinnacle": [
-          2.44,
+          2.46,
           1.61
         ],
         "BetOnline.ag": [
-          2.39,
-          1.62
+          2.47,
+          1.59
         ],
         "LeoVegas (SE)": [
           2.55,
@@ -2051,7 +3997,7 @@
         "serve": 0.3494,
         "w": 0.55
       },
-      "pinnacle_a": 0.3975,
+      "pinnacle_a": 0.3956,
       "flags": []
     },
     {
@@ -2068,7 +4014,7 @@
         "key": "t-paul",
         "model": 0.5883,
         "fair_odds": 1.7,
-        "market": 0.5706,
+        "market": 0.5707,
         "best_odds": 1.69,
         "book": "Pinnacle",
         "ev": -0.0058,
@@ -2079,10 +4025,10 @@
         "key": "v-vacherot",
         "model": 0.4117,
         "fair_odds": 2.43,
-        "market": 0.4294,
-        "best_odds": 2.3,
+        "market": 0.4293,
+        "best_odds": 2.34,
         "book": "Betfair",
-        "ev": -0.0531,
+        "ev": -0.0366,
         "kelly": 0.0
       },
       "books": 18,
@@ -2129,7 +4075,7 @@
         ],
         "BetOnline.ag": [
           1.69,
-          2.25
+          2.24
         ],
         "PMU (FR)": [
           1.6,
@@ -2163,12 +4109,58 @@
       "flags": []
     }
   ],
-  "unmatched": [],
-  "scheduled_only": 0,
-  "kalshi_matched": 14,
+  "unmatched": [
+    {
+      "id": "312043c78cdd2a5299fc59c6ef1604dd",
+      "tour": "WTA",
+      "tournament": "WTA Wuhan Open",
+      "start": "2026-10-12T02:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Xiyu Wang",
+        "key": null
+      },
+      "b": {
+        "name": "Xinyu Wang",
+        "key": null
+      },
+      "books": 5,
+      "prices": {
+        "Unibet (NL)": [
+          1.83,
+          1.96
+        ],
+        "Coolbet": [
+          1.89,
+          1.92
+        ],
+        "Unibet (FR)": [
+          1.78,
+          1.79
+        ],
+        "PMU (FR)": [
+          1.76,
+          1.88
+        ],
+        "1xBet": [
+          1.87,
+          1.92
+        ]
+      },
+      "missing": [
+        "Xiyu Wang",
+        "Xinyu Wang"
+      ]
+    }
+  ],
+  "scheduled_only": 1,
+  "kalshi_matched": 22,
   "record": {
     "settled": 240,
-    "pending": 27,
+    "pending": 51,
     "by_model": {
       "2026-10-03": {
         "settled": 4,
@@ -2189,7 +4181,7 @@
       },
       "2026-10-04": {
         "settled": 158,
-        "pending": 26,
+        "pending": 50,
         "model_right": 0.6582,
         "market_right": 0.6456,
         "brier_model": 0.2128,

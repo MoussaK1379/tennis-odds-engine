@@ -114,16 +114,23 @@
     </ul>
     <p><strong>Backtest.</strong> <code>tools/backtest.py</code> predicts every saved match using only
       the matches before it. Settings were tuned on 2025-04-01 – 2026-03-31; the
-      numbers below are the <em>holdout</em> (2026-04-01 – 2026-10-03,
-      4,725 finished matches).</p>
+      numbers below are the <em>holdout</em> (2026-04-01 – 2026-10-12,
+      4,907 finished ATP/WTA matches; the current model also learns from Challenger results, but it
+      is scored on the same tour-level matches as the original).</p>
     <table class="bt">
       <tr><th></th><th>Original model</th><th>Current model</th></tr>
-      <tr><td>Log loss (lower is better)</td><td>0.6436</td><td><strong>0.6270</strong></td></tr>
-      <tr><td>Brier (lower is better)</td><td>0.2262</td><td><strong>0.2193</strong></td></tr>
-      <tr><td>Favourite won</td><td>62.8%</td><td><strong>63.9%</strong></td></tr>
+      <tr><td>Log loss (lower is better)</td><td>0.6433</td><td><strong>0.6138</strong></td></tr>
+      <tr><td>Brier (lower is better)</td><td>0.2260</td><td><strong>0.2131</strong></td></tr>
+      <tr><td>Favourite won</td><td>62.8%</td><td><strong>65.9%</strong></td></tr>
     </table>
     <p>Calibration on the holdout (favourite's side):</p>
-    <table class="bt"><tr><th>Predicted</th><th>Average predicted</th><th>Actually won</th><th>Matches</th></tr><tr><td>50-60%</td><td>55%</td><td>55%</td><td>2093</td></tr><tr><td>60-70%</td><td>65%</td><td>64%</td><td>1482</td></tr><tr><td>70-80%</td><td>74%</td><td>76%</td><td>755</td></tr><tr><td>80-90%</td><td>84%</td><td>87%</td><td>303</td></tr><tr><td>90-100%</td><td>93%</td><td>94%</td><td>92</td></tr></table>
+    <table class="bt"><tr><th>Predicted</th><th>Average predicted</th><th>Actually won</th><th>Matches</th></tr><tr><td>50-60%</td><td>55%</td><td>56%</td><td>2128</td></tr><tr><td>60-70%</td><td>65%</td><td>68%</td><td>1560</td></tr><tr><td>70-80%</td><td>74%</td><td>76%</td><td>797</td></tr><tr><td>80-90%</td><td>84%</td><td>90%</td><td>334</td></tr><tr><td>90-100%</td><td>93%</td><td>90%</td><td>88</td></tr></table>
+    <p>Adding Challenger history was the biggest single gain: holdout log loss 0.6274 → 0.6138 on the same
+      tour-level matches, and the favourite-won rate 63.8% → 65.9%. Most of it comes from qualifiers and other
+      players who used to have little tour-level history. A Challenger match counts half as much as a tour match
+      for the rating (<code>ch_k</code> 0.5), its serve points count fully, and a player first seen at Challenger
+      level starts at 1150. Predictions for Challenger matches themselves are less sharp (holdout log loss 0.645).
+      The model is now a little <em>under</em>-confident on clear favourites: 80–90% picks won 90% of the time.</p>
     <p><strong>Tested and not adopted:</strong></p>
     <ul>
       <li><strong>Glicko-2</strong>: a tie with Elo. <strong>Court speed</strong>: when a court is fast

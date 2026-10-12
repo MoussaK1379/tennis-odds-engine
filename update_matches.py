@@ -215,9 +215,10 @@ def _match_event(title, tour, month=None):
 
 # Challenger level (ATP Challenger, WTA 125). These share city names with tour events
 # but not always the surface, so they get their own lookup and court ids ("ch-...").
-# First choice is api-tennis's own surface for the tournament (data/tournament_surfaces.json,
-# refreshed by update_data.py); then this table of hosts that always use one surface.
-# Cities whose events change surface through the year are left out on purpose.
+# First choice is this table of hosts that always use one surface; then api-tennis's own
+# surface for the tournament (data/tournament_surfaces.json, refreshed by update_data.py),
+# which is second because it mixes up cities with several events (it calls Stuttgart's and
+# Mallorca's June grass events clay). Cities whose events change surface are left out.
 CH_CLAY = """buenos aires|santiago|lima|bogota|cali|medellin|guayaquil|quito|asuncion|montevideo|campinas|
 florianopolis|sao paulo|porto alegre|curitiba|brasilia|santa cruz|concepcion|temuco|tigre|rosario|antofagasta|
 piracicaba|itajai|barranquilla|pereira|villa maria|santa fe|mar del plata|neuquen|punta del este|salta|tucuman|
@@ -227,16 +228,18 @@ napoli|naples|barletta|sanremo|cervia|padova|bari|braga|lisbon|murcia|valencia|b
 girona|maspalomas|gran canaria|prostejov|ostrava|liberec|pilsen|plzen|poznan|szczecin|banja luka|zagreb|split|
 zadar|skopje|belgrade|novi sad|iasi|sibiu|bucharest|tulln|salzburg|mauthausen|heilbronn|ludenscheid|meerbusch|
 braunschweig|augsburg|amersfoort|aix en provence|bordeaux|blois|troyes|bad waltersdorf|warsaw|budapest|
-tampere|antalya|tunis|cairo|samarkand|kunming|anning|sarasota|savannah|houston|bonita springs"""
+tampere|antalya|tunis|cairo|samarkand|kunming|anning|sarasota|savannah|houston|bonita springs|montemar|maia|
+colina"""
 CH_GRASS = "surbiton|nottingham|ilkley|gaiba|veneto"
 CH_HARD = """phoenix|little rock|lexington|chicago|cary|granby|vancouver|tiburon|fairfield|las vegas|
 newport beach|morelos|cuernavaca|puerto vallarta|guadalajara|leon|shenzhen|guangzhou|zhangjiagang|seoul|busan|
 gwangju|yokohama|matsuyama|bengaluru|bangalore|pune|chennai|mumbai|new delhi|delhi|hua hin|nonthaburi|bangkok|
 manama|tashkent|fergana|canberra|burnie|launceston|traralgon|playford|bendigo|shepparton|darwin|cairns|
-townsville|sydney|brisbane|jinan|hangzhou|suzhou|nanchang|hong kong|tenerife|manacor"""
+townsville|sydney|brisbane|jinan|hangzhou|suzhou|nanchang|hong kong|tenerife|manacor|olbia|tampico"""
 CH_INDOOR_HARD = """bergamo|ortisei|brescia|andria|ismaning|eckental|koblenz|saint brieuc|st brieuc|quimper|pau|
 orleans|rennes|mouilleron le captif|mouilleron|roanne|brest|poitiers|lille|cherbourg|glasgow|helsinki|trento|
-cleveland|columbus|champaign|knoxville|charlottesville|calgary|drummondville|kobe|kyoto|kaohsiung|astana"""
+cleveland|columbus|champaign|knoxville|charlottesville|calgary|drummondville|kobe|kyoto|kaohsiung|astana|
+sioux falls|midland|angers|limoges"""
 def _ch_table():
     t = {}
     for names, val in ((CH_CLAY, ("clay", False)), (CH_GRASS, ("grass", False)),
@@ -268,13 +271,21 @@ def _challenger_event(title, feed):
     t = " " + key + " "
     table = next(((k, v) for k, v in sorted(CHALLENGER_TABLE.items(), key=lambda kv: -len(kv[0]))
                   if f" {k} " in t), None)
-    api = (_api_surfaces().get(feed) or {}).get(title)
+    known = _api_surfaces().get(feed) or {}
+    api = known.get(title) or known.get(challenger_name(title))
     court = "ch-" + (table[0] if table else key).replace(" ", "-")
-    if api:
-        return court, api, bool(table and table[1][1] and table[1][0] == api), True
+    # A second event in a city ("Rome US", "Nottingham 3") can be on another surface:
+    # there api-tennis's answer for that exact event beats the city's usual surface.
+    second = re.search(r"\b([2-9]|ii|iii|iv|us|usa)\b", (title or "").lower())
+    if api and (second or not table):
+        return court + ("-" + second.group(1) if second else ""), api, False, True
     if table:
         return court, table[1][0], table[1][1], True
     return court, "hard", False, False
+
+def challenger_name(name):
+    """'Olbia Challenger Men' -> 'Olbia' (api-tennis adds the level to the name)."""
+    return re.sub(r"\s+challenger(\s+(men|women))?\s*$", "", name or "", flags=re.I).strip() or name
 
 def surface_for(title, tour, month=None):
     """-> (surface, indoor, known). Unknown tournaments default to outdoor hard.
@@ -1001,7 +1012,7 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             return {"name": name, "key": key, "model": round(q, 4), "fair_odds": round(1 / q, 2),
                     "market": None, "best_odds": None, "book": None, "ev": None, "kelly": None}
         level_name = ("ATP Challenger" if f["tour"] == "ATP" else "WTA 125") if ch else f["tour"]
-        title = f"{level_name} {f['tournament']}"
+        title = f"{level_name} {challenger_name(f['tournament']) if ch else f['tournament']}"
         if not ch:                         # same event, one name: use the odds feed's when it lists it
             title = feed_titles.get((f["tour"], court_id(f["tournament"], feed, month)), title)
         title += " (qualifying)" if f["qualifying"] else ""

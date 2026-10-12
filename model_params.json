@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-04",
+  "version": "2026-10-12",
   "tuned_on": "2025-04-01..2026-03-31",
   "params": {
     "rating": "elo",
@@ -22,8 +22,12 @@
     "init_elo_qual": 1250,
     "stack_atp": null,
     "stack_wta": null,
+    "ch_use": true,
+    "ch_k": 0.5,
+    "ch_sv": 1.0,
+    "init_elo_ch": 1150,
     "set_m_atp3": 0.55,
-    "set_m_atp5": 0.6,
+    "set_m_atp5": 0.65,
     "set_m_wta3": 0.6
   },
   "notes": "Logistic stack (features: elo, serve, serve_thin, server_vs_returner, layoff, fatigue) beat the blend on the tuning year (0.6330 vs 0.6346) but not on the holdout (0.6275 vs 0.6270), so it is switched off. Weights it found are kept under tested_stack.",
@@ -44,5 +48,66 @@
       0.08494,
       0.0562
     ]
+  },
+  "challenger_study": {
+    "challenger_matches": 26628,
+    "without": {
+      "tune": {
+        "n": 8341,
+        "logloss": 0.6345956402805824,
+        "brier": 0.22280455857266018,
+        "acc": 0.6296007672940894
+      },
+      "holdout": {
+        "n": 4907,
+        "logloss": 0.6273951490419899,
+        "brier": 0.21939394673879645,
+        "acc": 0.6382718565314857
+      },
+      "holdout_established": {
+        "n": 3790,
+        "logloss": 0.6219841584790997,
+        "brier": 0.21689829265843763,
+        "acc": 0.6467018469656992
+      }
+    },
+    "with": {
+      "settings": {
+        "ch_k": 0.5,
+        "ch_sv": 1.0,
+        "init_elo_ch": 1150
+      },
+      "tune": {
+        "n": 8341,
+        "logloss": 0.6281379695457585,
+        "brier": 0.21988603822767047,
+        "acc": 0.6377532669943652
+      },
+      "holdout": {
+        "n": 4907,
+        "logloss": 0.613755586806459,
+        "brier": 0.21309471205607472,
+        "acc": 0.6585490116160587
+      },
+      "holdout_established": {
+        "n": 4475,
+        "logloss": 0.6125263387856703,
+        "brier": 0.21255750022073205,
+        "acc": 0.6581005586592179
+      },
+      "challenger_tune": {
+        "n": 12655,
+        "logloss": 0.6586721023847055,
+        "brier": 0.2333672966743648,
+        "acc": 0.6011853022520742
+      },
+      "challenger_holdout": {
+        "n": 8343,
+        "logloss": 0.6451653102637019,
+        "brier": 0.22687066717875853,
+        "acc": 0.6306484478005514
+      }
+    },
+    "adopted": true
   }
 }

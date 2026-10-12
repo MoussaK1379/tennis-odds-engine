@@ -118,6 +118,14 @@ class Params:
     # optional logistic-regression stack replacing the blend; weights per tour for STACK_FEATURES
     stack_atp: list = None
     stack_wta: list = None
+    # Challenger results (ATP Challenger / WTA 125) in the same rating pool as the tour.
+    # ch_use off = tour-level matches only (the original data). ch_k scales the Elo step
+    # for a Challenger match and ch_sv the weight of its serve points; init_elo_ch is
+    # where a player first seen at Challenger level starts (0 = same as init_elo_qual).
+    ch_use: bool = False
+    ch_k: float = 1.0
+    ch_sv: float = 1.0
+    init_elo_ch: float = 0.0
     # set momentum on the log-odds scale (0 = independent sets), fitted on real set scores
     set_m_atp3: float = 0.0
     set_m_atp5: float = 0.0
@@ -397,7 +405,9 @@ class TourEngine:
         phi = min(math.sqrt(phi * phi + sigma * sigma * t), phi0)
         return [mu, phi, sigma]
 
-    def _init(self, qual):
+    def _init(self, qual, level=None):
+        if level == "challenger":
+            return self.P.init_elo_ch or self.P.init_elo_qual
         return self.P.init_elo_qual if qual else self.P.init_elo
 
     def rating(self, p, surface, d, qual=False):
@@ -463,20 +473,21 @@ class TourEngine:
         if self.P.rating == "elo":
             for p in (w, l):
                 if p not in self.elo:                 # first match: seed the starting rating
-                    self.elo[p] = self._init(m.get("qualifying", False))
+                    self.elo[p] = self._init(m.get("qualifying", False), m.get("level"))
         if m["status"] == "ret":
             self.info[l]["rets"].append(d)          # the player who didn't finish
         if m["status"] == "wo":
             return
+        ch = m.get("level") == "challenger"
         if m["status"] == "completed":
-            self._update_rating(w, l, s, d)
-        self._update_serve(m, d, s)
+            self._update_rating(w, l, s, d, self.P.ch_k if ch else 1.0)
+        self._update_serve(m, d, s, self.P.ch_sv if ch else 1.0)
 
-    def _update_rating(self, w, l, s, d):
+    def _update_rating(self, w, l, s, d, kmul=1.0):
         P = self.P
         if P.rating == "legacy":
             rw, rl = self.elo.get(w, 1500.0), self.elo.get(l, 1500.0)
-            kw, kl = self._k(w), self._k(l)
+            kw, kl = self._k(w) * kmul, self._k(l) * kmul
             e = 1 / (1 + 10 ** ((rl - rw) / 400))
             self.elo[w] = rw + kw * (1 - e); self.elo[l] = rl - kl * (1 - e)
             if s:
@@ -488,7 +499,7 @@ class TourEngine:
             ol = self.off.get((l, s), 0.0) if s else 0.0
             rw, rl = self.elo.get(w, 1500.0), self.elo.get(l, 1500.0)
             e = 1 / (1 + 10 ** (((rl + ol) - (rw + ow)) / 400))
-            kw, kl = self._k(w), self._k(l)
+            kw, kl = self._k(w) * kmul, self._k(l) * kmul
             self.elo[w] = rw + kw * (1 - e); self.elo[l] = rl - kl * (1 - e)
             if s:
                 self.off[(w, s)] = ow + P.surf_k * kw * (1 - e)
@@ -548,7 +559,7 @@ class TourEngine:
         mu_new = mu + phi_new * phi_new * g * (score - E)
         return [mu_new, phi_new, sigma_new]
 
-    def _update_serve(self, m, d, s):
+    def _update_serve(self, m, d, s, wt=1.0):
         P, T = self.P, self.T()
         w, l, cid = m["winner"], m["loser"], m.get("court")
         ce = self.court_effect(cid)
@@ -567,14 +578,15 @@ class TourEngine:
             rate = won / pts
             adj_s = rate - ce + (R_ret - (1 - T))       # tough returner -> serve rate counts for more
             adj_r = (1 - rate) + ce + (S_srv - T)        # big server -> return rate counts for more
+            wp = pts * wt                                # Challenger points can count for less
             for key in ("overall", s) if s else ("overall",):
-                self._add(srv, key, d, sw=adj_s * pts, sp=pts, count=True)
-                self._add(ret, key, d, rw=adj_r * pts, rp=pts)
+                self._add(srv, key, d, sw=adj_s * wp, sp=wp, count=True)
+                self._add(ret, key, d, rw=adj_r * wp, rp=wp)
             if cid:
                 expected = T + (S_srv - T) - (R_ret - (1 - T))
                 c = self.court.setdefault(cid, [0.0, 0.0])
                 c[0] += (rate - expected) * pts; c[1] += pts
-            self.T_num += won; self.T_den += pts
+            self.T_num += won * wt; self.T_den += pts * wt
 
     # --- export for players.json ---
     def export(self, p, d):
@@ -612,6 +624,8 @@ class TourEngine:
         blk = {"rating": "glicko" if self.P.rating == "glicko" else "elo",
                "w": {"ATP": self.P.w_atp, "WTA": self.P.w_wta}, "n0": self.P.n0}
         blk["set_m"] = {"ATP": {"3": self.P.set_m_atp3, "5": self.P.set_m_atp5}, "WTA": {"3": self.P.set_m_wta3}}
+        if self.P.ch_use:
+            blk["challenger"] = True          # Challenger results are in the ratings; list their matches
         if self.P.stack_atp or self.P.stack_wta:
             blk["stack"] = {t: w for t, w in (("ATP", self.P.stack_atp), ("WTA", self.P.stack_wta)) if w}
             blk["stack_features"] = STACK_FEATURES

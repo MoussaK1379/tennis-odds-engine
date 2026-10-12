@@ -14,6 +14,10 @@ never sees, so the holdout numbers are the honest ones.
 
     python tools/backtest.py                 # compare original vs current model_params.json
     python tools/backtest.py --tune          # grid-search, write model_params.json + report
+    python tools/backtest.py --challenger    # does Challenger history help? (--write to adopt)
+
+Scores are on tour-level matches unless they say Challenger, so a model fed Challenger
+history is judged on exactly the same matches as one without it.
 """
 
 import argparse, itertools, json, math, os, sys, time
@@ -34,10 +38,12 @@ BASELINE = model.Params(rating="legacy", k0=250, k_off=5, k_exp=0.4, half_life=3
 
 
 def load(cache_path):
+    """Both tours, Challenger level included (marked level 'challenger'); run() leaves
+    it out unless the settings use it."""
     cache = update_data.load_api_cache(cache_path)
     out = {}
     for tour in ("ATP", "WTA"):
-        ms = update_data.from_api_cache(cache, tour)
+        ms = update_data.from_api_cache(cache, tour, challenger=True)
         ms.sort(key=lambda m: (m["date"], m["order"]))
         out[tour] = ms
     return out
@@ -51,12 +57,15 @@ def run(P, data, set_prob):
         eng = model.TourEngine(tour, P, set_prob=set_prob)
         seen = {}
         for m in ms:
+            if m.get("level") == "challenger" and not P.ch_use:
+                continue
             if m["status"] == "completed":
                 a, b = sorted((m["winner"], m["loser"]))
                 r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"), m["qualifying"])
                 recs.append((tour, m["date"], 1 if a == m["winner"] else 0, r["p"], r["p_elo"],
                              r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"],
-                             r["feats"], _sets_for(m, a), m["best_of"], r["pa"], r["pb"], _set1_for(m, a)))
+                             r["feats"], _sets_for(m, a), m["best_of"], r["pa"], r["pb"], _set1_for(m, a),
+                             m.get("level", "tour")))
             eng.update(m)
             seen[m["winner"]] = seen.get(m["winner"], 0) + 1
             seen[m["loser"]] = seen.get(m["loser"], 0) + 1
@@ -79,7 +88,7 @@ def _set1_for(m, a):
 
 def first_set_check(recs, P, end, log):
     """How well the first-set exact game scores match reality on the holdout."""
-    rows = [r for r in recs if HOLD_START <= r[1] <= end and r[14] and r[10]]
+    rows = [r for r in recs if HOLD_START <= r[1] <= end and r[14] and r[10] and r[15] == "tour"]
     if len(rows) < 200:
         log(f"  first-set game scores: only {len(rows)} matches with game scores, skipped")
         return None
@@ -105,7 +114,7 @@ SET_GRID = [round(-0.2 + 0.05 * i, 2) for i in range(29)]     # -0.2 .. 1.2
 def set_rows(recs, lo, hi, tour, bo):
     need = 3 if bo == 5 else 2
     return [(r[3], r[10]) for r in recs if r[0] == tour and r[11] == bo and lo <= r[1] <= hi
-            and r[10] and max(r[10]) == need and min(r[10]) < need]
+            and r[15] == "tour" and r[10] and max(r[10]) == need and min(r[10]) < need]
 
 
 def set_logloss(rows, bo, m):
@@ -150,10 +159,13 @@ def fit_sets(recs, end, log, P):
     return out
 
 
-def score(recs, lo, hi, col=3, tour=None, min_prior=0):
+def score(recs, lo, hi, col=3, tour=None, min_prior=0, level="tour"):
+    """level: 'tour' (default), 'challenger', or None for both."""
     n = ll = br = acc = 0
     for r in recs:
         if not (lo <= r[1] <= hi) or (tour and r[0] != tour) or r[7] < min_prior:
+            continue
+        if level and r[15] != level:
             continue
         p = min(max(r[col], 1e-6), 1 - 1e-6)
         y = r[2]
@@ -178,7 +190,7 @@ def calibration(recs, lo, hi, bins=10):
     """Predicted vs actual win rate, folded so the favourite is always 'A'."""
     b = [[0, 0.0, 0] for _ in range(bins // 2)]
     for r in recs:
-        if not (lo <= r[1] <= hi):
+        if not (lo <= r[1] <= hi) or r[15] != "tour":
             continue
         p, y = r[3], r[2]
         if p < 0.5:
@@ -201,7 +213,8 @@ def summary(name, recs, end):
         out[label] = {"all": score(recs, lo, hi), "ATP": score(recs, lo, hi, tour="ATP"),
                       "WTA": score(recs, lo, hi, tour="WTA"),
                       "established": score(recs, lo, hi, min_prior=10),
-                      "elo_only": score(recs, lo, hi, col=4), "serve_only": score(recs, lo, hi, col=5)}
+                      "elo_only": score(recs, lo, hi, col=4), "serve_only": score(recs, lo, hi, col=5),
+                      "challenger": score(recs, lo, hi, level="challenger")}
     out["calibration_holdout"] = calibration(recs, HOLD_START, end)
     return out
 
@@ -278,7 +291,7 @@ def tune(data, set_prob, log):
     blend_ll = score(blended(recs, wa, ww, n0), lo, hi)["logloss"]
     stacks = {}
     for tour in ("ATP", "WTA"):
-        rows = [(r[9], r[2]) for r in recs if r[0] == tour and lo <= r[1] <= hi]
+        rows = [(r[9], r[2]) for r in recs if r[0] == tour and lo <= r[1] <= hi and r[15] == "tour"]
         stacks[tour] = fit_logistic(rows)
     stacked = [r[:3] + (model.stack_prob(stacks[r[0]], r[9]),) + r[4:] for r in recs]
     stack_ll = score(stacked, lo, hi)["logloss"]
@@ -333,6 +346,46 @@ def _solve(A, b):
     return [M[i][n] / M[i][i] for i in range(n)]
 
 
+def challenger_study(data, set_prob, base, end, log):
+    """Feed Challenger results into the rating pool and pick the settings that help the
+    tour-level tune score most. -> (best Params, report). Adopted only if the gain on the
+    tune period passes MIN_GAIN; the holdout is reported, never used to choose."""
+    lo, hi = TUNE
+    recs0 = run(base, data, set_prob)
+    s0 = score(recs0, lo, hi)
+    log(f"without Challengers: tune {fmt(s0)}")
+    log(f"                     holdout {fmt(score(recs0, HOLD_START, end))}")
+    n_ch = sum(1 for ms in data.values() for m in ms if m.get("level") == "challenger")
+    if not n_ch:
+        log("no Challenger matches cached yet")
+        return base, {"challenger_matches": 0}
+    trials = []
+    for ch_k, ch_sv, init in itertools.product((0.5, 0.75, 1.0), (0.5, 1.0), (1150, 1250, 1350)):
+        P = model.Params.from_dict({**base.to_dict(), "ch_use": True, "ch_k": ch_k, "ch_sv": ch_sv,
+                                    "init_elo_ch": init})
+        recs = run(P, data, set_prob)
+        st = score(recs, lo, hi)
+        trials.append((st["logloss"], P, recs))
+        log(f"  ch_k {ch_k:<4} ch_sv {ch_sv:<3} start {init}: tune {fmt(st)}")
+    trials.sort(key=lambda t: t[0])
+    ll, best, recs = trials[0]
+    adopt = s0["logloss"] - ll >= MIN_GAIN
+    rep = {"challenger_matches": n_ch,
+           "without": {"tune": s0, "holdout": score(recs0, HOLD_START, end),
+                       "holdout_established": score(recs0, HOLD_START, end, min_prior=10)},
+           "with": {"settings": {k: getattr(best, k) for k in ("ch_k", "ch_sv", "init_elo_ch")},
+                    "tune": score(recs, lo, hi), "holdout": score(recs, HOLD_START, end),
+                    "holdout_established": score(recs, HOLD_START, end, min_prior=10),
+                    "challenger_tune": score(recs, lo, hi, level="challenger"),
+                    "challenger_holdout": score(recs, HOLD_START, end, level="challenger")},
+           "adopted": adopt}
+    log(f"best with Challengers ({rep['with']['settings']}): tune {fmt(rep['with']['tune'])}")
+    log(f"                     holdout {fmt(rep['with']['holdout'])}")
+    log(f"Challenger matches themselves: holdout {fmt(rep['with']['challenger_holdout'])}")
+    log("-> " + ("use Challenger history" if adopt else "not enough gain; keep tour-level only"))
+    return (best if adopt else base), rep
+
+
 def rating_desc(P):
     if P.rating == "glicko":
         return f"tau {P.g_tau}, {P.g_days:.0f}-day periods, start RD {P.g_rd0:.0f}, surface step {P.g_surf_k:.0f}"
@@ -348,6 +401,8 @@ def main():
     ap.add_argument("--tune", action="store_true")
     ap.add_argument("--sets", action="store_true", help="only (re)fit set momentum, keeping the other settings")
     ap.add_argument("--report", default="backtest_report.json")
+    ap.add_argument("--challenger", action="store_true", help="test feeding Challenger results into the ratings")
+    ap.add_argument("--write", action="store_true", help="with --challenger: save the result to --params")
     args = ap.parse_args()
 
     data = load(args.cache)
@@ -361,6 +416,15 @@ def main():
             saved = json.load(fh)
     except (OSError, ValueError):
         saved = {}
+    if args.challenger:
+        P0 = model.Params.from_dict(saved["params"])
+        P, rep = challenger_study(data, set_prob, P0, end, log)
+        if args.write:
+            saved.update({"version": str(date.today()), "params": P.to_dict(), "challenger_study": rep})
+            with open(args.params, "w") as fh:
+                json.dump(saved, fh, indent=2, default=str)
+            log(f"wrote {args.params}")
+        return
     sets_report = None
     if args.tune or args.sets:
         if args.tune:

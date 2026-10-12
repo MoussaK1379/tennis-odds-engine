@@ -158,6 +158,7 @@
   .ttabs button span{ font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-left:.2rem; }
   .ttabs button[aria-selected="true"]{ background:var(--ball); border-color:var(--ball); color:var(--ink); }
   .ttabs button[aria-selected="true"] span{ color:var(--ink); }
+  .ttabs button.ttabs__ch{ border-style:dashed; }
   .ttour__head{ font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ball); margin:14px 0 2px; }
   .parlay__legs .who a{ font-family:var(--mono); font-size:.7rem; margin-left:.3rem; }
   .addleg{ width:22px; height:22px; margin-right:.45rem; vertical-align:1px; flex:0 0 auto; cursor:pointer; line-height:1;
@@ -877,19 +878,26 @@ function renderToday(j){
   const ms = (j.matches || []).filter(m => !m.start || new Date(m.start) > Date.now() - 3*3600e3);
   if(!ms.length){ list.innerHTML = '<div class="today__empty">No priced ATP/WTA matches in the next day and a half.</div>'; return; }
   const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
-  // one tab per tournament (the remembered one, or All, which groups them)
-  const tours = [...new Set(ms.map(m => m.tournament))];
-  if (TODAY_TAB && !tours.includes(TODAY_TAB)) TODAY_TAB = "";
-  const tabs = `<div class="ttabs" role="tablist">${["", ...tours].map(t => {
-      const n = t ? ms.filter(m => m.tournament === t).length : ms.length;
-      return `<button type="button" role="tab" data-t="${esc(t)}" aria-selected="${t === TODAY_TAB}">${t ? esc(t) : "All"} <span>${n}</span></button>`;
-    }).join("")}</div>`;
+  // one tab per tournament (the remembered one, or All, which groups them): tour events
+  // first, then "All Challengers" and each Challenger event
+  const CH = "\u0001challengers";
+  const isCh = m => m.level === "challenger";
+  const tourEv = [...new Set(ms.filter(m => !isCh(m)).map(m => m.tournament))];
+  const chEv = [...new Set(ms.filter(isCh).map(m => m.tournament))];
+  const tours = [...tourEv, ...chEv];
+  if (TODAY_TAB && TODAY_TAB !== CH && !tours.includes(TODAY_TAB)) TODAY_TAB = "";
+  if (TODAY_TAB === CH && !chEv.length) TODAY_TAB = "";
+  const count = t => t === "" ? ms.length : t === CH ? ms.filter(isCh).length : ms.filter(m => m.tournament === t).length;
+  const label = t => t === "" ? "All" : t === CH ? "All Challengers" : esc(t);
+  const tabs = `<div class="ttabs" role="tablist">${["", ...tourEv, ...(chEv.length ? [CH] : []), ...chEv].map(t =>
+      `<button type="button" role="tab" data-t="${esc(t)}" aria-selected="${t === TODAY_TAB}"${t === CH ? ' class="ttabs__ch"' : ""}>${label(t)} <span>${count(t)}</span></button>`
+    ).join("")}</div>`;
   const card = (m, i) => `<div class="match">
       <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
       <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}</div>
       <button class="match__go" type="button" data-i="${i}">Analyse</button>
       ${matchExtras(m)}</div>`;
-  const shown = (TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
+  const shown = (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
     `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t ? card(m, i) : "").join("")}</div>`).join("");
   list.innerHTML = tabs + shown;
   list.querySelectorAll(".ttabs button").forEach(b => b.addEventListener("click", () => {

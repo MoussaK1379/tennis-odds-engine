@@ -266,7 +266,7 @@ def _api_surfaces():
 
 def _challenger_event(title, feed):
     """-> (court id, surface, indoor, known) for a Challenger-level tournament."""
-    words = [w for w in _words(title).split() if w not in _CH_NOISE]
+    words = [w for w in _words(QUALI_NAME.sub("", title or "")).split() if w not in _CH_NOISE]
     key = " ".join(words) or _words(title).strip()
     t = " " + key + " "
     table = next(((k, v) for k, v in sorted(CHALLENGER_TABLE.items(), key=lambda kv: -len(kv[0]))
@@ -283,9 +283,13 @@ def _challenger_event(title, feed):
         return court, table[1][0], table[1][1], True
     return court, "hard", False, False
 
+QUALI_NAME = re.compile(r"\s*(\([^)]*\))?\s*-\s*qualification\s*$", re.I)
+
 def challenger_name(name):
-    """'Olbia Challenger Men' -> 'Olbia' (api-tennis adds the level to the name)."""
-    return re.sub(r"\s+challenger(\s+(men|women))?\s*$", "", name or "", flags=re.I).strip() or name
+    """'Olbia Challenger Men' -> 'Olbia', 'Catania (Italy) - Qualification' -> 'Catania'
+    (api-tennis adds the level, or the country and 'Qualification', to the name)."""
+    n = QUALI_NAME.sub("", name or "")
+    return re.sub(r"\s+challenger(\s+(men|women))?\s*$", "", n, flags=re.I).strip() or name
 
 def surface_for(title, tour, month=None):
     """-> (surface, indoor, known). Unknown tournaments default to outdoor hard.
@@ -1002,6 +1006,8 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             continue                       # priced, but the odds feed's names didn't resolve
         month = f["start"].month
         feed, ch = f.get("feed", f["tour"]), f.get("level") == "challenger"
+        if QUALI_NAME.search(f["tournament"] or ""):
+            f = {**f, "qualifying": True}      # 'Lisbon (Portugal) - Qualification' is the qualifying draw
         surf, indoor, known = surface_for(f["tournament"], feed, month)
         best_of = 3 if f["qualifying"] or ch else guess_best_of(f["tournament"], f["tour"])
         t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)

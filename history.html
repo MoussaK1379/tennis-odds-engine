@@ -123,6 +123,11 @@
         <option value="wrong">Model wrong</option>
         <option value="value">Value bets only</option>
       </select>
+      <select id="level" aria-label="Level">
+        <option value="">All levels</option>
+        <option value="tour">Tour (ATP / WTA)</option>
+        <option value="challenger">Challenger / WTA 125</option>
+      </select>
       <select id="version" aria-label="Model version"><option value="">All model versions</option></select>
       <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div>
       <input id="q" type="search" placeholder="Player or tournament" aria-label="Search player or tournament">
@@ -192,6 +197,7 @@ function enrich(h){
   return { ...h, pa, ma, oa, ob, settled, bet, pl,
     pin: h.pinnacle_a ? +h.pinnacle_a : null,
     version: h.model_version || "original",
+    level: /\b(challenger|wta 125)\b/i.test(h.tournament || "") ? "challenger" : "tour",
     flags: h.flags ? h.flags.split(";").filter(Boolean) : [],
     modelRight: settled ? (pa > 0.5) === (h.result === "a") : null,
     marketRight: settled ? (ma > 0.5) === (h.result === "a") : null,
@@ -199,12 +205,13 @@ function enrich(h){
 }
 
 let ALL = [], shown = 60;
-const state = { tour: "", status: "", version: "", q: "", day: null };
+const state = { tour: "", status: "", version: "", level: "", q: "", day: null };
 
 function filtered(){
   const q = state.q.trim().toLowerCase();
   return ALL.filter(h => {
     if (state.tour && h.tour !== state.tour) return false;
+    if (state.level && h.level !== state.level) return false;
     if (state.version && h.version !== state.version) return false;
     if (state.status === "settled" && !h.settled) return false;
     if (state.status === "pending" && (h.settled || h.result === "void")) return false;
@@ -369,7 +376,7 @@ function wire(){
     document.querySelectorAll("#tourSeg button").forEach(x => x.setAttribute("aria-pressed", x === b));
     state.tour = b.dataset.v; shown = 60; renderList();
   }));
-  for (const id of ["status", "version"])
+  for (const id of ["status", "version", "level"])
     document.getElementById(id).addEventListener("change", e => { state[id] = e.target.value; shown = 60; renderList(); });
   document.getElementById("q").addEventListener("input", e => { state.q = e.target.value; shown = 60; renderList(); });
   document.getElementById("more").addEventListener("click", () => { shown += 60; renderList(); });

@@ -184,8 +184,8 @@ python update_data.py --local-xlsx 2025.xlsx         # offline test, tennis-data
     <p>For those matches the updater also asks api-tennis.com for bookmaker odds (its <code>get_odds</code>,
       if your plan includes it), which covers qualifying and smaller events. A match priced this way gets
       EV, warnings and a place in the track record like any other, marked "odds via api-tennis"; if the odds
-      feed prices it later, that price replaces it. They're left out of the recommended parlays, but you
-      can add them in the parlay builder.</p>
+      feed prices it later, that price replaces it (and any logged parlay leg follows it to the odds
+      feed's match, so it still settles). They can be legs in recommended parlays like any other match.</p>
     <pre><code>ODDS_API_KEY=your-key python update_matches.py
 ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code></pre>
     <p>Surface comes from a built-in table of every ATP tournament: Grand Slams, Masters 1000, 500s,
@@ -229,6 +229,21 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       (a void leg counts as odds 1.0); the site shows how many won against how many the model expected.
       A parlay multiplies the bookmaker's margin and any model error, so it needs a real edge on every
       leg; until the single-pick track record shows the model beats the market, treat these as entertainment-sized stakes.</p>
+
+    <h2>Challengers (ATP Challenger, WTA 125)</h2>
+    <p>The updater also keeps api-tennis.com's Challenger singles (men's ATP Challenger and women's WTA 125)
+      in the match cache, two years back. The history arrives over the first few daily runs, since each run
+      spends at most 18 minutes on it and saves as it goes. Challenger results go into the same rating pool
+      as the tour, so a player's Challenger form counts toward their ATP or WTA rating. That matters most for
+      qualifiers, who play mostly Challengers. How much a Challenger match counts (<code>ch_k</code> for the
+      rating, <code>ch_sv</code> for serve points) and where a player first seen at Challenger level starts
+      (<code>init_elo_ch</code>) are picked by <code>tools/backtest.py --challenger</code> on the tune period,
+      scored on the same tour-level matches as before. They're switched on only if they improve those
+      predictions (<code>ch_use</code>). Once they're on, Challenger matches appear in the match list as
+      "ATP Challenger …" or "WTA 125 …" with api-tennis and Kalshi prices, under their own tabs.</p>
+    <p>Challenger surfaces come from api-tennis's own tournament data when it has them, otherwise from a list
+      of hosts that always use one surface. Anything else shows "surface?" and is treated as hard. Expect the
+      model to be less sure at this level: players change more, and prices move more.</p>
 
     <h2>Kalshi</h2>
     <p>The updater also reads <a href="https://kalshi.com">Kalshi</a>'s public tennis match markets (no key

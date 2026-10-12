@@ -213,13 +213,81 @@ def _match_event(title, tour, month=None):
                     return k, surf, indoor
     return None
 
+# Challenger level (ATP Challenger, WTA 125). These share city names with tour events
+# but not always the surface, so they get their own lookup and court ids ("ch-...").
+# First choice is api-tennis's own surface for the tournament (data/tournament_surfaces.json,
+# refreshed by update_data.py); then this table of hosts that always use one surface.
+# Cities whose events change surface through the year are left out on purpose.
+CH_CLAY = """buenos aires|santiago|lima|bogota|cali|medellin|guayaquil|quito|asuncion|montevideo|campinas|
+florianopolis|sao paulo|porto alegre|curitiba|brasilia|santa cruz|concepcion|temuco|tigre|rosario|antofagasta|
+piracicaba|itajai|barranquilla|pereira|villa maria|santa fe|mar del plata|neuquen|punta del este|salta|tucuman|
+rio de janeiro|belo horizonte|san luis potosi|aguascalientes|mexico city|santo domingo|rome|florence|cagliari|
+turin|piemonte|genoa|francavilla|vicenza|perugia|todi|verona|trieste|cordenons|san marino|como|milan|parma|
+napoli|naples|barletta|sanremo|cervia|padova|bari|braga|lisbon|murcia|valencia|barcelona|seville|marbella|
+girona|maspalomas|gran canaria|prostejov|ostrava|liberec|pilsen|plzen|poznan|szczecin|banja luka|zagreb|split|
+zadar|skopje|belgrade|novi sad|iasi|sibiu|bucharest|tulln|salzburg|mauthausen|heilbronn|ludenscheid|meerbusch|
+braunschweig|augsburg|amersfoort|aix en provence|bordeaux|blois|troyes|bad waltersdorf|warsaw|budapest|
+tampere|antalya|tunis|cairo|samarkand|kunming|anning|sarasota|savannah|houston|bonita springs"""
+CH_GRASS = "surbiton|nottingham|ilkley|gaiba|veneto"
+CH_HARD = """phoenix|little rock|lexington|chicago|cary|granby|vancouver|tiburon|fairfield|las vegas|
+newport beach|morelos|cuernavaca|puerto vallarta|guadalajara|leon|shenzhen|guangzhou|zhangjiagang|seoul|busan|
+gwangju|yokohama|matsuyama|bengaluru|bangalore|pune|chennai|mumbai|new delhi|delhi|hua hin|nonthaburi|bangkok|
+manama|tashkent|fergana|canberra|burnie|launceston|traralgon|playford|bendigo|shepparton|darwin|cairns|
+townsville|sydney|brisbane|jinan|hangzhou|suzhou|nanchang|hong kong|tenerife|manacor"""
+CH_INDOOR_HARD = """bergamo|ortisei|brescia|andria|ismaning|eckental|koblenz|saint brieuc|st brieuc|quimper|pau|
+orleans|rennes|mouilleron le captif|mouilleron|roanne|brest|poitiers|lille|cherbourg|glasgow|helsinki|trento|
+cleveland|columbus|champaign|knoxville|charlottesville|calgary|drummondville|kobe|kyoto|kaohsiung|astana"""
+def _ch_table():
+    t = {}
+    for names, val in ((CH_CLAY, ("clay", False)), (CH_GRASS, ("grass", False)),
+                       (CH_HARD, ("hard", False)), (CH_INDOOR_HARD, ("hard", True))):
+        for k in names.replace("\n", "").split("|"):
+            if k.strip():
+                t[k.strip()] = val
+    return t
+CHALLENGER_TABLE = _ch_table()
+_CH_NOISE = {"challenger", "atp", "wta", "125", "men", "mens", "women", "womens", "singles", "qualifying",
+             "ii", "iii", "2", "3", "q", "tennis", "open", "cup", "trophy", "international", "championships"}
+_API_SURFACES = None
+
+def _api_surfaces():
+    global _API_SURFACES
+    if _API_SURFACES is None:
+        try:
+            with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "tournament_surfaces.json"),
+                      encoding="utf-8") as fh:
+                _API_SURFACES = json.load(fh)
+        except (OSError, ValueError):
+            _API_SURFACES = {}
+    return _API_SURFACES
+
+def _challenger_event(title, feed):
+    """-> (court id, surface, indoor, known) for a Challenger-level tournament."""
+    words = [w for w in _words(title).split() if w not in _CH_NOISE]
+    key = " ".join(words) or _words(title).strip()
+    t = " " + key + " "
+    table = next(((k, v) for k, v in sorted(CHALLENGER_TABLE.items(), key=lambda kv: -len(kv[0]))
+                  if f" {k} " in t), None)
+    api = (_api_surfaces().get(feed) or {}).get(title)
+    court = "ch-" + (table[0] if table else key).replace(" ", "-")
+    if api:
+        return court, api, bool(table and table[1][1] and table[1][0] == api), True
+    if table:
+        return court, table[1][0], table[1][1], True
+    return court, "hard", False, False
+
 def surface_for(title, tour, month=None):
-    """-> (surface, indoor, known). Unknown tournaments default to outdoor hard."""
+    """-> (surface, indoor, known). Unknown tournaments default to outdoor hard.
+    tour 'ATP_CH' / 'WTA_CH' is the Challenger level."""
+    if tour.endswith("_CH"):
+        return _challenger_event(title, tour)[1:]
     hit = _match_event(title, tour, month)
     return (hit[1], hit[2], True) if hit else ("hard", False, False)
 
 def court_id(title, tour, month=None):
     """Stable id for a tournament's court, shared by both feeds; None if unknown."""
+    if tour.endswith("_CH"):
+        return _challenger_event(title, tour)[0]
     hit = _match_event(title, tour, month)
     return hit[0] if hit else None
 
@@ -498,13 +566,18 @@ def save_history(path, hist):
 def log_predictions(hist, matches, now):
     """Upsert each not-yet-started match, so the log keeps the last price seen before the start."""
     # A match first priced from api-tennis and later by the odds feed has two ids;
-    # keep one row, the odds feed's.
+    # keep one row, the odds feed's. Returns {old id: (new id, players swapped)} so
+    # logged parlay legs can follow the match.
     def same(h):
         return (h["tour"], (h.get("start") or "")[:10], frozenset((loose_key(h["player_a"]), loose_key(h["player_b"]))))
-    feed = {same({"tour": m["tour"], "start": m["start"], "player_a": m["a"]["name"], "player_b": m["b"]["name"]})
+    feed = {same({"tour": m["tour"], "start": m["start"], "player_a": m["a"]["name"], "player_b": m["b"]["name"]}): m
             for m in matches if not m["id"].startswith("apit-")}
-    for k in [k for k, h in hist.items() if k.startswith("apit-") and not h.get("result") and same(h) in feed]:
-        del hist[k]
+    moved = {}
+    for k, h in list(hist.items()):
+        if k.startswith("apit-") and not h.get("result") and same(h) in feed:
+            m = feed[same(h)]
+            moved[k] = (m["id"], loose_key(h["player_a"]) != loose_key(m["a"]["name"]))
+            del hist[k]
     for m in matches:
         st = parse_iso(m["start"])
         if not st or st <= now:
@@ -521,6 +594,8 @@ def log_predictions(hist, matches, now):
                          "pinnacle_a": m.get("pinnacle_a", ""),
                          "flags": ";".join(sorted({c for c, _ in m.get("flags", [])})),
                          "model_version": m.get("model_version", "")}
+    return moved
+
 
 def settle(hist, results, now):
     """Fill in winners from recent_results.json. result: 'a', 'b' or 'void'."""
@@ -752,12 +827,14 @@ def kalshi_parlay_matches(matches):
 # The odds feed only lists matches a bookmaker has priced, so the order of play
 # for tomorrow is often half missing there. api-tennis has the full schedule;
 # matches it lists that the odds feed doesn't get the model's number, no odds.
-def fetch_schedule(key, now, hours):
+def fetch_schedule(key, now, hours, challenger=False):
     """Upcoming ATP/WTA singles from api-tennis: [{tour, tournament, start, a, b, ...}]."""
     from update_data import api_tennis_call, API_TENNIS_TYPES      # lazy: update_data imports this module
     end = now + timedelta(hours=hours)
     out = []
     for tour, (type_key, type_name) in API_TENNIS_TYPES.items():
+        if tour.endswith("_ch") and not challenger:
+            continue                       # Challenger matches only once their results are in the ratings
         params = dict(method="get_fixtures", event_type_key=type_key,
                       date_start=(now - timedelta(days=1)).date().isoformat(),
                       date_stop=(end + timedelta(days=1)).date().isoformat())
@@ -781,7 +858,9 @@ def fetch_schedule(key, now, hours):
                 continue
             if not (now - timedelta(hours=14) < start <= end + timedelta(hours=14)):
                 continue                       # final window check after any time-zone fix
-            out.append({"key": str(ev.get("event_key")), "tour": tour.upper(),
+            feed = tour.upper()                # ATP, WTA, ATP_CH or WTA_CH
+            out.append({"key": str(ev.get("event_key")), "tour": feed[:3], "feed": feed,
+                        "level": "challenger" if feed.endswith("_CH") else "tour",
                         "tournament": ev.get("tournament_name", ""), "round": ev.get("tournament_round", ""),
                         "qualifying": ev.get("event_qualification") == "True", "start": start,
                         "a": a, "a_key": ev.get("first_player_key"), "b": b, "b_key": ev.get("second_player_key")})
@@ -848,11 +927,12 @@ def summary_from_books(books):
             pin = ia / (ia + ib)
     return best_a, best_b, statistics.mean(fair), len(fair), pin, by_book
 
-def schedule_pid(name, api_key, players):
+def schedule_pid(name, api_key, players, tour=None):
     """players.json id for an api-tennis name (the stats come from the same feed)."""
-    for pid in (slugify(f"{name} ({api_key})"), slugify(name)):
-        if pid in players:
-            return pid
+    for base in (slugify(f"{name} ({api_key})"), slugify(name)):
+        for pid in (base, f"{base}-{(tour or '').lower()}"):
+            if pid in players and (not tour or players[pid].get("tour") == tour):
+                return pid
     return None
 
 PLACEHOLDER = re.compile(r"\b(tba|tbd|bye|qualifier|lucky loser|winner)\b|/", re.I)
@@ -875,7 +955,7 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
     # the matches both feeds list show by how much.
     diffs = sorted(round((f["start"] - parse_iso(have[pair]["start"])).total_seconds() / 3600)
                    for f in sched
-                   for pair in [frozenset((schedule_pid(f["a"], f["a_key"], players), schedule_pid(f["b"], f["b_key"], players)))]
+                   for pair in [frozenset((schedule_pid(f["a"], f["a_key"], players, f["tour"]), schedule_pid(f["b"], f["b_key"], players, f["tour"])))]
                    if pair in have and parse_iso(have[pair]["start"]))
     # (newcomers can't be in the odds list under a players.json id, so they don't count here)
     shift = diffs[len(diffs) // 2] if len(diffs) >= 3 and abs(diffs[len(diffs) // 2]) <= 14 else 0
@@ -887,12 +967,18 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
     unmatched = [(name_keys(u["a"]["name"]), name_keys(u["b"]["name"])) for u in out["unmatched"]]
     added = 0
     extra = {}                             # newcomers, by id, for this run only
+    feed_titles = {}
+    for m in out["matches"]:
+        st_ = parse_iso(m.get("start"))
+        cid = court_id(m["tournament"], m["tour"], st_.month if st_ else None)
+        if cid and not m["id"].startswith(("sched-", "apit-")):
+            feed_titles.setdefault((m["tour"], cid), m["tournament"])
     for f in sched:
         if PLACEHOLDER.search(f["a"]) or PLACEHOLDER.search(f["b"]):
             continue                       # draw slot not filled yet
         ids = []
         for name, akey in ((f["a"], f["a_key"]), (f["b"], f["b_key"])):
-            pid = schedule_pid(name, akey, players)
+            pid = schedule_pid(name, akey, players, f["tour"])
             if not pid:
                 pid = "new-" + slugify(f"{name} {akey}")
                 extra.setdefault(pid, newcomer(name, f["tour"]))
@@ -904,8 +990,9 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
         if any((ua & fa and ub & fb) or (ua & fb and ub & fa) for ua, ub in unmatched):
             continue                       # priced, but the odds feed's names didn't resolve
         month = f["start"].month
-        surf, indoor, known = surface_for(f["tournament"], f["tour"], month)
-        best_of = 3 if f["qualifying"] else guess_best_of(f["tournament"], f["tour"])
+        feed, ch = f.get("feed", f["tour"]), f.get("level") == "challenger"
+        surf, indoor, known = surface_for(f["tournament"], feed, month)
+        best_of = 3 if f["qualifying"] or ch else guess_best_of(f["tournament"], f["tour"])
         t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)
         A, B = players.get(ka) or extra[ka], players.get(kb) or extra[kb]
         r = predict_export(A, B, surf, best_of, t_avg, mdl)
@@ -913,12 +1000,17 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
         def no_odds(name, key, q):
             return {"name": name, "key": key, "model": round(q, 4), "fair_odds": round(1 / q, 2),
                     "market": None, "best_odds": None, "book": None, "ev": None, "kelly": None}
-        title = f"{f['tour']} {f['tournament']}" + (" (qualifying)" if f["qualifying"] else "")
+        level_name = ("ATP Challenger" if f["tour"] == "ATP" else "WTA 125") if ch else f["tour"]
+        title = f"{level_name} {f['tournament']}"
+        if not ch:                         # same event, one name: use the odds feed's when it lists it
+            title = feed_titles.get((f["tour"], court_id(f["tournament"], feed, month)), title)
+        title += " (qualifying)" if f["qualifying"] else ""
         row = {"id": "sched-" + f["key"], "tour": f["tour"], "tournament": title, "round": f["round"],
                "start": iso(f["start"]), "surface": surf, "indoor": indoor, "surface_known": known,
                "best_of": best_of, "a": no_odds(A["name"], ka, p),
                "b": no_odds(B["name"], kb, 1 - p), "books": 0, "no_odds": True,
-               "court": court_id(f["tournament"], f["tour"], month), "model_version": version,
+               "court": court_id(f["tournament"], feed, month), "model_version": version,
+               "level": f.get("level", "tour"),
                "parts": {"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3)},
                "flags": [fl for fl in match_flags(A, B, surf, today, p, p)]}
         books = (odds or {}).get(f["key"])
@@ -971,7 +1063,7 @@ def main():
     def finish():
         tkey = os.environ.get("TENNIS_API_KEY", "").strip()
         if tkey and players:
-            sched = fetch_schedule(tkey, now, args.hours)
+            sched = fetch_schedule(tkey, now, args.hours, challenger=bool(mdl.get("challenger")))
             odds = fetch_api_tennis_odds(tkey, now, args.hours)
             n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours, odds)
             n_priced = sum(1 for m in out["matches"] if m.get("odds_source") == "api-tennis")
@@ -986,7 +1078,21 @@ def main():
             print(f"Kalshi: {out['kalshi_matched']} of {len(kal)} Kalshi matches paired with the list", file=sys.stderr)
         priced = [m for m in out["matches"] if not m.get("no_odds")]
         n_settled = settle(hist, results, now)
-        log_predictions(hist, priced, now)
+        moved = log_predictions(hist, priced, now)
+        if moved:                          # parlay legs follow a match to its odds-feed id
+            for pid in list(parlay_rows):
+                r = parlay_rows[pid]
+                legs = json.loads(r["legs"])
+                if not any(l["id"] in moved for l in legs):
+                    continue
+                for l in legs:
+                    if l["id"] in moved:
+                        new_id, swapped = moved[l["id"]]
+                        l["id"], l["side"] = new_id, ({"a": "b", "b": "a"}[l["side"]] if swapped else l["side"])
+                r["legs"] = json.dumps(legs)
+                r["id"] = ("kalshi|" if pid.startswith("kalshi|") else "") + "+".join(f"{l['id']}:{l['side']}" for l in legs)
+                del parlay_rows[pid]
+                parlay_rows[r["id"]] = r
         out["record"] = track_record(hist)
         save_history(args.history, hist)
         # api-tennis-priced matches can change id when the odds feed picks them up, which
@@ -1014,11 +1120,10 @@ def main():
                     used[i] = used.get(i, 0) + 1
             log_parlays(parlay_rows, new, now)
             return live_parlays(parlay_rows, hist, out["matches"], now, kalshi=kal)
-        fresh = build_parlays([m for m in priced if m.get("odds_source") != "api-tennis"], now, show=50)
+        fresh = build_parlays(priced, now, show=50)
         out["parlays"] = refill(fresh, False)
         # Kalshi gets its own slots, priced at Kalshi (after its fee)
-        # (only matches with a lasting id, so a logged leg can always be settled)
-        kfresh = build_parlays(kalshi_parlay_matches([m for m in priced if m.get("odds_source") != "api-tennis"]), now, show=50)
+        kfresh = build_parlays(kalshi_parlay_matches(priced), now, show=50)
         for c in kfresh:
             c["id"] = "kalshi|" + "+".join(f"{l['id']}:{l['side']}" for l in c["legs"])
         out["kalshi_parlays"] = refill(kfresh, True)
@@ -1086,7 +1191,7 @@ def main():
             a, b = ev.get("home_team"), ev.get("away_team")
             ka, kb = resolve(a, tour, players, idx), resolve(b, tour, players, idx)
             summary = price_summary(ev, a, b)
-            row = {"id": ev.get("id"), "tour": tour, "tournament": title,
+            row = {"id": ev.get("id"), "tour": tour, "tournament": title, "level": "tour",
                    "start": ev.get("commence_time"), "surface": surf, "indoor": indoor,
                    "surface_known": known, "best_of": best_of,
                    "a": {"name": a, "key": ka}, "b": {"name": b, "key": kb}}

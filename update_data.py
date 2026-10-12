@@ -95,7 +95,10 @@ def http_get(url):
 
 # ---------- source 1: api-tennis.com ------------------------------------------
 API_TENNIS = "https://api.api-tennis.com/tennis/"
-API_TENNIS_TYPES = {"atp": ("265", "Atp Singles"), "wta": ("266", "Wta Singles")}
+API_TENNIS_TYPES = {"atp": ("265", "Atp Singles"), "wta": ("266", "Wta Singles"),
+                    # Challenger level (ATP Challenger, WTA 125), cached as tour ATP_CH / WTA_CH
+                    "atp_ch": ("281", "Challenger Men Singles"), "wta_ch": ("272", "Challenger Women Singles")}
+CHALLENGER_OF = {"ATP": "ATP_CH", "WTA": "WTA_CH"}
 API_CACHE_FIELDS = ["event_key", "date", "time", "tour", "tournament", "round", "qualifying",
                     "surface", "indoor", "status", "winner", "winner_key", "loser", "loser_key",
                     "w_srv_won", "w_srv_pts", "l_srv_won", "l_srv_pts",
@@ -104,6 +107,9 @@ API_STATUS = {"Finished": "completed", "Retired": "ret", "Walk Over": "wo"}
 API_WINDOW_DAYS = 7        # date range per request
 API_REFRESH_DAYS = 7       # re-fetch this many recent days each run (late stats, corrections)
 API_BACKFILL_DAYS = 730    # history fetched on the first run
+API_BUDGET_S = 18 * 60     # stop fetching history after this long; the next run carries on
+API_SAVE_EVERY = 8         # save the cache every this many requests, so a killed run keeps its work
+SURFACES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "tournament_surfaces.json")
 
 def api_tennis_call(key, **params):
     q = urllib.parse.urlencode({"APIkey": key, **params})
@@ -174,20 +180,31 @@ def save_api_cache(path, cache):
 def _state_path(cache_path):
     return os.path.join(os.path.dirname(cache_path) or ".", "api_tennis_state.json")
 
-def sync_api_tennis(key, cache_path, tours, today=None):
+def sync_api_tennis(key, cache_path, tours, today=None, budget_s=API_BUDGET_S):
     """Bring the cache up to date. Returns (cache, number of new/updated rows, error or None).
 
+    A new feed (e.g. the Challengers) is backfilled API_BACKFILL_DAYS; the backfill stops
+    after budget_s seconds and the next run carries on from the newest cached match.
     Matches cached before set scores were stored are re-fetched once (a one-off
     backfill tracked in api_tennis_state.json, resumable if it's interrupted)."""
+    import time
+    t0 = time.time()
     today = today or date.today()
     cache = load_api_cache(cache_path)
     state = load_json(_state_path(cache_path)) or {}
     sets_state = state.setdefault("sets_backfill", {})
-    changed, err = 0, None
+    changed, err, calls = 0, None, 0
+    def save():
+        save_api_cache(cache_path, cache)
+        with open(_state_path(cache_path), "w", encoding="utf-8") as fh:
+            json.dump(state, fh, indent=1)
     for tour in tours:
         type_key, type_name = API_TENNIS_TYPES[tour]
         # Per tour, so an interrupted backfill of one tour resumes where it stopped.
         have = [r["date"] for r in cache.values() if r["tour"] == tour.upper()]
+        if not have:
+            sets_state[tour] = "done"      # a new feed: its rows carry set scores from the start
+            print(f"  · api-tennis {tour}: new feed, fetching {API_BACKFILL_DAYS} days of history", file=sys.stderr)
         a = (datetime.strptime(max(have), "%Y-%m-%d").date() - timedelta(days=API_REFRESH_DAYS)
              if have else today - timedelta(days=API_BACKFILL_DAYS))
         backfill = bool(have) and sets_state.get(tour) != "done"
@@ -197,6 +214,10 @@ def sync_api_tennis(key, cache_path, tours, today=None):
                  if done_to else datetime.strptime(min(have), "%Y-%m-%d").date())
             print(f"  · api-tennis {tour}: adding set scores to history from {a}", file=sys.stderr)
         while a <= today:
+            if a < today - timedelta(days=API_REFRESH_DAYS) and time.time() - t0 > budget_s:
+                print(f"  · api-tennis {tour}: time budget used, history fetched up to {a - timedelta(days=1)};"
+                      " the next run carries on", file=sys.stderr)
+                break
             b = min(a + timedelta(days=API_WINDOW_DAYS - 1), today)
             try:
                 events = api_tennis_call(key, method="get_fixtures", event_type_key=type_key,
@@ -218,13 +239,51 @@ def sync_api_tennis(key, cache_path, tours, today=None):
             if backfill:
                 sets_state[tour] = b.isoformat()
             a = b + timedelta(days=1)
+            calls += 1
+            if calls % API_SAVE_EVERY == 0:
+                save()
         else:
             if backfill:
                 sets_state[tour] = "done"
-    save_api_cache(cache_path, cache)
-    with open(_state_path(cache_path), "w", encoding="utf-8") as fh:
-        json.dump(state, fh, indent=1)
+    save()
     return cache, changed, err
+
+def sync_tournament_surfaces(key, path=SURFACES_PATH):
+    """api-tennis's own surface for each tournament, saved as {feed: {tournament name: surface}}
+    for the Challenger events the tournament table doesn't list. Returns a short report."""
+    try:
+        res = api_tennis_call(key, method="get_tournaments")
+    except Exception as e:                           # noqa: BLE001
+        return f"tournament list unavailable ({e})"
+    if not isinstance(res, list):
+        return f"tournament list: unexpected reply ({type(res).__name__})"
+    by_type = {v[1]: k.upper() for k, v in API_TENNIS_TYPES.items()}
+    out, fields, with_surf = {}, set(), 0
+    for t in res:
+        if not isinstance(t, dict):
+            continue
+        fields.update(t)
+        feed = by_type.get(t.get("event_type_type"))
+        raw = str(t.get("tournament_sourface") or t.get("tournament_surface") or t.get("surface") or "").lower()
+        surf = next((x for x in ("clay", "grass", "hard") if x in raw), "hard" if "carpet" in raw else None)
+        if feed and t.get("tournament_name") and surf:
+            out.setdefault(feed, {})[t["tournament_name"]] = surf
+            with_surf += 1
+    # how often api-tennis agrees with the tournament table on tour events (a trust check)
+    from update_matches import _match_event
+    agree = total = 0
+    for feed in ("ATP", "WTA"):
+        for name, surf in (out.get(feed) or {}).items():
+            hit = _match_event(name, feed)
+            if hit:
+                total += 1; agree += hit[1] == surf
+    if out:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(out, fh, ensure_ascii=False, indent=1, sort_keys=True)
+    counts = {k: len(v) for k, v in out.items()}
+    return (f"{len(res)} tournaments, {with_surf} with a surface {counts}; agrees with the table on "
+            f"{agree}/{total} tour events" + ("" if with_surf else f"; fields: {sorted(fields)[:12]}"))
 
 def _first_set(games):
     """'6-4 3-6 7-6' (winner's side) -> (6, 4); None if missing or not a finished set.
@@ -236,35 +295,43 @@ def _first_set(games):
     done = (max(a, b) == 6 and abs(a - b) >= 2) or (max(a, b) == 7 and min(a, b) in (5, 6))
     return (a, b) if done else None
 
-def from_api_cache(cache, tour_label):
+def from_api_cache(cache, tour_label, challenger=False):
+    """Cached matches for one tour as model rows. challenger=True also includes that tour's
+    Challenger level (ATP Challenger / WTA 125), marked level 'challenger'."""
     # Surface, court and format come from the tournament table at load time, so
     # fixes to the table also apply to matches cached before the fix.
     from update_matches import surface_for, court_id, guess_best_of
-    out, names = [], {}
-    for r in cache.values():
-        if r["tour"] != tour_label:
-            continue
+    feeds = (tour_label, CHALLENGER_OF[tour_label]) if challenger and tour_label in CHALLENGER_OF else (tour_label,)
+    rows = [r for r in cache.values() if r["tour"] in feeds]
+    # Two different players can share an abbreviated name ("J. Smith"); keep them apart.
+    # Tour-level players claim a name first, so adding Challengers never renames them.
+    names = {}
+    for r in sorted(rows, key=lambda r: (r["tour"] != tour_label, r["date"])):
+        for n, k in ((r["winner"], r["winner_key"]), (r["loser"], r["loser_key"])):
+            names.setdefault(n, k)
+    def nm(n, k):
+        return n if names.get(n) == k else f"{n} ({k})"
+    out = []
+    for r in rows:
         d = parse_ymd(r["date"].replace("-", ""))
         if not d:
             continue
-        # Two different players can share an abbreviated name ("J. Smith"); keep them apart.
-        def nm(n, k):
-            owner = names.setdefault(n, k)
-            return n if owner == k else f"{n} ({k})"
         w, l = nm(r["winner"], r["winner_key"]), nm(r["loser"], r["loser_key"])
         def srv(won, pts):
             won, pts = to_float(won), to_float(pts)
             return (won, pts) if won is not None and pts else None
-        surf, _, _ = surface_for(r["tournament"], tour_label, d.month)
+        feed = r["tour"]
+        surf, _, _ = surface_for(r["tournament"], feed, d.month)
         qual = r.get("qualifying") == "True"
+        ch = feed != tour_label
         out.append({"date": d, "order": (r["time"], r["event_key"]), "surface": surf,
                     "winner": w, "loser": l, "status": r["status"], "tournament": r["tournament"],
-                    "court": court_id(r["tournament"], tour_label, d.month),
+                    "court": court_id(r["tournament"], feed, d.month),
                     "set1": _first_set(r.get("games")),
                     "sets": ((int(r["w_sets"]), int(r["l_sets"]))
                              if (r.get("w_sets") or "").isdigit() and (r.get("l_sets") or "").isdigit() else None),
-                    "best_of": 3 if qual else guess_best_of(r["tournament"], tour_label),
-                    "qualifying": qual,
+                    "best_of": 3 if qual or ch else guess_best_of(r["tournament"], tour_label),
+                    "qualifying": qual, "level": "challenger" if ch else "tour",
                     "w_srv": srv(r["w_srv_won"], r["w_srv_pts"]), "l_srv": srv(r["l_srv_won"], r["l_srv_pts"])})
     return out
 
@@ -484,6 +551,8 @@ def main():
     ap.add_argument("--local", default=None, help="local Sackmann-format CSV, processed as the first --tours value")
     ap.add_argument("--local-xlsx", default=None, help="local tennis-data .xlsx, processed as the first --tours value")
     ap.add_argument("--api-cache", default="data/api_tennis_matches.csv")
+    ap.add_argument("--api-feeds", nargs="+", default=list(API_TENNIS_TYPES), choices=list(API_TENNIS_TYPES),
+                    help="api-tennis feeds kept in the cache (Challengers are fetched even while the model doesn't use them yet)")
     args = ap.parse_args()
 
     prev = load_json(args.out) or {}
@@ -491,8 +560,13 @@ def main():
     key = os.environ.get("TENNIS_API_KEY", "").strip()
     if key and not (args.local or args.local_xlsx):
         print("Syncing api-tennis.com…", file=sys.stderr)
-        api_cache, n, api_err = sync_api_tennis(key, args.api_cache, args.tours)
-        print(f"  · api-tennis: {len(api_cache)} matches cached, {n} new or updated", file=sys.stderr)
+        api_cache, n, api_err = sync_api_tennis(key, args.api_cache, args.api_feeds)
+        by_feed = {}
+        for r in api_cache.values():
+            by_feed[r["tour"]] = by_feed.get(r["tour"], 0) + 1
+        print(f"  · api-tennis: {len(api_cache)} matches cached {by_feed}, {n} new or updated", file=sys.stderr)
+        if any(f.endswith("_ch") for f in args.api_feeds):
+            print(f"  · api-tennis surfaces: {sync_tournament_surfaces(key)}", file=sys.stderr)
     elif os.path.exists(args.api_cache) and not (args.local or args.local_xlsx):
         api_cache = load_api_cache(args.api_cache)    # no key today: still use what's cached
     prev_players = prev.get("players", {})
@@ -511,7 +585,10 @@ def main():
             with open(args.local_xlsx, "rb") as fh:
                 matches, source = from_tennis_data_rows(read_xlsx(fh.read())), "local xlsx"
         else:
-            matches, source = (from_api_cache(api_cache, label), "api-tennis.com") if api_cache else ([], None)
+            matches, source = ((from_api_cache(api_cache, label, challenger=params.ch_use), "api-tennis.com")
+                               if api_cache else ([], None))
+            if params.ch_use and matches:
+                source += " incl. Challengers"
             if matches and api_err:
                 source += " (last sync incomplete)"
             if not matches:
@@ -526,7 +603,12 @@ def main():
             model_block = {**mblock, "version": params_version()}
         if pl:
             latest = max(m["date"] for m in matches).isoformat()
-            players_all.update(pl)
+            for k, v in pl.items():
+                # an ATP and a WTA player can share a name ("S. Johnson"): the second tour's
+                # id gets a suffix instead of overwriting the first
+                if k in players_all and players_all[k].get("tour") != label:
+                    k = f"{k}-{label.lower()}"
+                players_all[k] = v
             tours_meta[tour] = {"tour_avg_spw": avg if has_serve else
                                 (prev.get("tours", {}).get(tour, {}).get("tour_avg_spw") or avg),
                                 "source": source, "latest_match": latest,

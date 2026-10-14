@@ -8,12 +8,18 @@ name: refresh-data
 #   3. commits and publishes the site to GitHub Pages.
 # 16:20 and 21:20 UTC: odds-only refreshes for later matches, since bookmakers often
 # price the next day's matches in the evening (skips odds if the month's Odds API
-# allowance is running low). A push to main also republishes the site.
+# allowance is running low).
+# :35 past every other hour: a quick refresh of the order of play (Challengers appear
+# once each event publishes it), api-tennis odds and Kalshi, keeping the Odds API's
+# last prices so its monthly allowance isn't touched. GitHub can start scheduled runs
+# hours late; the hourly ones keep the list current when that happens.
+# A push to main also republishes the site.
 on:
   schedule:
     - cron: "20 6 * * *"
     - cron: "20 16 * * *"
     - cron: "20 21 * * *"
+    - cron: "35 0-5,7-15,17-20,22,23 * * *"
   workflow_dispatch: {}
   push:
     branches: [main]
@@ -43,7 +49,8 @@ jobs:
           python-version: "3.12"
 
       - name: Regenerate players.json + recent_results.json
-        if: github.event.schedule != '20 16 * * *' && github.event.schedule != '20 21 * * *'
+        # stats and results once a day (and on demand), not on the odds-only or quick runs
+        if: github.event_name != 'schedule' || github.event.schedule == '20 6 * * *'
         timeout-minutes: 30          # the first run backfills ~2 years from api-tennis.com
         env:
           TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
@@ -55,7 +62,9 @@ jobs:
         env:
           ODDS_API_KEY: ${{ secrets.ODDS_API_KEY }}
           TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}   # the full order of play, priced or not
-        run: python update_matches.py --players players.json --out matches.json --min-remaining 60
+        run: >-
+          python update_matches.py --players players.json --out matches.json --min-remaining 60
+          ${{ github.event.schedule == '35 0-5,7-15,17-20,22,23 * * *' && '--skip-odds-feed' || '' }}
 
       - name: Commit if changed
         run: |

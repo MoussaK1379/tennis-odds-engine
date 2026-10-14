@@ -871,7 +871,10 @@ try { TODAY_TAB = localStorage.getItem("todayTab") || ""; } catch (e) { /* stora
 function renderToday(j){
   const list = $("todayList");
   if(!j){ list.innerHTML = '<div class="today__empty">No match list yet — it appears after the first daily run.</div>'; return; }
-  $("todayStamp").textContent = "updated " + (j.updated || "").replace("T"," ").replace(/:\d\dZ$/," UTC");
+  const stamp = t => (t || "").replace("T"," ").replace(/:\d\dZ$/," UTC");
+  $("todayStamp").textContent = "updated " + stamp(j.updated);
+  // quick hourly refreshes keep the main odds feed's prices from its last 3-a-day run
+  if (j.odds_feed_at && j.odds_feed_at !== j.updated) $("todayStamp").textContent += ` · tour odds from ${stamp(j.odds_feed_at).slice(11)}`;
   if(j.status === "quota_low") $("todayStamp").textContent += " · odds allowance low";
   if(j.scheduled_only) $("todayStamp").textContent += ` · ${j.scheduled_only} without odds yet`;
   if(j.status === "no_api_key" && !(j.matches || []).length){ list.innerHTML = '<div class="today__empty">Odds feed not connected yet — add the ODDS_API_KEY secret (see Docs).</div>'; return; }

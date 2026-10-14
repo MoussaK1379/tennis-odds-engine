@@ -266,7 +266,7 @@ def _api_surfaces():
 
 def _challenger_event(title, feed):
     """-> (court id, surface, indoor, known) for a Challenger-level tournament."""
-    words = [w for w in _words(title).split() if w not in _CH_NOISE]
+    words = [w for w in _words(QUALI_NAME.sub("", title or "")).split() if w not in _CH_NOISE]
     key = " ".join(words) or _words(title).strip()
     t = " " + key + " "
     table = next(((k, v) for k, v in sorted(CHALLENGER_TABLE.items(), key=lambda kv: -len(kv[0]))
@@ -283,9 +283,13 @@ def _challenger_event(title, feed):
         return court, table[1][0], table[1][1], True
     return court, "hard", False, False
 
+QUALI_NAME = re.compile(r"\s*(\([^)]*\))?\s*-\s*qualification\s*$", re.I)
+
 def challenger_name(name):
-    """'Olbia Challenger Men' -> 'Olbia' (api-tennis adds the level to the name)."""
-    return re.sub(r"\s+challenger(\s+(men|women))?\s*$", "", name or "", flags=re.I).strip() or name
+    """'Olbia Challenger Men' -> 'Olbia', 'Catania (Italy) - Qualification' -> 'Catania'
+    (api-tennis adds the level, or the country and 'Qualification', to the name)."""
+    n = QUALI_NAME.sub("", name or "")
+    return re.sub(r"\s+challenger(\s+(men|women))?\s*$", "", n, flags=re.I).strip() or name
 
 def surface_for(title, tour, month=None):
     """-> (surface, indoor, known). Unknown tournaments default to outdoor hard.
@@ -838,11 +842,14 @@ def kalshi_parlay_matches(matches):
 # The odds feed only lists matches a bookmaker has priced, so the order of play
 # for tomorrow is often half missing there. api-tennis has the full schedule;
 # matches it lists that the odds feed doesn't get the model's number, no odds.
+SCHEDULE_ERRORS = []                       # feeds whose schedule couldn't be read this run
+
 def fetch_schedule(key, now, hours, challenger=False):
     """Upcoming ATP/WTA singles from api-tennis: [{tour, tournament, start, a, b, ...}]."""
     from update_data import api_tennis_call, API_TENNIS_TYPES      # lazy: update_data imports this module
     end = now + timedelta(hours=hours)
     out = []
+    SCHEDULE_ERRORS.clear()
     for tour, (type_key, type_name) in API_TENNIS_TYPES.items():
         if tour.endswith("_ch") and not challenger:
             continue                       # Challenger matches only once their results are in the ratings
@@ -853,6 +860,7 @@ def fetch_schedule(key, now, hours, challenger=False):
             events, tz = api_tennis_call(key, timezone="Etc/UTC", **params), timezone.utc
         except Exception as e:                                        # noqa: BLE001
             print(f"  · schedule {tour.upper()}: {e}", file=sys.stderr)
+            SCHEDULE_ERRORS.append(tour.upper())
             continue
         for ev in events:
             if ev.get("event_type_type") != type_name or ev.get("event_live") == "1":
@@ -1002,6 +1010,8 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             continue                       # priced, but the odds feed's names didn't resolve
         month = f["start"].month
         feed, ch = f.get("feed", f["tour"]), f.get("level") == "challenger"
+        if QUALI_NAME.search(f["tournament"] or ""):
+            f = {**f, "qualifying": True}      # 'Lisbon (Portugal) - Qualification' is the qualifying draw
         surf, indoor, known = surface_for(f["tournament"], feed, month)
         best_of = 3 if f["qualifying"] or ch else guess_best_of(f["tournament"], f["tour"])
         t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)
@@ -1057,10 +1067,13 @@ def main():
     ap.add_argument("--regions", default="eu", help="bookmaker regions: us, uk, eu, au (each costs 1 request)")
     ap.add_argument("--min-remaining", type=int, default=0,
                     help="skip fetching odds if the monthly allowance left is below this")
+    ap.add_argument("--skip-odds-feed", action="store_true",
+                    help="quick refresh: keep the last odds-feed prices, refresh the schedule, "
+                         "api-tennis odds and Kalshi (saves the odds feed's monthly allowance)")
     args = ap.parse_args()
 
     now = datetime.now(timezone.utc)
-    out = {"updated": iso(now), "window_hours": args.hours, "status": "ok",
+    out = {"updated": iso(now), "odds_feed_at": iso(now), "window_hours": args.hours, "status": "ok",
            "requests_remaining": None, "matches": [], "unmatched": []}
     hist = load_history(args.history)
     try:
@@ -1075,13 +1088,30 @@ def main():
         tkey = os.environ.get("TENNIS_API_KEY", "").strip()
         if tkey and players:
             sched = fetch_schedule(tkey, now, args.hours, challenger=bool(mdl.get("challenger")))
+            if SCHEDULE_ERRORS and not prev_sched:
+                try:
+                    with open(args.out, encoding="utf-8") as fh:
+                        prev_sched[:] = [m for m in json.load(fh).get("matches", [])
+                                         if str(m.get("id", "")).startswith(("sched-", "apit-"))]
+                except (OSError, ValueError):
+                    pass
+            if SCHEDULE_ERRORS and prev_sched:
+                # api-tennis didn't answer: keep the last list for those feeds rather than drop it
+                lost = {"ATP": "tour", "WTA": "tour", "ATP_CH": "challenger", "WTA_CH": "challenger"}
+                kept = [m for m in prev_sched if parse_iso(m.get("start")) and parse_iso(m["start"]) > now
+                        and any(m["tour"] == f[:3] and m.get("level", "tour") == lost[f] for f in SCHEDULE_ERRORS)]
+                for m in kept:
+                    m.pop("kalshi", None)
+                out["matches"] += kept
+                print(f"  · schedule unavailable for {SCHEDULE_ERRORS}: kept {len(kept)} matches from the last run",
+                      file=sys.stderr)
             odds = fetch_api_tennis_odds(tkey, now, args.hours)
             n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours, odds)
             n_priced = sum(1 for m in out["matches"] if m.get("odds_source") == "api-tennis")
-            out["scheduled_only"] = n - n_priced
+            out["scheduled_only"] = sum(1 for m in out["matches"] if m.get("no_odds"))
             n_new = sum(1 for m in out["matches"] if m.get("new_players"))
-            print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added: {n_priced} priced by "
-                  f"api-tennis, {n - n_priced} without odds ({n_new} with a player new to our data)",
+            print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added; listed now: {n_priced} priced by "
+                  f"api-tennis, {out['scheduled_only']} without odds ({n_new} with a player new to our data)",
                   file=sys.stderr)
         if players:
             kal = fetch_kalshi(now, args.hours)
@@ -1156,6 +1186,32 @@ def main():
     version = mdl.get("version", "")
     today = now.date()
 
+    prev_sched = []                        # last run's schedule-only rows, kept if api-tennis fails
+    def carry_over_feed():
+        """Keep the last run's odds-feed matches (and when they were priced); the schedule,
+        api-tennis prices and Kalshi are rebuilt fresh by finish()."""
+        try:
+            with open(args.out, encoding="utf-8") as fh:
+                prev = json.load(fh)
+        except (OSError, ValueError):
+            return None
+        keep = [m for m in prev.get("matches", []) if not str(m.get("id", "")).startswith(("sched-", "apit-"))]
+        prev_sched[:] = [m for m in prev.get("matches", []) if str(m.get("id", "")).startswith(("sched-", "apit-"))]
+        for m in keep:
+            m.pop("kalshi", None)          # re-attached from the fresh Kalshi read
+        out["matches"], out["unmatched"] = keep, prev.get("unmatched", [])
+        out["odds_feed_at"] = prev.get("odds_feed_at") or prev.get("updated")
+        out["requests_remaining"] = prev.get("requests_remaining")
+        return prev
+
+    if args.skip_odds_feed:
+        prev = carry_over_feed()
+        if prev is not None:
+            out["status"] = prev.get("status", "ok")
+            print(f"Quick refresh: kept {len(out['matches'])} odds-feed matches priced at {out['odds_feed_at']}",
+                  file=sys.stderr)
+            return finish()
+
     key = os.environ.get("ODDS_API_KEY", "").strip()
     if not key:
         out["status"] = "no_api_key"
@@ -1167,12 +1223,7 @@ def main():
     print(f"{len(tennis)} active ATP/WTA events, requests remaining: {remaining}", file=sys.stderr)
     if remaining is not None and args.min_remaining and int(float(remaining)) < args.min_remaining:
         # Keep the morning's list rather than spend the last of the allowance.
-        try:
-            with open(args.out, encoding="utf-8") as fh:
-                prev = json.load(fh)
-            out["matches"] = [m for m in prev.get("matches", []) if not m.get("no_odds")]
-            out["unmatched"], out["updated"] = prev.get("unmatched", []), prev.get("updated")
-        except (OSError, ValueError):
+        if carry_over_feed() is None:
             pass
         out["status"], out["requests_remaining"] = "quota_low", remaining
         print(f"Only {remaining} requests left this month — skipped the odds refresh.", file=sys.stderr)

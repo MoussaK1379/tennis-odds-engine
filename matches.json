@@ -1,9 +1,9 @@
 {
-  "updated": "2026-10-14T23:24:13Z",
-  "odds_feed_at": "2026-10-14T20:14:48Z",
+  "updated": "2026-10-14T23:58:12Z",
+  "odds_feed_at": "2026-10-14T23:58:12Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "373",
+  "requests_remaining": "371",
   "matches": [
     {
       "id": "7a21aca444222176633bd1bece7ec245",
@@ -20,32 +20,32 @@
         "key": "k-muchova",
         "model": 0.6468,
         "fair_odds": 1.55,
-        "market": 0.5096,
-        "best_odds": 1.97,
+        "market": 0.5014,
+        "best_odds": 2.02,
         "book": "Betfair",
-        "ev": 0.2741,
-        "kelly": 0.0706
+        "ev": 0.3064,
+        "kelly": 0.0751
       },
       "b": {
         "name": "Diana Shnaider",
         "key": "d-shnaider",
         "model": 0.3532,
         "fair_odds": 2.83,
-        "market": 0.4904,
-        "best_odds": 2.0,
-        "book": "Betfair",
-        "ev": -0.2935,
+        "market": 0.4986,
+        "best_odds": 1.96,
+        "book": "Unibet (NL)",
+        "ev": -0.3076,
         "kelly": 0.0
       },
       "books": 20,
       "prices": {
         "William Hill": [
-          1.91,
-          1.91
+          1.95,
+          1.85
         ],
         "Coolbet": [
-          1.87,
-          1.95
+          1.92,
+          1.89
         ],
         "PMU (FR)": [
           1.76,
@@ -60,60 +60,60 @@
           1.96
         ],
         "888sport": [
-          1.91,
-          1.91
+          1.95,
+          1.85
         ],
         "Marathon Bet": [
-          1.85,
-          1.94
+          1.88,
+          1.91
         ],
         "Unibet (SE)": [
           1.83,
           1.96
         ],
         "Nordic Bet": [
-          1.84,
-          1.97
+          1.89,
+          1.92
         ],
         "Betclic (FR)": [
-          1.83,
-          1.95
+          1.88,
+          1.9
         ],
         "Betsson": [
-          1.84,
-          1.97
+          1.89,
+          1.92
         ],
         "1xBet": [
-          1.88,
-          1.97
+          1.91,
+          1.94
         ],
         "Unibet (FR)": [
-          1.76,
-          1.88
+          1.81,
+          1.83
         ],
         "Winamax (FR)": [
-          1.9,
-          1.88
+          1.86,
+          1.86
         ],
         "Winamax (DE)": [
           1.94,
           1.92
         ],
         "Tipico": [
-          1.75,
-          1.95
+          1.8,
+          1.9
         ],
         "BetOnline.ag": [
-          1.91,
-          1.91
+          1.96,
+          1.86
         ],
         "Pinnacle": [
-          1.95,
-          1.93
+          1.99,
+          1.92
         ],
         "BetAnything": [
-          1.87,
-          1.87
+          1.91,
+          1.83
         ]
       },
       "court": "wuhan",
@@ -123,8 +123,13 @@
         "serve": 0.5517,
         "w": 0.45
       },
-      "pinnacle_a": 0.4974,
-      "flags": [],
+      "pinnacle_a": 0.491,
+      "flags": [
+        [
+          "disagree",
+          "Model and market differ by 16 points"
+        ]
+      ],
       "kalshi": {
         "a": {
           "cost": 0.5,
@@ -158,28 +163,28 @@
         "key": "m-pohankova",
         "model": 0.3841,
         "fair_odds": 2.6,
-        "market": 0.322,
-        "best_odds": 3.15,
+        "market": 0.3255,
+        "best_odds": 3.1,
         "book": "Betfair",
-        "ev": 0.2099,
-        "kelly": 0.0244
+        "ev": 0.1907,
+        "kelly": 0.0227
       },
       "b": {
         "name": "Maria Sakkari",
         "key": "m-sakkari",
         "model": 0.6159,
         "fair_odds": 1.62,
-        "market": 0.678,
-        "best_odds": 1.45,
+        "market": 0.6745,
+        "best_odds": 1.46,
         "book": "Betfair",
-        "ev": -0.1069,
+        "ev": -0.1008,
         "kelly": 0.0
       },
       "books": 19,
       "prices": {
         "888sport": [
-          2.9,
-          1.4
+          2.75,
+          1.44
         ],
         "Nordic Bet": [
           2.95,
@@ -202,8 +207,8 @@
           1.42
         ],
         "William Hill": [
-          2.9,
-          1.4
+          2.75,
+          1.44
         ],
         "Betclic (FR)": [
           2.9,
@@ -214,16 +219,16 @@
           1.35
         ],
         "Winamax (FR)": [
-          2.95,
-          1.4
+          2.85,
+          1.38
         ],
         "Winamax (DE)": [
           3.05,
           1.42
         ],
         "Unibet (SE)": [
-          3.0,
-          1.38
+          2.95,
+          1.4
         ],
         "PMU (FR)": [
           2.8,
@@ -238,16 +243,16 @@
           1.4
         ],
         "Pinnacle": [
-          3.02,
-          1.43
+          3.0,
+          1.45
         ],
         "BetOnline.ag": [
-          3.0,
-          1.42
+          2.95,
+          1.43
         ],
         "BetAnything": [
-          3.0,
-          1.42
+          2.95,
+          1.43
         ]
       },
       "court": "wuhan",
@@ -257,7 +262,7 @@
         "serve": 0.4201,
         "w": 0.45
       },
-      "pinnacle_a": 0.3213,
+      "pinnacle_a": 0.3258,
       "flags": [],
       "kalshi": {
         "a": {
@@ -267,12 +272,12 @@
           "ticker": "KXWTAMATCH-26OCT14POHSAK-POH"
         },
         "b": {
-          "cost": 0.7,
-          "odds": 1.399,
-          "ev": -0.1384,
+          "cost": 0.69,
+          "odds": 1.418,
+          "ev": -0.1267,
           "ticker": "KXWTAMATCH-26OCT14POHSAK-SAK"
         },
-        "market_a": 0.3119,
+        "market_a": 0.315,
         "event": "KXWTAMATCH-26OCT14POHSAK",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct14pohsak"
       }
@@ -292,10 +297,10 @@
         "key": "i-jovic",
         "model": 0.6205,
         "fair_odds": 1.61,
-        "market": 0.725,
-        "best_odds": 1.35,
-        "book": "1xBet",
-        "ev": -0.1624,
+        "market": 0.7212,
+        "best_odds": 1.39,
+        "book": "Betfair",
+        "ev": -0.1376,
         "kelly": 0.0
       },
       "b": {
@@ -303,21 +308,21 @@
         "key": "m-chwalinska",
         "model": 0.3795,
         "fair_odds": 2.63,
-        "market": 0.275,
-        "best_odds": 3.8,
-        "book": "Betfair",
-        "ev": 0.4422,
-        "kelly": 0.0395
+        "market": 0.2788,
+        "best_odds": 3.65,
+        "book": "Winamax (DE)",
+        "ev": 0.3853,
+        "kelly": 0.0363
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Nordic Bet": [
           1.31,
           3.45
         ],
         "William Hill": [
-          1.3,
-          3.5
+          1.33,
+          3.3
         ],
         "Betsson": [
           1.31,
@@ -325,31 +330,31 @@
         ],
         "1xBet": [
           1.35,
-          3.31
+          3.33
         ],
         "Unibet (FR)": [
           1.28,
           3.15
         ],
         "Coolbet": [
-          1.3,
-          3.55
+          1.32,
+          3.42
         ],
         "Marathon Bet": [
           1.33,
-          3.26
+          3.28
         ],
         "888sport": [
-          1.3,
-          3.5
+          1.33,
+          3.3
         ],
         "Betclic (FR)": [
           1.31,
           3.4
         ],
         "Winamax (FR)": [
-          1.3,
-          3.5
+          1.28,
+          3.4
         ],
         "Winamax (DE)": [
           1.31,
@@ -376,12 +381,16 @@
           3.4
         ],
         "Pinnacle": [
-          1.32,
-          3.67
+          1.33,
+          3.62
         ],
         "BetOnline.ag": [
           1.32,
           3.49
+        ],
+        "BetAnything": [
+          1.32,
+          3.4
         ]
       },
       "court": "wuhan",
@@ -391,7 +400,7 @@
         "serve": 0.5265,
         "w": 0.45
       },
-      "pinnacle_a": 0.7355,
+      "pinnacle_a": 0.7313,
       "flags": [
         [
           "specialist",
@@ -431,24 +440,24 @@
         "key": "e-svitolina",
         "model": 0.8973,
         "fair_odds": 1.11,
-        "market": 0.8869,
-        "best_odds": 1.1,
+        "market": 0.8867,
+        "best_odds": 1.12,
         "book": "Betfair",
-        "ev": -0.013,
-        "kelly": 0.0
+        "ev": 0.0049,
+        "kelly": 0.0103
       },
       "b": {
         "name": "Guo Hanyu",
         "key": "h-guo",
         "model": 0.1027,
         "fair_odds": 9.73,
-        "market": 0.1131,
-        "best_odds": 10.0,
-        "book": "Betfair",
-        "ev": 0.0274,
-        "kelly": 0.0008
+        "market": 0.1133,
+        "best_odds": 9.5,
+        "book": "Winamax (DE)",
+        "ev": -0.0239,
+        "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "888sport": [
           1.06,
@@ -460,7 +469,7 @@
         ],
         "Marathon Bet": [
           1.07,
-          8.3
+          8.2
         ],
         "William Hill": [
           1.07,
@@ -484,19 +493,19 @@
         ],
         "1xBet": [
           1.08,
-          8.9
+          8.8
         ],
         "Winamax (FR)": [
-          1.07,
-          8.5
+          1.06,
+          7.5
         ],
         "Winamax (DE)": [
           1.08,
           9.5
         ],
         "Tipico": [
-          1.03,
-          9.0
+          1.04,
+          8.2
         ],
         "LeoVegas (SE)": [
           1.07,
@@ -508,7 +517,7 @@
         ],
         "PMU (FR)": [
           1.02,
-          7.5
+          8.0
         ],
         "Unibet (NL)": [
           1.07,
@@ -516,11 +525,15 @@
         ],
         "Pinnacle": [
           1.08,
-          9.06
+          8.98
         ],
         "BetOnline.ag": [
-          1.09,
-          7.88
+          1.06,
+          9.17
+        ],
+        "BetAnything": [
+          1.06,
+          8.95
         ]
       },
       "court": "wuhan",
@@ -530,13 +543,13 @@
         "serve": 0.8918,
         "w": 0.45
       },
-      "pinnacle_a": 0.8935,
+      "pinnacle_a": 0.8926,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.91,
-          "odds": 1.092,
-          "ev": -0.0201,
+          "cost": 0.9,
+          "odds": 1.103,
+          "ev": -0.0103,
           "ticker": "KXWTAMATCH-26OCT15SVIGUO-SVI"
         },
         "b": {
@@ -545,7 +558,7 @@
           "ev": -0.1211,
           "ticker": "KXWTAMATCH-26OCT15SVIGUO-GUO"
         },
-        "market_a": 0.896,
+        "market_a": 0.895,
         "event": "KXWTAMATCH-26OCT15SVIGUO",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct15sviguo"
       }
@@ -565,10 +578,10 @@
         "key": "j-paolini",
         "model": 0.4765,
         "fair_odds": 2.1,
-        "market": 0.5168,
-        "best_odds": 1.89,
+        "market": 0.5297,
+        "best_odds": 1.85,
         "book": "Betfair",
-        "ev": -0.0994,
+        "ev": -0.1184,
         "kelly": 0.0
       },
       "b": {
@@ -576,85 +589,89 @@
         "key": "s-kartal",
         "model": 0.5235,
         "fair_odds": 1.91,
-        "market": 0.4832,
-        "best_odds": 2.08,
+        "market": 0.4703,
+        "best_odds": 2.14,
         "book": "Betfair",
-        "ev": 0.0888,
-        "kelly": 0.0206
+        "ev": 0.1202,
+        "kelly": 0.0264
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Nordic Bet": [
-          1.88,
-          1.93
+          1.8,
+          2.02
         ],
         "William Hill": [
           1.8,
           2.0
         ],
         "Betsson": [
-          1.88,
-          1.93
+          1.8,
+          2.02
         ],
         "1xBet": [
-          1.86,
-          1.99
+          1.78,
+          2.08
         ],
         "Unibet (FR)": [
-          1.79,
-          1.84
+          1.72,
+          1.93
         ],
         "Coolbet": [
-          1.82,
-          2.0
+          1.8,
+          2.02
         ],
         "Marathon Bet": [
-          1.83,
-          1.96
+          1.76,
+          2.05
         ],
         "888sport": [
           1.8,
           2.0
         ],
         "Betclic (FR)": [
-          1.86,
-          1.91
+          1.78,
+          2.0
         ],
         "Winamax (FR)": [
-          1.82,
+          1.76,
           1.98
         ],
         "Winamax (DE)": [
-          1.86,
-          2.0
+          1.82,
+          2.05
         ],
         "Tipico": [
-          1.85,
-          1.85
+          1.75,
+          1.95
         ],
         "Unibet (SE)": [
-          1.83,
+          1.82,
           1.97
         ],
         "PMU (FR)": [
-          1.75,
-          1.88
+          1.74,
+          1.89
         ],
         "LeoVegas (SE)": [
-          1.83,
+          1.82,
           1.97
         ],
         "Unibet (NL)": [
-          1.83,
+          1.82,
           1.97
         ],
         "Pinnacle": [
-          1.85,
-          2.04
+          1.81,
+          2.09
         ],
         "BetOnline.ag": [
-          1.83,
-          2.0
+          1.78,
+          2.09
+        ],
+        "BetAnything": [
+          1.77,
+          2.1
         ]
       },
       "court": "wuhan",
@@ -664,7 +681,7 @@
         "serve": 0.3847,
         "w": 0.45
       },
-      "pinnacle_a": 0.5244,
+      "pinnacle_a": 0.5359,
       "flags": [],
       "kalshi": {
         "a": {
@@ -699,28 +716,28 @@
         "key": "a-gea",
         "model": 0.5052,
         "fair_odds": 1.98,
-        "market": 0.4777,
-        "best_odds": 2.06,
-        "book": "Matchbook",
-        "ev": 0.0407,
-        "kelly": 0.0096
+        "market": 0.4822,
+        "best_odds": 2.03,
+        "book": "GTbets",
+        "ev": 0.0255,
+        "kelly": 0.0062
       },
       "b": {
         "name": "Alejandro Davidovich Fokina",
         "key": "a-davidovich-fokina",
         "model": 0.4948,
         "fair_odds": 2.02,
-        "market": 0.5223,
-        "best_odds": 1.93,
+        "market": 0.5178,
+        "best_odds": 1.96,
         "book": "Betfair",
-        "ev": -0.045,
+        "ev": -0.0302,
         "kelly": 0.0
       },
       "books": 21,
       "prices": {
         "Betsson": [
-          2.01,
-          1.81
+          1.98,
+          1.83
         ],
         "GTbets": [
           2.03,
@@ -739,28 +756,28 @@
           1.86
         ],
         "Nordic Bet": [
-          2.01,
-          1.81
-        ],
-        "Tipico": [
-          1.95,
+          1.98,
           1.83
         ],
+        "Tipico": [
+          1.97,
+          1.8
+        ],
         "Winamax (FR)": [
-          2.0,
+          1.96,
           1.8
         ],
         "Winamax (DE)": [
           2.0,
-          1.84
+          1.86
         ],
         "William Hill": [
-          2.0,
-          1.8
+          1.95,
+          1.85
         ],
         "888sport": [
-          2.0,
-          1.8
+          1.95,
+          1.85
         ],
         "Unibet (NL)": [
           2.0,
@@ -779,16 +796,16 @@
           1.74
         ],
         "Pinnacle": [
-          2.06,
-          1.85
+          1.98,
+          1.93
         ],
         "BetOnline.ag": [
-          2.0,
-          1.83
+          1.96,
+          1.86
         ],
         "Coolbet": [
-          2.0,
-          1.82
+          1.96,
+          1.85
         ],
         "BetAnything": [
           1.95,
@@ -802,7 +819,7 @@
         "serve": 0.5839,
         "w": 0.55
       },
-      "pinnacle_a": 0.4731,
+      "pinnacle_a": 0.4936,
       "flags": [],
       "kalshi": {
         "a": {
@@ -837,9 +854,9 @@
         "key": "l-fernandez",
         "model": 0.5874,
         "fair_odds": 1.7,
-        "market": 0.5276,
+        "market": 0.5388,
         "best_odds": 1.83,
-        "book": "Betfair",
+        "book": "Unibet (NL)",
         "ev": 0.0749,
         "kelly": 0.0226
       },
@@ -848,53 +865,53 @@
         "key": "j-ostapenko",
         "model": 0.4126,
         "fair_odds": 2.42,
-        "market": 0.4724,
-        "best_odds": 2.16,
+        "market": 0.4612,
+        "best_odds": 2.2,
         "book": "Betfair",
-        "ev": -0.1088,
+        "ev": -0.0923,
         "kelly": 0.0
       },
-      "books": 15,
+      "books": 18,
       "prices": {
         "Betsson": [
-          1.79,
-          2.03
+          1.75,
+          2.09
         ],
         "1xBet": [
-          1.81,
-          2.05
+          1.77,
+          2.09
         ],
         "Marathon Bet": [
-          1.78,
-          2.02
+          1.75,
+          2.06
         ],
         "888sport": [
-          1.8,
-          2.0
+          1.73,
+          2.1
         ],
         "William Hill": [
-          1.8,
-          2.0
+          1.73,
+          2.1
         ],
         "Coolbet": [
-          1.8,
-          2.02
+          1.73,
+          2.12
         ],
         "Nordic Bet": [
-          1.79,
-          2.03
+          1.75,
+          2.09
         ],
         "Unibet (FR)": [
-          1.69,
-          1.9
+          1.65,
+          1.94
         ],
         "Betclic (FR)": [
-          1.78,
-          2.01
+          1.74,
+          2.06
         ],
         "Tipico": [
-          1.72,
-          2.0
+          1.75,
+          1.95
         ],
         "Unibet (NL)": [
           1.83,
@@ -905,12 +922,24 @@
           1.96
         ],
         "PMU (FR)": [
-          1.76,
+          1.75,
           1.88
         ],
         "Unibet (SE)": [
           1.83,
           1.96
+        ],
+        "Pinnacle": [
+          1.75,
+          2.19
+        ],
+        "BetOnline.ag": [
+          1.74,
+          2.16
+        ],
+        "BetAnything": [
+          1.77,
+          2.1
         ]
       },
       "court": "wuhan",
@@ -920,6 +949,7 @@
         "serve": 0.6591,
         "w": 0.45
       },
+      "pinnacle_a": 0.5558,
       "flags": [
         [
           "retired",
@@ -959,48 +989,48 @@
         "key": "a-zverev",
         "model": 0.6468,
         "fair_odds": 1.55,
-        "market": 0.6444,
-        "best_odds": 1.57,
-        "book": "Matchbook",
-        "ev": 0.0154,
-        "kelly": 0.0068
+        "market": 0.6393,
+        "best_odds": 1.56,
+        "book": "Betfair",
+        "ev": 0.0089,
+        "kelly": 0.004
       },
       "b": {
         "name": "Alex de Minaur",
         "key": "a-de-minaur",
         "model": 0.3532,
         "fair_odds": 2.83,
-        "market": 0.3556,
-        "best_odds": 2.75,
-        "book": "LeoVegas (SE)",
-        "ev": -0.0286,
+        "market": 0.3607,
+        "best_odds": 2.78,
+        "book": "Betfair",
+        "ev": -0.018,
         "kelly": 0.0
       },
       "books": 21,
       "prices": {
         "1xBet": [
-          1.48,
-          2.73
+          1.49,
+          2.7
         ],
         "GTbets": [
           1.46,
           2.74
         ],
         "Unibet (FR)": [
-          1.46,
-          2.7
+          1.47,
+          2.65
         ],
         "Betsson": [
-          1.49,
-          2.65
+          1.5,
+          2.6
         ],
         "Nordic Bet": [
-          1.49,
-          2.65
+          1.5,
+          2.6
         ],
         "Marathon Bet": [
-          1.46,
-          2.69
+          1.47,
+          2.66
         ],
         "PMU (FR)": [
           1.4,
@@ -1019,40 +1049,40 @@
           2.75
         ],
         "Pinnacle": [
-          1.52,
-          2.72
+          1.54,
+          2.67
         ],
         "Winamax (FR)": [
-          1.48,
-          2.6
+          1.49,
+          2.55
         ],
         "Winamax (DE)": [
-          1.5,
-          2.7
+          1.52,
+          2.65
         ],
         "Tipico": [
           1.47,
           2.6
         ],
         "BetOnline.ag": [
-          1.5,
-          2.74
+          1.53,
+          2.64
         ],
         "William Hill": [
-          1.5,
-          2.6
+          1.53,
+          2.5
         ],
         "888sport": [
-          1.5,
-          2.6
+          1.53,
+          2.5
         ],
         "BetAnything": [
-          1.49,
-          2.7
+          1.54,
+          2.55
         ],
         "Coolbet": [
-          1.48,
-          2.67
+          1.5,
+          2.6
         ]
       },
       "court": "shanghai",
@@ -1062,7 +1092,7 @@
         "serve": 0.6226,
         "w": 0.55
       },
-      "pinnacle_a": 0.6415,
+      "pinnacle_a": 0.6342,
       "flags": [
         [
           "retired",
@@ -1102,28 +1132,28 @@
         "key": "a-krueger",
         "model": 0.1064,
         "fair_odds": 9.4,
-        "market": 0.1169,
-        "best_odds": 10.0,
-        "book": "Winamax (DE)",
-        "ev": 0.0637,
-        "kelly": 0.0018
+        "market": 0.1107,
+        "best_odds": 10.5,
+        "book": "Betfair",
+        "ev": 0.1168,
+        "kelly": 0.0031
       },
       "b": {
         "name": "Iga Swiatek",
         "key": "i-swiatek",
         "model": 0.8936,
         "fair_odds": 1.12,
-        "market": 0.8831,
-        "best_odds": 1.11,
+        "market": 0.8893,
+        "best_odds": 1.1,
         "book": "Betfair",
-        "ev": -0.0081,
+        "ev": -0.017,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (NL)": [
           8.0,
-          1.07
+          1.08
         ],
         "PMU (FR)": [
           7.5,
@@ -1131,19 +1161,19 @@
         ],
         "Unibet (SE)": [
           8.0,
-          1.07
+          1.08
         ],
         "LeoVegas (SE)": [
           8.0,
-          1.07
+          1.08
         ],
         "Marathon Bet": [
-          7.9,
+          8.4,
           1.07
         ],
         "Coolbet": [
-          8.1,
-          1.08
+          8.7,
+          1.07
         ],
         "William Hill": [
           9.0,
@@ -1154,44 +1184,48 @@
           1.06
         ],
         "1xBet": [
-          8.4,
-          1.08
+          9.05,
+          1.07
         ],
         "Unibet (FR)": [
-          5.7,
-          1.06
+          6.0,
+          1.05
         ],
         "Betsson": [
-          7.8,
-          1.09
+          8.6,
+          1.07
         ],
         "Nordic Bet": [
-          7.8,
-          1.09
+          8.6,
+          1.07
         ],
         "Betclic (FR)": [
-          7.4,
-          1.08
+          8.0,
+          1.07
         ],
         "Winamax (FR)": [
-          8.5,
-          1.06
+          8.0,
+          1.05
         ],
         "Winamax (DE)": [
           10.0,
           1.07
         ],
         "Tipico": [
-          7.8,
-          1.05
+          9.0,
+          1.03
         ],
         "Pinnacle": [
-          9.83,
+          9.89,
           1.07
         ],
         "BetOnline.ag": [
-          7.53,
-          1.09
+          9.95,
+          1.05
+        ],
+        "BetAnything": [
+          8.95,
+          1.06
         ]
       },
       "court": "wuhan",
@@ -1201,7 +1235,7 @@
         "serve": 0.0615,
         "w": 0.45
       },
-      "pinnacle_a": 0.0982,
+      "pinnacle_a": 0.0976,
       "flags": [],
       "kalshi": {
         "a": {
@@ -1236,10 +1270,10 @@
         "key": "a-li",
         "model": 0.5796,
         "fair_odds": 1.73,
-        "market": 0.6138,
-        "best_odds": 1.58,
-        "book": "Winamax (DE)",
-        "ev": -0.0842,
+        "market": 0.6197,
+        "best_odds": 1.56,
+        "book": "Unibet (SE)",
+        "ev": -0.0958,
         "kelly": 0.0
       },
       "b": {
@@ -1247,29 +1281,29 @@
         "key": "j-tjen",
         "model": 0.4204,
         "fair_odds": 2.38,
-        "market": 0.3862,
-        "best_odds": 2.7,
+        "market": 0.3803,
+        "best_odds": 2.78,
         "book": "Betfair",
-        "ev": 0.135,
-        "kelly": 0.0198
+        "ev": 0.1686,
+        "kelly": 0.0237
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (SE)": [
           1.56,
-          2.43
+          2.4
         ],
         "LeoVegas (SE)": [
           1.56,
-          2.43
+          2.4
         ],
         "Unibet (NL)": [
           1.56,
-          2.43
+          2.4
         ],
         "PMU (FR)": [
           1.5,
-          2.32
+          2.3
         ],
         "888sport": [
           1.53,
@@ -1280,52 +1314,56 @@
           2.5
         ],
         "Coolbet": [
-          1.54,
-          2.5
+          1.53,
+          2.52
         ],
         "Betclic (FR)": [
-          1.52,
-          2.45
+          1.49,
+          2.52
         ],
         "Nordic Bet": [
-          1.56,
-          2.44
+          1.53,
+          2.5
         ],
         "Betsson": [
-          1.56,
-          2.44
+          1.53,
+          2.5
         ],
         "Unibet (FR)": [
-          1.48,
-          2.25
+          1.46,
+          2.3
         ],
         "Tipico": [
-          1.52,
-          2.35
+          1.47,
+          2.5
         ],
         "Marathon Bet": [
-          1.54,
-          2.46
+          1.53,
+          2.48
         ],
         "1xBet": [
-          1.56,
-          2.49
+          1.55,
+          2.52
         ],
         "Winamax (FR)": [
-          1.56,
-          2.4
+          1.5,
+          2.45
         ],
         "Winamax (DE)": [
-          1.58,
-          2.5
+          1.54,
+          2.55
         ],
         "Pinnacle": [
           1.56,
           2.57
         ],
         "BetOnline.ag": [
-          1.57,
-          2.53
+          1.54,
+          2.61
+        ],
+        "BetAnything": [
+          1.54,
+          2.55
         ]
       },
       "court": "wuhan",
@@ -1370,7 +1408,7 @@
         "key": "r-jodar",
         "model": 0.5362,
         "fair_odds": 1.87,
-        "market": 0.5502,
+        "market": 0.5495,
         "best_odds": 1.79,
         "book": "Betfair",
         "ev": -0.0402,
@@ -1381,11 +1419,11 @@
         "key": "c-ruud",
         "model": 0.4638,
         "fair_odds": 2.16,
-        "market": 0.4498,
-        "best_odds": 2.22,
-        "book": "GTbets",
-        "ev": 0.0297,
-        "kelly": 0.0061
+        "market": 0.4505,
+        "best_odds": 2.24,
+        "book": "Betfair",
+        "ev": 0.0389,
+        "kelly": 0.0079
       },
       "books": 21,
       "prices": {
@@ -1394,8 +1432,8 @@
           2.12
         ],
         "1xBet": [
-          1.74,
-          2.14
+          1.75,
+          2.13
         ],
         "Nordic Bet": [
           1.71,
@@ -1406,8 +1444,8 @@
           2.15
         ],
         "Marathon Bet": [
-          1.72,
-          2.11
+          1.73,
+          2.1
         ],
         "Unibet (FR)": [
           1.62,
@@ -1439,7 +1477,7 @@
         ],
         "Winamax (FR)": [
           1.72,
-          2.1
+          2.05
         ],
         "Winamax (DE)": [
           1.76,
@@ -1454,12 +1492,12 @@
           2.1
         ],
         "Pinnacle": [
-          1.75,
-          2.18
+          1.76,
+          2.17
         ],
         "BetOnline.ag": [
-          1.74,
-          2.16
+          1.76,
+          2.12
         ],
         "BetAnything": [
           1.74,
@@ -1473,7 +1511,7 @@
         "serve": 0.5201,
         "w": 0.55
       },
-      "pinnacle_a": 0.5547,
+      "pinnacle_a": 0.5522,
       "flags": [
         [
           "retired",
@@ -1513,9 +1551,9 @@
         "key": "d-medvedev",
         "model": 0.5801,
         "fair_odds": 1.72,
-        "market": 0.6347,
+        "market": 0.6316,
         "best_odds": 1.53,
-        "book": "1xBet",
+        "book": "Unibet (SE)",
         "ev": -0.1125,
         "kelly": 0.0
       },
@@ -1524,33 +1562,33 @@
         "key": "t-paul",
         "model": 0.4199,
         "fair_odds": 2.38,
-        "market": 0.3653,
-        "best_odds": 2.75,
-        "book": "Unibet (SE)",
-        "ev": 0.1547,
-        "kelly": 0.0221
+        "market": 0.3684,
+        "best_odds": 2.9,
+        "book": "Betfair",
+        "ev": 0.2177,
+        "kelly": 0.0286
       },
       "books": 21,
       "prices": {
         "Unibet (FR)": [
-          1.44,
-          2.35
+          1.43,
+          2.4
         ],
         "Marathon Bet": [
-          1.47,
-          2.66
+          1.49,
+          2.6
         ],
         "Nordic Bet": [
-          1.51,
+          1.5,
           2.6
         ],
         "Betsson": [
-          1.51,
+          1.5,
           2.6
         ],
         "1xBet": [
-          1.53,
-          2.58
+          1.51,
+          2.63
         ],
         "Coolbet": [
           1.5,
@@ -1558,23 +1596,23 @@
         ],
         "GTbets": [
           1.51,
-          2.73
+          2.59
         ],
         "Unibet (SE)": [
-          1.44,
-          2.75
+          1.53,
+          2.5
         ],
         "LeoVegas (SE)": [
-          1.44,
-          2.75
+          1.53,
+          2.5
         ],
         "PMU (FR)": [
-          1.4,
-          2.63
+          1.47,
+          2.4
         ],
         "Unibet (NL)": [
-          1.44,
-          2.75
+          1.53,
+          2.5
         ],
         "Tipico": [
           1.5,
@@ -1589,24 +1627,24 @@
           2.6
         ],
         "Winamax (DE)": [
-          1.52,
-          2.6
+          1.5,
+          2.65
         ],
         "Winamax (FR)": [
-          1.5,
+          1.48,
           2.55
         ],
         "Pinnacle": [
-          1.53,
-          2.66
+          1.49,
+          2.81
         ],
         "BetOnline.ag": [
-          1.53,
-          2.65
+          1.45,
+          2.84
         ],
         "BetAnything": [
-          1.51,
-          2.65
+          1.48,
+          2.7
         ]
       },
       "court": "shanghai",
@@ -1616,7 +1654,7 @@
         "serve": 0.6022,
         "w": 0.55
       },
-      "pinnacle_a": 0.6348,
+      "pinnacle_a": 0.6535,
       "flags": []
     }
   ],

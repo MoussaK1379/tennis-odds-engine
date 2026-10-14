@@ -279,8 +279,12 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
     <p><code>.github/workflows/update.yml</code> runs every day at 06:20 UTC. It rebuilds
       the player stats, the match list and the track record, commits them, and publishes the site
       to GitHub Pages. Runs at 16:20 and 21:20 UTC refresh only the odds (bookmakers often price the next day in the evening), and
-      skips them if fewer than 60 requests are left in the month. You can also run it by hand from the repo's <strong>Actions</strong> tab
-      (<em>refresh-data → Run workflow</em>).</p>
+      skips them if fewer than 60 requests are left in the month. In every other hour, a quick run at :35 refreshes the order
+      of play (Challenger matches appear once each event publishes it, usually the evening before), the api-tennis odds and
+      Kalshi. It keeps the main odds feed's last prices, so it doesn't use that feed's monthly allowance, and the site notes
+      when those prices are from. If api-tennis doesn't answer, the last list is kept. GitHub sometimes starts scheduled runs
+      hours late; the hourly runs keep the list current when it does. You can also run it by hand from the repo's
+      <strong>Actions</strong> tab (<em>refresh-data → Run workflow</em>).</p>
     <ol>
       <li><strong>Turn on Pages:</strong> repo <em>Settings → Pages → Build and deployment → Source:
         GitHub Actions</em>. The site appears at <code>https://&lt;user&gt;.github.io/&lt;repo&gt;/</code>.</li>
@@ -295,7 +299,8 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
         permissions → Read and write permissions</em>.</li>
     </ol>
     <div class="callout">
-      <p><strong>Odds move.</strong> Prices are snapshots from 06:20, 16:20 and 21:20 UTC — check the live
+      <p><strong>Odds move.</strong> Main-feed prices are snapshots from 06:20, 16:20 and 21:20 UTC; api-tennis and
+        Kalshi prices are at most about an hour old. Check the live
         price before acting on any "value" flag.</p>
       <p>The date stamps on the Predictor show when each file was last rebuilt.</p>
     </div>

@@ -1,126 +1,16 @@
 {
-  "updated": "2026-10-16T19:35:58Z",
+  "updated": "2026-10-16T21:38:23Z",
   "odds_feed_at": "2026-10-16T19:35:58Z",
   "window_hours": 36,
   "status": "ok",
   "requests_remaining": "361",
   "matches": [
     {
-      "id": "sched-12171387",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Santa Cruz 2",
-      "round": "Santa Cruz 2 - Quarter-finals",
-      "start": "2026-10-16T20:00:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "L. A. Miguel",
-        "key": "l-a-miguel",
-        "model": 0.383,
-        "fair_odds": 2.61,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "H. Dellien",
-        "key": "h-dellien",
-        "model": 0.617,
-        "fair_odds": 1.62,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-santa-cruz-2",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.2978,
-        "serve": 0.4526,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "specialist",
-          "L. A. Miguel: clay-court specialist (64% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "H. Dellien: clay-court specialist (90% of matches on clay)"
-        ],
-        [
-          "retired",
-          "H. Dellien: retired from a match 36 days ago (3 in 6 months)"
-        ]
-      ]
-    },
-    {
-      "id": "sched-12171604",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Santa Cruz 2",
-      "round": "Santa Cruz 2 - Quarter-finals",
-      "start": "2026-10-16T20:00:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "J. M. La Serna",
-        "key": "j-m-la-serna",
-        "model": 0.5196,
-        "fair_odds": 1.92,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "F. Roncadelli",
-        "key": "f-roncadelli",
-        "model": 0.4804,
-        "fair_odds": 2.08,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-santa-cruz-2",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.4885,
-        "serve": 0.545,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "specialist",
-          "J. M. La Serna: clay-court specialist (100% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "F. Roncadelli: clay-court specialist (92% of matches on clay)"
-        ]
-      ]
-    },
-    {
       "id": "apit-12171624",
       "tour": "ATP",
       "tournament": "ATP Challenger Santa Cruz 2",
       "round": "Santa Cruz 2 - Quarter-finals",
-      "start": "2026-10-16T21:00:00Z",
+      "start": "2026-10-16T22:30:00Z",
       "surface": "clay",
       "indoor": false,
       "surface_known": true,
@@ -130,7 +20,7 @@
         "key": "t-seyboth-wild",
         "model": 0.7163,
         "fair_odds": 1.4,
-        "market": 0.8221,
+        "market": 0.8219,
         "best_odds": 1.16,
         "book": "bet365",
         "ev": -0.1691,
@@ -141,11 +31,11 @@
         "key": "n-kicker",
         "model": 0.2837,
         "fair_odds": 3.53,
-        "market": 0.1779,
-        "best_odds": 6.23,
+        "market": 0.1781,
+        "best_odds": 6.18,
         "book": "Pncl",
-        "ev": 0.7673,
-        "kelly": 0.0367
+        "ev": 0.7531,
+        "kelly": 0.0363
       },
       "books": 6,
       "no_odds": false,
@@ -194,7 +84,7 @@
         ],
         "Pncl": [
           1.14,
-          6.23
+          6.18
         ],
         "1xBet": [
           1.12,
@@ -202,21 +92,21 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.8453,
+      "pinnacle_a": 0.8443,
       "kalshi": {
         "a": {
-          "cost": 0.86,
-          "odds": 1.152,
-          "ev": -0.1748,
+          "cost": 0.85,
+          "odds": 1.164,
+          "ev": -0.1662,
           "ticker": "KXATPCHALLENGERMATCH-26OCT16SEYKIC-SEY"
         },
         "b": {
-          "cost": 0.16,
-          "odds": 5.903,
-          "ev": 0.6747,
+          "cost": 0.17,
+          "odds": 5.559,
+          "ev": 0.5771,
           "ticker": "KXATPCHALLENGERMATCH-26OCT16SEYKIC-KIC"
         },
-        "market_a": 0.8458,
+        "market_a": 0.84,
         "event": "KXATPCHALLENGERMATCH-26OCT16SEYKIC",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct16seykic"
       }
@@ -343,18 +233,18 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.77,
-          "odds": 1.278,
-          "ev": -0.0382,
+          "cost": 0.78,
+          "odds": 1.263,
+          "ev": -0.0495,
           "ticker": "KXATPMATCH-26OCT17ZVEDAV-ZVE"
         },
         "b": {
-          "cost": 0.24,
-          "odds": 3.956,
-          "ev": -0.0213,
+          "cost": 0.23,
+          "odds": 4.125,
+          "ev": 0.0205,
           "ticker": "KXATPMATCH-26OCT17ZVEDAV-DAV"
         },
-        "market_a": 0.765,
+        "market_a": 0.775,
         "event": "KXATPMATCH-26OCT17ZVEDAV",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct17zvedav"
       }
@@ -486,9 +376,9 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.57,
-          "odds": 1.703,
-          "ev": 0.0347,
+          "cost": 0.56,
+          "odds": 1.732,
+          "ev": 0.0524,
           "ticker": "KXWTAMATCH-26OCT17KAROST-KAR"
         },
         "b": {
@@ -497,7 +387,7 @@
           "ev": -0.1603,
           "ticker": "KXWTAMATCH-26OCT17KAROST-OST"
         },
-        "market_a": 0.5622,
+        "market_a": 0.555,
         "event": "KXWTAMATCH-26OCT17KAROST",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct17karost"
       }
@@ -629,9 +519,9 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.86,
-          "odds": 1.152,
-          "ev": -0.0808,
+          "cost": 0.85,
+          "odds": 1.164,
+          "ev": -0.0712,
           "ticker": "KXWTAMATCH-26OCT17SWICHW-SWI"
         },
         "b": {
@@ -640,7 +530,7 @@
           "ev": 0.2716,
           "ticker": "KXWTAMATCH-26OCT17SWICHW-CHW"
         },
-        "market_a": 0.8543,
+        "market_a": 0.8535,
         "event": "KXWTAMATCH-26OCT17SWICHW",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct17swichw"
       }
@@ -773,19 +663,19 @@
           "ticker": "KXATPMATCH-26OCT16JODMED-JOD"
         },
         "b": {
-          "cost": 0.64,
-          "odds": 1.524,
-          "ev": -0.1623,
+          "cost": 0.65,
+          "odds": 1.502,
+          "ev": -0.1744,
           "ticker": "KXATPMATCH-26OCT16JODMED-MED"
         },
-        "market_a": 0.365,
+        "market_a": 0.36,
         "event": "KXATPMATCH-26OCT16JODMED",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct16jodmed"
       }
     }
   ],
   "unmatched": [],
-  "scheduled_only": 2,
+  "scheduled_only": 0,
   "kalshi_matched": 5,
   "record": {
     "settled": 532,

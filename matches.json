@@ -1,112 +1,10 @@
 {
-  "updated": "2026-10-17T19:40:53Z",
+  "updated": "2026-10-17T22:36:44Z",
   "odds_feed_at": "2026-10-17T18:34:28Z",
   "window_hours": 36,
   "status": "ok",
   "requests_remaining": "353",
   "matches": [
-    {
-      "id": "apit-12171806",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Santa Cruz 2",
-      "round": "Santa Cruz 2 - Semi-finals",
-      "start": "2026-10-17T20:30:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "F. Comesana",
-        "key": "f-comesana",
-        "model": 0.3469,
-        "fair_odds": 2.88,
-        "market": 0.4218,
-        "best_odds": 2.37,
-        "book": "Pncl",
-        "ev": -0.1779,
-        "kelly": 0.0
-      },
-      "b": {
-        "name": "T. Seyboth Wild",
-        "key": "t-seyboth-wild",
-        "model": 0.6531,
-        "fair_odds": 1.53,
-        "market": 0.5782,
-        "best_odds": 1.64,
-        "book": "Pncl",
-        "ev": 0.0711,
-        "kelly": 0.0278
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-santa-cruz-2",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.4784,
-        "serve": 0.2392,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "specialist",
-          "F. Comesana: clay-court specialist (65% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "T. Seyboth Wild: clay-court specialist (91% of matches on clay)"
-        ],
-        [
-          "retired",
-          "T. Seyboth Wild: retired from a match 43 days ago"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          2.2,
-          1.62
-        ],
-        "bet365": [
-          2.2,
-          1.61
-        ],
-        "Marathon": [
-          2.16,
-          1.6
-        ],
-        "BetVictor": [
-          2.2,
-          1.6
-        ],
-        "1xBet": [
-          2.16,
-          1.62
-        ],
-        "Pncl": [
-          2.37,
-          1.64
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.409,
-      "kalshi": {
-        "a": {
-          "cost": 0.4,
-          "odds": 2.399,
-          "ev": -0.1678,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT17COMSEY-COM"
-        },
-        "b": {
-          "cost": 0.61,
-          "odds": 1.596,
-          "ev": 0.0423,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT17COMSEY-SEY"
-        },
-        "market_a": 0.395,
-        "event": "KXATPCHALLENGERMATCH-26OCT17COMSEY",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct17comsey"
-      }
-    },
     {
       "id": "558c4df94e8e9d970b74c5213c82675c",
       "tour": "ATP",
@@ -225,9 +123,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.44,
-          "odds": 2.187,
-          "ev": -0.0355,
+          "cost": 0.45,
+          "odds": 2.14,
+          "ev": -0.0563,
           "ticker": "KXATPMATCH-26OCT18DAVJOD-DAV"
         },
         "b": {
@@ -236,120 +134,10 @@
           "ev": -0.048,
           "ticker": "KXATPMATCH-26OCT18DAVJOD-JOD"
         },
-        "market_a": 0.435,
+        "market_a": 0.4406,
         "event": "KXATPMATCH-26OCT18DAVJOD",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18davjod"
       }
-    },
-    {
-      "id": "sched-12171973",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Catania (qualifying)",
-      "round": "Catania - Final",
-      "start": "2026-10-18T09:00:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "G. Cadenasso",
-        "key": "g-cadenasso",
-        "model": 0.4525,
-        "fair_odds": 2.21,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "R. M. Papoe",
-        "key": "r-m-papoe",
-        "model": 0.5475,
-        "fair_odds": 1.83,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-catania",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.437,
-        "serve": 0.4651,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "specialist",
-          "G. Cadenasso: clay-court specialist (98% of matches on clay)"
-        ],
-        [
-          "retired",
-          "G. Cadenasso: retired from a match 15 days ago (2 in 6 months)"
-        ],
-        [
-          "specialist",
-          "R. M. Papoe: clay-court specialist (95% of matches on clay)"
-        ]
-      ]
-    },
-    {
-      "id": "sched-12171968",
-      "tour": "WTA",
-      "tournament": "WTA 125 Lisbon (qualifying)",
-      "round": "Lisbon - Final",
-      "start": "2026-10-18T10:00:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "C. Burel",
-        "key": "c-burel",
-        "model": 0.6737,
-        "fair_odds": 1.48,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "L. Romero Gormaz",
-        "key": "l-romero-gormaz",
-        "model": 0.3263,
-        "fair_odds": 3.06,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-lisbon",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6213,
-        "serve": 0.7377,
-        "w": 0.45
-      },
-      "flags": [
-        [
-          "specialist",
-          "C. Burel: clay-court specialist (92% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "L. Romero Gormaz: clay-court specialist (81% of matches on clay)"
-        ]
-      ]
     },
     {
       "id": "6c0df7365e0bd69dc2354b2fa6434919",
@@ -474,9 +262,9 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.48,
-          "odds": 2.01,
-          "ev": -0.117,
+          "cost": 0.49,
+          "odds": 1.97,
+          "ev": -0.1346,
           "ticker": "KXWTAMATCH-26OCT18CHWKAR-CHW"
         },
         "b": {
@@ -485,15 +273,15 @@
           "ev": 0.0435,
           "ticker": "KXWTAMATCH-26OCT18CHWKAR-KAR"
         },
-        "market_a": 0.4798,
+        "market_a": 0.485,
         "event": "KXWTAMATCH-26OCT18CHWKAR",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct18chwkar"
       }
     }
   ],
   "unmatched": [],
-  "scheduled_only": 2,
-  "kalshi_matched": 3,
+  "scheduled_only": 0,
+  "kalshi_matched": 2,
   "record": {
     "settled": 560,
     "pending": 40,

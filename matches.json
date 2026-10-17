@@ -1,67 +1,10 @@
 {
-  "updated": "2026-10-17T18:34:28Z",
+  "updated": "2026-10-17T19:40:53Z",
   "odds_feed_at": "2026-10-17T18:34:28Z",
   "window_hours": 36,
   "status": "ok",
   "requests_remaining": "353",
   "matches": [
-    {
-      "id": "sched-12171805",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Santa Cruz 2",
-      "round": "Santa Cruz 2 - Semi-finals",
-      "start": "2026-10-17T19:00:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "J. M. La Serna",
-        "key": "j-m-la-serna",
-        "model": 0.3679,
-        "fair_odds": 2.72,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "H. Dellien",
-        "key": "h-dellien",
-        "model": 0.6321,
-        "fair_odds": 1.58,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-santa-cruz-2",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.3174,
-        "serve": 0.4092,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "specialist",
-          "J. M. La Serna: clay-court specialist (100% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "H. Dellien: clay-court specialist (90% of matches on clay)"
-        ],
-        [
-          "retired",
-          "H. Dellien: retired from a match 37 days ago (3 in 6 months)"
-        ]
-      ]
-    },
     {
       "id": "apit-12171806",
       "tour": "ATP",
@@ -77,10 +20,10 @@
         "key": "f-comesana",
         "model": 0.3469,
         "fair_odds": 2.88,
-        "market": 0.4251,
-        "best_odds": 2.33,
+        "market": 0.4218,
+        "best_odds": 2.37,
         "book": "Pncl",
-        "ev": -0.1918,
+        "ev": -0.1779,
         "kelly": 0.0
       },
       "b": {
@@ -88,11 +31,11 @@
         "key": "t-seyboth-wild",
         "model": 0.6531,
         "fair_odds": 1.53,
-        "market": 0.5749,
-        "best_odds": 1.65,
+        "market": 0.5782,
+        "best_odds": 1.64,
         "book": "Pncl",
-        "ev": 0.0777,
-        "kelly": 0.0299
+        "ev": 0.0711,
+        "kelly": 0.0278
       },
       "books": 6,
       "no_odds": false,
@@ -132,34 +75,34 @@
           1.6
         ],
         "BetVictor": [
-          2.1,
-          1.62
+          2.2,
+          1.6
         ],
         "1xBet": [
           2.16,
           1.62
         ],
         "Pncl": [
-          2.33,
-          1.65
+          2.37,
+          1.64
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4146,
+      "pinnacle_a": 0.409,
       "kalshi": {
         "a": {
-          "cost": 0.41,
-          "odds": 2.342,
-          "ev": -0.1876,
+          "cost": 0.4,
+          "odds": 2.399,
+          "ev": -0.1678,
           "ticker": "KXATPCHALLENGERMATCH-26OCT17COMSEY-COM"
         },
         "b": {
-          "cost": 0.6,
-          "odds": 1.621,
-          "ev": 0.0587,
+          "cost": 0.61,
+          "odds": 1.596,
+          "ev": 0.0423,
           "ticker": "KXATPCHALLENGERMATCH-26OCT17COMSEY-SEY"
         },
-        "market_a": 0.405,
+        "market_a": 0.395,
         "event": "KXATPCHALLENGERMATCH-26OCT17COMSEY",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct17comsey"
       }
@@ -537,19 +480,19 @@
           "ticker": "KXWTAMATCH-26OCT18CHWKAR-CHW"
         },
         "b": {
-          "cost": 0.54,
-          "odds": 1.794,
-          "ev": 0.0059,
+          "cost": 0.52,
+          "odds": 1.861,
+          "ev": 0.0435,
           "ticker": "KXWTAMATCH-26OCT18CHWKAR-KAR"
         },
-        "market_a": 0.4726,
+        "market_a": 0.4798,
         "event": "KXWTAMATCH-26OCT18CHWKAR",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct18chwkar"
       }
     }
   ],
   "unmatched": [],
-  "scheduled_only": 3,
+  "scheduled_only": 2,
   "kalshi_matched": 3,
   "record": {
     "settled": 560,

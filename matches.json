@@ -1,101 +1,40 @@
 {
-  "updated": "2026-10-18T18:42:32Z",
+  "updated": "2026-10-18T19:36:49Z",
   "odds_feed_at": "2026-10-18T18:42:32Z",
   "window_hours": 36,
   "status": "ok",
   "requests_remaining": "350",
   "matches": [
     {
-      "id": "sched-12172079",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Semi-finals",
-      "start": "2026-10-18T20:45:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "S. L. Hernandez R.",
-        "key": "s-l-hernandez-r",
-        "model": 0.439,
-        "fair_odds": 2.28,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "W. Leite",
-        "key": "w-leite",
-        "model": 0.561,
-        "fair_odds": 1.78,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-cali",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.5014,
-        "serve": 0.3878,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "thin",
-          "S. L. Hernandez R.: only 2 matches in 12 months"
-        ],
-        [
-          "layoff",
-          "S. L. Hernandez R.: first match in 103 days"
-        ],
-        [
-          "surface_few",
-          "S. L. Hernandez R.: few clay matches this year"
-        ],
-        [
-          "specialist",
-          "W. Leite: clay-court specialist (100% of matches on clay)"
-        ]
-      ]
-    },
-    {
-      "id": "apit-12172097",
+      "id": "apit-12172098",
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
       "round": "Fort Worth - Semi-finals",
-      "start": "2026-10-18T21:00:00Z",
+      "start": "2026-10-18T20:00:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
       "best_of": 3,
       "a": {
-        "name": "J. K. Trotter",
-        "key": "j-k-trotter",
-        "model": 0.6619,
-        "fair_odds": 1.51,
-        "market": 0.5327,
-        "best_odds": 1.8,
-        "book": "bet365",
-        "ev": 0.1914,
-        "kelly": 0.0598
+        "name": "Q. Vandecasteele",
+        "key": "q-vandecasteele",
+        "model": 0.5702,
+        "fair_odds": 1.75,
+        "market": 0.4895,
+        "best_odds": 1.96,
+        "book": "Pncl",
+        "ev": 0.1176,
+        "kelly": 0.0306
       },
       "b": {
-        "name": "G. Young",
-        "key": "g-young",
-        "model": 0.3381,
-        "fair_odds": 2.96,
-        "market": 0.4673,
-        "best_odds": 2.06,
-        "book": "Pncl",
-        "ev": -0.3035,
+        "name": "M. Antonius",
+        "key": "m-antonius",
+        "model": 0.4298,
+        "fair_odds": 2.33,
+        "market": 0.5105,
+        "best_odds": 1.83,
+        "book": "bet365",
+        "ev": -0.2135,
         "kelly": 0.0
       },
       "books": 6,
@@ -104,68 +43,60 @@
       "model_version": "2026-10-12",
       "level": "challenger",
       "parts": {
-        "elo": 0.6321,
-        "serve": 0.6863,
+        "elo": 0.5502,
+        "serve": 0.5865,
         "w": 0.55
       },
       "flags": [
         [
-          "retired",
-          "J. K. Trotter: retired from a match 44 days ago"
-        ],
-        [
           "thin",
-          "G. Young: only 6 matches in 12 months"
-        ],
-        [
-          "layoff",
-          "G. Young: first match in 69 days"
+          "M. Antonius: only 4 matches in 12 months"
         ]
       ],
       "prices": {
         "WilliamHill": [
-          1.73,
-          2.0
+          1.91,
+          1.8
         ],
         "bet365": [
-          1.8,
-          1.9
+          1.83,
+          1.83
         ],
         "Marathon": [
-          1.71,
-          1.99
+          1.88,
+          1.8
         ],
         "Pncl": [
-          1.75,
-          2.06
+          1.96,
+          1.83
         ],
         "1xBet": [
-          1.71,
-          1.99
+          1.88,
+          1.8
         ],
         "BetVictor": [
-          1.73,
-          1.95
+          1.87,
+          1.8
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.5407,
+      "pinnacle_a": 0.4828,
       "kalshi": {
         "a": {
-          "cost": 0.57,
-          "odds": 1.703,
-          "ev": 0.1272,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18TROYOU-TRO"
+          "cost": 0.48,
+          "odds": 2.01,
+          "ev": 0.1461,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT18VANANT-VAN"
         },
         "b": {
-          "cost": 0.45,
-          "odds": 2.14,
-          "ev": -0.2765,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18TROYOU-YOU"
+          "cost": 0.53,
+          "odds": 1.827,
+          "ev": -0.2148,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT18VANANT-ANT"
         },
-        "market_a": 0.56,
-        "event": "KXATPCHALLENGERMATCH-26OCT18TROYOU",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18troyou"
+        "market_a": 0.475,
+        "event": "KXATPCHALLENGERMATCH-26OCT18VANANT",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18vanant"
       }
     },
     {
@@ -173,7 +104,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Cali (qualifying)",
       "round": "Cali - Semi-finals",
-      "start": "2026-10-18T21:30:00Z",
+      "start": "2026-10-18T20:15:00Z",
       "surface": "clay",
       "indoor": false,
       "surface_known": true,
@@ -254,9 +185,9 @@
       "pinnacle_a": 0.3007,
       "kalshi": {
         "a": {
-          "cost": 0.3,
-          "odds": 3.178,
-          "ev": 0.2906,
+          "cost": 0.31,
+          "odds": 3.077,
+          "ev": 0.2496,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18DELGOM-DEL"
         },
         "b": {
@@ -265,103 +196,107 @@
           "ev": -0.1911,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18DELGOM-GOM"
         },
-        "market_a": 0.29,
+        "market_a": 0.295,
         "event": "KXATPCHALLENGERMATCH-26OCT18DELGOM",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18delgom"
       }
     },
     {
-      "id": "apit-12172098",
+      "id": "apit-12172078",
       "tour": "ATP",
-      "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
-      "round": "Fort Worth - Semi-finals",
-      "start": "2026-10-18T21:30:00Z",
-      "surface": "hard",
+      "tournament": "ATP Challenger Cali (qualifying)",
+      "round": "Cali - Semi-finals",
+      "start": "2026-10-18T20:15:00Z",
+      "surface": "clay",
       "indoor": false,
       "surface_known": true,
       "best_of": 3,
       "a": {
-        "name": "Q. Vandecasteele",
-        "key": "q-vandecasteele",
-        "model": 0.5702,
-        "fair_odds": 1.75,
-        "market": 0.4895,
-        "best_odds": 1.96,
-        "book": "Pncl",
-        "ev": 0.1176,
-        "kelly": 0.0306
+        "name": "A. Hernandez",
+        "key": "a-hernandez",
+        "model": 0.7479,
+        "fair_odds": 1.34,
+        "market": 0.7804,
+        "best_odds": 1.22,
+        "book": "bet365",
+        "ev": -0.0875,
+        "kelly": 0.0
       },
       "b": {
-        "name": "M. Antonius",
-        "key": "m-antonius",
-        "model": 0.4298,
-        "fair_odds": 2.33,
-        "market": 0.5105,
-        "best_odds": 1.83,
-        "book": "bet365",
-        "ev": -0.2135,
-        "kelly": 0.0
+        "name": "M. Covato",
+        "key": "m-covato",
+        "model": 0.2521,
+        "fair_odds": 3.97,
+        "market": 0.2196,
+        "best_odds": 5.0,
+        "book": "WilliamHill",
+        "ev": 0.2604,
+        "kelly": 0.0163
       },
       "books": 6,
       "no_odds": false,
-      "court": "ch-fort-worth-usa-usa",
+      "court": "ch-cali",
       "model_version": "2026-10-12",
       "level": "challenger",
       "parts": {
-        "elo": 0.5502,
-        "serve": 0.5865,
+        "elo": 0.6863,
+        "serve": 0.7983,
         "w": 0.55
       },
       "flags": [
         [
-          "thin",
-          "M. Antonius: only 4 matches in 12 months"
+          "retired",
+          "A. Hernandez: retired from a match 48 days ago"
+        ],
+        [
+          "specialist",
+          "M. Covato: clay-court specialist (73% of matches on clay)"
         ]
       ],
       "prices": {
         "WilliamHill": [
-          1.91,
-          1.8
+          1.14,
+          5.0
         ],
         "bet365": [
-          1.83,
-          1.83
+          1.22,
+          4.0
         ],
         "Marathon": [
-          1.88,
-          1.8
-        ],
-        "Pncl": [
-          1.96,
-          1.83
-        ],
-        "1xBet": [
-          1.88,
-          1.8
+          1.18,
+          4.15
         ],
         "BetVictor": [
-          1.87,
-          1.8
+          1.18,
+          4.0
+        ],
+        "1xBet": [
+          1.19,
+          4.14
+        ],
+        "Pncl": [
+          1.22,
+          4.19
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4828,
+      "pinnacle_a": 0.7745,
       "kalshi": {
         "a": {
-          "cost": 0.5,
-          "odds": 1.932,
-          "ev": 0.1016,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18VANANT-VAN"
+          "cost": 0.79,
+          "odds": 1.247,
+          "ev": -0.0674,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT18HERCOV-HER"
         },
         "b": {
-          "cost": 0.51,
-          "odds": 1.896,
-          "ev": -0.1851,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18VANANT-ANT"
+          "cost": 0.22,
+          "odds": 4.31,
+          "ev": 0.0866,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT18HERCOV-COV"
         },
-        "market_a": 0.4925,
-        "event": "KXATPCHALLENGERMATCH-26OCT18VANANT",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18vanant"
+        "market_a": 0.7889,
+        "event": "KXATPCHALLENGERMATCH-26OCT18HERCOV",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18hercov"
       }
     },
     {
@@ -369,7 +304,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
       "round": "Fort Worth - Semi-finals",
-      "start": "2026-10-18T22:00:00Z",
+      "start": "2026-10-18T20:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -458,109 +393,11 @@
       }
     },
     {
-      "id": "apit-12172078",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Semi-finals",
-      "start": "2026-10-18T22:30:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "A. Hernandez",
-        "key": "a-hernandez",
-        "model": 0.7479,
-        "fair_odds": 1.34,
-        "market": 0.7804,
-        "best_odds": 1.22,
-        "book": "bet365",
-        "ev": -0.0875,
-        "kelly": 0.0
-      },
-      "b": {
-        "name": "M. Covato",
-        "key": "m-covato",
-        "model": 0.2521,
-        "fair_odds": 3.97,
-        "market": 0.2196,
-        "best_odds": 5.0,
-        "book": "WilliamHill",
-        "ev": 0.2604,
-        "kelly": 0.0163
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-cali",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6863,
-        "serve": 0.7983,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "retired",
-          "A. Hernandez: retired from a match 48 days ago"
-        ],
-        [
-          "specialist",
-          "M. Covato: clay-court specialist (73% of matches on clay)"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.14,
-          5.0
-        ],
-        "bet365": [
-          1.22,
-          4.0
-        ],
-        "Marathon": [
-          1.18,
-          4.15
-        ],
-        "BetVictor": [
-          1.18,
-          4.0
-        ],
-        "1xBet": [
-          1.19,
-          4.14
-        ],
-        "Pncl": [
-          1.22,
-          4.19
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.7745,
-      "kalshi": {
-        "a": {
-          "cost": 0.8,
-          "odds": 1.233,
-          "ev": -0.0778,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18HERCOV-HER"
-        },
-        "b": {
-          "cost": 0.21,
-          "odds": 4.512,
-          "ev": 0.1375,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18HERCOV-COV"
-        },
-        "market_a": 0.795,
-        "event": "KXATPCHALLENGERMATCH-26OCT18HERCOV",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18hercov"
-      }
-    },
-    {
       "id": "apit-12172086",
       "tour": "ATP",
       "tournament": "ATP Challenger Santa Cruz 2",
       "round": "Santa Cruz 2 - Final",
-      "start": "2026-10-18T22:30:00Z",
+      "start": "2026-10-18T20:30:00Z",
       "surface": "clay",
       "indoor": false,
       "surface_known": true,
@@ -645,9 +482,9 @@
       "pinnacle_a": 0.5995,
       "kalshi": {
         "a": {
-          "cost": 0.6,
-          "odds": 1.621,
-          "ev": -0.0614,
+          "cost": 0.59,
+          "odds": 1.648,
+          "ev": -0.0458,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18SEYDEL-SEY"
         },
         "b": {
@@ -656,87 +493,9 @@
           "ev": -0.0368,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18SEYDEL-DEL"
         },
-        "market_a": 0.5891,
+        "market_a": 0.585,
         "event": "KXATPCHALLENGERMATCH-26OCT18SEYDEL",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18seydel"
-      }
-    },
-    {
-      "id": "sched-12172169",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali",
-      "round": null,
-      "start": "2026-10-18T22:30:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "S. Rodriguez Taverna",
-        "key": "s-rodriguez-taverna",
-        "model": 0.6249,
-        "fair_odds": 1.6,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "F. De Dios",
-        "key": "f-de-dios",
-        "model": 0.3751,
-        "fair_odds": 2.67,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-cali",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6063,
-        "serve": 0.6402,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "specialist",
-          "S. Rodriguez Taverna: clay-court specialist (95% of matches on clay)"
-        ],
-        [
-          "thin",
-          "F. De Dios: only 2 matches in 12 months"
-        ],
-        [
-          "layoff",
-          "F. De Dios: first match in 112 days"
-        ],
-        [
-          "surface_few",
-          "F. De Dios: few clay matches this year"
-        ]
-      ],
-      "kalshi": {
-        "a": {
-          "cost": 0.93,
-          "odds": 1.07,
-          "ev": -0.3314,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18RODDE-ROD"
-        },
-        "b": {
-          "cost": 0.09,
-          "odds": 10.446,
-          "ev": 2.9183,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT18RODDE-DE"
-        },
-        "market_a": 0.9246,
-        "event": "KXATPCHALLENGERMATCH-26OCT18RODDE",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18rodde"
       }
     },
     {
@@ -744,7 +503,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
       "round": "Fort Worth - Semi-finals",
-      "start": "2026-10-18T22:45:00Z",
+      "start": "2026-10-18T20:30:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -812,20 +571,98 @@
       "pinnacle_a": 0.6357,
       "kalshi": {
         "a": {
-          "cost": 0.62,
-          "odds": 1.571,
-          "ev": -0.1124,
+          "cost": 0.65,
+          "odds": 1.502,
+          "ev": -0.1514,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18MITZAH-MIT"
         },
         "b": {
-          "cost": 0.39,
-          "odds": 2.459,
-          "ev": 0.0697,
+          "cost": 0.36,
+          "odds": 2.659,
+          "ev": 0.1567,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18MITZAH-ZAH"
         },
-        "market_a": 0.6181,
+        "market_a": 0.6482,
         "event": "KXATPCHALLENGERMATCH-26OCT18MITZAH",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18mitzah"
+      }
+    },
+    {
+      "id": "sched-12172169",
+      "tour": "ATP",
+      "tournament": "ATP Challenger Cali",
+      "round": null,
+      "start": "2026-10-18T20:30:00Z",
+      "surface": "clay",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "S. Rodriguez Taverna",
+        "key": "s-rodriguez-taverna",
+        "model": 0.6249,
+        "fair_odds": 1.6,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "b": {
+        "name": "F. De Dios",
+        "key": "f-de-dios",
+        "model": 0.3751,
+        "fair_odds": 2.67,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "books": 0,
+      "no_odds": true,
+      "court": "ch-cali",
+      "model_version": "2026-10-12",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.6063,
+        "serve": 0.6402,
+        "w": 0.55
+      },
+      "flags": [
+        [
+          "specialist",
+          "S. Rodriguez Taverna: clay-court specialist (95% of matches on clay)"
+        ],
+        [
+          "thin",
+          "F. De Dios: only 2 matches in 12 months"
+        ],
+        [
+          "layoff",
+          "F. De Dios: first match in 112 days"
+        ],
+        [
+          "surface_few",
+          "F. De Dios: few clay matches this year"
+        ]
+      ],
+      "kalshi": {
+        "a": {
+          "cost": 0.91,
+          "odds": 1.092,
+          "ev": -0.3176,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT18RODDE-ROD"
+        },
+        "b": {
+          "cost": 0.1,
+          "odds": 9.407,
+          "ev": 2.5286,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT18RODDE-DE"
+        },
+        "market_a": 0.9045,
+        "event": "KXATPCHALLENGERMATCH-26OCT18RODDE",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18rodde"
       }
     },
     {
@@ -833,7 +670,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
       "round": "Fort Worth - Semi-finals",
-      "start": "2026-10-18T23:00:00Z",
+      "start": "2026-10-18T21:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -917,7 +754,7 @@
           "ev": -0.1313,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18FENBIG-BIG"
         },
-        "market_a": 0.6061,
+        "market_a": 0.603,
         "event": "KXATPCHALLENGERMATCH-26OCT18FENBIG",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18fenbig"
       }
@@ -927,7 +764,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
       "round": "Fort Worth - Semi-finals",
-      "start": "2026-10-18T23:30:00Z",
+      "start": "2026-10-18T21:30:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -1016,7 +853,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
       "round": "Fort Worth - Semi-finals",
-      "start": "2026-10-19T00:00:00Z",
+      "start": "2026-10-18T22:00:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -1099,12 +936,12 @@
           "ticker": "KXATPCHALLENGERMATCH-26OCT18SHEMCH-SHE"
         },
         "b": {
-          "cost": 0.72,
-          "odds": 1.362,
-          "ev": -0.2297,
+          "cost": 0.73,
+          "odds": 1.344,
+          "ev": -0.2398,
           "ticker": "KXATPCHALLENGERMATCH-26OCT18SHEMCH-MCH"
         },
-        "market_a": 0.29,
+        "market_a": 0.2871,
         "event": "KXATPCHALLENGERMATCH-26OCT18SHEMCH",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18shemch"
       }
@@ -1349,9 +1186,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.72,
-          "odds": 1.362,
-          "ev": 0.0925,
+          "cost": 0.73,
+          "odds": 1.344,
+          "ev": 0.078,
           "ticker": "KXWTAMATCH-26OCT19CIRSHI-CIR"
         },
         "b": {
@@ -1360,7 +1197,7 @@
           "ev": -0.3499,
           "ticker": "KXWTAMATCH-26OCT19CIRSHI-SHI"
         },
-        "market_a": 0.7186,
+        "market_a": 0.72,
         "event": "KXWTAMATCH-26OCT19CIRSHI",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19cirshi"
       }
@@ -1475,9 +1312,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.44,
-          "odds": 2.187,
-          "ev": -0.0808,
+          "cost": 0.45,
+          "odds": 2.14,
+          "ev": -0.1006,
           "ticker": "KXWTAMATCH-26OCT19KASSAS-KAS"
         },
         "b": {
@@ -1486,7 +1323,7 @@
           "ev": 0.004,
           "ticker": "KXWTAMATCH-26OCT19KASSAS-SAS"
         },
-        "market_a": 0.4394,
+        "market_a": 0.445,
         "event": "KXWTAMATCH-26OCT19KASSAS",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19kassas"
       }
@@ -1742,7 +1579,7 @@
           "ev": 0.0135,
           "ticker": "KXWTAMATCH-26OCT19EALPAR-PAR"
         },
-        "market_a": 0.725,
+        "market_a": 0.7286,
         "event": "KXWTAMATCH-26OCT19EALPAR",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19ealpar"
       }
@@ -1969,12 +1806,12 @@
           "ticker": "KXWTAMATCH-26OCT19OSTBEN-OST"
         },
         "b": {
-          "cost": 0.57,
-          "odds": 1.703,
-          "ev": 0.1178,
+          "cost": 0.56,
+          "odds": 1.732,
+          "ev": 0.1369,
           "ticker": "KXWTAMATCH-26OCT19OSTBEN-BEN"
         },
-        "market_a": 0.435,
+        "market_a": 0.4394,
         "event": "KXWTAMATCH-26OCT19OSTBEN",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19ostben"
       }
@@ -2306,9 +2143,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.23,
-          "odds": 4.125,
-          "ev": -0.057,
+          "cost": 0.22,
+          "odds": 4.31,
+          "ev": -0.0147,
           "ticker": "KXWTAMATCH-26OCT19GUOALE-GUO"
         },
         "b": {
@@ -2317,7 +2154,7 @@
           "ev": -0.0381,
           "ticker": "KXWTAMATCH-26OCT19GUOALE-ALE"
         },
-        "market_a": 0.2189,
+        "market_a": 0.215,
         "event": "KXWTAMATCH-26OCT19GUOALE",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19guoale"
       }
@@ -2430,497 +2267,6 @@
           "K. Kawa: clay-court specialist (62% of matches on clay), now on hard"
         ]
       ]
-    },
-    {
-      "id": "apit-12171924",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou",
-      "round": "Guangzhou - 1/16-finals",
-      "start": "2026-10-20T04:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "S. Fomin",
-        "key": "s-fomin",
-        "model": 0.2902,
-        "fair_odds": 3.45,
-        "market": 0.2041,
-        "best_odds": 5.32,
-        "book": "Pncl",
-        "ev": 0.5436,
-        "kelly": 0.0315
-      },
-      "b": {
-        "name": "T. Schoolkate",
-        "key": "t-schoolkate",
-        "model": 0.7098,
-        "fair_odds": 1.41,
-        "market": 0.7959,
-        "best_odds": 1.22,
-        "book": "bet365",
-        "ev": -0.134,
-        "kelly": 0.0
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.3088,
-        "serve": 0.2749,
-        "w": 0.55
-      },
-      "flags": [],
-      "prices": {
-        "WilliamHill": [
-          5.0,
-          1.14
-        ],
-        "bet365": [
-          4.0,
-          1.22
-        ],
-        "Marathon": [
-          4.6,
-          1.15
-        ],
-        "BetVictor": [
-          4.33,
-          1.17
-        ],
-        "1xBet": [
-          4.34,
-          1.18
-        ],
-        "Pncl": [
-          5.32,
-          1.16
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.179
-    },
-    {
-      "id": "apit-12171925",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou",
-      "round": "Guangzhou - 1/16-finals",
-      "start": "2026-10-20T04:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "C. Hewitt",
-        "key": "c-hewitt",
-        "model": 0.744,
-        "fair_odds": 1.34,
-        "market": 0.6327,
-        "best_odds": 1.51,
-        "book": "Pncl",
-        "ev": 0.1234,
-        "kelly": 0.0605
-      },
-      "b": {
-        "name": "R. Te",
-        "key": "r-te",
-        "model": 0.256,
-        "fair_odds": 3.91,
-        "market": 0.3673,
-        "best_odds": 2.62,
-        "book": "bet365",
-        "ev": -0.3292,
-        "kelly": 0.0
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6649,
-        "serve": 0.8087,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "thin",
-          "R. Te: only 9 matches in 12 months"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.5,
-          2.5
-        ],
-        "bet365": [
-          1.44,
-          2.62
-        ],
-        "Marathon": [
-          1.46,
-          2.49
-        ],
-        "BetVictor": [
-          1.45,
-          2.5
-        ],
-        "1xBet": [
-          1.47,
-          2.5
-        ],
-        "Pncl": [
-          1.51,
-          2.6
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.6326
-    },
-    {
-      "id": "apit-12171926",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou",
-      "round": "Guangzhou - 1/16-finals",
-      "start": "2026-10-20T04:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "Y. H. Hsu",
-        "key": "y-h-hsu",
-        "model": 0.5518,
-        "fair_odds": 1.81,
-        "market": 0.4208,
-        "best_odds": 2.31,
-        "book": "Pncl",
-        "ev": 0.2747,
-        "kelly": 0.0524
-      },
-      "b": {
-        "name": "J. Cui",
-        "key": "j-cui",
-        "model": 0.4482,
-        "fair_odds": 2.23,
-        "market": 0.5792,
-        "best_odds": 1.63,
-        "book": "Pncl",
-        "ev": -0.2695,
-        "kelly": 0.0
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.5345,
-        "serve": 0.566,
-        "w": 0.55
-      },
-      "flags": [],
-      "prices": {
-        "WilliamHill": [
-          2.25,
-          1.57
-        ],
-        "bet365": [
-          2.2,
-          1.61
-        ],
-        "Marathon": [
-          2.15,
-          1.61
-        ],
-        "BetVictor": [
-          2.2,
-          1.6
-        ],
-        "1xBet": [
-          2.16,
-          1.62
-        ],
-        "Pncl": [
-          2.31,
-          1.63
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.4137
-    },
-    {
-      "id": "apit-12171927",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou",
-      "round": "Guangzhou - 1/16-finals",
-      "start": "2026-10-20T04:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "H. Matsuoka",
-        "key": "h-matsuoka",
-        "model": 0.3346,
-        "fair_odds": 2.99,
-        "market": 0.2236,
-        "best_odds": 4.84,
-        "book": "Pncl",
-        "ev": 0.6197,
-        "kelly": 0.0403
-      },
-      "b": {
-        "name": "Y. Wu",
-        "key": "y-wu",
-        "model": 0.6654,
-        "fair_odds": 1.5,
-        "market": 0.7764,
-        "best_odds": 1.25,
-        "book": "bet365",
-        "ev": -0.1683,
-        "kelly": 0.0
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.2498,
-        "serve": 0.404,
-        "w": 0.55
-      },
-      "flags": [],
-      "prices": {
-        "WilliamHill": [
-          4.5,
-          1.17
-        ],
-        "Marathon": [
-          4.33,
-          1.17
-        ],
-        "BetVictor": [
-          4.0,
-          1.18
-        ],
-        "1xBet": [
-          3.74,
-          1.23
-        ],
-        "bet365": [
-          3.75,
-          1.25
-        ],
-        "Pncl": [
-          4.84,
-          1.19
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.1973
-    },
-    {
-      "id": "apit-12171929",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou",
-      "round": "Guangzhou - 1/16-finals",
-      "start": "2026-10-20T04:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "O. Milic",
-        "key": "o-milic",
-        "model": 0.3405,
-        "fair_odds": 2.94,
-        "market": 0.2531,
-        "best_odds": 4.02,
-        "book": "Pncl",
-        "ev": 0.3689,
-        "kelly": 0.0305
-      },
-      "b": {
-        "name": "J. D. Hara Friend",
-        "key": "j-d-hara-friend",
-        "model": 0.6595,
-        "fair_odds": 1.52,
-        "market": 0.7469,
-        "best_odds": 1.25,
-        "book": "WilliamHill",
-        "ev": -0.1756,
-        "kelly": 0.0
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.4498,
-        "serve": 0.2511,
-        "w": 0.55
-      },
-      "flags": [],
-      "prices": {
-        "WilliamHill": [
-          3.75,
-          1.25
-        ],
-        "Marathon": [
-          3.56,
-          1.24
-        ],
-        "BetVictor": [
-          3.5,
-          1.25
-        ],
-        "1xBet": [
-          3.56,
-          1.25
-        ],
-        "bet365": [
-          3.75,
-          1.25
-        ],
-        "Pncl": [
-          4.02,
-          1.25
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.2372
-    },
-    {
-      "id": "sched-12171930",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou",
-      "round": "Guangzhou - 1/16-finals",
-      "start": "2026-10-20T04:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "F. Sun",
-        "key": "f-sun",
-        "model": 0.727,
-        "fair_odds": 1.38,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "Sun Qian",
-        "key": "sun-qian",
-        "model": 0.273,
-        "fair_odds": 3.66,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.7211,
-        "serve": 0.7318,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "thin",
-          "Sun Qian: only 4 matches in 12 months"
-        ]
-      ]
-    },
-    {
-      "id": "apit-12171932",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou",
-      "round": "Guangzhou - 1/16-finals",
-      "start": "2026-10-20T04:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "Z. Zhang",
-        "key": "z-zhang",
-        "model": 0.6985,
-        "fair_odds": 1.43,
-        "market": 0.8475,
-        "best_odds": 1.14,
-        "book": "bet365",
-        "ev": -0.2037,
-        "kelly": 0.0
-      },
-      "b": {
-        "name": "K. Uchida",
-        "key": "k-uchida",
-        "model": 0.3015,
-        "fair_odds": 3.32,
-        "market": 0.1525,
-        "best_odds": 7.09,
-        "book": "Pncl",
-        "ev": 1.1378,
-        "kelly": 0.0467
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-12",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.707,
-        "serve": 0.6915,
-        "w": 0.55
-      },
-      "flags": [
-        [
-          "disagree",
-          "Model and market differ by 17 points"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.1,
-          6.5
-        ],
-        "bet365": [
-          1.14,
-          5.0
-        ],
-        "Marathon": [
-          1.08,
-          6.15
-        ],
-        "BetVictor": [
-          1.08,
-          6.0
-        ],
-        "1xBet": [
-          1.08,
-          6.15
-        ],
-        "Pncl": [
-          1.09,
-          7.09
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.8667
     }
   ],
   "unmatched": [
@@ -3018,8 +2364,8 @@
       ]
     }
   ],
-  "scheduled_only": 3,
-  "kalshi_matched": 17,
+  "scheduled_only": 1,
+  "kalshi_matched": 16,
   "record": {
     "settled": 608,
     "pending": 101,
@@ -3116,7 +2462,7 @@
           "odds": 2.6,
           "vs": "S. Mitsui",
           "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
-          "start": "2026-10-18T22:45:00Z",
+          "start": "2026-10-18T20:30:00Z",
           "url": null,
           "model": 0.435
         },
@@ -3151,7 +2497,7 @@
           "odds": 2.5,
           "vs": "S. Mitsui",
           "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
-          "start": "2026-10-18T22:45:00Z",
+          "start": "2026-10-18T20:30:00Z",
           "url": null,
           "model": 0.435
         },
@@ -3245,7 +2591,7 @@
           "odds": 2.459,
           "vs": "S. Mitsui",
           "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
-          "start": "2026-10-18T22:45:00Z",
+          "start": "2026-10-18T20:30:00Z",
           "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct18mitzah",
           "model": 0.435
         },

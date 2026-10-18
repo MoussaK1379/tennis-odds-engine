@@ -8,8 +8,8 @@ matches (retirements and walkovers are not scored):
     Brier     - mean squared error of the probability; lower is better.
     accuracy  - share of matches where the favourite won.
 
-Periods: the first six months only warm the ratings up; settings are tuned on
-the next twelve months; the most recent months are a holdout that tuning
+Periods: the first twelve months only warm the ratings up; settings are tuned on
+the next six months; the most recent months are a holdout that tuning
 never sees, so the holdout numbers are the honest ones.
 
     python tools/backtest.py                 # compare original vs current model_params.json
@@ -27,8 +27,12 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import model                                     # noqa: E402
 import update_data                               # noqa: E402
 
-WARM_END = date(2025, 3, 31)
-TUNE = (date(2025, 4, 1), date(2026, 3, 31))
+# The cached history starts 2024-09-30 and the ratings take about a year to settle (log
+# loss falls from 0.68 to 0.61 over the first twelve months), so tuning starts after that:
+# tuned on the settling-in months, it favours settings that forget fast and suit
+# newcomers, which then lose on mature ratings.
+WARM_END = date(2025, 9, 30)
+TUNE = (date(2025, 10, 1), date(2026, 3, 31))
 HOLD_START = date(2026, 4, 1)
 
 MIN_GAIN = 0.001   # log loss a more complex option must save before it is adopted

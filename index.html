@@ -474,12 +474,12 @@ function statsFor(key, surf, custom){
   if(key === "custom" || !DATA.players[key]){
     const c = custom || {spw:0.64, rpw:0.38};
     // a custom player counts as fully known, so the serve model gets its full weight
-    return { name:"Custom", elo:1850, rd:0, n:1e6, raw:null,
+    return { name:"Custom", elo:1850, rd:0, n:1e6, m:1e6, raw:null,
              spw:clip(c.spw,0.40,0.85), rpw:clip(c.rpw,0.20,0.60) };
   }
   const p = DATA.players[key], t = tourAvg();
   const sv = pick(p.serve, surf), rt = pick(p.return, surf);
-  return { name:p.name, elo:pick(p.elo, surf), rd:p.rd || 0, n:p.n || 0, raw:p,
+  return { name:p.name, elo:pick(p.elo, surf), rd:p.rd || 0, n:p.n || 0, m:p.m || 0, raw:p,
     spw: sv == null ? t : sv, rpw: rt == null ? 1 - t : rt };
 }
 
@@ -563,10 +563,11 @@ function compute(){
     const info = P => (P && P.info) || {};
     const days = P => info(P).last ? Math.max(0, Math.round((Date.parse(todayISO()) - Date.parse(info(P).last)) / 864e5)) : 0;
     const thin = 1 - n / (n + 500), t = tourAvg();
+    const mMin = Math.min(A.m, B.m), thinElo = 1 - mMin / (mMin + 3);
     const inter = ((A.spw - t)*(B.rpw - (1-t)) - (B.spw - t)*(A.rpw - (1-t))) * 100;
     const feats = [L(pElo), L(pMkv), L(pMkv)*thin, inter,
                    Math.log1p(Math.min(days(A.raw),365)) - Math.log1p(Math.min(days(B.raw),365)),
-                   (info(A.raw).m7 || 0) - (info(B.raw).m7 || 0)];
+                   (info(A.raw).m7 || 0) - (info(B.raw).m7 || 0), L(pElo)*thinElo];
     const z = feats.reduce((acc, f, i) => acc + f * stack[i], 0);
     pEns = 1 / (1 + Math.exp(-Math.max(Math.min(z, 30), -30)));
   }

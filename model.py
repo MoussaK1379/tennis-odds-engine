@@ -253,21 +253,25 @@ def full_scorelines(pa, pb, dist, best_of, m=0.0, top=8):
 # ---------- stacking ------------------------------------------------------------
 # Every feature is "A minus B" (or flips sign when A and B swap), and the stack
 # has no intercept, so P(A beats B) = 1 - P(B beats A) always holds.
-STACK_FEATURES = ["elo", "serve", "serve_thin", "server_vs_returner", "layoff", "fatigue"]
+STACK_FEATURES = ["elo", "serve", "serve_thin", "server_vs_returner", "layoff", "fatigue", "elo_thin"]
 THIN_POINTS = 500.0
+THIN_MATCHES = 3.0       # rated matches at which the Elo is half "new player"
 
 def _logit(p):
     p = min(max(p, 1e-4), 1 - 1e-4)
     return math.log(p / (1 - p))
 
-def stack_features(p_elo, p_mkv, Sa, Ra, Sb, Rb, T, na, nb, days_a, days_b, wk_a, wk_b):
+def stack_features(p_elo, p_mkv, Sa, Ra, Sb, Rb, T, na, nb, days_a, days_b, wk_a, wk_b, ma=0, mb=0):
     n = min(na, nb)
     thin = 1 - n / (n + THIN_POINTS)                 # 1 = no data, 0 = lots
+    m = min(ma, mb)                                  # rated matches of the less-known player
+    thin_elo = 1 - m / (m + THIN_MATCHES)
     # big server meeting an elite returner: product of A's serve edge and B's return
     # edge, minus the same the other way round (in percentage points squared / 100)
     inter = ((Sa - T) * (Rb - (1 - T)) - (Sb - T) * (Ra - (1 - T))) * 100
     layoff = math.log1p(min(days_a, 365)) - math.log1p(min(days_b, 365))
-    return [_logit(p_elo), _logit(p_mkv), _logit(p_mkv) * thin, inter, layoff, wk_a - wk_b]
+    return [_logit(p_elo), _logit(p_mkv), _logit(p_mkv) * thin, inter, layoff, wk_a - wk_b,
+            _logit(p_elo) * thin_elo]
 
 def stack_prob(weights, feats):
     z = sum(w * f for w, f in zip(weights, feats))
@@ -311,7 +315,7 @@ def predict_export(A, B, surface, best_of, tour_avg, model, court=0.0, set_prob=
             return max(0, (ref - _date.fromisoformat(last)).days) if last else 0
         wk = lambda P: (P.get("info") or {}).get("m7", 0) or 0
         feats = stack_features(p_elo, p_mkv, sa, rta, sb, rtb, T, A.get("n", 0) or 0, B.get("n", 0) or 0,
-                               days(A), days(B), wk(A), wk(B))
+                               days(A), days(B), wk(A), wk(B), A.get("m", 0) or 0, B.get("m", 0) or 0)
         p = stack_prob(stack, feats)
     return {"p": p, "p_elo": p_elo, "p_mkv": p_mkv,
             "w": w, "pa": pa, "pb": pb, "set": s}
@@ -454,7 +458,8 @@ class TourEngine:
         p_mkv = match_from_set(self.set_prob(pa, pb), best_of)
         w = P.weight(self.tour, min(na, nb))
         (days_a, wk_a), (days_b, wk_b) = self._recent(a, d), self._recent(b, d)
-        feats = stack_features(p_elo, p_mkv, Sa, Ra, Sb, Rb, T, na, nb, days_a, days_b, wk_a, wk_b)
+        feats = stack_features(p_elo, p_mkv, Sa, Ra, Sb, Rb, T, na, nb, days_a, days_b, wk_a, wk_b,
+                               self.played.get(a, 0), self.played.get(b, 0))
         stack = P.stack(self.tour)
         p = stack_prob(stack, feats) if stack else w * p_mkv + (1 - w) * p_elo
         return {"p": p, "p_elo": p_elo, "p_mkv": p_mkv, "w": w, "n": min(na, nb), "feats": feats,
@@ -603,6 +608,7 @@ class TourEngine:
         if self.P.rating == "glicko":
             e["rd"] = round(rd)
         e["n"] = round(n)
+        e["m"] = self.played.get(p, 0)            # rated matches (for the stack's elo_thin)
         e["info"] = self.activity(p, d)
         return e
 

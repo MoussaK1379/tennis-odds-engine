@@ -13,7 +13,7 @@ the next twelve months; the most recent months are a holdout that tuning
 never sees, so the holdout numbers are the honest ones.
 
     python tools/backtest.py                 # compare original vs current model_params.json
-    python tools/backtest.py --tune          # grid-search, write model_params.json + report
+    python tools/backtest.py --tune          # tune all settings jointly, write model_params.json + report
     python tools/backtest.py --challenger    # does Challenger history help? (--write to adopt)
 
 Scores are on tour-level matches unless they say Challenger, so a model fed Challenger
@@ -219,92 +219,93 @@ def summary(name, recs, end):
     return out
 
 
-def tune(data, set_prob, log):
+# Settings searched by tune(), one at a time (coordinate descent), each judged on the
+# finished prediction: the stack refitted on the tuning year for every candidate.
+TUNE_GRID = {
+    "shrink": [25, 50, 100, 200, 400],
+    "surf_shrink": [250, 500, 1000, 2000, 4000],
+    "half_life": [60, 90, 135, 200, 300],
+    "k0": [100, 150, 200, 250, 300],
+    "k_exp": [0.3, 0.4, 0.5, 0.6],
+    "k_off": [1, 2, 5, 10],
+    "surf_k": [0.1, 0.25, 0.5, 0.75, 1.0],
+    "init_elo": [1350, 1400, 1450, 1500],
+    "init_elo_qual": [1100, 1150, 1200, 1250, 1300],
+    "init_elo_ch": [1100, 1150, 1200, 1250],
+    "ch_k": [0.5, 0.75, 1.0],
+    "ch_sv": [0.5, 0.75, 1.0],
+    "court_shrink": [0, 3000, 10000],
+}
+
+
+def fit_stacks(recs, lo, hi):
+    """Stack weights per tour, fitted on tour-level matches between lo and hi."""
+    return {tour: fit_logistic([(r[9], r[2]) for r in recs
+                                if r[0] == tour and lo <= r[1] <= hi and r[15] == "tour"])
+            for tour in ("ATP", "WTA")}
+
+
+def stacked(recs, stacks):
+    return [r[:3] + (model.stack_prob(stacks[r[0]], r[9]),) + r[4:] for r in recs]
+
+
+def best_blend(recs, lo, hi):
+    """Best serve-model weights per tour for the plain blend: (log loss, w_atp, w_wta)."""
+    grid = [i / 20 for i in range(21)]
+    return min((score(blended(recs, wa, ww, 0), lo, hi)["logloss"], wa, ww)
+               for wa, ww in itertools.product(grid, grid))
+
+
+def tune(data, set_prob, log, start=None, passes=3):
+    """Coordinate descent over TUNE_GRID from `start` (the saved settings): each setting in
+    turn takes its best grid value, judged on the tuning year's log loss with the stack
+    refitted, until a full pass changes nothing. Tuning every setting on the finished
+    prediction finds combinations a stage-by-stage search misses (e.g. light serve
+    shrinkage pays off once the stack knows how thin each sample is)."""
     t0 = time.time()
     lo, hi = TUNE
-    best = {}
+    P0 = model.Params.from_dict({**(start or model.Params()).to_dict(), "rating": "elo",
+                                 "stack_atp": None, "stack_wta": None})
+    cache = {}
 
-    # Stage 1: rating system on the rating-only prediction.
-    cands = [BASELINE]
-    for k0, ke, sk in itertools.product((100, 150, 200, 250), (0.3, 0.4, 0.5), (0.1, 0.25, 0.5)):
-        cands.append(model.Params(rating="elo", k0=k0, k_exp=ke, surf_k=sk))
-    for tau, gd, rd0, gsk in itertools.product((0.2, 0.3, 0.5), (10, 15, 30), (150, 200, 250, 350), (0, 5, 10, 20)):
-        cands.append(model.Params(rating="glicko", g_tau=tau, g_days=gd, g_rd0=rd0, g_surf_k=gsk))
-    res = []
-    for P in cands:
-        recs = run(P, data, set_prob)
-        res.append((score(recs, lo, hi, col=4)["logloss"], P))
-    res.sort(key=lambda x: x[0])
-    top = {}
-    for kind in ("legacy", "elo", "glicko"):
-        top[kind] = next(x for x in res if x[1].rating == kind)
-        log(f"  best {kind:6}: rating-only log loss {top[kind][0]:.4f}  {rating_desc(top[kind][1])}")
-    # Glicko-2 is the more complex system: adopt it only for a real gain.
-    best_rating = (top["glicko"] if top["glicko"][0] <= top["elo"][0] - MIN_GAIN else top["elo"])[1]
-    if best_rating.rating == "elo":
-        # starting ratings: everyone at 1500 vs lower starts (and a separate one for qualifying debuts)
-        base = (top["elo"][0], 1500, 1500)
-        res = []
-        for ie, iq in itertools.product((1500, 1450, 1400, 1350, 1300), (1500, 1450, 1400, 1350, 1300, 1250)):
-            P = model.Params(**{**best_rating.to_dict(), "init_elo": ie, "init_elo_qual": iq})
-            res.append((score(run(P, data, set_prob), lo, hi, col=4)["logloss"], ie, iq))
-        res.sort()
-        log(f"  starting ratings: best start {res[0][1]}, qualifying debut {res[0][2]} -> rating-only "
-            f"log loss {res[0][0]:.4f} (all at 1500: {base[0]:.4f})")
-        if res[0][0] <= base[0] - MIN_GAIN:
-            best_rating.init_elo, best_rating.init_elo_qual = res[0][1], res[0][2]
-    log(f"Stage 1 (rating) done in {time.time() - t0:.0f}s -> {best_rating.rating}")
+    def evaluate(P):
+        k = json.dumps(P.to_dict(), sort_keys=True, default=str)
+        if k not in cache:
+            recs = run(P, data, set_prob)
+            cache[k] = score(stacked(recs, fit_stacks(recs, lo, hi)), lo, hi)["logloss"]
+        return cache[k]
 
-    # Stage 2: serve model on the serve-only prediction (independent of the rating).
-    res = []
-    for hl, sh, ss, cs in itertools.product((90, 135, 180, 365), (200, 400, 800),
-                                            (0, 2000, 4000, 8000, 16000), (0, 3000)):
-        P = model.Params(rating="legacy", half_life=hl, shrink=sh, surf_shrink=ss, court_shrink=cs)
-        recs = run(P, data, set_prob)
-        res.append((score(recs, lo, hi, col=5)["logloss"], P))
-    res.sort(key=lambda x: x[0])
-    with_court = next(x for x in res if x[1].court_shrink > 0)
-    no_court = next(x for x in res if x[1].court_shrink == 0)
-    for label, (ll, b) in (("with court speed", with_court), ("without", no_court)):
-        log(f"  best serve model {label}: serve-only log loss {ll:.4f}  half-life {b.half_life:.0f}d, "
-            f"shrink {b.shrink:.0f}, surface shrink {b.surf_shrink:.0f}, court shrink {b.court_shrink:.0f}")
-    # The court adjustment adds a table to maintain: adopt it only for a real gain.
-    b = (with_court if with_court[0] <= no_court[0] - MIN_GAIN else no_court)[1]
-    log(f"Stage 2 (serve) done in {time.time() - t0:.0f}s")
+    best, P = evaluate(P0), P0
+    log(f"  start: stacked log loss {best:.4f} on the tuning year")
+    for i in range(passes):
+        moved = False
+        for name, grid in TUNE_GRID.items():
+            for v in grid:
+                cand = model.Params.from_dict({**P.to_dict(), name: v})
+                ll = evaluate(cand)
+                if ll < best - 1e-5:
+                    best, P, moved = ll, cand, True
+            log(f"  pass {i + 1}, {name:13} -> {getattr(P, name)}  (log loss {best:.4f}, {time.time() - t0:.0f}s)")
+        if not moved:
+            break
 
-    # Stage 3: blend weights on the combined prediction.
-    P = model.Params(**{**best_rating.to_dict(),
-                        **{k: getattr(b, k) for k in ("half_life", "shrink", "surf_shrink", "court_shrink")}})
     recs = run(P, data, set_prob)
-    res = []
-    grid = [i / 20 for i in range(21)]
-    for n0 in (0, 250, 500, 1000, 2000, 4000):
-        for wa, ww in itertools.product(grid, grid):
-            res.append((score(blended(recs, wa, ww, n0), lo, hi)["logloss"], wa, ww, n0))
-    res.sort()
-    _, wa, ww, n0 = res[0]
-    P.w_atp, P.w_wta, P.n0 = wa, ww, n0
-    log(f"  best blend: serve-model weight ATP {wa:.2f}, WTA {ww:.2f}, thin-sample half-point {n0} serve points")
-    log(f"Stage 3 (blend) done in {time.time() - t0:.0f}s")
-
-    # Stage 4: logistic-regression stack, fitted on the tuning year per tour.
-    blend_ll = score(blended(recs, wa, ww, n0), lo, hi)["logloss"]
-    stacks = {}
-    for tour in ("ATP", "WTA"):
-        rows = [(r[9], r[2]) for r in recs if r[0] == tour and lo <= r[1] <= hi and r[15] == "tour"]
-        stacks[tour] = fit_logistic(rows)
-    stacked = [r[:3] + (model.stack_prob(stacks[r[0]], r[9]),) + r[4:] for r in recs]
-    stack_ll = score(stacked, lo, hi)["logloss"]
+    stacks = fit_stacks(recs, lo, hi)
+    stack_ll = score(stacked(recs, stacks), lo, hi)["logloss"]
+    blend_ll, wa, ww = best_blend(recs, lo, hi)
+    P.w_atp, P.w_wta, P.n0 = wa, ww, 0
     for tour in ("ATP", "WTA"):
         log(f"  stack {tour}: " + ", ".join(f"{n} {w:+.3f}" for n, w in zip(model.STACK_FEATURES, stacks[tour])))
-    log(f"  stack log loss {stack_ll:.4f} vs blend {blend_ll:.4f} on the tuning year")
+    log(f"  stack log loss {stack_ll:.4f} vs blend {blend_ll:.4f} (serve weight ATP {wa:.2f}, WTA {ww:.2f}) "
+        "on the tuning year")
+    # The stack is the more complex option: adopt it only for a real gain.
     if stack_ll <= blend_ll - MIN_GAIN:
         P.stack_atp = [round(w, 5) for w in stacks["ATP"]]
         P.stack_wta = [round(w, 5) for w in stacks["WTA"]]
         log("  -> stack adopted")
     else:
-        log("  -> stack not adopted (not 0.001 better)")
-    log(f"Stage 4 (stack) done in {time.time() - t0:.0f}s")
+        log(f"  -> stack not adopted (not {MIN_GAIN} better)")
+    log(f"tuning done in {time.time() - t0:.0f}s")
     return P
 
 
@@ -386,14 +387,6 @@ def challenger_study(data, set_prob, base, end, log):
     return (best if adopt else base), rep
 
 
-def rating_desc(P):
-    if P.rating == "glicko":
-        return f"tau {P.g_tau}, {P.g_days:.0f}-day periods, start RD {P.g_rd0:.0f}, surface step {P.g_surf_k:.0f}"
-    if P.rating == "elo":
-        return f"K {P.k0:.0f}/(n+{P.k_off:.0f})^{P.k_exp}, surface offset rate {P.surf_k}"
-    return "original: separate surface Elos from 1500"
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", default="data/api_tennis_matches.csv")
@@ -428,7 +421,7 @@ def main():
     sets_report = None
     if args.tune or args.sets:
         if args.tune:
-            P = tune(data, set_prob, log)
+            P = tune(data, set_prob, log, start=model.Params.from_dict(saved.get("params")))
         else:
             P = model.Params.from_dict(saved["params"])
         recs_sets = run(P, data, set_prob)
@@ -453,11 +446,16 @@ def main():
                 log(f"  {'':8} {k:6} {fmt(s[label][k])}")
     log("\nholdout calibration (tuned): " + ", ".join(
         f"{c['range']}: predicted {c['predicted']:.0%} / won {c['actual']:.0%} (n={c['n']})" for c in new["calibration_holdout"]))
+    if sets_report is None and os.path.exists(args.report):
+        try:                                     # keep the last set-momentum fit
+            with open(args.report) as fh:
+                sets_report = json.load(fh).get("sets")
+        except ValueError:
+            pass
     with open(args.report, "w") as fh:
         json.dump({"periods": {"warm_up_until": str(WARM_END), "tune": [str(TUNE[0]), str(TUNE[1])],
                                "holdout": [str(HOLD_START), str(end)]},
-                   "params": P.to_dict(), "original": base, "tuned": new,
-                   "sets": sets_report or (json.load(open(args.report)).get("sets") if os.path.exists(args.report) else None)},
+                   "params": P.to_dict(), "original": base, "tuned": new, "sets": sets_report},
                   fh, indent=1, default=str)
     log(f"wrote {args.report}")
 

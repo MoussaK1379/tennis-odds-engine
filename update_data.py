@@ -9,8 +9,9 @@ so the Markov math uses the right reference for each.
 Sources, tried in order for each tour:
   1. api-tennis.com (needs TENNIS_API_KEY) — results plus serve points won.
      Matches are cached in data/api_tennis_matches.csv: the first run
-     backfills about two years, later runs fetch only the last week, and the
-     cache keeps the history even if the API stops responding.
+     backfills about two years, later runs fetch the last week and, with any
+     time left, extend the history back to API_HISTORY_FROM a few weeks at a
+     time. The cache keeps the history even if the API stops responding.
   2. Jeff Sackmann's match CSVs on GitHub — results plus serve/return stats.
   3. tennis-data.co.uk yearly spreadsheets — results only. ELO stays current;
      serve/return rates are carried over from the previous players.json
@@ -107,6 +108,8 @@ API_STATUS = {"Finished": "completed", "Retired": "ret", "Walk Over": "wo"}
 API_WINDOW_DAYS = 7        # date range per request
 API_REFRESH_DAYS = 7       # re-fetch this many recent days each run (late stats, corrections)
 API_BACKFILL_DAYS = 730    # history fetched on the first run
+API_HISTORY_FROM = date(2022, 1, 1)   # older history, fetched backwards with spare time each run
+API_HISTORY_EMPTY = 8      # this many empty weeks in a row = the API has nothing older
 API_BUDGET_S = 18 * 60     # stop fetching history after this long; the next run carries on
 API_SAVE_EVERY = 8         # save the cache every this many requests, so a killed run keeps its work
 SURFACES_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "tournament_surfaces.json")
@@ -186,7 +189,8 @@ def sync_api_tennis(key, cache_path, tours, today=None, budget_s=API_BUDGET_S):
     A new feed (e.g. the Challengers) is backfilled API_BACKFILL_DAYS; the backfill stops
     after budget_s seconds and the next run carries on from the newest cached match.
     Matches cached before set scores were stored are re-fetched once (a one-off
-    backfill tracked in api_tennis_state.json, resumable if it's interrupted)."""
+    backfill tracked in api_tennis_state.json, resumable if it's interrupted).
+    Time left after the recent days goes to older history (see extend_history)."""
     import time
     t0 = time.time()
     today = today or date.today()
@@ -198,8 +202,29 @@ def sync_api_tennis(key, cache_path, tours, today=None, budget_s=API_BUDGET_S):
         save_api_cache(cache_path, cache)
         with open(_state_path(cache_path), "w", encoding="utf-8") as fh:
             json.dump(state, fh, indent=1)
-    for tour in tours:
+    def fetch(tour, a, b):
+        """Cache one window of results. -> number of matches in it (raises on API errors)."""
+        nonlocal changed, calls
         type_key, type_name = API_TENNIS_TYPES[tour]
+        events = api_tennis_call(key, method="get_fixtures", event_type_key=type_key,
+                                 date_start=a.isoformat(), date_stop=b.isoformat())
+        n = 0
+        for ev in events:
+            if ev.get("event_type_type") != type_name:
+                continue
+            row = api_event_row(ev, tour)
+            if row:
+                n += 1
+                k = str(row["event_key"])
+                row = {f: ("" if row[f] is None else str(row[f])) for f in API_CACHE_FIELDS}
+                if cache.get(k) != row:
+                    cache[k] = row
+                    changed += 1
+        calls += 1
+        if calls % API_SAVE_EVERY == 0:
+            save()
+        return n
+    for tour in tours:
         # Per tour, so an interrupted backfill of one tour resumes where it stopped.
         have = [r["date"] for r in cache.values() if r["tour"] == tour.upper()]
         if not have:
@@ -220,33 +245,58 @@ def sync_api_tennis(key, cache_path, tours, today=None, budget_s=API_BUDGET_S):
                 break
             b = min(a + timedelta(days=API_WINDOW_DAYS - 1), today)
             try:
-                events = api_tennis_call(key, method="get_fixtures", event_type_key=type_key,
-                                         date_start=a.isoformat(), date_stop=b.isoformat())
+                fetch(tour, a, b)
             except Exception as e:                   # noqa: BLE001
                 err = f"{tour} {a}..{b}: {e}"
                 print(f"  · api-tennis {err}", file=sys.stderr)
                 break                                # keep what we have; retry tomorrow
-            for ev in events:
-                if ev.get("event_type_type") != type_name:
-                    continue
-                row = api_event_row(ev, tour)
-                if row:
-                    k = str(row["event_key"])
-                    row = {f: ("" if row[f] is None else str(row[f])) for f in API_CACHE_FIELDS}
-                    if cache.get(k) != row:
-                        cache[k] = row
-                        changed += 1
             if backfill:
                 sets_state[tour] = b.isoformat()
             a = b + timedelta(days=1)
-            calls += 1
-            if calls % API_SAVE_EVERY == 0:
-                save()
         else:
             if backfill:
                 sets_state[tour] = "done"
+    if not err:
+        extend_history(cache, state.setdefault("history", {}), tours, fetch,
+                       lambda: time.time() - t0 > budget_s)
     save()
     return cache, changed, err
+
+
+def extend_history(cache, hist, tours, fetch, out_of_time):
+    """Fetch older results backwards from each feed's earliest cached match until
+    API_HISTORY_FROM, a week per call, while there's time. hist (saved in the state
+    file) records per feed how far back it got, how many empty weeks in a row it has
+    seen, or "done"; a long run of empty weeks means the API keeps nothing older."""
+    for tour in tours:
+        h = hist.get(tour)
+        if h == "done":
+            continue
+        have = [r["date"] for r in cache.values() if r["tour"] == tour.upper()]
+        if not have:
+            continue
+        h = h or {}
+        b = (datetime.strptime(h["from"], "%Y-%m-%d").date() if h.get("from")
+             else datetime.strptime(min(have), "%Y-%m-%d").date()) - timedelta(days=1)
+        empty = h.get("empty", 0)
+        while b >= API_HISTORY_FROM and empty < API_HISTORY_EMPTY and not out_of_time():
+            a = max(b - timedelta(days=API_WINDOW_DAYS - 1), API_HISTORY_FROM)
+            try:
+                n = fetch(tour, a, b)
+            except Exception as e:                   # noqa: BLE001
+                print(f"  · api-tennis {tour} history {a}..{b}: {e}", file=sys.stderr)
+                break                                # try again next run
+            empty = 0 if n else empty + 1
+            h = hist[tour] = {"from": a.isoformat(), "empty": empty}
+            b = a - timedelta(days=1)
+        if b < API_HISTORY_FROM or empty >= API_HISTORY_EMPTY:
+            print(f"  · api-tennis {tour}: history complete back to {h.get('from', min(have))}", file=sys.stderr)
+            hist[tour] = "done"
+        else:
+            if h.get("from"):
+                print(f"  · api-tennis {tour}: history fetched back to {h['from']}; the next run carries on",
+                      file=sys.stderr)
+            hist[tour] = h
 
 def sync_tournament_surfaces(key, path=SURFACES_PATH):
     """api-tennis's own surface for each tournament, saved as {feed: {tournament name: surface}}

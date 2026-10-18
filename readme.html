@@ -159,8 +159,10 @@
     <ol>
       <li><strong>api-tennis.com</strong> (needs the <code>TENNIS_API_KEY</code> secret): ATP and WTA
         results with serve points won. Results are saved in <code>data/api_tennis_matches.csv</code>. The
-        first run downloads about two years; after that each run only fetches the last week, and
-        the saved history keeps working even if the subscription lapses.</li>
+        first run downloads about two years; after that each run fetches the last week and spends any
+        time left extending the history back to 2022 a few weeks at a time (older results let the ratings
+        settle before the matches being predicted). The saved history keeps working even if the
+        subscription lapses.</li>
       <li><strong>Jeff Sackmann's match files</strong> on GitHub: results plus serve/return stats
         (no longer available at the time of writing).</li>
       <li><strong>tennis-data.co.uk</strong> yearly spreadsheets: results only. Elo stays current;

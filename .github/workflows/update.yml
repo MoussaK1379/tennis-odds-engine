@@ -9,7 +9,7 @@ name: refresh-data
 # 16:20 and 21:20 UTC: odds-only refreshes for later matches, since bookmakers often
 # price the next day's matches in the evening (skips odds if the month's Odds API
 # allowance is running low).
-# :35 past every other hour: a quick refresh of the order of play (Challengers appear
+# :35 and :05 past every other hour: a quick refresh of the order of play (Challengers appear
 # once each event publishes it), api-tennis odds and Kalshi, keeping the Odds API's
 # last prices so its monthly allowance isn't touched. GitHub can start scheduled runs
 # hours late; the hourly ones keep the list current when that happens.
@@ -20,6 +20,7 @@ on:
     - cron: "20 16 * * *"
     - cron: "20 21 * * *"
     - cron: "35 0-5,7-15,17-20,22,23 * * *"
+    - cron: "5 0-5,7-15,17-20,22,23 * * *"
   workflow_dispatch: {}
   push:
     branches: [main]
@@ -64,7 +65,7 @@ jobs:
           TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}   # the full order of play, priced or not
         run: >-
           python update_matches.py --players players.json --out matches.json --min-remaining 60
-          ${{ github.event.schedule == '35 0-5,7-15,17-20,22,23 * * *' && '--skip-odds-feed' || '' }}
+          ${{ (github.event.schedule == '35 0-5,7-15,17-20,22,23 * * *' || github.event.schedule == '5 0-5,7-15,17-20,22,23 * * *') && '--skip-odds-feed' || '' }}
 
       - name: Commit if changed
         run: |

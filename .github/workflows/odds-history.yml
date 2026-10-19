@@ -27,13 +27,15 @@ jobs:
           python-version: "3.12"
 
       - name: Fetch odds
-        run: python tools/fetch_odds.py
+        # the log is committed too, so a failed fetch can be diagnosed from the repo
+        run: python tools/fetch_odds.py 2>&1 | tee data/odds_fetch.log
 
       - name: Commit if changed
         run: |
           git config user.name  "data-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/odds_history.csv
+          git add data/odds_fetch.log
+          if [ -e data/odds_history.csv ]; then git add data/odds_history.csv; fi
           if git diff --staged --quiet; then
             echo "No odds changes."
           else

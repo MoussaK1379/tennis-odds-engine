@@ -179,6 +179,22 @@
       value bets that carried no warnings, and compares the model with Pinnacle where Pinnacle prices
       the match.</p>
 
+    <h2>Live scores and delays</h2>
+    <p><code>tools/live.py</code> runs around the clock in GitHub Actions (<code>live-scores</code>,
+      about six hours per run, each run starting the next). Every minute it reads api-tennis's live
+      scores, and every ten minutes the day's fixtures, and publishes <code>live.json</code> on the
+      <code>live</code> branch (one commit, replaced each time). The site reads it about every minute:</p>
+    <ul>
+      <li><strong>Live tab</strong>: every ATP, WTA and Challenger singles match in play, with set and
+        game scores, who is serving, and the chance to win now: the model's point → game → set chain run
+        from the live score, with the serve chances tuned so that before the first point it gives the
+        pre-match pick (including bookmakers' prices when the match was priced).</li>
+      <li><strong>On each listed match</strong>: Live with the score, Suspended (rain, light), Cancelled,
+        "Moved to 15:30 (was 14:00)" when the order of play changes the time, or "Running late" once a match
+        is past its time and not started. Tennis times after the first match on a court are estimates
+        ("followed by"), so a late match shows its due time until it starts. Finished matches leave the list.</li>
+    </ul>
+
     <h2>Daily data updates</h2>
     <p>The app reads <code>players.json</code> on every load (uncached). <code>update_data.py</code>
       rebuilds it each morning, trying these sources in order for each tour:</p>

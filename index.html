@@ -1042,13 +1042,17 @@ function matchExtras(m){
 }
 /* ===================== live scores and start times (live.json) ========== */
 // tools/live.py (GitHub Actions, every minute) publishes live.json on the "live" branch;
-// read straight from GitHub so it is fresh without rebuilding the site.
+// read straight from GitHub so it is fresh without rebuilding the site. GitHub's API serves
+// the newest copy (within a minute) but allows a visitor 60 requests an hour, hence a 75 s
+// poll; if it says no, the raw file is used, which its CDN can hold for up to 5 minutes.
+const LIVE_API = "https://api.github.com/repos/MoussaK1379/tennis-odds-engine/contents/live.json?ref=live";
 const LIVE_URL = "https://raw.githubusercontent.com/MoussaK1379/tennis-odds-engine/live/live.json";
 const LIVE_TAB = "\u0002live";
 let LIVE = null;
 async function loadLive(){
   try{
-    const r = await fetch(LIVE_URL + "?t=" + Math.floor(Date.now() / 20000), { cache:"no-store" });
+    let r = await fetch(LIVE_API, { headers: { Accept: "application/vnd.github.raw+json" } }).catch(() => null);
+    if(!r || !r.ok) r = await fetch(LIVE_URL, { cache:"no-cache" });
     if(!r.ok) return;
     LIVE = await r.json();
     LIVE.liveKeys = new Set((LIVE.live || []).map(e => e.k));
@@ -1199,7 +1203,7 @@ function renderToday(j){
     ? `<div class="today__empty">Live scores paused: last update ${hhmm(LIVE.updated)}.</div>` : "";
   const shown = TODAY_TAB === LIVE_TAB
     ? stale + (liveN ? (LIVE.live || []).map(liveCard).join("") : '<div class="today__empty">No ATP, WTA or Challenger singles in play right now.</div>')
-      + `<div class="match__pin lv-note">Scores update every minute (as of ${hhmm(LIVE.updated)}). The chance to win now runs the model's point-by-point chain from the score.</div>`
+      + `<div class="match__pin lv-note">Scores refresh about every minute (as of ${hhmm(LIVE.updated)}). The chance to win now runs the model's point-by-point chain from the score.</div>`
     : (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
       `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t ? card(m, i) : "").join("")}</div>`).join("");
   list.innerHTML = tabs + shown;
@@ -1467,7 +1471,7 @@ function pbTotals(){
 }
 
 loadData().then(loadMatches).then(loadLive);
-setInterval(() => { if(!document.hidden) loadLive(); }, 30000);
+setInterval(() => { if(!document.hidden) loadLive(); }, 75000);
 document.addEventListener("visibilitychange", () => { if(!document.hidden) loadLive(); });
 </script>
 </body>

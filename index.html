@@ -143,6 +143,8 @@
   .match__p .n{ font-family:var(--display); font-weight:600; font-size:.95rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .match__p--a .n{ color:var(--A); } .match__p--b .n{ color:var(--B); }
   .match__p .nums{ color:var(--mute); white-space:nowrap; }
+  .match__pick{ font-family:var(--mono); font-size:.76rem; color:var(--mute); margin-top:2px; }
+  .match__pick b{ font-family:var(--display); font-size:.86rem; } .match__pick .pa{ color:var(--A); } .match__pick .pb{ color:var(--B); }
   .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
     color:var(--chalk); background:var(--ink-3); border:1px solid var(--ink-4); border-radius:7px; padding:.4rem .6rem; }
   .match__go:hover{ background:var(--ball); color:var(--ink); }
@@ -912,6 +914,15 @@ function matchSide(cls, p, m){
   return `<div class="match__p match__p--${cls}"><span class="n">${add}${esc(p.name)}</span>
     <span class="nums">${pct(p.model)} · ${OddsFmt.show(p.best_odds)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}"${p.bet != null ? ` title="EV uses ${pct(p.bet)}: the bookmakers' consensus, sharpened, with a little of the model (the model alone loses against real prices)"` : ""}>${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
 }
+/* The winner pick, as in the predictor's verdict: the betting probability when the match
+   is priced (market and model, the sharper number), the model's otherwise. */
+function matchPick(m){
+  const pA = m.a.bet ?? m.a.model;
+  if(pA == null) return "";
+  const aWins = pA >= 0.5, q = aWins ? pA : 1 - pA, who = aWins ? m.a.name : m.b.name;
+  const src = m.a.bet != null ? "" : " · model only";
+  return `<div class="match__pick">${q < 0.53 ? "Toss-up · edge" : "Pick"}: <b class="${aWins ? "pa" : "pb"}">${esc(who)}</b> ${pct(q)}${src}</div>`;
+}
 function matchExtras(m){
   const bits = [];
   if(m.pinnacle_a != null) bits.push(`<div class="match__pin">Pinnacle: ${pct(m.pinnacle_a)} / ${pct(1 - m.pinnacle_a)}</div>`);
@@ -959,7 +970,7 @@ function renderToday(j){
     ).join("")}</div>`;
   const card = (m, i) => `<div class="match">
       <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
-      <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}</div>
+      <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}${matchPick(m)}</div>
       <button class="match__go" type="button" data-i="${i}">Analyse</button>
       ${matchExtras(m)}</div>`;
   const shown = (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).map(t =>

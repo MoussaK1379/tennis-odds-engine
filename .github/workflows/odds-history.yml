@@ -1,0 +1,43 @@
+name: odds-history
+
+# Mondays 05:10 UTC (and on demand): historical closing odds from tennis-data.co.uk
+# for the market backtest (tools/market_backtest.py), saved to data/odds_history.csv.
+on:
+  schedule:
+    - cron: "10 5 * * 1"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-and-deploy          # same group as refresh-data, so the two never push at once
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch odds
+        run: python tools/fetch_odds.py
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/odds_history.csv
+          if git diff --staged --quiet; then
+            echo "No odds changes."
+          else
+            git commit -m "data: odds history $(date -u +%F)"
+            git pull --rebase -X theirs origin "${{ github.event.repository.default_branch }}"
+            git push
+          fi

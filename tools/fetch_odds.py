@@ -23,9 +23,25 @@ COLS = {"ps_w": "PSW", "ps_l": "PSL", "max_w": "MaxW", "max_l": "MaxL", "avg_w":
         "avg_l": "AvgL", "b365_w": "B365W", "b365_l": "B365L", "w_rank": "WRank", "l_rank": "LRank"}
 
 
+def download(url):
+    """The site answers 403 to the updater's bot user agent, so ask like a browser (https first)."""
+    import urllib.request
+    err = None
+    for u_ in (url.replace("http://", "https://"), url):
+        req = urllib.request.Request(u_, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
+                                                  "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+                                                  "Accept": "*/*"})
+        try:
+            with urllib.request.urlopen(req, timeout=90) as resp:
+                return resp.read()
+        except Exception as e:                       # noqa: BLE001
+            err = e
+    raise err
+
+
 def rows_for(tour, year):
     out = []
-    for r in u.read_xlsx(u.http_get(u.TENNIS_DATA[tour].format(year=year))):
+    for r in u.read_xlsx(download(u.TENNIS_DATA[tour].format(year=year))):
         d = u.td_date(r.get("Date"))
         w, l = u.td_name(r.get("Winner")), u.td_name(r.get("Loser"))
         if not d or not w or not l:

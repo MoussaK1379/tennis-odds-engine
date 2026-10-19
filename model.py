@@ -278,6 +278,17 @@ def stack_prob(weights, feats):
     return 1 / (1 + math.exp(-max(min(z, 30), -30)))
 
 
+# ---------- betting probability -------------------------------------------------
+# Against real closing prices the market is sharper than the model, and betting the
+# model's own edges lost money (tools/market_backtest.py). Value bets therefore use
+# the market and model log-odds blended with weights fitted on past odds, per level
+# ("tour", "challenger"); without weights for a level the model's number is used.
+def bet_prob(model_p, market_p, weights):
+    if not weights or market_p is None:
+        return model_p
+    return stack_prob(weights, [_logit(market_p), _logit(model_p)])
+
+
 # ---------- export-based prediction (what update_matches.py and the site use) ---
 def predict_export(A, B, surface, best_of, tour_avg, model, court=0.0, set_prob=set_win_prob, today=None):
     """A, B: player entries from players.json. model: players.json["model"].

@@ -129,7 +129,7 @@ WTA_EXTRA = [
 
 
 # ---------- model (shared with update_data.py and the backtest) ----------------
-from model import predict_export  # noqa: E402  (after the tables above, which model-free callers import)
+from model import predict_export, bet_prob  # noqa: E402  (after the tables above, which model-free callers import)
 
 def kelly_fraction(p, d, frac=0.25):
     b = d - 1
@@ -180,12 +180,19 @@ def resolve(name, tour, players, idx):
     """Player id for an odds-feed name, or None. A looser tier is used only if
     the stricter ones found nobody, and only when it points at exactly one player."""
     m = idx.get(tour, {})
+    words = [w for w in slugify(name).split("-") if w]
     for tier in name_tiers(name):
         hits = set().union(*(m.get(k, set()) for k in tier))
         if len(hits) == 1:
             return hits.pop()
         if len(hits) > 1:
-            return None          # ambiguous: better unmatched than wrong
+            # 'Xiyu Wang' hits both 'Xiy. Wang' and 'Xin. Wang': keep the one whose
+            # abbreviated first name starts one of the full name's words
+            def lead(pid):
+                w = [x for x in slugify(players.get(pid, {}).get("name", "")).split("-") if x]
+                return w[0] if len(w) >= 2 and len(w[0]) >= 2 else None
+            fits = {h for h in hits if lead(h) and any(x.startswith(lead(h)) for x in words)}
+            return fits.pop() if len(fits) == 1 else None   # still ambiguous: better unmatched than wrong
     return None
 
 def _words(title):
@@ -284,6 +291,15 @@ def _challenger_event(title, feed):
     return court, "hard", False, False
 
 QUALI_NAME = re.compile(r"\s*(\([^)]*\))?\s*-\s*qualification\s*$", re.I)
+# api-tennis names qualifying rounds Quarter-finals / Semi-finals / Final; a "1/16-finals"
+# style round is always the main draw, even when api-tennis files the match under the
+# qualifying event or flags it as qualifying (seen at Lyon 2026)
+MAIN_ROUND = re.compile(r"\b1/\d+-finals\b", re.I)
+
+def is_qualifying(flag, tournament, rnd):
+    if MAIN_ROUND.search(rnd or ""):
+        return False
+    return bool(flag) or bool(QUALI_NAME.search(tournament or ""))
 
 def challenger_name(name):
     """'Olbia Challenger Men' -> 'Olbia', 'Catania (Italy) - Qualification' -> 'Catania'
@@ -392,11 +408,24 @@ def match_flags(A, B, surface, today, model_p, market_p):
         out.append(("disagree", f"Model and market differ by {abs(model_p - market_p) * 100:.0f} points"))
     return out
 
-def side(model_p, market_p, price, book):
-    ev = model_p * price - 1
+def market_blend(path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "model_params.json")):
+    """{level: [market weight, model weight]} fitted by tools/market_backtest.py --write; {} if none."""
+    try:
+        with open(path) as fh:
+            return json.load(fh).get("market_blend", {}).get("weights", {})
+    except (OSError, ValueError):
+        return {}
+
+MARKET_BLEND = market_blend()
+
+def side(model_p, market_p, price, book, level="tour"):
+    """One player's prices. EV and Kelly use the betting probability (market and model
+    blended, see model.bet_prob), not the model's own number."""
+    p = bet_prob(model_p, market_p, MARKET_BLEND.get(level))
+    ev = p * price - 1
     return {"model": round(model_p, 4), "fair_odds": round(1 / model_p, 2),
-            "market": round(market_p, 4), "best_odds": price, "book": book,
-            "ev": round(ev, 4), "kelly": round(kelly_fraction(model_p, price), 4)}
+            "market": round(market_p, 4), "bet": round(p, 4), "best_odds": price, "book": book,
+            "ev": round(ev, 4), "kelly": round(kelly_fraction(p, price), 4)}
 
 
 # ---------- parlays ---------------------------------------------------------------
@@ -418,7 +447,7 @@ def build_parlays(matches, now, show=PARLAY_SHOW):
             continue
         for book, prices in (m.get("prices") or {}).items():
             for side, price in zip(("a", "b"), prices):
-                p = m[side]["model"]
+                p = m[side].get("bet") or m[side]["model"]          # the betting probability
                 if p >= PARLAY_LEG_MIN_P and p * price - 1 >= PARLAY_LEG_MIN_EV:
                     books.setdefault(book, []).append({
                         "id": m["id"], "side": side, "name": m[side]["name"],
@@ -545,7 +574,7 @@ def parlay_record(rows):
 # ---------- prediction log + track record ------------------------------------
 HIST_FIELDS = ["id", "tour", "tournament", "start", "surface", "best_of", "player_a", "player_b",
                "model_a", "market_a", "odds_a", "odds_b", "books", "logged", "result", "settled",
-               "pinnacle_a", "flags", "model_version"]
+               "pinnacle_a", "flags", "model_version", "bet_a"]
 SETTLE_AFTER_H = 3        # try to settle once a match started this long ago
 GIVE_UP_DAYS = 30         # after this, a match with no result found is voided
 
@@ -604,6 +633,7 @@ def log_predictions(hist, matches, now):
                          "surface": m["surface"], "best_of": m["best_of"],
                          "player_a": m["a"]["name"], "player_b": m["b"]["name"],
                          "model_a": m["a"]["model"], "market_a": m["a"]["market"],
+                         "bet_a": m["a"].get("bet", ""),
                          "odds_a": m["a"]["best_odds"], "odds_b": m["b"]["best_odds"],
                          "books": m.get("books", ""), "logged": iso(now), "result": "", "settled": "",
                          "pinnacle_a": m.get("pinnacle_a", ""),
@@ -656,10 +686,12 @@ def track_record(hist, split=True):
     rec["market_right"] = round(sum((f(h, "market_a") > 0.5) == (h["result"] == "a") for h in rows) / len(rows), 4)
     rec["brier_model"] = round(statistics.mean((f(h, "model_a") - won_a(h)) ** 2 for h in rows), 4)
     rec["brier_market"] = round(statistics.mean((f(h, "market_a") - won_a(h)) ** 2 for h in rows), 4)
-    # flat 1-unit bet on the better +EV side of each match, at the logged best price
+    # flat 1-unit bet on the better +EV side of each match, at the logged best price,
+    # judged on the betting probability where it was logged (the model's before that)
+    pb = lambda h: f(h, "bet_a") if h.get("bet_a") else f(h, "model_a")
     bets = profit = wins = 0
     for h in rows:
-        pa, oa, ob = f(h, "model_a"), f(h, "odds_a"), f(h, "odds_b")
+        pa, oa, ob = pb(h), f(h, "odds_a"), f(h, "odds_b")
         ev_a, ev_b = pa * oa - 1, (1 - pa) * ob - 1
         if max(ev_a, ev_b) <= 0:
             continue
@@ -682,7 +714,7 @@ def track_record(hist, split=True):
     clean = [h for h in rows if h.get("model_version") and not h.get("flags")]
     cb = cp = 0
     for h in clean:
-        pa, oa, ob = f(h, "model_a"), f(h, "odds_a"), f(h, "odds_b")
+        pa, oa, ob = pb(h), f(h, "odds_a"), f(h, "odds_b")
         ev_a, ev_b = pa * oa - 1, (1 - pa) * ob - 1
         if max(ev_a, ev_b) <= 0:
             continue
@@ -814,7 +846,8 @@ def attach_kalshi(matches, kal, players, idx):
             (na, ca, ma, ta), (nb, cb, mb, tb) = (nb, cb, mb, tb), (na, ca, ma, ta)
         mkt_a = ma / (ma + mb) if ma and mb else None
         sides = {}
-        for sd, cost, model_p in (("a", ca, m["a"]["model"]), ("b", cb, m["b"]["model"])):
+        bet = lambda sd: m[sd].get("bet") or m[sd]["model"]          # the betting probability
+        for sd, cost, model_p in (("a", ca, bet("a")), ("b", cb, bet("b"))):
             odds = kalshi_odds(cost)
             sides[sd] = {"cost": cost, "odds": odds,
                          "ev": round(model_p * odds - 1, 4) if odds else None,
@@ -881,7 +914,9 @@ def fetch_schedule(key, now, hours, challenger=False):
             out.append({"key": str(ev.get("event_key")), "tour": feed[:3], "feed": feed,
                         "level": "challenger" if feed.endswith("_CH") else "tour",
                         "tournament": ev.get("tournament_name", ""), "round": ev.get("tournament_round", ""),
-                        "qualifying": ev.get("event_qualification") == "True", "start": start,
+                        "qualifying": is_qualifying(ev.get("event_qualification") == "True",
+                                                    ev.get("tournament_name"), ev.get("tournament_round")),
+                        "start": start,
                         "a": a, "a_key": ev.get("first_player_key"), "b": b, "b_key": ev.get("second_player_key")})
     return out
 
@@ -1010,8 +1045,8 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             continue                       # priced, but the odds feed's names didn't resolve
         month = f["start"].month
         feed, ch = f.get("feed", f["tour"]), f.get("level") == "challenger"
-        if QUALI_NAME.search(f["tournament"] or ""):
-            f = {**f, "qualifying": True}      # 'Lisbon (Portugal) - Qualification' is the qualifying draw
+        # 'Lisbon (Portugal) - Qualification' is the qualifying draw, unless the round is a main-draw one
+        f = {**f, "qualifying": is_qualifying(f["qualifying"], f["tournament"], f["round"])}
         surf, indoor, known = surface_for(f["tournament"], feed, month)
         best_of = 3 if f["qualifying"] or ch else guess_best_of(f["tournament"], f["tour"])
         t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)
@@ -1039,7 +1074,8 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
         books = (odds or {}).get(f["key"])
         if books:                          # priced by api-tennis's bookmakers
             best_a, best_b, mkt_a, n_books, pin_a, by_book = summary_from_books(books)
-            row["a"].update(side(p, mkt_a, *best_a)); row["b"].update(side(1 - p, 1 - mkt_a, *best_b))
+            lvl = f.get("level", "tour")
+            row["a"].update(side(p, mkt_a, *best_a, lvl)); row["b"].update(side(1 - p, 1 - mkt_a, *best_b, lvl))
             row.update(books=n_books, prices=by_book, no_odds=False, odds_source="api-tennis",
                        id="apit-" + f["key"],
                        flags=match_flags(A, B, surf, today, p, pin_a if pin_a is not None else mkt_a))

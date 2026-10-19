@@ -11,8 +11,11 @@ on:
 permissions:
   contents: write
 
+# Its own group: sharing refresh-data's would make the site's refreshes queue behind a
+# 15-minute fetch, and GitHub cancels queued runs in a group. Pushes are safe anyway
+# (rebase before push).
 concurrency:
-  group: refresh-and-deploy          # same group as refresh-data, so the two never push at once
+  group: odds-history
   cancel-in-progress: false
 
 jobs:

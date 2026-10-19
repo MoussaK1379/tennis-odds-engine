@@ -132,7 +132,7 @@ def _service_points(ev, player_key):
 
 def api_event_row(ev, tour):
     """One api-tennis fixture -> cache row, or None if it isn't a played singles match."""
-    from update_matches import surface_for       # same tournament table as the match list
+    from update_matches import surface_for, MAIN_ROUND   # same tables as the match list
     status = API_STATUS.get(ev.get("event_status"))
     winner_side = ev.get("event_winner")
     if not status or winner_side not in ("First Player", "Second Player"):
@@ -158,7 +158,8 @@ def api_event_row(ev, tour):
             games.append(f"{a_}-{b_}" if w_first else f"{b_}-{a_}")
     return {"event_key": ev.get("event_key"), "date": ev.get("event_date"), "time": ev.get("event_time") or "",
             "tour": tour.upper(), "tournament": ev.get("tournament_name", ""),
-            "round": ev.get("tournament_round", ""), "qualifying": ev.get("event_qualification") == "True",
+            "round": ev.get("tournament_round", ""),
+            "qualifying": ev.get("event_qualification") == "True" and not MAIN_ROUND.search(ev.get("tournament_round") or ""),
             "surface": surf, "indoor": indoor, "status": status,
             "winner": w.strip(), "winner_key": wk, "loser": l.strip(), "loser_key": lk,
             "w_srv_won": ws[0] if ws else "", "w_srv_pts": ws[1] if ws else "",

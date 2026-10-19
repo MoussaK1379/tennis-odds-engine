@@ -1,1294 +1,16 @@
 {
-  "updated": "2026-10-19T17:43:52Z",
-  "odds_feed_at": "2026-10-19T13:17:02Z",
+  "updated": "2026-10-19T21:08:58Z",
+  "odds_feed_at": "2026-10-19T21:08:58Z",
   "window_hours": 36,
   "status": "ok",
-  "requests_remaining": "343",
+  "requests_remaining": "342",
   "matches": [
-    {
-      "id": "apit-12172217",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
-      "round": "Fort Worth - Final",
-      "start": "2026-10-19T18:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "M. Antonius",
-        "key": "m-antonius",
-        "model": 0.4855,
-        "fair_odds": 2.06,
-        "market": 0.6255,
-        "best_odds": 1.53,
-        "book": "bet365",
-        "ev": -0.0105,
-        "kelly": 0.0,
-        "bet": 0.6467
-      },
-      "b": {
-        "name": "A. Pedrico Kravtsov",
-        "key": "a-pedrico-kravtsov",
-        "model": 0.5145,
-        "fair_odds": 1.94,
-        "market": 0.3745,
-        "best_odds": 2.64,
-        "book": "Pncl",
-        "ev": -0.0674,
-        "kelly": 0.0,
-        "bet": 0.3533
-      },
-      "books": 8,
-      "no_odds": false,
-      "court": "ch-fort-worth-usa-usa",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6186,
-        "serve": 0.349,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "thin",
-          "M. Antonius: only 5 matches in 12 months"
-        ],
-        [
-          "thin",
-          "A. Pedrico Kravtsov: only 1 matches in 12 months"
-        ],
-        [
-          "surface_few",
-          "A. Pedrico Kravtsov: few hard matches this year"
-        ],
-        [
-          "disagree",
-          "Model and market differ by 16 points"
-        ]
-      ],
-      "prices": {
-        "bet365": [
-          1.53,
-          2.37
-        ],
-        "BetVictor": [
-          1.5,
-          2.4
-        ],
-        "WilliamHill": [
-          1.5,
-          2.5
-        ],
-        "Marathon": [
-          1.47,
-          2.46
-        ],
-        "Pncl": [
-          1.47,
-          2.64
-        ],
-        "1xBet": [
-          1.48,
-          2.47
-        ],
-        "Sbo": [
-          1.44,
-          2.53
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.6423,
-      "kalshi": {
-        "a": {
-          "cost": 0.65,
-          "odds": 1.502,
-          "ev": -0.0287,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19ANTPED-ANT"
-        },
-        "b": {
-          "cost": 0.37,
-          "odds": 2.589,
-          "ev": -0.0853,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19ANTPED-PED"
-        },
-        "market_a": 0.64,
-        "event": "KXATPCHALLENGERMATCH-26OCT19ANTPED",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19antped"
-      }
-    },
-    {
-      "id": "apit-12172244",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
-      "round": "Fort Worth - Final",
-      "start": "2026-10-19T18:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "E. Arutiunian",
-        "key": "e-arutiunian",
-        "model": 0.5619,
-        "fair_odds": 1.78,
-        "market": 0.4976,
-        "best_odds": 1.91,
-        "book": "Betfair",
-        "ev": -0.0463,
-        "kelly": 0.0,
-        "bet": 0.4993
-      },
-      "b": {
-        "name": "A. McHugh",
-        "key": "a-mchugh",
-        "model": 0.4381,
-        "fair_odds": 2.28,
-        "market": 0.5024,
-        "best_odds": 1.91,
-        "book": "Pncl",
-        "ev": -0.0437,
-        "kelly": 0.0,
-        "bet": 0.5007
-      },
-      "books": 8,
-      "no_odds": false,
-      "court": "ch-fort-worth-usa-usa",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6875,
-        "serve": 0.3161,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "thin",
-          "A. McHugh: only 8 matches in 12 months"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.83,
-          1.83
-        ],
-        "Marathon": [
-          1.84,
-          1.84
-        ],
-        "BetVictor": [
-          1.83,
-          1.85
-        ],
-        "Pncl": [
-          1.88,
-          1.91
-        ],
-        "1xBet": [
-          1.85,
-          1.83
-        ],
-        "bet365": [
-          1.9,
-          1.8
-        ],
-        "Sbo": [
-          1.83,
-          1.87
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.504,
-      "kalshi": {
-        "a": {
-          "cost": 0.5,
-          "odds": 1.932,
-          "ev": -0.0354,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19ARUMCH-ARU"
-        },
-        "b": {
-          "cost": 0.52,
-          "odds": 1.861,
-          "ev": -0.0682,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19ARUMCH-MCH"
-        },
-        "market_a": 0.4925,
-        "event": "KXATPCHALLENGERMATCH-26OCT19ARUMCH",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19arumch"
-      }
-    },
-    {
-      "id": "apit-12172174",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Final",
-      "start": "2026-10-19T18:10:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "A. Magadan",
-        "key": "a-magadan",
-        "model": 0.7937,
-        "fair_odds": 1.26,
-        "market": 0.5743,
-        "best_odds": 1.65,
-        "book": "Pncl",
-        "ev": -0.0122,
-        "kelly": 0.0,
-        "bet": 0.5987
-      },
-      "b": {
-        "name": "D. Salazar",
-        "key": "d-salazar",
-        "model": 0.2063,
-        "fair_odds": 4.85,
-        "market": 0.4257,
-        "best_odds": 2.21,
-        "book": "Pncl",
-        "ev": -0.1131,
-        "kelly": 0.0,
-        "bet": 0.4013
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-cali",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.802,
-        "serve": 0.8003,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "specialist",
-          "D. Salazar: clay-court specialist (100% of matches on clay)"
-        ],
-        [
-          "disagree",
-          "Model and market differ by 22 points"
-        ]
-      ],
-      "prices": {
-        "Marathon": [
-          1.59,
-          2.18
-        ],
-        "BetVictor": [
-          1.62,
-          2.1
-        ],
-        "Pncl": [
-          1.65,
-          2.21
-        ],
-        "1xBet": [
-          1.6,
-          2.2
-        ],
-        "WilliamHill": [
-          1.62,
-          2.2
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.5725,
-      "kalshi": {
-        "a": {
-          "cost": 0.58,
-          "odds": 1.675,
-          "ev": 0.0028,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19MAGSAL-MAG"
-        },
-        "b": {
-          "cost": 0.43,
-          "odds": 2.236,
-          "ev": -0.1027,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19MAGSAL-SAL"
-        },
-        "market_a": 0.575,
-        "event": "KXATPCHALLENGERMATCH-26OCT19MAGSAL",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19magsal"
-      }
-    },
-    {
-      "id": "apit-12172190",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Final",
-      "start": "2026-10-19T18:10:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "M. Alves",
-        "key": "m-alves",
-        "model": 0.5709,
-        "fair_odds": 1.75,
-        "market": 0.7496,
-        "best_odds": 1.25,
-        "book": "WilliamHill",
-        "ev": -0.0163,
-        "kelly": 0.0,
-        "bet": 0.787
-      },
-      "b": {
-        "name": "J. Pereira",
-        "key": "j-pereira",
-        "model": 0.4291,
-        "fair_odds": 2.33,
-        "market": 0.2504,
-        "best_odds": 3.89,
-        "book": "Pncl",
-        "ev": -0.1713,
-        "kelly": 0.0,
-        "bet": 0.213
-      },
-      "books": 8,
-      "no_odds": false,
-      "court": "ch-cali",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.5994,
-        "serve": 0.4046,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "specialist",
-          "M. Alves: clay-court specialist (89% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "J. Pereira: clay-court specialist (100% of matches on clay)"
-        ],
-        [
-          "disagree",
-          "Model and market differ by 19 points"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.25,
-          3.75
-        ],
-        "bet365": [
-          1.25,
-          3.75
-        ],
-        "Marathon": [
-          1.22,
-          3.74
-        ],
-        "BetVictor": [
-          1.22,
-          3.6
-        ],
-        "1xBet": [
-          1.23,
-          3.74
-        ],
-        "Pncl": [
-          1.25,
-          3.89
-        ],
-        "Sbo": [
-          1.21,
-          3.63
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.7568,
-      "kalshi": {
-        "a": {
-          "cost": 0.78,
-          "odds": 1.263,
-          "ev": -0.006,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19ALVPER-ALV"
-        },
-        "b": {
-          "cost": 0.24,
-          "odds": 3.956,
-          "ev": -0.1574,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19ALVPER-PER"
-        },
-        "market_a": 0.77,
-        "event": "KXATPCHALLENGERMATCH-26OCT19ALVPER",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19alvper"
-      }
-    },
-    {
-      "id": "apit-12172191",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Final",
-      "start": "2026-10-19T18:10:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "D. Dedura",
-        "key": "d-dedura",
-        "model": 0.4648,
-        "fair_odds": 2.15,
-        "market": 0.8925,
-        "best_odds": 1.06,
-        "book": "bet365",
-        "ev": -0.0205,
-        "kelly": 0.0,
-        "bet": 0.9241
-      },
-      "b": {
-        "name": "F. Rengifo",
-        "key": "f-rengifo",
-        "model": 0.5352,
-        "fair_odds": 1.87,
-        "market": 0.1075,
-        "best_odds": 10.0,
-        "book": "WilliamHill",
-        "ev": -0.2408,
-        "kelly": 0.0,
-        "bet": 0.0759
-      },
-      "books": 5,
-      "no_odds": false,
-      "court": "ch-cali",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.8239,
-        "serve": 0.081,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "specialist",
-          "D. Dedura: clay-court specialist (88% of matches on clay)"
-        ],
-        [
-          "thin",
-          "F. Rengifo: only 1 matches in 12 months"
-        ],
-        [
-          "surface_few",
-          "F. Rengifo: few clay matches this year"
-        ],
-        [
-          "disagree",
-          "Model and market differ by 43 points"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.04,
-          10.0
-        ],
-        "bet365": [
-          1.06,
-          8.0
-        ],
-        "Pncl": [
-          1.05,
-          9.14
-        ],
-        "Sbo": [
-          1.03,
-          7.25
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.897,
-      "kalshi": {
-        "a": {
-          "cost": 0.93,
-          "odds": 1.07,
-          "ev": -0.0112,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19DEDREN-DED"
-        },
-        "b": {
-          "cost": 0.09,
-          "odds": 10.446,
-          "ev": -0.2071,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19DEDREN-REN"
-        },
-        "market_a": 0.9204,
-        "event": "KXATPCHALLENGERMATCH-26OCT19DEDREN",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19dedren"
-      }
-    },
-    {
-      "id": "apit-12172243",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Fort Worth (Usa) (qualifying)",
-      "round": "Fort Worth - Final",
-      "start": "2026-10-19T18:15:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "K. Bigun",
-        "key": "k-bigun",
-        "model": 0.3863,
-        "fair_odds": 2.59,
-        "market": 0.5565,
-        "best_odds": 1.71,
-        "book": "Pncl",
-        "ev": -0.0376,
-        "kelly": 0.0,
-        "bet": 0.5628
-      },
-      "b": {
-        "name": "P. Zahraj",
-        "key": "p-zahraj",
-        "model": 0.6137,
-        "fair_odds": 1.63,
-        "market": 0.4435,
-        "best_odds": 2.2,
-        "book": "bet365",
-        "ev": -0.0382,
-        "kelly": 0.0,
-        "bet": 0.4372
-      },
-      "books": 8,
-      "no_odds": false,
-      "court": "ch-fort-worth-usa-usa",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.3416,
-        "serve": 0.4586,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "disagree",
-          "Model and market differ by 17 points"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.67,
-          2.1
-        ],
-        "bet365": [
-          1.61,
-          2.2
-        ],
-        "Marathon": [
-          1.66,
-          2.06
-        ],
-        "BetVictor": [
-          1.67,
-          2.05
-        ],
-        "Pncl": [
-          1.71,
-          2.12
-        ],
-        "1xBet": [
-          1.68,
-          2.06
-        ],
-        "Sbo": [
-          1.67,
-          2.05
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.5535,
-      "kalshi": {
-        "a": {
-          "cost": 0.56,
-          "odds": 1.732,
-          "ev": -0.0252,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19BIGZAH-BIG"
-        },
-        "b": {
-          "cost": 0.45,
-          "odds": 2.14,
-          "ev": -0.0644,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19BIGZAH-ZAH"
-        },
-        "market_a": 0.555,
-        "event": "KXATPCHALLENGERMATCH-26OCT19BIGZAH",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19bigzah"
-      }
-    },
-    {
-      "id": "apit-12172112",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Fort Worth (Usa)",
-      "round": "Fort Worth - 1/16-finals",
-      "start": "2026-10-19T19:30:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "L. E. Ambrogi",
-        "key": "l-e-ambrogi",
-        "model": 0.3586,
-        "fair_odds": 2.79,
-        "market": 0.2146,
-        "best_odds": 4.9,
-        "book": "Betano",
-        "ev": -0.1451,
-        "kelly": 0.0,
-        "bet": 0.1745
-      },
-      "b": {
-        "name": "P. Maloney",
-        "key": "p-maloney",
-        "model": 0.6414,
-        "fair_odds": 1.56,
-        "market": 0.7854,
-        "best_odds": 1.23,
-        "book": "Pncl",
-        "ev": 0.0154,
-        "kelly": 0.0167,
-        "bet": 0.8255
-      },
-      "books": 9,
-      "no_odds": false,
-      "court": "ch-fort-worth-usa-usa",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.4342,
-        "serve": 0.2609,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "surface_few",
-          "L. E. Ambrogi: few hard matches this year"
-        ],
-        [
-          "specialist",
-          "L. E. Ambrogi: clay-court specialist (98% of matches on clay), now on hard"
-        ]
-      ],
-      "prices": {
-        "bet365": [
-          4.5,
-          1.16
-        ],
-        "BetVictor": [
-          4.0,
-          1.18
-        ],
-        "WilliamHill": [
-          4.0,
-          1.22
-        ],
-        "Marathon": [
-          4.4,
-          1.16
-        ],
-        "1xBet": [
-          4.38,
-          1.18
-        ],
-        "Betano": [
-          4.9,
-          1.17
-        ],
-        "Pncl": [
-          4.4,
-          1.23
-        ],
-        "Sbo": [
-          4.03,
-          1.18
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.2185,
-      "kalshi": {
-        "a": {
-          "cost": 0.22,
-          "odds": 4.31,
-          "ev": -0.2479,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19AMBMAL-AMB"
-        },
-        "b": {
-          "cost": 0.79,
-          "odds": 1.247,
-          "ev": 0.0294,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19AMBMAL-MAL"
-        },
-        "market_a": 0.215,
-        "event": "KXATPCHALLENGERMATCH-26OCT19AMBMAL",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19ambmal"
-      }
-    },
-    {
-      "id": "apit-12172121",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Fort Worth (Usa)",
-      "round": "Fort Worth - 1/16-finals",
-      "start": "2026-10-19T19:30:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "E. Winter",
-        "key": "e-winter",
-        "model": 0.2747,
-        "fair_odds": 3.64,
-        "market": 0.2682,
-        "best_odds": 3.75,
-        "book": "bet365",
-        "ev": -0.1451,
-        "kelly": 0.0,
-        "bet": 0.228
-      },
-      "b": {
-        "name": "T. Legout",
-        "key": "t-legout",
-        "model": 0.7253,
-        "fair_odds": 1.38,
-        "market": 0.7318,
-        "best_odds": 1.3,
-        "book": "WilliamHill",
-        "ev": 0.0036,
-        "kelly": 0.003,
-        "bet": 0.772
-      },
-      "books": 9,
-      "no_odds": false,
-      "court": "ch-fort-worth-usa-usa",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.3162,
-        "serve": 0.1817,
-        "w": 0.4
-      },
-      "flags": [],
-      "prices": {
-        "bet365": [
-          3.75,
-          1.25
-        ],
-        "BetVictor": [
-          3.4,
-          1.25
-        ],
-        "WilliamHill": [
-          3.4,
-          1.3
-        ],
-        "Marathon": [
-          3.4,
-          1.26
-        ],
-        "1xBet": [
-          3.41,
-          1.27
-        ],
-        "Betano": [
-          3.5,
-          1.29
-        ],
-        "Pncl": [
-          3.58,
-          1.3
-        ],
-        "Sbo": [
-          3.27,
-          1.26
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.2664,
-      "kalshi": {
-        "a": {
-          "cost": 0.27,
-          "odds": 3.524,
-          "ev": -0.1965,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19WINLEG-WIN"
-        },
-        "b": {
-          "cost": 0.75,
-          "odds": 1.31,
-          "ev": 0.0113,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19WINLEG-LEG"
-        },
-        "market_a": 0.26,
-        "event": "KXATPCHALLENGERMATCH-26OCT19WINLEG",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19winleg"
-      }
-    },
-    {
-      "id": "apit-12172209",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Final",
-      "start": "2026-10-19T19:30:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "A. Hernandez",
-        "key": "a-hernandez",
-        "model": 0.505,
-        "fair_odds": 1.98,
-        "market": 0.5917,
-        "best_odds": 1.62,
-        "book": "Pncl",
-        "ev": -0.0148,
-        "kelly": 0.0,
-        "bet": 0.6081
-      },
-      "b": {
-        "name": "F. Ribero",
-        "key": "f-ribero",
-        "model": 0.495,
-        "fair_odds": 2.02,
-        "market": 0.4083,
-        "best_odds": 2.37,
-        "book": "bet365",
-        "ev": -0.0713,
-        "kelly": 0.0,
-        "bet": 0.3919
-      },
-      "books": 7,
-      "no_odds": false,
-      "court": "ch-cali",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.5658,
-        "serve": 0.3726,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "retired",
-          "A. Hernandez: retired from a match 49 days ago"
-        ],
-        [
-          "specialist",
-          "F. Ribero: clay-court specialist (98% of matches on clay)"
-        ]
-      ],
-      "prices": {
-        "bet365": [
-          1.53,
-          2.37
-        ],
-        "Marathon": [
-          1.55,
-          2.26
-        ],
-        "1xBet": [
-          1.57,
-          2.25
-        ],
-        "BetVictor": [
-          1.53,
-          2.25
-        ],
-        "Pncl": [
-          1.62,
-          2.28
-        ],
-        "Sbo": [
-          1.58,
-          2.21
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.5846,
-      "kalshi": {
-        "a": {
-          "cost": 0.62,
-          "odds": 1.571,
-          "ev": -0.0447,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19HERRIB-HER"
-        },
-        "b": {
-          "cost": 0.39,
-          "odds": 2.459,
-          "ev": -0.0363,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19HERRIB-RIB"
-        },
-        "market_a": 0.6131,
-        "event": "KXATPCHALLENGERMATCH-26OCT19HERRIB",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19herrib"
-      }
-    },
-    {
-      "id": "apit-12172210",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Final",
-      "start": "2026-10-19T19:30:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "F. Meligeni Alves",
-        "key": "f-meligeni-alves",
-        "model": 0.9205,
-        "fair_odds": 1.09,
-        "market": 0.8751,
-        "best_odds": 1.07,
-        "book": "bet365",
-        "ev": -0.0202,
-        "kelly": 0.0,
-        "bet": 0.9157
-      },
-      "b": {
-        "name": "J. S. Gomez",
-        "key": "j-s-gomez",
-        "model": 0.0795,
-        "fair_odds": 12.58,
-        "market": 0.1249,
-        "best_odds": 9.39,
-        "book": "Pncl",
-        "ev": -0.2088,
-        "kelly": 0.0,
-        "bet": 0.0843
-      },
-      "books": 8,
-      "no_odds": false,
-      "court": "ch-cali",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.8171,
-        "serve": 0.9665,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "specialist",
-          "F. Meligeni Alves: clay-court specialist (83% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "J. S. Gomez: clay-court specialist (87% of matches on clay)"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.06,
-          8.0
-        ],
-        "bet365": [
-          1.07,
-          7.5
-        ],
-        "Marathon": [
-          1.07,
-          6.55
-        ],
-        "BetVictor": [
-          1.07,
-          6.5
-        ],
-        "1xBet": [
-          1.07,
-          6.55
-        ],
-        "Pncl": [
-          1.05,
-          9.39
-        ],
-        "Sbo": [
-          1.03,
-          7.25
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.8994,
-      "kalshi": {
-        "a": {
-          "cost": 0.93,
-          "odds": 1.07,
-          "ev": -0.0202,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19MELGOM-MEL"
-        },
-        "b": {
-          "cost": 0.08,
-          "odds": 11.744,
-          "ev": -0.01,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19MELGOM-GOM"
-        },
-        "market_a": 0.925,
-        "event": "KXATPCHALLENGERMATCH-26OCT19MELGOM",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19melgom"
-      }
-    },
-    {
-      "id": "sched-12172216",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali (qualifying)",
-      "round": "Cali - Final",
-      "start": "2026-10-19T19:30:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "S. Rodriguez Taverna",
-        "key": "s-rodriguez-taverna",
-        "model": 0.6854,
-        "fair_odds": 1.46,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "b": {
-        "name": "S. L. Hernandez R.",
-        "key": "s-l-hernandez-r",
-        "model": 0.3146,
-        "fair_odds": 3.18,
-        "market": null,
-        "best_odds": null,
-        "book": null,
-        "ev": null,
-        "kelly": null
-      },
-      "books": 0,
-      "no_odds": true,
-      "court": "ch-cali",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.7566,
-        "serve": 0.6174,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "specialist",
-          "S. Rodriguez Taverna: clay-court specialist (95% of matches on clay)"
-        ],
-        [
-          "thin",
-          "S. L. Hernandez R.: only 3 matches in 12 months"
-        ]
-      ]
-    },
-    {
-      "id": "apit-12172117",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Fort Worth (Usa)",
-      "round": "Fort Worth - 1/16-finals",
-      "start": "2026-10-19T19:45:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "D. Milavsky",
-        "key": "d-milavsky",
-        "model": 0.7633,
-        "fair_odds": 1.31,
-        "market": 0.7676,
-        "best_odds": 1.22,
-        "book": "bet365",
-        "ev": -0.0112,
-        "kelly": 0.0,
-        "bet": 0.8105
-      },
-      "b": {
-        "name": "G. Nanda",
-        "key": "new-g-nanda-2968",
-        "model": 0.2367,
-        "fair_odds": 4.22,
-        "market": 0.2324,
-        "best_odds": 4.05,
-        "book": "Marathon",
-        "ev": -0.2324,
-        "kelly": 0.0,
-        "bet": 0.1895,
-        "new": true
-      },
-      "books": 7,
-      "no_odds": false,
-      "court": "ch-fort-worth-usa-usa",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6649,
-        "serve": 0.9527,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "thin",
-          "G. Nanda: no matches in our data yet, rated as a first-time qualifier"
-        ]
-      ],
-      "prices": {
-        "bet365": [
-          1.22,
-          4.0
-        ],
-        "BetVictor": [
-          1.2,
-          4.0
-        ],
-        "WilliamHill": [
-          1.22,
-          4.0
-        ],
-        "Marathon": [
-          1.19,
-          4.05
-        ],
-        "1xBet": [
-          1.2,
-          4.04
-        ],
-        "Sbo": [
-          1.2,
-          3.77
-        ]
-      },
-      "odds_source": "api-tennis",
-      "new_players": {
-        "b": {
-          "name": "G. Nanda",
-          "tour": "ATP",
-          "elo": {
-            "overall": 1250
-          },
-          "n": 0,
-          "new": true,
-          "info": {
-            "m12": 0,
-            "surf12": {}
-          }
-        }
-      }
-    },
-    {
-      "id": "apit-12172102",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Cali",
-      "round": "Cali - 1/16-finals",
-      "start": "2026-10-19T21:00:00Z",
-      "surface": "clay",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "H. Casanova",
-        "key": "h-casanova",
-        "model": 0.4341,
-        "fair_odds": 2.3,
-        "market": 0.3769,
-        "best_odds": 2.62,
-        "book": "bet365",
-        "ev": -0.0739,
-        "kelly": 0.0,
-        "bet": 0.3535
-      },
-      "b": {
-        "name": "G. Bueno",
-        "key": "g-bueno",
-        "model": 0.5659,
-        "fair_odds": 1.77,
-        "market": 0.6231,
-        "best_odds": 1.54,
-        "book": "Pncl",
-        "ev": -0.0043,
-        "kelly": 0.0,
-        "bet": 0.6465
-      },
-      "books": 8,
-      "no_odds": false,
-      "court": "ch-cali",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.3923,
-        "serve": 0.4851,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "specialist",
-          "H. Casanova: clay-court specialist (100% of matches on clay)"
-        ],
-        [
-          "specialist",
-          "G. Bueno: clay-court specialist (87% of matches on clay)"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          2.38,
-          1.53
-        ],
-        "Marathon": [
-          2.46,
-          1.47
-        ],
-        "1xBet": [
-          2.47,
-          1.48
-        ],
-        "BetVictor": [
-          2.4,
-          1.5
-        ],
-        "bet365": [
-          2.62,
-          1.44
-        ],
-        "Pncl": [
-          2.54,
-          1.54
-        ],
-        "Sbo": [
-          2.4,
-          1.49
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.3775,
-      "kalshi": {
-        "a": {
-          "cost": 0.37,
-          "odds": 2.589,
-          "ev": -0.0848,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19CASBUE-CAS"
-        },
-        "b": {
-          "cost": 0.64,
-          "odds": 1.524,
-          "ev": -0.0147,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19CASBUE-BUE"
-        },
-        "market_a": 0.365,
-        "event": "KXATPCHALLENGERMATCH-26OCT19CASBUE",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19casbue"
-      }
-    },
     {
       "id": "apit-12172113",
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa)",
       "round": "Fort Worth - 1/16-finals",
-      "start": "2026-10-19T21:00:00Z",
+      "start": "2026-10-19T21:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -1299,9 +21,9 @@
         "model": 0.805,
         "fair_odds": 1.24,
         "market": 0.8408,
-        "best_odds": 1.12,
-        "book": "WilliamHill",
-        "ev": -0.0116,
+        "best_odds": 1.13,
+        "book": "Betano",
+        "ev": -0.0028,
         "kelly": 0.0,
         "bet": 0.8825
       },
@@ -1329,92 +51,92 @@
       },
       "flags": [],
       "prices": {
+        "WilliamHill": [
+          1.11,
+          6.0
+        ],
         "bet365": [
           1.1,
           6.5
+        ],
+        "Marathon": [
+          1.1,
+          5.65
         ],
         "BetVictor": [
           1.1,
           5.5
         ],
-        "WilliamHill": [
-          1.12,
-          5.5
-        ],
-        "Marathon": [
-          1.09,
-          5.9
-        ],
-        "1xBet": [
-          1.09,
-          5.9
-        ],
-        "Betano": [
-          1.12,
-          5.9
-        ],
         "Pncl": [
           1.12,
-          6.28
+          6.3
         ],
         "Sbo": [
           1.09,
-          5.16
+          5.54
+        ],
+        "1xBet": [
+          1.1,
+          5.55
+        ],
+        "Betano": [
+          1.13,
+          5.7
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.8486,
+      "pinnacle_a": 0.8491,
       "kalshi": {
         "a": {
-          "cost": 0.88,
-          "odds": 1.127,
-          "ev": -0.0054,
+          "cost": 0.86,
+          "odds": 1.152,
+          "ev": 0.0166,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19BROKRU-BRO"
         },
         "b": {
-          "cost": 0.14,
-          "odds": 6.737,
-          "ev": -0.2084,
+          "cost": 0.15,
+          "odds": 6.292,
+          "ev": -0.2607,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19BROKRU-KRU"
         },
-        "market_a": 0.8706,
+        "market_a": 0.855,
         "event": "KXATPCHALLENGERMATCH-26OCT19BROKRU",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19brokru"
       }
     },
     {
-      "id": "apit-12172118",
+      "id": "apit-12172121",
       "tour": "ATP",
       "tournament": "ATP Challenger Fort Worth (Usa)",
       "round": "Fort Worth - 1/16-finals",
-      "start": "2026-10-19T21:00:00Z",
+      "start": "2026-10-19T21:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
       "best_of": 3,
       "a": {
-        "name": "M. H. Rehberg",
-        "key": "m-h-rehberg",
-        "model": 0.429,
-        "fair_odds": 2.33,
-        "market": 0.4439,
-        "best_odds": 2.2,
+        "name": "E. Winter",
+        "key": "e-winter",
+        "model": 0.2747,
+        "fair_odds": 3.64,
+        "market": 0.2728,
+        "best_odds": 3.75,
         "book": "bet365",
-        "ev": -0.0511,
+        "ev": -0.1268,
         "kelly": 0.0,
-        "bet": 0.4313
+        "bet": 0.2329
       },
       "b": {
-        "name": "M. Rottgering",
-        "key": "m-rottgering",
-        "model": 0.571,
-        "fair_odds": 1.75,
-        "market": 0.5561,
-        "best_odds": 1.71,
-        "book": "Pncl",
-        "ev": -0.0276,
-        "kelly": 0.0,
-        "bet": 0.5687
+        "name": "T. Legout",
+        "key": "t-legout",
+        "model": 0.7253,
+        "fair_odds": 1.38,
+        "market": 0.7272,
+        "best_odds": 1.33,
+        "book": "WilliamHill",
+        "ev": 0.0203,
+        "kelly": 0.0154,
+        "bet": 0.7671
       },
       "books": 9,
       "no_odds": false,
@@ -1422,68 +144,167 @@
       "model_version": "2026-10-19",
       "level": "challenger",
       "parts": {
-        "elo": 0.4627,
-        "serve": 0.328,
+        "elo": 0.3162,
+        "serve": 0.1817,
+        "w": 0.4
+      },
+      "flags": [],
+      "prices": {
+        "WilliamHill": [
+          3.25,
+          1.33
+        ],
+        "bet365": [
+          3.75,
+          1.25
+        ],
+        "Marathon": [
+          3.34,
+          1.27
+        ],
+        "BetVictor": [
+          3.25,
+          1.29
+        ],
+        "Pncl": [
+          3.58,
+          1.31
+        ],
+        "Sbo": [
+          3.27,
+          1.26
+        ],
+        "1xBet": [
+          3.34,
+          1.28
+        ],
+        "Betano": [
+          3.5,
+          1.29
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.2679,
+      "kalshi": {
+        "a": {
+          "cost": 0.26,
+          "odds": 3.657,
+          "ev": -0.1483,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19WINLEG-WIN"
+        },
+        "b": {
+          "cost": 0.75,
+          "odds": 1.31,
+          "ev": 0.0049,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19WINLEG-LEG"
+        },
+        "market_a": 0.255,
+        "event": "KXATPCHALLENGERMATCH-26OCT19WINLEG",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19winleg"
+      }
+    },
+    {
+      "id": "apit-12172102",
+      "tour": "ATP",
+      "tournament": "ATP Challenger Cali",
+      "round": "Cali - 1/16-finals",
+      "start": "2026-10-19T21:30:00Z",
+      "surface": "clay",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "H. Casanova",
+        "key": "h-casanova",
+        "model": 0.4341,
+        "fair_odds": 2.3,
+        "market": 0.3812,
+        "best_odds": 2.62,
+        "book": "bet365",
+        "ev": -0.0608,
+        "kelly": 0.0,
+        "bet": 0.3585
+      },
+      "b": {
+        "name": "G. Bueno",
+        "key": "g-bueno",
+        "model": 0.5659,
+        "fair_odds": 1.77,
+        "market": 0.6188,
+        "best_odds": 1.56,
+        "book": "Pncl",
+        "ev": 0.0008,
+        "kelly": 0.0003,
+        "bet": 0.6415
+      },
+      "books": 8,
+      "no_odds": false,
+      "court": "ch-cali",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.3923,
+        "serve": 0.4851,
         "w": 0.4
       },
       "flags": [
         [
           "specialist",
-          "M. H. Rehberg: clay-court specialist (73% of matches on clay), now on hard"
+          "H. Casanova: clay-court specialist (100% of matches on clay)"
+        ],
+        [
+          "specialist",
+          "G. Bueno: clay-court specialist (87% of matches on clay)"
         ]
       ],
       "prices": {
-        "bet365": [
-          2.2,
-          1.61
-        ],
-        "BetVictor": [
-          2.05,
-          1.67
-        ],
         "WilliamHill": [
-          2.1,
-          1.67
+          2.38,
+          1.53
+        ],
+        "bet365": [
+          2.62,
+          1.44
         ],
         "Marathon": [
-          2.03,
-          1.68
+          2.4,
+          1.49
         ],
-        "1xBet": [
-          2.03,
-          1.68
-        ],
-        "Betano": [
-          2.12,
-          1.7
+        "BetVictor": [
+          2.38,
+          1.5
         ],
         "Pncl": [
-          2.15,
-          1.71
+          2.49,
+          1.56
         ],
         "Sbo": [
-          2.07,
-          1.65
+          2.35,
+          1.51
+        ],
+        "1xBet": [
+          2.42,
+          1.5
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.443,
+      "pinnacle_a": 0.3852,
       "kalshi": {
         "a": {
-          "cost": 0.46,
-          "odds": 2.095,
-          "ev": -0.0964,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19REHROT-REH"
+          "cost": 0.38,
+          "odds": 2.522,
+          "ev": -0.0959,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19CASBUE-CAS"
         },
         "b": {
-          "cost": 0.55,
-          "odds": 1.763,
-          "ev": 0.0026,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19REHROT-ROT"
+          "cost": 0.63,
+          "odds": 1.547,
+          "ev": -0.0076,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19CASBUE-BUE"
         },
-        "market_a": 0.4523,
-        "event": "KXATPCHALLENGERMATCH-26OCT19REHROT",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19rehrot"
+        "market_a": 0.375,
+        "event": "KXATPCHALLENGERMATCH-26OCT19CASBUE",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19casbue"
       }
     },
     {
@@ -1501,24 +322,24 @@
         "key": "d-e-galan-1735",
         "model": 0.5012,
         "fair_odds": 2.0,
-        "market": 0.4951,
-        "best_odds": 1.92,
+        "market": 0.496,
+        "best_odds": 1.93,
         "book": "Pncl",
-        "ev": -0.0511,
+        "ev": -0.0441,
         "kelly": 0.0,
-        "bet": 0.4942
+        "bet": 0.4953
       },
       "b": {
         "name": "J. P. Varillas",
         "key": "j-p-varillas",
         "model": 0.4988,
         "fair_odds": 2.0,
-        "market": 0.5049,
-        "best_odds": 1.9,
+        "market": 0.504,
+        "best_odds": 1.91,
         "book": "Pncl",
-        "ev": -0.039,
+        "ev": -0.0359,
         "kelly": 0.0,
-        "bet": 0.5058
+        "bet": 0.5047
       },
       "books": 9,
       "no_odds": false,
@@ -1545,11 +366,11 @@
           1.83,
           1.83
         ],
-        "Marathon": [
-          1.85,
-          1.83
+        "bet365": [
+          1.9,
+          1.8
         ],
-        "1xBet": [
+        "Marathon": [
           1.85,
           1.83
         ],
@@ -1557,25 +378,129 @@
           1.83,
           1.83
         ],
-        "bet365": [
-          1.9,
-          1.8
-        ],
         "Pncl": [
-          1.92,
-          1.9
-        ],
-        "Betano": [
-          1.91,
-          1.87
+          1.93,
+          1.91
         ],
         "Sbo": [
           1.85,
+          1.85
+        ],
+        "1xBet": [
+          1.85,
           1.83
+        ],
+        "Betano": [
+          1.88,
+          1.88
         ]
       },
       "odds_source": "api-tennis",
       "pinnacle_a": 0.4974
+    },
+    {
+      "id": "apit-12172118",
+      "tour": "ATP",
+      "tournament": "ATP Challenger Fort Worth (Usa)",
+      "round": "Fort Worth - 1/16-finals",
+      "start": "2026-10-19T22:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "M. H. Rehberg",
+        "key": "m-h-rehberg",
+        "model": 0.429,
+        "fair_odds": 2.33,
+        "market": 0.4445,
+        "best_odds": 2.2,
+        "book": "bet365",
+        "ev": -0.0494,
+        "kelly": 0.0,
+        "bet": 0.4321
+      },
+      "b": {
+        "name": "M. Rottgering",
+        "key": "m-rottgering",
+        "model": 0.571,
+        "fair_odds": 1.75,
+        "market": 0.5555,
+        "best_odds": 1.72,
+        "book": "Pncl",
+        "ev": -0.0232,
+        "kelly": 0.0,
+        "bet": 0.5679
+      },
+      "books": 9,
+      "no_odds": false,
+      "court": "ch-fort-worth-usa-usa",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.4627,
+        "serve": 0.328,
+        "w": 0.4
+      },
+      "flags": [
+        [
+          "specialist",
+          "M. H. Rehberg: clay-court specialist (73% of matches on clay), now on hard"
+        ]
+      ],
+      "prices": {
+        "WilliamHill": [
+          2.1,
+          1.67
+        ],
+        "bet365": [
+          2.2,
+          1.61
+        ],
+        "Marathon": [
+          2.01,
+          1.7
+        ],
+        "BetVictor": [
+          2.05,
+          1.67
+        ],
+        "Pncl": [
+          2.16,
+          1.72
+        ],
+        "Sbo": [
+          2.07,
+          1.65
+        ],
+        "1xBet": [
+          2.03,
+          1.68
+        ],
+        "Betano": [
+          2.12,
+          1.7
+        ]
+      },
+      "odds_source": "api-tennis",
+      "pinnacle_a": 0.4433,
+      "kalshi": {
+        "a": {
+          "cost": 0.46,
+          "odds": 2.095,
+          "ev": -0.0948,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19REHROT-REH"
+        },
+        "b": {
+          "cost": 0.56,
+          "odds": 1.732,
+          "ev": -0.0164,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19REHROT-ROT"
+        },
+        "market_a": 0.4505,
+        "event": "KXATPCHALLENGERMATCH-26OCT19REHROT",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19rehrot"
+      }
     },
     {
       "id": "apit-12172107",
@@ -1592,24 +517,24 @@
         "key": "n-jarry",
         "model": 0.4494,
         "fair_odds": 2.23,
-        "market": 0.3731,
-        "best_odds": 2.62,
-        "book": "bet365",
-        "ev": -0.0841,
+        "market": 0.371,
+        "best_odds": 2.65,
+        "book": "Betano",
+        "ev": -0.08,
         "kelly": 0.0,
-        "bet": 0.3496
+        "bet": 0.3472
       },
       "b": {
         "name": "T. Barrios Vera",
         "key": "t-barrios-vera",
         "model": 0.5506,
         "fair_odds": 1.82,
-        "market": 0.6269,
-        "best_odds": 1.53,
+        "market": 0.629,
+        "best_odds": 1.54,
         "book": "Pncl",
-        "ev": -0.0049,
-        "kelly": 0.0,
-        "bet": 0.6504
+        "ev": 0.0053,
+        "kelly": 0.0025,
+        "bet": 0.6528
       },
       "books": 9,
       "no_odds": false,
@@ -1640,37 +565,37 @@
           2.5,
           1.5
         ],
+        "bet365": [
+          2.62,
+          1.44
+        ],
         "Marathon": [
           2.46,
           1.47
+        ],
+        "BetVictor": [
+          2.5,
+          1.45
+        ],
+        "Pncl": [
+          2.53,
+          1.54
+        ],
+        "Sbo": [
+          2.29,
+          1.48
         ],
         "1xBet": [
           2.47,
           1.48
         ],
-        "BetVictor": [
-          2.4,
-          1.45
-        ],
-        "bet365": [
-          2.62,
-          1.44
-        ],
         "Betano": [
-          2.57,
-          1.5
-        ],
-        "Pncl": [
-          2.54,
-          1.53
-        ],
-        "Sbo": [
-          2.29,
-          1.48
+          2.65,
+          1.47
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.3759
+      "pinnacle_a": 0.3784
     },
     {
       "id": "382e298ed707ab99e1aea406cebbb42f",
@@ -1687,34 +612,30 @@
         "key": "s-bejlek",
         "model": 0.5231,
         "fair_odds": 1.91,
-        "market": 0.4904,
-        "bet": 0.4895,
+        "market": 0.5544,
+        "bet": 0.5621,
         "best_odds": 1.93,
         "book": "Unibet (NL)",
-        "ev": -0.0552,
-        "kelly": 0.0
+        "ev": 0.0849,
+        "kelly": 0.0228
       },
       "b": {
         "name": "Xiyu Wang",
         "key": "xiy-wang",
         "model": 0.4769,
         "fair_odds": 2.1,
-        "market": 0.5096,
-        "bet": 0.5105,
-        "best_odds": 1.88,
-        "book": "BetOnline.ag",
-        "ev": -0.0403,
-        "kelly": 0.0
+        "market": 0.4456,
+        "bet": 0.4379,
+        "best_odds": 5.1,
+        "book": "BetAnything",
+        "ev": 1.2331,
+        "kelly": 0.0752
       },
       "books": 5,
       "prices": {
         "Unibet (NL)": [
           1.93,
           1.85
-        ],
-        "BetOnline.ag": [
-          1.93,
-          1.88
         ],
         "LeoVegas (SE)": [
           1.93,
@@ -1727,6 +648,10 @@
         "PMU (FR)": [
           1.85,
           1.78
+        ],
+        "BetAnything": [
+          1.17,
+          5.1
         ]
       },
       "court": "ningbo",
@@ -1753,42 +678,42 @@
         "key": "s-bejlek",
         "model": 0.7982,
         "fair_odds": 1.25,
-        "market": 0.7637,
-        "bet": 0.7954,
-        "best_odds": 1.17,
-        "book": "888sport",
-        "ev": -0.0693,
-        "kelly": 0.0
+        "market": 0.8117,
+        "bet": 0.8436,
+        "best_odds": 1.19,
+        "book": "Betfair",
+        "ev": 0.0039,
+        "kelly": 0.0051
       },
       "b": {
         "name": "Alycia Parks",
         "key": "a-parks",
         "model": 0.2018,
         "fair_odds": 4.96,
-        "market": 0.2363,
-        "bet": 0.2046,
-        "best_odds": 5.1,
-        "book": "Marathon Bet",
-        "ev": 0.0433,
-        "kelly": 0.0026
+        "market": 0.1883,
+        "bet": 0.1564,
+        "best_odds": 5.9,
+        "book": "Matchbook",
+        "ev": -0.0773,
+        "kelly": 0.0
       },
-      "books": 13,
+      "books": 19,
       "prices": {
         "Betsson": [
-          1.16,
-          5.0
+          1.17,
+          4.9
         ],
         "Nordic Bet": [
-          1.16,
-          5.0
+          1.17,
+          4.9
         ],
         "Tipico": [
           1.13,
           5.0
         ],
         "Unibet (FR)": [
-          1.13,
-          4.2
+          1.14,
+          4.15
         ],
         "888sport": [
           1.17,
@@ -1799,24 +724,48 @@
           5.0
         ],
         "Marathon Bet": [
-          1.16,
-          5.1
+          1.17,
+          5.05
         ],
         "Winamax (FR)": [
-          1.14,
-          4.4
+          1.16,
+          4.7
         ],
         "Winamax (DE)": [
-          1.17,
-          5.1
+          1.18,
+          5.3
         ],
         "1xBet": [
-          1.17,
-          5.0
+          1.18,
+          4.96
         ],
         "Coolbet": [
           1.17,
           5.1
+        ],
+        "Pinnacle": [
+          1.19,
+          5.16
+        ],
+        "BetOnline.ag": [
+          1.18,
+          5.15
+        ],
+        "Unibet (SE)": [
+          1.17,
+          5.1
+        ],
+        "Unibet (NL)": [
+          1.17,
+          5.1
+        ],
+        "LeoVegas (SE)": [
+          1.17,
+          5.1
+        ],
+        "PMU (FR)": [
+          1.13,
+          4.7
         ]
       },
       "court": "ningbo",
@@ -1826,21 +775,22 @@
         "serve": 0.9432,
         "w": 0.3
       },
+      "pinnacle_a": 0.8126,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.82,
-          "odds": 1.204,
-          "ev": -0.0423,
+          "cost": 0.83,
+          "odds": 1.191,
+          "ev": 0.0047,
           "ticker": "KXWTAMATCH-26OCT20BEJPAR-BEJ"
         },
         "b": {
-          "cost": 0.19,
-          "odds": 4.981,
-          "ev": 0.0191,
+          "cost": 0.18,
+          "odds": 5.254,
+          "ev": -0.1783,
           "ticker": "KXWTAMATCH-26OCT20BEJPAR-PAR"
         },
-        "market_a": 0.8191,
+        "market_a": 0.825,
         "event": "KXWTAMATCH-26OCT20BEJPAR",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct20bejpar"
       }
@@ -1860,11 +810,11 @@
         "key": "y-putintseva",
         "model": 0.3193,
         "fair_odds": 3.13,
-        "market": 0.275,
-        "bet": 0.2469,
-        "best_odds": 3.7,
+        "market": 0.2734,
+        "bet": 0.2453,
+        "best_odds": 3.75,
         "book": "Matchbook",
-        "ev": -0.0866,
+        "ev": -0.0803,
         "kelly": 0.0
       },
       "b": {
@@ -1872,14 +822,14 @@
         "key": "d-shnaider",
         "model": 0.6807,
         "fair_odds": 1.47,
-        "market": 0.725,
-        "bet": 0.7531,
-        "best_odds": 1.36,
-        "book": "Matchbook",
-        "ev": 0.0243,
-        "kelly": 0.0168
+        "market": 0.7266,
+        "bet": 0.7547,
+        "best_odds": 1.33,
+        "book": "888sport",
+        "ev": 0.0038,
+        "kelly": 0.0029
       },
-      "books": 18,
+      "books": 19,
       "prices": {
         "888sport": [
           3.3,
@@ -1890,12 +840,12 @@
           1.25
         ],
         "Winamax (DE)": [
-          3.5,
-          1.3
+          3.65,
+          1.32
         ],
         "Winamax (FR)": [
-          3.2,
-          1.26
+          3.35,
+          1.28
         ],
         "William Hill": [
           3.3,
@@ -1941,8 +891,12 @@
           3.5,
           1.3
         ],
+        "Pinnacle": [
+          3.62,
+          1.33
+        ],
         "BetOnline.ag": [
-          3.63,
+          3.61,
           1.31
         ]
       },
@@ -1953,21 +907,22 @@
         "serve": 0.2366,
         "w": 0.3
       },
+      "pinnacle_a": 0.2687,
       "flags": [],
       "kalshi": {
         "a": {
           "cost": 0.27,
           "odds": 3.524,
-          "ev": -0.1299,
+          "ev": -0.1356,
           "ticker": "KXWTAMATCH-26OCT19PUTSHN-PUT"
         },
         "b": {
           "cost": 0.75,
           "odds": 1.31,
-          "ev": -0.0134,
+          "ev": -0.0113,
           "ticker": "KXWTAMATCH-26OCT19PUTSHN-SHN"
         },
-        "market_a": 0.2637,
+        "market_a": 0.26,
         "event": "KXWTAMATCH-26OCT19PUTSHN",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19putshn"
       }
@@ -1977,7 +932,7 @@
       "tour": "WTA",
       "tournament": "WTA Ningbo Open",
       "level": "tour",
-      "start": "2026-10-20T06:30:00Z",
+      "start": "2026-10-20T06:10:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -1987,50 +942,50 @@
         "key": "j-paolini",
         "model": 0.7038,
         "fair_odds": 1.42,
-        "market": 0.6449,
-        "bet": 0.6669,
-        "best_odds": 1.5,
-        "book": "888sport",
-        "ev": 0.0003,
-        "kelly": 0.0001
+        "market": 0.6528,
+        "bet": 0.6755,
+        "best_odds": 1.49,
+        "book": "Matchbook",
+        "ev": 0.0065,
+        "kelly": 0.0033
       },
       "b": {
         "name": "Anhelina Kalinina",
         "key": "a-kalinina",
         "model": 0.2962,
         "fair_odds": 3.38,
-        "market": 0.3551,
-        "bet": 0.3331,
-        "best_odds": 2.84,
+        "market": 0.3472,
+        "bet": 0.3245,
+        "best_odds": 2.94,
         "book": "Matchbook",
-        "ev": -0.0539,
+        "ev": -0.046,
         "kelly": 0.0
       },
-      "books": 13,
+      "books": 15,
       "prices": {
         "888sport": [
-          1.5,
-          2.6
+          1.44,
+          2.75
         ],
         "Unibet (FR)": [
-          1.4,
+          1.39,
           2.5
         ],
         "Winamax (DE)": [
-          1.46,
-          2.7
+          1.48,
+          2.8
         ],
         "Winamax (FR)": [
-          1.41,
-          2.5
+          1.44,
+          2.65
         ],
         "William Hill": [
-          1.5,
-          2.6
+          1.44,
+          2.75
         ],
         "Marathon Bet": [
-          1.49,
-          2.6
+          1.48,
+          2.62
         ],
         "Betsson": [
           1.45,
@@ -2041,16 +996,24 @@
           2.7
         ],
         "Coolbet": [
-          1.47,
-          2.7
+          1.45,
+          2.78
         ],
         "Tipico": [
           1.4,
           2.7
         ],
         "1xBet": [
-          1.5,
-          2.59
+          1.49,
+          2.62
+        ],
+        "Pinnacle": [
+          1.47,
+          2.82
+        ],
+        "BetOnline.ag": [
+          1.47,
+          2.81
         ]
       },
       "court": "ningbo",
@@ -2060,6 +1023,7 @@
         "serve": 0.6732,
         "w": 0.3
       },
+      "pinnacle_a": 0.6573,
       "flags": [
         [
           "specialist",
@@ -2074,13 +1038,13 @@
         "a": {
           "cost": 0.67,
           "odds": 1.459,
-          "ev": -0.027,
+          "ev": -0.0144,
           "ticker": "KXWTAMATCH-26OCT19PAOKAL-PAO"
         },
         "b": {
           "cost": 0.34,
           "odds": 2.811,
-          "ev": -0.0637,
+          "ev": -0.0878,
           "ticker": "KXWTAMATCH-26OCT19PAOKAL-KAL"
         },
         "market_a": 0.6633,
@@ -2093,7 +1057,7 @@
       "tour": "WTA",
       "tournament": "WTA Ningbo Open",
       "level": "tour",
-      "start": "2026-10-20T06:30:00Z",
+      "start": "2026-10-20T06:10:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -2103,70 +1067,70 @@
         "key": "c-bucsa",
         "model": 0.5034,
         "fair_odds": 1.99,
-        "market": 0.5196,
-        "bet": 0.5223,
-        "best_odds": 1.88,
+        "market": 0.5186,
+        "bet": 0.5212,
+        "best_odds": 1.92,
         "book": "Matchbook",
-        "ev": -0.0181,
-        "kelly": 0.0
+        "ev": 0.0006,
+        "kelly": 0.0002
       },
       "b": {
         "name": "Polina Kudermetova",
         "key": "p-kudermetova",
         "model": 0.4966,
         "fair_odds": 2.01,
-        "market": 0.4804,
-        "bet": 0.4777,
-        "best_odds": 2.04,
+        "market": 0.4814,
+        "bet": 0.4788,
+        "best_odds": 2.06,
         "book": "Matchbook",
-        "ev": -0.0255,
+        "ev": -0.0136,
         "kelly": 0.0
       },
-      "books": 17,
+      "books": 19,
       "prices": {
         "888sport": [
-          1.8,
-          2.0
+          1.85,
+          1.95
         ],
         "Unibet (FR)": [
-          1.72,
-          1.86
+          1.7,
+          1.88
         ],
         "Winamax (DE)": [
           1.82,
-          1.98
+          2.05
         ],
         "Winamax (FR)": [
-          1.74,
-          1.88
+          1.76,
+          1.96
         ],
         "William Hill": [
-          1.8,
-          2.0
+          1.85,
+          1.95
         ],
         "Marathon Bet": [
-          1.84,
-          1.95
+          1.83,
+          1.96
         ],
         "Betsson": [
-          1.81,
-          1.97
+          1.79,
+          2.0
         ],
         "Nordic Bet": [
-          1.81,
-          1.97
+          1.79,
+          2.0
         ],
         "Coolbet": [
-          1.82,
-          2.0
+          1.85,
+          1.96
         ],
         "Tipico": [
-          1.72,
-          2.0
+          1.8,
+          1.9
         ],
         "1xBet": [
-          1.84,
-          1.95
+          1.83,
+          1.96
         ],
         "PMU (FR)": [
           1.77,
@@ -2183,6 +1147,14 @@
         "Unibet (SE)": [
           1.85,
           1.94
+        ],
+        "Pinnacle": [
+          1.87,
+          2.0
+        ],
+        "BetOnline.ag": [
+          1.81,
+          2.03
         ]
       },
       "court": "ningbo",
@@ -2192,21 +1164,22 @@
         "serve": 0.5889,
         "w": 0.3
       },
+      "pinnacle_a": 0.5168,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.53,
-          "odds": 1.827,
-          "ev": -0.0458,
+          "cost": 0.52,
+          "odds": 1.861,
+          "ev": -0.03,
           "ticker": "KXWTAMATCH-26OCT19BUCKUD-BUC"
         },
         "b": {
-          "cost": 0.48,
-          "odds": 2.01,
-          "ev": -0.0398,
+          "cost": 0.49,
+          "odds": 1.97,
+          "ev": -0.0568,
           "ticker": "KXWTAMATCH-26OCT19BUCKUD-KUD"
         },
-        "market_a": 0.5276,
+        "market_a": 0.5176,
         "event": "KXWTAMATCH-26OCT19BUCKUD",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19buckud"
       }
@@ -2226,11 +1199,11 @@
         "key": "j-ostapenko",
         "model": 0.4321,
         "fair_odds": 2.31,
-        "market": 0.4482,
-        "bet": 0.4399,
-        "best_odds": 2.22,
-        "book": "Betfair",
-        "ev": -0.0234,
+        "market": 0.4345,
+        "bet": 0.4244,
+        "best_odds": 2.33,
+        "book": "Pinnacle",
+        "ev": -0.0111,
         "kelly": 0.0
       },
       "b": {
@@ -2238,30 +1211,34 @@
         "key": "b-bencic",
         "model": 0.5679,
         "fair_odds": 1.76,
-        "market": 0.5518,
-        "bet": 0.5601,
-        "best_odds": 1.74,
-        "book": "Betfair",
-        "ev": -0.0255,
+        "market": 0.5655,
+        "bet": 0.5756,
+        "best_odds": 1.73,
+        "book": "Unibet (NL)",
+        "ev": -0.0043,
         "kelly": 0.0
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (NL)": [
           2.1,
           1.73
         ],
+        "Pinnacle": [
+          2.33,
+          1.67
+        ],
         "BetOnline.ag": [
-          2.16,
-          1.74
+          2.24,
+          1.69
         ],
         "LeoVegas (SE)": [
           2.1,
           1.73
         ],
         "888sport": [
-          2.1,
-          1.73
+          2.2,
+          1.67
         ],
         "Unibet (SE)": [
           2.1,
@@ -2272,48 +1249,48 @@
           1.66
         ],
         "Unibet (FR)": [
-          1.98,
-          1.63
+          2.05,
+          1.58
         ],
         "Winamax (DE)": [
-          2.1,
-          1.72
+          2.25,
+          1.7
         ],
         "Winamax (FR)": [
-          2.0,
+          2.15,
           1.64
         ],
         "William Hill": [
-          2.1,
-          1.73
+          2.2,
+          1.67
         ],
         "Marathon Bet": [
-          2.12,
-          1.71
+          2.17,
+          1.68
         ],
         "Betsson": [
-          2.1,
-          1.71
+          2.18,
+          1.66
         ],
         "Nordic Bet": [
-          2.1,
-          1.71
+          2.18,
+          1.66
         ],
         "Coolbet": [
-          2.15,
-          1.71
+          2.23,
+          1.66
         ],
         "Tipico": [
-          2.05,
-          1.7
+          2.15,
+          1.62
         ],
         "1xBet": [
-          2.1,
-          1.73
+          2.15,
+          1.7
         ],
         "BetAnything": [
-          2.2,
-          1.71
+          2.3,
+          1.67
         ]
       },
       "court": "ningbo",
@@ -2323,6 +1300,7 @@
         "serve": 0.531,
         "w": 0.3
       },
+      "pinnacle_a": 0.4175,
       "flags": [
         [
           "retired",
@@ -2331,18 +1309,18 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.46,
-          "odds": 2.095,
-          "ev": -0.0784,
+          "cost": 0.43,
+          "odds": 2.236,
+          "ev": -0.051,
           "ticker": "KXWTAMATCH-26OCT19OSTBEN-OST"
         },
         "b": {
-          "cost": 0.56,
-          "odds": 1.732,
-          "ev": -0.0299,
+          "cost": 0.58,
+          "odds": 1.675,
+          "ev": -0.0359,
           "ticker": "KXWTAMATCH-26OCT19OSTBEN-BEN"
         },
-        "market_a": 0.45,
+        "market_a": 0.425,
         "event": "KXWTAMATCH-26OCT19OSTBEN",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19ostben"
       }
@@ -2352,7 +1330,7 @@
       "tour": "WTA",
       "tournament": "WTA Ningbo Open",
       "level": "tour",
-      "start": "2026-10-20T09:30:00Z",
+      "start": "2026-10-20T08:30:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -2362,11 +1340,11 @@
         "key": "k-kawa",
         "model": 0.1674,
         "fair_odds": 5.97,
-        "market": 0.2565,
-        "bet": 0.2246,
-        "best_odds": 4.1,
-        "book": "LeoVegas (SE)",
-        "ev": -0.079,
+        "market": 0.2676,
+        "bet": 0.2362,
+        "best_odds": 3.75,
+        "book": "Betfair",
+        "ev": -0.1143,
         "kelly": 0.0
       },
       "b": {
@@ -2374,46 +1352,46 @@
         "key": "d-snigur",
         "model": 0.8326,
         "fair_odds": 1.2,
-        "market": 0.7435,
-        "bet": 0.7754,
-        "best_odds": 1.3,
+        "market": 0.7324,
+        "bet": 0.7638,
+        "best_odds": 1.33,
         "book": "Betfair",
-        "ev": 0.008,
-        "kelly": 0.0067
+        "ev": 0.0159,
+        "kelly": 0.012
       },
-      "books": 17,
+      "books": 19,
       "prices": {
         "Betsson": [
-          3.7,
-          1.27
+          3.45,
+          1.3
         ],
         "Unibet (FR)": [
-          3.3,
-          1.23
+          3.1,
+          1.25
         ],
         "Nordic Bet": [
-          3.7,
-          1.27
+          3.45,
+          1.3
         ],
         "Tipico": [
-          3.8,
-          1.22
+          3.3,
+          1.28
         ],
         "Winamax (DE)": [
-          3.75,
-          1.27
+          3.65,
+          1.32
         ],
         "Winamax (FR)": [
-          3.4,
-          1.23
+          3.35,
+          1.28
         ],
         "Marathon Bet": [
-          3.8,
-          1.26
+          3.64,
+          1.28
         ],
         "Coolbet": [
-          3.8,
-          1.27
+          3.55,
+          1.3
         ],
         "888sport": [
           3.5,
@@ -2424,24 +1402,32 @@
           1.3
         ],
         "1xBet": [
-          3.76,
-          1.27
+          3.6,
+          1.29
+        ],
+        "Pinnacle": [
+          3.71,
+          1.31
         ],
         "LeoVegas (SE)": [
-          4.1,
-          1.24
+          3.65,
+          1.28
         ],
         "PMU (FR)": [
-          3.85,
-          1.19
+          3.45,
+          1.23
         ],
         "Unibet (SE)": [
-          4.1,
-          1.24
+          3.65,
+          1.28
         ],
         "Unibet (NL)": [
-          4.1,
-          1.24
+          3.65,
+          1.28
+        ],
+        "BetOnline.ag": [
+          3.59,
+          1.31
         ]
       },
       "court": "ningbo",
@@ -2451,6 +1437,7 @@
         "serve": 0.2642,
         "w": 0.3
       },
+      "pinnacle_a": 0.261,
       "flags": [
         [
           "specialist",
@@ -2463,18 +1450,18 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.25,
-          "odds": 3.8,
-          "ev": -0.1465,
+          "cost": 0.26,
+          "odds": 3.657,
+          "ev": -0.1362,
           "ticker": "KXWTAMATCH-26OCT19KAWSNI-KAW"
         },
         "b": {
-          "cost": 0.77,
-          "odds": 1.278,
-          "ev": -0.009,
+          "cost": 0.75,
+          "odds": 1.31,
+          "ev": 0.0006,
           "ticker": "KXWTAMATCH-26OCT19KAWSNI-SNI"
         },
-        "market_a": 0.24,
+        "market_a": 0.255,
         "event": "KXWTAMATCH-26OCT19KAWSNI",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19kawsni"
       }
@@ -2494,11 +1481,11 @@
         "key": "h-guo",
         "model": 0.2142,
         "fair_odds": 4.67,
-        "market": 0.2439,
-        "bet": 0.2126,
-        "best_odds": 4.3,
+        "market": 0.2374,
+        "bet": 0.2059,
+        "best_odds": 4.4,
         "book": "Betfair",
-        "ev": -0.0859,
+        "ev": -0.094,
         "kelly": 0.0
       },
       "b": {
@@ -2506,30 +1493,34 @@
         "key": "e-alexandrova",
         "model": 0.7858,
         "fair_odds": 1.27,
-        "market": 0.7561,
-        "bet": 0.7874,
+        "market": 0.7626,
+        "bet": 0.7941,
         "best_odds": 1.29,
-        "book": "Betfair",
-        "ev": 0.0158,
-        "kelly": 0.0136
+        "book": "1xBet",
+        "ev": 0.0244,
+        "kelly": 0.021
       },
-      "books": 19,
+      "books": 20,
       "prices": {
         "Unibet (NL)": [
           4.25,
           1.22
         ],
+        "Pinnacle": [
+          4.23,
+          1.26
+        ],
         "BetOnline.ag": [
-          3.92,
-          1.27
+          4.03,
+          1.26
         ],
         "LeoVegas (SE)": [
           4.25,
           1.22
         ],
         "888sport": [
-          3.6,
-          1.29
+          4.0,
+          1.25
         ],
         "Unibet (SE)": [
           4.25,
@@ -2544,16 +1535,16 @@
           1.21
         ],
         "Winamax (DE)": [
-          3.9,
+          4.2,
           1.25
         ],
         "Winamax (FR)": [
-          3.5,
+          3.9,
           1.22
         ],
         "William Hill": [
-          3.6,
-          1.29
+          4.0,
+          1.25
         ],
         "Marathon Bet": [
           3.64,
@@ -2568,8 +1559,8 @@
           1.25
         ],
         "Coolbet": [
-          3.9,
-          1.26
+          4.0,
+          1.25
         ],
         "Tipico": [
           3.8,
@@ -2591,24 +1582,205 @@
         "serve": 0.145,
         "w": 0.3
       },
+      "pinnacle_a": 0.2295,
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.22,
-          "odds": 4.31,
-          "ev": -0.0837,
+          "cost": 0.23,
+          "odds": 4.125,
+          "ev": -0.1507,
           "ticker": "KXWTAMATCH-26OCT19GUOALE-GUO"
         },
         "b": {
           "cost": 0.79,
           "odds": 1.247,
-          "ev": -0.0181,
+          "ev": -0.0098,
           "ticker": "KXWTAMATCH-26OCT19GUOALE-ALE"
         },
-        "market_a": 0.2161,
+        "market_a": 0.22,
         "event": "KXWTAMATCH-26OCT19GUOALE",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19guoale"
       }
+    },
+    {
+      "id": "6d35a679c6d7ad7551c06bf07a240079",
+      "tour": "WTA",
+      "tournament": "WTA Ningbo Open",
+      "level": "tour",
+      "start": "2026-10-21T05:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Leylah Fernandez",
+        "key": "l-fernandez",
+        "model": 0.6662,
+        "fair_odds": 1.5,
+        "market": 0.6452,
+        "bet": 0.6664,
+        "best_odds": 1.47,
+        "book": "Betfair",
+        "ev": -0.0203,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Aliaksandra Sasnovich",
+        "key": "a-sasnovich",
+        "model": 0.3338,
+        "fair_odds": 3.0,
+        "market": 0.3548,
+        "bet": 0.3336,
+        "best_odds": 2.78,
+        "book": "Coolbet",
+        "ev": -0.0727,
+        "kelly": 0.0
+      },
+      "books": 13,
+      "prices": {
+        "Winamax (FR)": [
+          1.4,
+          2.5
+        ],
+        "Winamax (DE)": [
+          1.46,
+          2.7
+        ],
+        "Marathon Bet": [
+          1.46,
+          2.69
+        ],
+        "Betsson": [
+          1.45,
+          2.7
+        ],
+        "Coolbet": [
+          1.45,
+          2.78
+        ],
+        "888sport": [
+          1.44,
+          2.75
+        ],
+        "1xBet": [
+          1.47,
+          2.68
+        ],
+        "Unibet (FR)": [
+          1.39,
+          2.5
+        ],
+        "Nordic Bet": [
+          1.45,
+          2.7
+        ],
+        "William Hill": [
+          1.44,
+          2.75
+        ],
+        "Tipico": [
+          1.4,
+          2.7
+        ]
+      },
+      "court": "ningbo",
+      "model_version": "2026-10-19",
+      "parts": {
+        "elo": 0.6925,
+        "serve": 0.6016,
+        "w": 0.3
+      },
+      "flags": []
+    },
+    {
+      "id": "411cad841b8b18dcf7a01bd7fc976575",
+      "tour": "WTA",
+      "tournament": "WTA Ningbo Open",
+      "level": "tour",
+      "start": "2026-10-21T05:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Marie Bouzkova",
+        "key": "m-bouzkova",
+        "model": 0.2022,
+        "fair_odds": 4.95,
+        "market": 0.2741,
+        "bet": 0.2438,
+        "best_odds": 3.75,
+        "book": "Winamax (DE)",
+        "ev": -0.0856,
+        "kelly": 0.0
+      },
+      "b": {
+        "name": "Iga Swiatek",
+        "key": "i-swiatek",
+        "model": 0.7978,
+        "fair_odds": 1.25,
+        "market": 0.7259,
+        "bet": 0.7562,
+        "best_odds": 1.38,
+        "book": "Betfair",
+        "ev": 0.0435,
+        "kelly": 0.0286
+      },
+      "books": 13,
+      "prices": {
+        "888sport": [
+          3.6,
+          1.29
+        ],
+        "Marathon Bet": [
+          3.64,
+          1.28
+        ],
+        "Nordic Bet": [
+          3.7,
+          1.26
+        ],
+        "1xBet": [
+          3.6,
+          1.29
+        ],
+        "Tipico": [
+          3.3,
+          1.28
+        ],
+        "Unibet (FR)": [
+          3.3,
+          1.22
+        ],
+        "Betsson": [
+          3.7,
+          1.26
+        ],
+        "William Hill": [
+          3.6,
+          1.29
+        ],
+        "Coolbet": [
+          3.65,
+          1.29
+        ],
+        "Winamax (FR)": [
+          3.35,
+          1.23
+        ],
+        "Winamax (DE)": [
+          3.75,
+          1.27
+        ]
+      },
+      "court": "ningbo",
+      "model_version": "2026-10-19",
+      "parts": {
+        "elo": 0.1704,
+        "serve": 0.2291,
+        "w": 0.3
+      },
+      "flags": []
     }
   ],
   "unmatched": [],
@@ -2622,11 +1794,11 @@
       0.0338
     ]
   },
-  "scheduled_only": 1,
-  "kalshi_matched": 20,
+  "scheduled_only": 0,
+  "kalshi_matched": 11,
   "record": {
     "settled": 701,
-    "pending": 128,
+    "pending": 130,
     "by_model": {
       "2026-10-03": {
         "settled": 4,
@@ -2698,7 +1870,7 @@
       },
       "2026-10-19": {
         "settled": 38,
-        "pending": 106,
+        "pending": 108,
         "model_right": 0.5263,
         "market_right": 0.6316,
         "brier_model": 0.2475,

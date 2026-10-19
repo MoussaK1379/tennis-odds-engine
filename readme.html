@@ -149,8 +149,29 @@
       year to settle (log loss 0.68 in the first months, 0.61 a year later). The daily update now extends
       the history back to 2022. Once it has, re-tune with <code>python tools/backtest.py --tune</code>
       (about 10 minutes): the settings above were chosen for the shorter history.</p>
-    <p>The live track record is the real test; a backtest has no bookmaker to beat. On the first 608
-      settled live picks the de-vigged market (log loss 0.621) beat the model (0.641).</p>
+    <p><strong>Against the bookmakers.</strong> <code>tools/market_backtest.py</code> joins every
+      walk-forward prediction with the real pre-match prices (api-tennis, saved daily by
+      <code>tools/fetch_odds.py</code> in <code>data/odds_history.csv</code>; they agree with the prices
+      the site logged before each match). On 12,410 holdout matches:</p>
+    <table class="bt">
+      <tr><th></th><th>Log loss</th></tr>
+      <tr><td>Model</td><td>0.620</td></tr>
+      <tr><td>Bookmakers' de-vigged average</td><td>0.579</td></tr>
+      <tr><td>Pinnacle (where it priced the match)</td><td>0.582</td></tr>
+    </table>
+    <p>The market is far sharper, and betting the model's own "value" lost about 7% per bet at
+      every threshold, tour and level (90% intervals entirely below zero). Fitted on 19,000 earlier
+      matches, a blend of market and model gives the model a weight of about 0.02: it knows nothing
+      the prices don't. So value bets, Kelly stakes and parlays now use the <em>betting probability</em>
+      (<code>model.bet_prob</code>): the bookmakers' consensus, stretched slightly (it is a little
+      too timid), plus that sliver of model. A value flag now mostly means one bookmaker is offering
+      more than the fair price. On the holdout that rule returned +2.0% on 5,176 bets (90%: −0.5% to
+      +4.7%), and +13% on the 697 bets with a 3%+ edge (−2% to +30%): promising, not proven, and
+      soft bookmakers limit accounts that win this way. The model's own percentage is still shown.
+      Refit with <code>python tools/market_backtest.py --write</code>.</p>
+    <p>The live track record is the real test. On the first 608 settled live picks (model-based
+      value bets) the market (log loss 0.621) beat the model (0.641); picks logged from now on carry
+      the betting probability, and the record judges them on it.</p>
     <p><strong>Warnings.</strong> The match list flags: fewer than 10 matches in 12 months, more than 45
       days since the last match, fewer than 3 matches on the surface this year, clay or grass
       specialists (half their matches on that surface), a retirement in the last 60 days (or two in

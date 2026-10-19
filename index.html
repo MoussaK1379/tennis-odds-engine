@@ -850,7 +850,7 @@ function matchSide(cls, p, m){
   const ev = (p.ev>=0?"+":"") + (p.ev*100).toFixed(1) + "%";
   const add = m && m.prices ? `<button class="addleg" type="button" data-id="${esc(m.id)}" data-side="${cls}" aria-pressed="false" aria-label="Add ${esc(p.name)} to the parlay builder" title="Add to parlay">+</button>` : "";
   return `<div class="match__p match__p--${cls}"><span class="n">${add}${esc(p.name)}</span>
-    <span class="nums">${pct(p.model)} · ${OddsFmt.show(p.best_odds)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}">${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
+    <span class="nums">${pct(p.model)} · ${OddsFmt.show(p.best_odds)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}"${p.bet != null ? ` title="EV uses ${pct(p.bet)}: the bookmakers' consensus, sharpened, with a little of the model (the model alone loses against real prices)"` : ""}>${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
 }
 function matchExtras(m){
   const bits = [];

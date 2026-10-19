@@ -107,5 +107,39 @@
       }
     },
     "adopted": true
+  },
+  "market_blend": {
+    "weights": {
+      "tour": [
+        1.1358,
+        0.0186
+      ],
+      "challenger": [
+        1.1828,
+        0.0338
+      ]
+    },
+    "fitted_on": "2025-04-01..2026-10-18",
+    "holdout": {
+      "tour": {
+        "weights": {
+          "market": 1.131142575838103,
+          "model": 0.022828440786574127
+        },
+        "holdout_market": 0.5830098296848666,
+        "holdout_blend": 0.581501449758912,
+        "n_holdout": 4679
+      },
+      "challenger": {
+        "weights": {
+          "market": 1.1851556859476697,
+          "model": 0.007572107064346254
+        },
+        "holdout_market": 0.5767589758352094,
+        "holdout_blend": 0.5736247232561154,
+        "n_holdout": 7731
+      }
+    },
+    "note": "value bets use bet_prob(model, market) with these weights; see tools/market_backtest.py"
   }
 }

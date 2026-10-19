@@ -446,6 +446,17 @@ function setWinProb(pa, pb){
 }
 const matchFromSet = (s, bo) => bo===3 ? s*s*(3-2*s) : Math.pow(s,3)*(6*s*s-15*s+10);
 const kellyFraction = (p,d,frac=0.25) => { const b=d-1; return Math.max(0, frac*((b*p-(1-p))/b)); };
+/* The betting probability (model.bet_prob in Python): market and model log-odds blended
+   with the weights in matches.json "market_blend". EV and Kelly use it everywhere, so the
+   predictor, the match list and the parlay builder agree. No weights: the model alone. */
+function betProb(model, market, level){
+  let w = null;
+  try { w = MATCHES && MATCHES.market_blend && MATCHES.market_blend[level || "tour"]; } catch(e) {}   // before the match list loads
+  if(!w || market == null) return model;
+  const L = p => { p = Math.min(Math.max(p, 1e-4), 1 - 1e-4); return Math.log(p/(1-p)); };
+  const z = w[0]*L(market) + w[1]*L(model);
+  return 1 / (1 + Math.exp(-Math.max(Math.min(z, 30), -30)));
+}
 
 /* ===================== data: fetch players.json, fall back to seed ======= */
 const SEED = {"updated":"2026-06-16 (seed)","tours":{"atp":{"tour_avg_spw":0.64},"wta":{"tour_avg_spw":0.56}},"tour_avg_spw":0.64,"players":{"sinner":{"name":"Jannik Sinner","tour":"ATP","elo":{"hard":2150,"clay":2080,"grass":2040,"overall":2120},"serve":{"hard":0.68,"clay":0.66,"grass":0.7,"overall":0.68},"return":{"hard":0.42,"clay":0.44,"grass":0.4,"overall":0.42}},"alcaraz":{"name":"Carlos Alcaraz","tour":"ATP","elo":{"hard":2090,"clay":2130,"grass":2100,"overall":2110},"serve":{"hard":0.66,"clay":0.65,"grass":0.69,"overall":0.66},"return":{"hard":0.43,"clay":0.45,"grass":0.41,"overall":0.43}},"djokovic":{"name":"Novak Djokovic","tour":"ATP","elo":{"hard":2090,"clay":2080,"grass":2090,"overall":2090},"serve":{"hard":0.66,"clay":0.65,"grass":0.68,"overall":0.66},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},"zverev":{"name":"Alexander Zverev","tour":"ATP","elo":{"hard":2010,"clay":2030,"grass":1980,"overall":2010},"serve":{"hard":0.68,"clay":0.66,"grass":0.7,"overall":0.68},"return":{"hard":0.4,"clay":0.41,"grass":0.38,"overall":0.4}},"medvedev":{"name":"Daniil Medvedev","tour":"ATP","elo":{"hard":2000,"clay":1900,"grass":1950,"overall":1980},"serve":{"hard":0.65,"clay":0.63,"grass":0.67,"overall":0.65},"return":{"hard":0.42,"clay":0.42,"grass":0.39,"overall":0.42}},"fritz":{"name":"Taylor Fritz","tour":"ATP","elo":{"hard":1970,"clay":1850,"grass":1990,"overall":1950},"serve":{"hard":0.69,"clay":0.66,"grass":0.71,"overall":0.69},"return":{"hard":0.37,"clay":0.37,"grass":0.35,"overall":0.37}},"rune":{"name":"Holger Rune","tour":"ATP","elo":{"hard":1930,"clay":1950,"grass":1900,"overall":1930},"serve":{"hard":0.65,"clay":0.64,"grass":0.67,"overall":0.65},"return":{"hard":0.4,"clay":0.41,"grass":0.38,"overall":0.4}},"tsitsipas":{"name":"Stefanos Tsitsipas","tour":"ATP","elo":{"hard":1920,"clay":1980,"grass":1900,"overall":1930},"serve":{"hard":0.67,"clay":0.66,"grass":0.68,"overall":0.67},"return":{"hard":0.39,"clay":0.41,"grass":0.37,"overall":0.39}},"rublev":{"name":"Andrey Rublev","tour":"ATP","elo":{"hard":1930,"clay":1940,"grass":1900,"overall":1930},"serve":{"hard":0.66,"clay":0.65,"grass":0.67,"overall":0.66},"return":{"hard":0.39,"clay":0.4,"grass":0.37,"overall":0.39}},"deminaur":{"name":"Alex de Minaur","tour":"ATP","elo":{"hard":1910,"clay":1860,"grass":1920,"overall":1900},"serve":{"hard":0.62,"clay":0.6,"grass":0.64,"overall":0.62},"return":{"hard":0.41,"clay":0.41,"grass":0.39,"overall":0.41}},"hurkacz":{"name":"Hubert Hurkacz","tour":"ATP","elo":{"hard":1910,"clay":1840,"grass":1970,"overall":1910},"serve":{"hard":0.7,"clay":0.67,"grass":0.72,"overall":0.7},"return":{"hard":0.35,"clay":0.35,"grass":0.33,"overall":0.35}},"draper":{"name":"Jack Draper","tour":"ATP","elo":{"hard":1920,"clay":1870,"grass":1930,"overall":1910},"serve":{"hard":0.67,"clay":0.65,"grass":0.69,"overall":0.67},"return":{"hard":0.39,"clay":0.39,"grass":0.37,"overall":0.39}},"musetti":{"name":"Lorenzo Musetti","tour":"ATP","elo":{"hard":1880,"clay":1950,"grass":1860,"overall":1900},"serve":{"hard":0.64,"clay":0.64,"grass":0.65,"overall":0.64},"return":{"hard":0.39,"clay":0.41,"grass":0.37,"overall":0.39}},"shelton":{"name":"Ben Shelton","tour":"ATP","elo":{"hard":1890,"clay":1830,"grass":1930,"overall":1890},"serve":{"hard":0.69,"clay":0.66,"grass":0.71,"overall":0.69},"return":{"hard":0.36,"clay":0.36,"grass":0.34,"overall":0.36}},"dimitrov":{"name":"Grigor Dimitrov","tour":"ATP","elo":{"hard":1880,"clay":1850,"grass":1900,"overall":1880},"serve":{"hard":0.67,"clay":0.65,"grass":0.69,"overall":0.67},"return":{"hard":0.38,"clay":0.38,"grass":0.36,"overall":0.38}},"tiafoe":{"name":"Frances Tiafoe","tour":"ATP","elo":{"hard":1870,"clay":1830,"grass":1890,"overall":1870},"serve":{"hard":0.66,"clay":0.64,"grass":0.68,"overall":0.66},"return":{"hard":0.38,"clay":0.38,"grass":0.36,"overall":0.38}},"atptour":{"name":"ATP tour average","tour":"ATP","elo":{"hard":1750,"clay":1750,"grass":1750,"overall":1750},"serve":{"hard":0.635,"clay":0.62,"grass":0.66,"overall":0.635},"return":{"hard":0.37,"clay":0.38,"grass":0.35,"overall":0.37}},"sabalenka":{"name":"Aryna Sabalenka","tour":"WTA","elo":{"hard":2050,"clay":1980,"grass":2000,"overall":2030},"serve":{"hard":0.6,"clay":0.58,"grass":0.61,"overall":0.6},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},"swiatek":{"name":"Iga Swiatek","tour":"WTA","elo":{"hard":2010,"clay":2120,"grass":1960,"overall":2030},"serve":{"hard":0.57,"clay":0.58,"grass":0.57,"overall":0.57},"return":{"hard":0.47,"clay":0.49,"grass":0.44,"overall":0.47}},"gauff":{"name":"Coco Gauff","tour":"WTA","elo":{"hard":1980,"clay":1970,"grass":1960,"overall":1980},"serve":{"hard":0.57,"clay":0.56,"grass":0.58,"overall":0.57},"return":{"hard":0.47,"clay":0.47,"grass":0.45,"overall":0.47}},"rybakina":{"name":"Elena Rybakina","tour":"WTA","elo":{"hard":1980,"clay":1950,"grass":1990,"overall":1980},"serve":{"hard":0.61,"clay":0.59,"grass":0.62,"overall":0.61},"return":{"hard":0.43,"clay":0.43,"grass":0.41,"overall":0.43}},"pegula":{"name":"Jessica Pegula","tour":"WTA","elo":{"hard":1930,"clay":1880,"grass":1930,"overall":1920},"serve":{"hard":0.58,"clay":0.56,"grass":0.59,"overall":0.58},"return":{"hard":0.44,"clay":0.43,"grass":0.42,"overall":0.44}},"paolini":{"name":"Jasmine Paolini","tour":"WTA","elo":{"hard":1900,"clay":1960,"grass":1890,"overall":1910},"serve":{"hard":0.55,"clay":0.56,"grass":0.55,"overall":0.55},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},"zheng":{"name":"Zheng Qinwen","tour":"WTA","elo":{"hard":1910,"clay":1880,"grass":1900,"overall":1910},"serve":{"hard":0.59,"clay":0.57,"grass":0.6,"overall":0.59},"return":{"hard":0.43,"clay":0.43,"grass":0.41,"overall":0.43}},"andreeva":{"name":"Mirra Andreeva","tour":"WTA","elo":{"hard":1910,"clay":1940,"grass":1880,"overall":1910},"serve":{"hard":0.56,"clay":0.57,"grass":0.56,"overall":0.56},"return":{"hard":0.46,"clay":0.47,"grass":0.44,"overall":0.46}},"wtatour":{"name":"WTA tour average","tour":"WTA","elo":{"hard":1650,"clay":1650,"grass":1650,"overall":1650},"serve":{"hard":0.555,"clay":0.56,"grass":0.555,"overall":0.555},"return":{"hard":0.445,"clay":0.45,"grass":0.43,"overall":0.445}}}};
@@ -696,11 +707,13 @@ function renderFullScores(A, B, dist, pa, pb){
       <span class="score__p">${(p * 100).toFixed(1)}%</span></div>`; }).join("");
 }
 
-function evRow(model, d, fairImplied, ids){
+function evRow(model, d, fairImplied, ids, bet){
   $(ids.mod).textContent = pct(model);
   $(ids.fair).textContent = OddsFmt.show(1/model);
   if(!(d > 1)){ $(ids.imp).textContent="—"; $(ids.ev).textContent="—"; $(ids.ev).className=""; $(ids.kel).textContent="—"; return; }
-  const ev = model*d - 1, kel = kellyFraction(model, d);
+  const p = bet == null ? model : bet;
+  const ev = p*d - 1, kel = kellyFraction(p, d);
+  $(ids.ev).title = bet == null ? "" : `EV uses ${pct(p)}: the bookmakers' consensus, sharpened, with a little of the model`;
   $(ids.imp).textContent = pct(fairImplied);
   const evEl = $(ids.ev);
   evEl.innerHTML = (ev>=0?"+":"") + (ev*100).toFixed(1) + "%" + (ev>0?'<span class="badge badge--ev">value</span>':"");
@@ -713,8 +726,15 @@ function renderEV(pEns){
   // With only one price entered, fall back to that price's raw implied chance.
   const qA = dA > 1 ? 1/dA : null, qB = dB > 1 ? 1/dB : null;
   const both = qA !== null && qB !== null, tot = both ? qA + qB : 1;
-  evRow(pEns,   dA, both ? qA/tot : qA, {imp:"impA",mod:"modA",fair:"fairA",ev:"evA",kel:"kelA"});
-  evRow(1-pEns, dB, both ? qB/tot : qB, {imp:"impB",mod:"modB",fair:"fairB",ev:"evB",kel:"kelB"});
+  // the market: a match loaded from the list keeps its consensus over all bookmakers
+  // (as in the list); otherwise the no-margin chance of the two prices entered
+  const c = state.ctx;
+  let mktA = both ? qA/tot : null, level = "tour";
+  if(c && c.a === state.a && c.b === state.b){ if(c.market_a != null) mktA = c.market_a; level = c.level; }
+  else if(c && c.a === state.b && c.b === state.a){ if(c.market_a != null) mktA = 1 - c.market_a; level = c.level; }
+  const betA = mktA == null ? null : betProb(pEns, mktA, level);
+  evRow(pEns,   dA, both ? qA/tot : qA, {imp:"impA",mod:"modA",fair:"fairA",ev:"evA",kel:"kelA"}, betA);
+  evRow(1-pEns, dB, both ? qB/tot : qB, {imp:"impB",mod:"modB",fair:"fairB",ev:"evB",kel:"kelB"}, betA == null ? null : 1 - betA);
   $("margin").textContent = both ? "Bookmaker margin: " + ((tot-1)*100).toFixed(1) + "%" : "";
 }
 
@@ -839,6 +859,7 @@ function loadMatch(m){
   $("inA").value = nameFromKey(state.a); $("inB").value = nameFromKey(state.b);
   $("customA").classList.remove("show"); $("customB").classList.remove("show");
   setOddsInput("oddsA", m.a.best_odds); setOddsInput("oddsB", m.b.best_odds);
+  state.ctx = { a: m.a.key, b: m.b.key, market_a: m.a.market, level: m.level || "tour" };
   renderEV(compute());
   if (m.no_odds) $("margin").textContent = "No bookmaker prices for this match yet: type the odds you're offered.";
   document.querySelector(".controls").scrollIntoView({ behavior:"smooth", block:"start" });
@@ -1135,7 +1156,7 @@ function pbTotals(){
   const book = $("pbBook").value;
   const odds = legs.map((l, i) => readOdds("pbOdds" + i));
   legs.forEach((l, i) => {
-    const el = $("pbEv" + i), p = l.m[l.side].model, ev = odds[i] > 1 ? p * odds[i] - 1 : null;
+    const el = $("pbEv" + i), p = l.m[l.side].bet ?? l.m[l.side].model, ev = odds[i] > 1 ? p * odds[i] - 1 : null;
     el.textContent = ev == null ? "no price" : "EV " + (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%";
     el.className = ev == null ? "" : ev > 0 ? "ev-pos" : "ev-neg";
   });
@@ -1143,14 +1164,15 @@ function pbTotals(){
   const pModel = legs.reduce((t, l) => t * l.m[l.side].model, 1);
   const pMkt = legs.reduce((t, l) => t * l.m[l.side].market, 1);
   const tot = ok ? odds.reduce((t, o) => t * o, 1) : null;
-  const ev = ok ? pModel * tot - 1 : null, kel = ok ? kellyFraction(pModel, tot) : 0;
+  const pBet = legs.reduce((t, l) => t * (l.m[l.side].bet ?? l.m[l.side].model), 1);   // EV on the betting probability
+  const ev = ok ? pBet * tot - 1 : null, kel = ok ? kellyFraction(pBet, tot) : 0;
   const stake = parseFloat(String(PB.stake).replace(",", ".")) || 0;
   const tile = (k, v, sub, cls = "") => `<div class="stat"><div class="stat__k">${k}</div><div class="stat__v ${cls}">${v}</div><div class="stat__sub">${sub}</div></div>`;
   $("pbGrid").innerHTML =
     tile("Parlay odds", ok ? OddsFmt.show(tot) : "—", book === "best" ? "best price per leg" : book === "custom" ? "your prices" : esc(book)) +
     tile("Model chance", pct(pModel), "fair odds " + OddsFmt.show(1 / pModel)) +
     tile("Market chance", pct(pMkt), "no-margin prices multiplied") +
-    tile("EV", ok ? (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%" : "—", ok && ev > 0 ? "model says value" : "no value at these prices", ok ? (ev > 0 ? "ev-pos" : "ev-neg") : "") +
+    tile("EV", ok ? (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%" : "—", ok && ev > 0 ? "value at these prices" : "no value at these prices", ok ? (ev > 0 ? "ev-pos" : "ev-neg") : "") +
     tile("¼-Kelly stake", ok && ev > 0 ? (kel * 100).toFixed(1) + "%" : "—", "of bankroll") +
     tile("Returns", ok && stake ? (stake * tot).toFixed(2) : "—", stake ? `on ${stake} staked · profit ${ok ? (stake * (tot - 1)).toFixed(2) : "—"}` : "enter a stake");
   const notes = [];

@@ -1112,7 +1112,8 @@ def main():
 
     now = datetime.now(timezone.utc)
     out = {"updated": iso(now), "odds_feed_at": iso(now), "window_hours": args.hours, "status": "ok",
-           "requests_remaining": None, "matches": [], "unmatched": []}
+           "requests_remaining": None, "matches": [], "unmatched": [],
+           "market_blend": MARKET_BLEND}         # the site computes the same betting probability
     hist = load_history(args.history)
     try:
         with open(args.results, encoding="utf-8") as fh:

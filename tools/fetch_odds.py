@@ -1,93 +1,140 @@
-"""Historical bookmaker odds for the market backtest (tools/market_backtest.py).
+"""Historical pre-match odds for the market backtest (tools/market_backtest.py).
 
-tennis-data.co.uk publishes a spreadsheet per tour and season with every ATP/WTA
-tour-level match and its closing odds: Pinnacle (PSW/PSL), the best price across
-the books it follows (MaxW/MaxL), their average (AvgW/AvgL) and Bet365 (B365W/B365L).
-This saves the odds columns to data/odds_history.csv, names converted to the
-"J. Sinner" form the api-tennis cache uses. Run weekly by .github/workflows/odds-history.yml.
+api-tennis.com's get_odds takes past dates too, keyed by the same event_key as the
+match cache (data/api_tennis_matches.csv). For every finished tour-level and
+Challenger match with match-winner prices this saves, from the first player's side:
+the best price, the average de-vigged probability across books, Pinnacle's de-vigged
+probability and the number of books, to data/odds_history.csv. get_fixtures for the
+same window says who the first player was (their key), so prices match the winner.
 
-    python tools/fetch_odds.py                  # 2024 to this season
-    python tools/fetch_odds.py --years 2022 2023 2024 2025 2026
+Each run fetches the last week, then works backwards to the start of the match cache
+until the time budget runs out (progress in data/odds_history_state.json). Run daily
+by .github/workflows/odds-history.yml (needs TENNIS_API_KEY).
+
+    TENNIS_API_KEY=... python tools/fetch_odds.py [--budget 900]
 """
 
-import argparse, csv, os, sys
-from datetime import date
+import argparse, csv, json, os, statistics, sys, time
+from datetime import date, datetime, timedelta
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import update_data as u                           # noqa: E402
 
-FIELDS = ["tour", "date", "tournament", "surface", "round", "best_of", "winner", "loser",
-          "w_rank", "l_rank", "comment", "ps_w", "ps_l", "max_w", "max_l", "avg_w", "avg_l",
-          "b365_w", "b365_l"]
-COLS = {"ps_w": "PSW", "ps_l": "PSL", "max_w": "MaxW", "max_l": "MaxL", "avg_w": "AvgW",
-        "avg_l": "AvgL", "b365_w": "B365W", "b365_l": "B365L", "w_rank": "WRank", "l_rank": "LRank"}
+OUT = "data/odds_history.csv"
+STATE = "data/odds_history_state.json"
+FIELDS = ["event_key", "date", "tour", "first_key", "books", "best_1", "best_2", "fair_1", "pin_1"]
+WINDOW = 3                    # days per request
+REFRESH = 7                   # recent days re-fetched every run
+WIN_MARKETS = ("home/away", "match winner", "to win match", "winner", "1x2")
+EXCHANGES = ("exchange", "betfair", "matchbook", "smarkets", "betdaq")
 
 
-def download(url):
-    """The site answers 403 to the updater's bot user agent, so ask like a browser (https first)."""
-    import urllib.request
-    err = None
-    for u_ in (url.replace("http://", "https://"), url):
-        req = urllib.request.Request(u_, headers={"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) "
-                                                  "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
-                                                  "Accept": "*/*"})
+def books_of(mk):
+    """{bookmaker: (price first player, price second player)} from one event's markets."""
+    win = next((mk[n] for n in mk if n.strip().lower() in WIN_MARKETS), None) if isinstance(mk, dict) else None
+    if not isinstance(win, dict):
+        return {}
+    sides = {k.strip().lower(): v for k, v in win.items() if isinstance(v, dict)}
+    home, away = sides.get("home") or sides.get("1"), sides.get("away") or sides.get("2")
+    out = {}
+    for bk in home or {}:
         try:
-            with urllib.request.urlopen(req, timeout=90) as resp:
-                return resp.read()
-        except Exception as e:                       # noqa: BLE001
-            err = e
-    raise err
-
-
-def rows_for(tour, year):
-    out = []
-    for r in u.read_xlsx(download(u.TENNIS_DATA[tour].format(year=year))):
-        d = u.td_date(r.get("Date"))
-        w, l = u.td_name(r.get("Winner")), u.td_name(r.get("Loser"))
-        if not d or not w or not l:
+            pa, pb = float(home[bk]), float((away or {}).get(bk))
+        except (TypeError, ValueError):
             continue
-        row = {"tour": tour.upper(), "date": d.isoformat(), "tournament": r.get("Tournament", ""),
-               "surface": u.norm_surface(r.get("Surface")) or "", "round": r.get("Round", ""),
-               "best_of": r.get("Best of", ""), "winner": w, "loser": l, "comment": r.get("Comment", "")}
-        for k, c in COLS.items():
-            v = u.to_float(r.get(c))
-            row[k] = "" if v is None else v
-        out.append(row)
+        if pa > 1 and pb > 1 and 1 / pa + 1 / pb < 1.25:      # drop obviously broken quotes
+            out[bk] = (pa, pb)
     return out
+
+
+def summarise(books):
+    fair, pin = [], ""
+    for bk, (pa, pb) in books.items():
+        f = (1 / pa) / (1 / pa + 1 / pb)
+        fair.append(f)
+        if "pinnacle" in bk.lower() or bk.lower() == "pncl":   # api-tennis abbreviates it "Pncl"
+            pin = round(f, 4)
+    soft = {bk: v for bk, v in books.items() if not any(x in bk.lower() for x in EXCHANGES)} or books
+    return {"books": len(books), "best_1": max(v[0] for v in soft.values()),
+            "best_2": max(v[1] for v in soft.values()), "fair_1": round(statistics.mean(fair), 4), "pin_1": pin}
+
+
+def fetch_window(key, a, b):
+    """-> (rows for finished matches between a and b with prices, finished matches, events with odds)."""
+    first = {}
+    for tour, (type_key, type_name) in u.API_TENNIS_TYPES.items():
+        for ev in u.api_tennis_call(key, method="get_fixtures", event_type_key=type_key,
+                                    date_start=a.isoformat(), date_stop=b.isoformat()):
+            if ev.get("event_type_type") == type_name and ev.get("event_status") in u.API_STATUS:
+                first[str(ev.get("event_key"))] = (tour.upper(), ev.get("event_date"), ev.get("first_player_key"))
+    res = u.api_tennis_call(key, method="get_odds", date_start=a.isoformat(), date_stop=b.isoformat())
+    res = res if isinstance(res, dict) else {}
+    rows = []
+    for ek, mk in res.items():
+        if str(ek) not in first:
+            continue
+        books = books_of(mk)
+        if books:
+            tour, d, fk = first[str(ek)]
+            rows.append({"event_key": str(ek), "date": d, "tour": tour, "first_key": fk, **summarise(books)})
+    return rows, len(first), len(res)
 
 
 def main():
     ap = argparse.ArgumentParser()
-    yr = date.today().year
-    ap.add_argument("--years", nargs="+", type=int, default=list(range(2024, yr + 1)))
-    ap.add_argument("--out", default="data/odds_history.csv")
+    ap.add_argument("--budget", type=float, default=900, help="seconds to spend fetching")
+    ap.add_argument("--cache", default="data/api_tennis_matches.csv")
     args = ap.parse_args()
-    old = []
-    if os.path.exists(args.out):
-        with open(args.out, encoding="utf-8") as fh:
-            old = list(csv.DictReader(fh))
-    got, fetched = [], set()
-    for tour in ("atp", "wta"):
-        for y in args.years:
-            try:
-                rows = rows_for(tour, y)
-            except Exception as e:                   # noqa: BLE001
-                print(f"  · {tour} {y}: not available ({e})", file=sys.stderr)
-                continue
-            print(f"  · {tour} {y}: {len(rows)} matches", file=sys.stderr)
-            got += rows
-            fetched.add((tour.upper(), str(y)))
-    if not got:
-        sys.exit("no odds fetched; keeping the existing file")
-    # seasons that failed this time keep their previous rows
-    keep = [r for r in old if (r["tour"], r["date"][:4]) not in fetched]
-    rows = sorted(keep + got, key=lambda r: (r["date"], r["tour"], r["tournament"], r["winner"]))
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    with open(args.out, "w", newline="", encoding="utf-8") as fh:
-        wr = csv.DictWriter(fh, fieldnames=FIELDS)
-        wr.writeheader()
-        wr.writerows(rows)
-    print(f"wrote {args.out}: {len(rows)} matches", file=sys.stderr)
+    key = os.environ.get("TENNIS_API_KEY", "").strip()
+    if not key:
+        sys.exit("TENNIS_API_KEY not set")
+    t0 = time.time()
+    rows = {}
+    if os.path.exists(OUT):
+        with open(OUT, encoding="utf-8") as fh:
+            rows = {r["event_key"]: r for r in csv.DictReader(fh)}
+    state = u.load_json(STATE) or {}
+    start = datetime.strptime(min(r["date"] for r in u.load_api_cache(args.cache).values()), "%Y-%m-%d").date()
+    today = date.today()
+
+    def save():
+        with open(OUT, "w", newline="", encoding="utf-8") as fh:
+            wr = csv.DictWriter(fh, fieldnames=FIELDS)
+            wr.writeheader()
+            wr.writerows(sorted(rows.values(), key=lambda r: (r["date"], r["event_key"])))
+        with open(STATE, "w", encoding="utf-8") as fh:
+            json.dump(state, fh, indent=1)
+
+    def run(a, b):
+        got, n_fx, n_odds = fetch_window(key, a, b)
+        for r in got:
+            rows[r["event_key"]] = r
+        print(f"  · {a}..{b}: {n_fx} finished matches, odds for {n_odds} events, {len(got)} matched",
+              file=sys.stderr)
+
+    calls = 0
+    try:
+        # recent days first (late results, closing prices), then history backwards
+        a = today - timedelta(days=REFRESH)
+        while a < today:
+            b = min(a + timedelta(days=WINDOW - 1), today - timedelta(days=1))
+            run(a, b)
+            a = b + timedelta(days=1)
+        b = (datetime.strptime(state["from"], "%Y-%m-%d").date() - timedelta(days=1) if state.get("from")
+             else today - timedelta(days=REFRESH + 1))
+        while b >= start and time.time() - t0 < args.budget:
+            a = max(b - timedelta(days=WINDOW - 1), start)
+            run(a, b)
+            state["from"] = a.isoformat()
+            b = a - timedelta(days=1)
+            calls += 1
+            if calls % 10 == 0:
+                save()                               # a killed run keeps its work
+    except Exception as e:                           # noqa: BLE001
+        print(f"  · stopped: {str(e).replace(key, '***')[:300]}", file=sys.stderr)
+    save()
+    print(f"wrote {OUT}: {len(rows)} matches with odds; history back to {state.get('from')} "
+          f"(cache starts {start})", file=sys.stderr)
 
 
 if __name__ == "__main__":

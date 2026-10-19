@@ -102,9 +102,9 @@
       backtest; the predictor repeats the same formula in the browser.</p>
     <ul>
       <li><strong>Rating:</strong> Elo on match results (walkovers and retirements skipped), with K =
-        150/(matches+5)<sup>0.6</sup>, so a rating moves fast early and settles quickly. Each surface is an
-        offset on top of the overall rating. New players start at 1500, or <strong>1250</strong> if their
-        first match is in qualifying and <strong>1100</strong> if it is at Challenger level.</li>
+        300/(matches+2)<sup>0.6</sup>, so a rating moves fast early and settles quickly. Each surface is an
+        offset on top of the overall rating. New players start at 1350, or <strong>1250</strong> if their
+        first match is in qualifying and at Challenger level (whose matches count three-quarters as much).</li>
       <li><strong>Serve model:</strong> share of serve and return points won, weighted by recency
         (half-life 60 days), adjusted for the strength of each opponent, and pulled lightly toward the
         tour average when a player has few points. Fed through a point → game → set → match Markov chain.</li>
@@ -116,16 +116,16 @@
     </ul>
     <p><strong>Backtest.</strong> <code>tools/backtest.py</code> predicts every saved match using only
       the matches before it. All settings were tuned together, on the finished prediction, over
-      2025-04-01 – 2026-03-31; the numbers below are the <em>holdout</em> (2026-04-01 – 2026-10-18,
-      5,010 finished ATP/WTA matches the tuning never saw).</p>
+      2025-04-01 – 2026-03-31, with the ratings built from results back to 2022; the numbers below are
+      the <em>holdout</em> (2026-04-01 – 2026-10-18, 5,024 finished ATP/WTA matches the tuning never saw).</p>
     <table class="bt">
       <tr><th></th><th>Original model</th><th>Previous settings</th><th>Current model</th></tr>
-      <tr><td>Log loss (lower is better)</td><td>0.6443</td><td>0.6149</td><td><strong>0.6093</strong></td></tr>
-      <tr><td>Brier (lower is better)</td><td>0.2263</td><td>0.2135</td><td><strong>0.2113</strong></td></tr>
-      <tr><td>Favourite won</td><td>62.8%</td><td>65.8%</td><td>65.7%</td></tr>
+      <tr><td>Log loss (lower is better)</td><td>0.6443</td><td>0.6149</td><td><strong>0.5994</strong></td></tr>
+      <tr><td>Brier (lower is better)</td><td>0.2263</td><td>0.2135</td><td><strong>0.2068</strong></td></tr>
+      <tr><td>Favourite won</td><td>62.8%</td><td>65.8%</td><td><strong>67.0%</strong></td></tr>
     </table>
     <p>Calibration on the holdout (favourite's side):</p>
-    <table class="bt"><tr><th>Predicted</th><th>Average predicted</th><th>Actually won</th><th>Matches</th></tr><tr><td>50-60%</td><td>55%</td><td>53%</td><td>1748</td></tr><tr><td>60-70%</td><td>65%</td><td>64%</td><td>1480</td></tr><tr><td>70-80%</td><td>75%</td><td>72%</td><td>1010</td></tr><tr><td>80-90%</td><td>85%</td><td>86%</td><td>575</td></tr><tr><td>90-100%</td><td>94%</td><td>92%</td><td>197</td></tr></table>
+    <table class="bt"><tr><th>Predicted</th><th>Average predicted</th><th>Actually won</th><th>Matches</th></tr><tr><td>50-60%</td><td>55%</td><td>55%</td><td>1804</td></tr><tr><td>60-70%</td><td>65%</td><td>65%</td><td>1437</td></tr><tr><td>70-80%</td><td>75%</td><td>77%</td><td>989</td></tr><tr><td>80-90%</td><td>84%</td><td>84%</td><td>568</td></tr><tr><td>90-100%</td><td>94%</td><td>93%</td><td>226</td></tr></table>
     <p>Where the gain comes from: players new to the data. With no earlier match, holdout log loss went
       0.698 → 0.481 (92 matches); with one or two, 0.585 → 0.528. On established players it is unchanged
       (0.614). The previous settings were under-confident between 60% and 90%; that is fixed. The very top
@@ -145,10 +145,10 @@
       <li><strong>Seeding from rankings</strong>: the saved match data has no historical rankings, so
         it can't be backtested.</li>
     </ul>
-    <p><strong>More history.</strong> The saved results start 2024-09-30 and the ratings take about a
-      year to settle (log loss 0.68 in the first months, 0.61 a year later). The daily update now extends
-      the history back to 2022. Once it has, re-tune with <code>python tools/backtest.py --tune</code>
-      (about 10 minutes): the settings above were chosen for the shorter history.</p>
+    <p><strong>More history.</strong> The saved results now go back to 2022 (the daily update extended
+      them). With the same settings that alone took the holdout from 0.6093 to 0.6072; re-tuning on it
+      gave 0.5994, and 0.6103 → 0.6038 on established players. Re-tune with
+      <code>python tools/backtest.py --tune</code> (about 15 minutes).</p>
     <p><strong>Against the bookmakers.</strong> <code>tools/market_backtest.py</code> joins every
       walk-forward prediction with the real pre-match prices (api-tennis, saved daily by
       <code>tools/fetch_odds.py</code> in <code>data/odds_history.csv</code>; they agree with the prices

@@ -56,6 +56,12 @@
   .note{ font-family:var(--mono); font-size:.72rem; color:var(--clay); margin-top:8px; min-height:1em; }
 
   .board{ margin-top:26px; }
+  .verdict{ text-align:center; margin:0 0 14px; padding:14px 12px; border-radius:var(--r);
+    background:var(--ink-2); border:1px solid var(--ink-3); }
+  .verdict__k{ font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; opacity:.7; }
+  .verdict__who{ font-family:var(--display); font-weight:700; font-size:clamp(1.4rem, 4.5vw, 2rem); line-height:1.15; margin:4px 0; }
+  .verdict__who--a{ color:var(--A); } .verdict__who--b{ color:var(--B); }
+  .verdict__sub{ font-size:.9rem; opacity:.85; }
   .board__names{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
   .board__name{ font-family:var(--display); font-weight:700; font-size:1.25rem; }
   .board__name--a{ color:var(--A); } .board__name--b{ color:var(--B); text-align:right; }
@@ -330,6 +336,11 @@
   </section>
 
   <section class="board">
+    <div class="verdict" id="verdict" aria-live="polite">
+      <div class="verdict__k" id="verdictK">Prediction</div>
+      <div class="verdict__who" id="verdictWho">—</div>
+      <div class="verdict__sub" id="verdictSub"></div>
+    </div>
     <div class="board__names">
       <div class="board__name board__name--a" id="nameA">—</div>
       <div class="board__name board__name--b" id="nameB">—</div>
@@ -589,8 +600,11 @@ function compute(){
   render({A,B,pa,pb,s,pMkv,pElo,pEns,w});
   return pEns;
 }
+let LAST = null;            // the last prediction drawn, so new odds can refresh the verdict
 function render(d){
   const {A,B,pa,pb,s,pMkv,pElo,pEns} = d;
+  LAST = d;
+  renderVerdict(A, B, pEns);
   $("nameA").textContent = A.name; $("nameB").textContent = B.name;
   ["srvName","holdName","setName"].forEach(id => { $(id+"A").textContent = A.name; $(id+"B").textContent = B.name; });
   $("evNameA").textContent = A.name; $("evNameB").textContent = B.name;
@@ -720,19 +734,44 @@ function evRow(model, d, fairImplied, ids, bet){
   evEl.className = ev > 0 ? "ev-pos" : "ev-neg";
   $(ids.kel).textContent = ev > 0 ? (kel*100).toFixed(1) + "%" : "—";
 }
+/* The market's chance for A: a match loaded from the list keeps its consensus over all
+   bookmakers (as in the list); otherwise the no-margin chance of the two prices entered. */
+function marketA(){
+  const dA = readOdds("oddsA"), dB = readOdds("oddsB");
+  const qA = dA > 1 ? 1/dA : null, qB = dB > 1 ? 1/dB : null;
+  // the boxes start with example prices: they count as the market only once someone types
+  let mktA = state.oddsTyped && qA !== null && qB !== null ? qA/(qA + qB) : null, level = "tour";
+  const c = state.ctx;
+  if(c && c.a === state.a && c.b === state.b){ if(c.market_a != null) mktA = c.market_a; level = c.level; }
+  else if(c && c.a === state.b && c.b === state.a){ if(c.market_a != null) mktA = 1 - c.market_a; level = c.level; }
+  return mktA == null ? null : { mktA, level };
+}
+function renderVerdict(A, B, pModel){
+  let m = marketA();
+  try { if(m && !(MATCHES && MATCHES.market_blend && MATCHES.market_blend[m.level])) m = null; } catch(e) { m = null; }
+  const p = m ? betProb(pModel, m.mktA, m.level) : pModel;
+  const aWins = p >= 0.5, who = aWins ? A.name : B.name, q = aWins ? p : 1 - p;
+  const modelSide = pModel >= 0.5;
+  $("verdictK").textContent = q < 0.53 ? "Toss-up · slight edge" : "Prediction";
+  const el = $("verdictWho");
+  el.textContent = `${who} to win`;
+  el.className = "verdict__who verdict__who--" + (aWins ? "a" : "b");
+  const bits = [`${pct(q)} chance · fair odds ${OddsFmt.show(1 / q)}`];
+  if(m){
+    bits.push(`with the bookmakers' prices (model alone: ${pct(aWins ? pModel : 1 - pModel)})`);
+    if(modelSide !== aWins) bits.push(`the model on its own leans ${aWins ? B.name : A.name}`);
+  } else bits.push("model only: add bookmaker odds below to include the market");
+  $("verdictSub").textContent = bits.join(" · ");
+}
 function renderEV(pEns){
   const dA = readOdds("oddsA"), dB = readOdds("oddsB");
   // De-vig: scale the two raw implied chances so they add up to 100%.
   // With only one price entered, fall back to that price's raw implied chance.
   const qA = dA > 1 ? 1/dA : null, qB = dB > 1 ? 1/dB : null;
   const both = qA !== null && qB !== null, tot = both ? qA + qB : 1;
-  // the market: a match loaded from the list keeps its consensus over all bookmakers
-  // (as in the list); otherwise the no-margin chance of the two prices entered
-  const c = state.ctx;
-  let mktA = both ? qA/tot : null, level = "tour";
-  if(c && c.a === state.a && c.b === state.b){ if(c.market_a != null) mktA = c.market_a; level = c.level; }
-  else if(c && c.a === state.b && c.b === state.a){ if(c.market_a != null) mktA = 1 - c.market_a; level = c.level; }
-  const betA = mktA == null ? null : betProb(pEns, mktA, level);
+  const mk = marketA();
+  const betA = mk == null ? null : betProb(pEns, mk.mktA, mk.level);
+  if(LAST) renderVerdict(LAST.A, LAST.B, pEns);
   evRow(pEns,   dA, both ? qA/tot : qA, {imp:"impA",mod:"modA",fair:"fairA",ev:"evA",kel:"kelA"}, betA);
   evRow(1-pEns, dB, both ? qB/tot : qB, {imp:"impB",mod:"modB",fair:"fairB",ev:"evB",kel:"kelB"}, betA == null ? null : 1 - betA);
   $("margin").textContent = both ? "Bookmaker margin: " + ((tot-1)*100).toFixed(1) + "%" : "";
@@ -1005,6 +1044,7 @@ async function loadMatches(){
     const r = await fetch("matches.json", { cache:"no-store" });
     const j = r.ok ? await r.json() : null;
     MATCHES = j;
+    if (LAST) renderEV(compute());      // the verdict can use the market now
     renderToday(j); renderBuilder(); renderRecord(j && j.record); renderParlays(j);
   }catch(e){ renderToday(null); renderRecord(null); renderParlays(null); renderBuilder(); }
 }
@@ -1020,7 +1060,7 @@ $("segTour").querySelectorAll("button").forEach(btn => btn.addEventListener("cli
 makeCombo("inA","dropA","a","customA"); makeCombo("inB","dropB","b","customB");
 $("swap").addEventListener("click", swapSides);
 ["aSpw","aRpw","bSpw","bRpw"].forEach(i => $(i).addEventListener("input", compute));
-["oddsA","oddsB"].forEach(i => $(i).addEventListener("input", () => renderEV(compute())));
+["oddsA","oddsB"].forEach(i => $(i).addEventListener("input", () => { state.oddsTyped = true; renderEV(compute()); }));
 
 /* ===================== odds format (decimal / American) ================== */
 let MATCHES = null;

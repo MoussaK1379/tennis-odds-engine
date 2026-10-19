@@ -876,6 +876,24 @@ def kalshi_parlay_matches(matches):
 # for tomorrow is often half missing there. api-tennis has the full schedule;
 # matches it lists that the odds feed doesn't get the model's number, no odds.
 SCHEDULE_ERRORS = []                       # feeds whose schedule couldn't be read this run
+# What each run saw and dropped, saved in matches.json["diagnostics"] so a thin list can be
+# explained from the repo (the Actions logs aren't kept long enough to look back).
+DIAG = {"feeds": {}, "dropped": {}}
+
+def _drop(reason, n=1):
+    DIAG["dropped"][reason] = DIAG["dropped"].get(reason, 0) + n
+
+def _api_retry(call, tries=3):
+    """api-tennis now and then times out or answers with an error for one request; a feed
+    is only given up after three tries (5 s, then 20 s apart)."""
+    import time
+    for i in range(tries):
+        try:
+            return call()
+        except Exception:                                            # noqa: BLE001
+            if i == tries - 1:
+                raise
+            time.sleep((5, 20)[min(i, 1)])
 
 def fetch_schedule(key, now, hours, challenger=False):
     """Upcoming ATP/WTA singles from api-tennis: [{tour, tournament, start, a, b, ...}]."""
@@ -889,16 +907,22 @@ def fetch_schedule(key, now, hours, challenger=False):
         params = dict(method="get_fixtures", event_type_key=type_key,
                       date_start=(now - timedelta(days=1)).date().isoformat(),
                       date_stop=(end + timedelta(days=1)).date().isoformat())
+        dg = DIAG["feeds"].setdefault(tour.upper(), {"events": 0, "upcoming": 0, "status": {}})
         try:
-            events, tz = api_tennis_call(key, timezone="Etc/UTC", **params), timezone.utc
+            events, tz = _api_retry(lambda: api_tennis_call(key, timezone="Etc/UTC", **params)), timezone.utc
         except Exception as e:                                        # noqa: BLE001
-            print(f"  · schedule {tour.upper()}: {e}", file=sys.stderr)
+            msg = str(e).replace(key, "***")[:200]
+            print(f"  · schedule {tour.upper()}: {msg}", file=sys.stderr)
+            dg["error"] = msg
             SCHEDULE_ERRORS.append(tour.upper())
             continue
+        dg["events"] = len(events)
         for ev in events:
+            st = (ev.get("event_status") or "").strip()
+            dg["status"][st or "(blank)"] = dg["status"].get(st or "(blank)", 0) + 1
             if ev.get("event_type_type") != type_name or ev.get("event_live") == "1":
                 continue
-            if (ev.get("event_status") or "").strip() not in ("", "Not Started"):
+            if st not in ("", "Not Started"):
                 continue                                              # finished, retired, cancelled
             a, b = (ev.get("event_first_player") or "").strip(), (ev.get("event_second_player") or "").strip()
             if not a or not b:
@@ -910,6 +934,7 @@ def fetch_schedule(key, now, hours, challenger=False):
                 continue
             if not (now - timedelta(hours=14) < start <= end + timedelta(hours=14)):
                 continue                       # final window check after any time-zone fix
+            dg["upcoming"] += 1
             feed = tour.upper()                # ATP, WTA, ATP_CH or WTA_CH
             out.append({"key": str(ev.get("event_key")), "tour": feed[:3], "feed": feed,
                         "level": "challenger" if feed.endswith("_CH") else "tour",
@@ -1029,6 +1054,7 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             feed_titles.setdefault((m["tour"], cid), m["tournament"])
     for f in sched:
         if PLACEHOLDER.search(f["a"]) or PLACEHOLDER.search(f["b"]):
+            _drop("draw slot not filled")
             continue                       # draw slot not filled yet
         ids = []
         for name, akey in ((f["a"], f["a_key"]), (f["b"], f["b_key"])):
@@ -1038,10 +1064,15 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
                 extra.setdefault(pid, newcomer(name, f["tour"]))
             ids.append(pid)
         ka, kb = ids
-        if frozenset((ka, kb)) in have or not (now < f["start"] <= now + timedelta(hours=hours)):
+        if frozenset((ka, kb)) in have:
+            _drop("already listed from the odds feed")
+            continue
+        if not (now < f["start"] <= now + timedelta(hours=hours)):
+            _drop("started or outside the window")
             continue
         fa, fb = name_keys(f["a"]), name_keys(f["b"])
         if any((ua & fa and ub & fb) or (ua & fb and ub & fa) for ua, ub in unmatched):
+            _drop("priced but names unresolved")
             continue                       # priced, but the odds feed's names didn't resolve
         month = f["start"].month
         feed, ch = f.get("feed", f["tour"]), f.get("level") == "challenger"
@@ -1134,6 +1165,7 @@ def main():
                                          if str(m.get("id", "")).startswith(("sched-", "apit-"))]
                 except (OSError, ValueError):
                     pass
+            kept = []
             if SCHEDULE_ERRORS and prev_sched:
                 # api-tennis didn't answer: keep the last list for those feeds rather than drop it
                 lost = {"ATP": "tour", "WTA": "tour", "ATP_CH": "challenger", "WTA_CH": "challenger"}
@@ -1148,6 +1180,8 @@ def main():
             n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours, odds)
             n_priced = sum(1 for m in out["matches"] if m.get("odds_source") == "api-tennis")
             out["scheduled_only"] = sum(1 for m in out["matches"] if m.get("no_odds"))
+            out["diagnostics"] = {**DIAG, "schedule_upcoming": len(sched), "schedule_added": n,
+                                  "kept_from_last_run": len(kept) if SCHEDULE_ERRORS and prev_sched else 0}
             n_new = sum(1 for m in out["matches"] if m.get("new_players"))
             print(f"Schedule: {len(sched)} upcoming on api-tennis, {n} added; listed now: {n_priced} priced by "
                   f"api-tennis, {out['scheduled_only']} without odds ({n_new} with a player new to our data)",

@@ -1,0 +1,38 @@
+name: probe-api
+
+# On demand only: saves a scrubbed sample of api-tennis live data to data/probe/
+# (tools/probe_live.py), used to build and check the Live tab.
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: probe-api
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Probe
+        env:
+          TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
+        run: python tools/probe_live.py
+      - name: Commit
+        run: |
+          git config user.name  "data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/probe
+          if ! git diff --staged --quiet; then
+            git commit -m "data: api-tennis live probe $(date -u +%FT%H:%M)"
+            git pull --rebase -X theirs origin "${{ github.event.repository.default_branch }}"
+            git push
+          fi

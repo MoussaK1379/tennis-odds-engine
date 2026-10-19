@@ -895,6 +895,19 @@ def _api_retry(call, tries=3):
                 raise
             time.sleep((5, 20)[min(i, 1)])
 
+# A fixture is dropped only when api-tennis says it is over or under way. Its label for a
+# match that hasn't started is not stable: usually blank or "Not Started", but on some days
+# "1" for the whole order of play (17 and 19 Oct 2026), which emptied the list when only
+# those two were accepted. Anything else that starts in the future is kept.
+DONE_STATUS = ("finished", "retired", "cancelled", "canceled", "walk over", "walkover", "interrupted",
+               "suspended", "postponed", "abandoned", "awarded", "defaulted", "after penalties")
+
+def not_started(ev):
+    st = (ev.get("event_status") or "").strip().lower()
+    if ev.get("event_live") == "1" or st in DONE_STATUS:
+        return False
+    return not (st.startswith("set ") or "tie" in st or st in ("live", "in progress", "break"))
+
 def fetch_schedule(key, now, hours, challenger=False):
     """Upcoming ATP/WTA singles from api-tennis: [{tour, tournament, start, a, b, ...}]."""
     from update_data import api_tennis_call, API_TENNIS_TYPES      # lazy: update_data imports this module
@@ -920,10 +933,8 @@ def fetch_schedule(key, now, hours, challenger=False):
         for ev in events:
             st = (ev.get("event_status") or "").strip()
             dg["status"][st or "(blank)"] = dg["status"].get(st or "(blank)", 0) + 1
-            if ev.get("event_type_type") != type_name or ev.get("event_live") == "1":
-                continue
-            if st not in ("", "Not Started"):
-                continue                                              # finished, retired, cancelled
+            if ev.get("event_type_type") != type_name or not not_started(ev):
+                continue                                              # under way, finished, retired, cancelled
             a, b = (ev.get("event_first_player") or "").strip(), (ev.get("event_second_player") or "").strip()
             if not a or not b:
                 continue

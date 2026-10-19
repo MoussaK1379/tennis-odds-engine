@@ -1,0 +1,46 @@
+name: live-scores
+
+# Keeps live.json (live scores, current start times, delays, suspensions) fresh for the
+# site, around the clock: tools/live.py polls api-tennis every minute for close to six
+# hours (the longest a job may run), publishing to the "live" branch, then starts the
+# next run. The schedule below restarts the chain if a hand-over is ever lost; with the
+# concurrency group only one run polls at a time and at most one waits.
+on:
+  schedule:
+    - cron: "7 */2 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write          # push the live branch
+  actions: write           # start the next run
+
+concurrency:
+  group: live-scores
+  cancel-in-progress: false
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    timeout-minutes: 358
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Poll and publish
+        env:
+          TENNIS_API_KEY: ${{ secrets.TENNIS_API_KEY }}
+        run: |
+          git config user.name  "data-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python tools/live.py --minutes 340
+
+      - name: Start the next run
+        if: success() || failure()          # not when someone cancels the run to stop it
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run live.yml --ref "${{ github.event.repository.default_branch }}"

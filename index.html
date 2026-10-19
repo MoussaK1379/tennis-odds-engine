@@ -143,6 +143,24 @@
   .match__p .n{ font-family:var(--display); font-weight:600; font-size:.95rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .match__p--a .n{ color:var(--A); } .match__p--b .n{ color:var(--B); }
   .match__p .nums{ color:var(--mute); white-space:nowrap; }
+  .match__live{ font-family:var(--mono); font-size:.74rem; color:#ff5d5d; margin-top:3px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+  .match__live--sus{ color:var(--clay); } .match__live--late{ color:var(--clay); }
+  .lv-dot{ display:inline-block; width:8px; height:8px; border-radius:50%; background:#ff4d4d; flex:0 0 auto; animation:lvpulse 1.4s ease-in-out infinite; }
+  @keyframes lvpulse{ 50%{ opacity:.35; } }
+  @media (prefers-reduced-motion: reduce){ .lv-dot{ animation:none; } }
+  .ttabs button.ttabs__live{ display:inline-flex; align-items:center; gap:6px; }
+  .lv-card{ border-top:1px solid var(--ink-3); padding:.65rem 0; }
+  .lv-card--sus .lv-dot{ background:var(--clay); animation:none; }
+  .lv-head{ font-family:var(--mono); font-size:.7rem; color:var(--mute); display:flex; align-items:center; gap:6px; margin-bottom:4px; flex-wrap:wrap; }
+  .lv-row{ display:grid; grid-template-columns:14px 1fr auto 58px; gap:8px; align-items:center; padding:2px 0; }
+  .lv-srv{ color:var(--ball); font-size:.7rem; }
+  .lv-name{ font-family:var(--display); font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .lv-row--a .lv-name{ color:var(--A); } .lv-row--b .lv-name{ color:var(--B); }
+  .lv-sets{ font-family:var(--mono); font-variant-numeric:tabular-nums; display:flex; gap:10px; }
+  .lv-set{ min-width:1ch; text-align:center; } .lv-pts{ min-width:2.2ch; text-align:right; color:var(--ball); }
+  .lv-p{ font-family:var(--mono); font-size:.8rem; text-align:right; color:var(--mute); }
+  .lv-foot{ font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:4px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .lv-note{ margin-top:10px; }
   .match__pick{ font-family:var(--mono); font-size:.76rem; color:var(--mute); margin-top:2px; }
   .match__pick b{ font-family:var(--display); font-size:.86rem; } .match__pick .pa{ color:var(--A); } .match__pick .pb{ color:var(--B); }
   .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
@@ -471,6 +489,85 @@ function betProb(model, market, level){
   return 1 / (1 + Math.exp(-Math.max(Math.min(z, 30), -30)));
 }
 
+/* ===================== in-play win chance ================================ */
+// Server's chance of winning the game from i points (server) to j (returner).
+function gameFrom(p, i, j){
+  if(i >= 4 && i - j >= 2) return 1;
+  if(j >= 4 && j - i >= 2) return 0;
+  if(i >= 3 && j >= 3){ const q = 1 - p, pd = p*p / (p*p + q*q); return i === j ? pd : i > j ? p + q*pd : p*pd; }
+  return p*gameFrom(p, i + 1, j) + (1 - p)*gameFrom(p, i, j + 1);
+}
+// A's chance of winning a tiebreak from a-b, A serving the next point if aNext. Serve goes
+// 1, then 2 each; at level scores from 6-6 the next two points are one serve each.
+function tiebreakFrom(pa, pb, a, b, aNext){
+  const n = a + b, s0A = n === 0 ? aNext : (Math.floor((n - 1)/2) % 2 === 1 ? aNext : !aNext);
+  const aS = pa, aR = 1 - pb, den = aS*aR + (1 - aS)*(1 - aR), tail = den > 0 ? aS*aR/den : 0.5;
+  const memo = new Map();
+  function f(x, y){
+    if(x >= 7 && x - y >= 2) return 1;
+    if(y >= 7 && y - x >= 2) return 0;
+    if(x === y && x >= 6) return tail;
+    const k = x + "," + y; if(memo.has(k)) return memo.get(k);
+    const m = x + y, srvIsS0 = m === 0 || Math.floor((m - 1)/2) % 2 === 1;
+    const ppt = (srvIsS0 === s0A) ? pa : 1 - pb;          // A's chance of this point
+    const r = ppt*f(x + 1, y) + (1 - ppt)*f(x, y + 1); memo.set(k, r); return r;
+  }
+  return f(a, b);
+}
+// A's chance of winning the set from ga-gb with A serving the current game (aServes),
+// inside which the points are i (A) - j (B); at 6-6 i, j are tiebreak points.
+function setFrom(pa, pb, ga, gb, aServes, i, j){
+  const done = (x, y) => (x >= 6 && x - y >= 2) || (x === 7 && y >= 5);
+  if(done(ga, gb)) return 1; if(done(gb, ga)) return 0;
+  if(ga === 6 && gb === 6) return tiebreakFrom(pa, pb, i, j, aServes);
+  const ga1 = gameWinProb(pa), gb1 = gameWinProb(pb), memo = new Map();
+  function F(x, y, aSrv){
+    if(done(x, y)) return 1; if(done(y, x)) return 0;
+    if(x === 6 && y === 6) return tiebreakFrom(pa, pb, 0, 0, aSrv);
+    const k = x + "," + y + "," + aSrv; if(memo.has(k)) return memo.get(k);
+    const pg = aSrv ? ga1 : 1 - gb1;
+    const r = pg*F(x + 1, y, !aSrv) + (1 - pg)*F(x, y + 1, !aSrv); memo.set(k, r); return r;
+  }
+  const pg = aServes ? gameFrom(pa, i, j) : 1 - gameFrom(pb, j, i);
+  return pg*F(ga + 1, gb, !aServes) + (1 - pg)*F(ga, gb + 1, !aServes);
+}
+// A's chance of winning the match from a live score (first player = A), or null.
+function liveChance(pa, pb, e, bestOf){
+  const need = bestOf === 5 ? 3 : 2;
+  let [sa, sb] = e.sets_won || [0, 0];
+  const sets = e.sets || [];
+  let [ga, gb] = sets[sa + sb] || [0, 0];
+  const done = (x, y) => (x >= 6 && x - y >= 2) || (x === 7 && y >= 5);
+  if(done(ga, gb) || done(gb, ga)){ done(ga, gb) ? sa++ : sb++; [ga, gb] = [0, 0]; }   // the feed's set count lags
+  if(sa >= need) return 1; if(sb >= need) return 0;
+  const tb = ga === 6 && gb === 6;
+  const pts = String(e.game || "").split("-").map(x => x.trim().toUpperCase());
+  const conv = x => tb ? (parseInt(x, 10) || 0) : ({"0": 0, "15": 1, "30": 2, "40": 3, "A": 4, "AD": 4}[x] ?? 0);
+  let i = pts.length === 2 ? conv(pts[0]) : 0, j = pts.length === 2 ? conv(pts[1]) : 0;
+  if(!tb && i === 4) j = 3; if(!tb && j === 4) i = 3;
+  const s = setWinProb(pa, pb), memo = new Map();
+  function M(x, y){
+    if(x >= need) return 1; if(y >= need) return 0;
+    const k = x + "," + y; if(memo.has(k)) return memo.get(k);
+    const r = s*M(x + 1, y) + (1 - s)*M(x, y + 1); memo.set(k, r); return r;
+  }
+  const pset = e.serve === "first" ? setFrom(pa, pb, ga, gb, true, i, j)
+             : e.serve === "second" ? setFrom(pa, pb, ga, gb, false, i, j)
+             : (setFrom(pa, pb, ga, gb, true, i, j) + setFrom(pa, pb, ga, gb, false, i, j)) / 2;
+  return pset*M(sa + 1, sb) + (1 - pset)*M(sa, sb + 1);
+}
+// Serve chances moved by the same amount in opposite directions so that before a point
+// is played the chain gives the pre-match chance p0 (as model.first_set_scores does).
+function tunedServe(pa, pb, p0, bestOf){
+  let lo = -0.3, hi = 0.3;
+  for(let n = 0; n < 24; n++){
+    const d = (lo + hi)/2;
+    if(matchFromSet(setWinProb(clip(pa + d), clip(pb - d)), bestOf) < p0) lo = d; else hi = d;
+  }
+  const d = (lo + hi)/2;
+  return [clip(pa + d), clip(pb - d)];
+}
+
 /* ===================== data: fetch players.json, fall back to seed ======= */
 const SEED = {"updated":"2026-06-16 (seed)","tours":{"atp":{"tour_avg_spw":0.64},"wta":{"tour_avg_spw":0.56}},"tour_avg_spw":0.64,"players":{"sinner":{"name":"Jannik Sinner","tour":"ATP","elo":{"hard":2150,"clay":2080,"grass":2040,"overall":2120},"serve":{"hard":0.68,"clay":0.66,"grass":0.7,"overall":0.68},"return":{"hard":0.42,"clay":0.44,"grass":0.4,"overall":0.42}},"alcaraz":{"name":"Carlos Alcaraz","tour":"ATP","elo":{"hard":2090,"clay":2130,"grass":2100,"overall":2110},"serve":{"hard":0.66,"clay":0.65,"grass":0.69,"overall":0.66},"return":{"hard":0.43,"clay":0.45,"grass":0.41,"overall":0.43}},"djokovic":{"name":"Novak Djokovic","tour":"ATP","elo":{"hard":2090,"clay":2080,"grass":2090,"overall":2090},"serve":{"hard":0.66,"clay":0.65,"grass":0.68,"overall":0.66},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},"zverev":{"name":"Alexander Zverev","tour":"ATP","elo":{"hard":2010,"clay":2030,"grass":1980,"overall":2010},"serve":{"hard":0.68,"clay":0.66,"grass":0.7,"overall":0.68},"return":{"hard":0.4,"clay":0.41,"grass":0.38,"overall":0.4}},"medvedev":{"name":"Daniil Medvedev","tour":"ATP","elo":{"hard":2000,"clay":1900,"grass":1950,"overall":1980},"serve":{"hard":0.65,"clay":0.63,"grass":0.67,"overall":0.65},"return":{"hard":0.42,"clay":0.42,"grass":0.39,"overall":0.42}},"fritz":{"name":"Taylor Fritz","tour":"ATP","elo":{"hard":1970,"clay":1850,"grass":1990,"overall":1950},"serve":{"hard":0.69,"clay":0.66,"grass":0.71,"overall":0.69},"return":{"hard":0.37,"clay":0.37,"grass":0.35,"overall":0.37}},"rune":{"name":"Holger Rune","tour":"ATP","elo":{"hard":1930,"clay":1950,"grass":1900,"overall":1930},"serve":{"hard":0.65,"clay":0.64,"grass":0.67,"overall":0.65},"return":{"hard":0.4,"clay":0.41,"grass":0.38,"overall":0.4}},"tsitsipas":{"name":"Stefanos Tsitsipas","tour":"ATP","elo":{"hard":1920,"clay":1980,"grass":1900,"overall":1930},"serve":{"hard":0.67,"clay":0.66,"grass":0.68,"overall":0.67},"return":{"hard":0.39,"clay":0.41,"grass":0.37,"overall":0.39}},"rublev":{"name":"Andrey Rublev","tour":"ATP","elo":{"hard":1930,"clay":1940,"grass":1900,"overall":1930},"serve":{"hard":0.66,"clay":0.65,"grass":0.67,"overall":0.66},"return":{"hard":0.39,"clay":0.4,"grass":0.37,"overall":0.39}},"deminaur":{"name":"Alex de Minaur","tour":"ATP","elo":{"hard":1910,"clay":1860,"grass":1920,"overall":1900},"serve":{"hard":0.62,"clay":0.6,"grass":0.64,"overall":0.62},"return":{"hard":0.41,"clay":0.41,"grass":0.39,"overall":0.41}},"hurkacz":{"name":"Hubert Hurkacz","tour":"ATP","elo":{"hard":1910,"clay":1840,"grass":1970,"overall":1910},"serve":{"hard":0.7,"clay":0.67,"grass":0.72,"overall":0.7},"return":{"hard":0.35,"clay":0.35,"grass":0.33,"overall":0.35}},"draper":{"name":"Jack Draper","tour":"ATP","elo":{"hard":1920,"clay":1870,"grass":1930,"overall":1910},"serve":{"hard":0.67,"clay":0.65,"grass":0.69,"overall":0.67},"return":{"hard":0.39,"clay":0.39,"grass":0.37,"overall":0.39}},"musetti":{"name":"Lorenzo Musetti","tour":"ATP","elo":{"hard":1880,"clay":1950,"grass":1860,"overall":1900},"serve":{"hard":0.64,"clay":0.64,"grass":0.65,"overall":0.64},"return":{"hard":0.39,"clay":0.41,"grass":0.37,"overall":0.39}},"shelton":{"name":"Ben Shelton","tour":"ATP","elo":{"hard":1890,"clay":1830,"grass":1930,"overall":1890},"serve":{"hard":0.69,"clay":0.66,"grass":0.71,"overall":0.69},"return":{"hard":0.36,"clay":0.36,"grass":0.34,"overall":0.36}},"dimitrov":{"name":"Grigor Dimitrov","tour":"ATP","elo":{"hard":1880,"clay":1850,"grass":1900,"overall":1880},"serve":{"hard":0.67,"clay":0.65,"grass":0.69,"overall":0.67},"return":{"hard":0.38,"clay":0.38,"grass":0.36,"overall":0.38}},"tiafoe":{"name":"Frances Tiafoe","tour":"ATP","elo":{"hard":1870,"clay":1830,"grass":1890,"overall":1870},"serve":{"hard":0.66,"clay":0.64,"grass":0.68,"overall":0.66},"return":{"hard":0.38,"clay":0.38,"grass":0.36,"overall":0.38}},"atptour":{"name":"ATP tour average","tour":"ATP","elo":{"hard":1750,"clay":1750,"grass":1750,"overall":1750},"serve":{"hard":0.635,"clay":0.62,"grass":0.66,"overall":0.635},"return":{"hard":0.37,"clay":0.38,"grass":0.35,"overall":0.37}},"sabalenka":{"name":"Aryna Sabalenka","tour":"WTA","elo":{"hard":2050,"clay":1980,"grass":2000,"overall":2030},"serve":{"hard":0.6,"clay":0.58,"grass":0.61,"overall":0.6},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},"swiatek":{"name":"Iga Swiatek","tour":"WTA","elo":{"hard":2010,"clay":2120,"grass":1960,"overall":2030},"serve":{"hard":0.57,"clay":0.58,"grass":0.57,"overall":0.57},"return":{"hard":0.47,"clay":0.49,"grass":0.44,"overall":0.47}},"gauff":{"name":"Coco Gauff","tour":"WTA","elo":{"hard":1980,"clay":1970,"grass":1960,"overall":1980},"serve":{"hard":0.57,"clay":0.56,"grass":0.58,"overall":0.57},"return":{"hard":0.47,"clay":0.47,"grass":0.45,"overall":0.47}},"rybakina":{"name":"Elena Rybakina","tour":"WTA","elo":{"hard":1980,"clay":1950,"grass":1990,"overall":1980},"serve":{"hard":0.61,"clay":0.59,"grass":0.62,"overall":0.61},"return":{"hard":0.43,"clay":0.43,"grass":0.41,"overall":0.43}},"pegula":{"name":"Jessica Pegula","tour":"WTA","elo":{"hard":1930,"clay":1880,"grass":1930,"overall":1920},"serve":{"hard":0.58,"clay":0.56,"grass":0.59,"overall":0.58},"return":{"hard":0.44,"clay":0.43,"grass":0.42,"overall":0.44}},"paolini":{"name":"Jasmine Paolini","tour":"WTA","elo":{"hard":1900,"clay":1960,"grass":1890,"overall":1910},"serve":{"hard":0.55,"clay":0.56,"grass":0.55,"overall":0.55},"return":{"hard":0.44,"clay":0.45,"grass":0.42,"overall":0.44}},"zheng":{"name":"Zheng Qinwen","tour":"WTA","elo":{"hard":1910,"clay":1880,"grass":1900,"overall":1910},"serve":{"hard":0.59,"clay":0.57,"grass":0.6,"overall":0.59},"return":{"hard":0.43,"clay":0.43,"grass":0.41,"overall":0.43}},"andreeva":{"name":"Mirra Andreeva","tour":"WTA","elo":{"hard":1910,"clay":1940,"grass":1880,"overall":1910},"serve":{"hard":0.56,"clay":0.57,"grass":0.56,"overall":0.56},"return":{"hard":0.46,"clay":0.47,"grass":0.44,"overall":0.46}},"wtatour":{"name":"WTA tour average","tour":"WTA","elo":{"hard":1650,"clay":1650,"grass":1650,"overall":1650},"serve":{"hard":0.555,"clay":0.56,"grass":0.555,"overall":0.555},"return":{"hard":0.445,"clay":0.45,"grass":0.43,"overall":0.445}}}};
 let DATA = SEED;
@@ -480,8 +577,8 @@ const $ = id => document.getElementById(id);
 const pct = x => (x*100).toFixed(1) + "%";
 const state = { a:null, b:null, surface:"hard", bestOf:3, tour:"ATP" };
 
-function tourAvg(){
-  const key = state.tour.toLowerCase();
+function tourAvg(tour){
+  const key = (tour || state.tour).toLowerCase();
   const t = DATA.tours && DATA.tours[key] && DATA.tours[key].tour_avg_spw;
   return t || DATA.tour_avg_spw || 0.64;
 }
@@ -562,15 +659,14 @@ function stampDate(){
 }
 
 /* ===================== compute + render ================================== */
-function compute(){
-  const A = statsFor(state.a, state.surface, readCustom("a"));
-  const B = statsFor(state.b, state.surface, readCustom("b"));
-  const t = tourAvg();
+/* One matchup through the whole model (same formula as predict_export() in model.py):
+   the predictor and the live tab both use it. */
+function pairModel(A, B, tour, bestOf){
+  const t = tourAvg(tour);
   const pa = servePointProb(A.spw, B.rpw, t);
   const pb = servePointProb(B.spw, A.rpw, t);
   const s  = setWinProb(pa, pb);
-  const pMkv = matchFromSet(s, state.bestOf);
-  // same formula as predict_export() in model.py
+  const pMkv = matchFromSet(s, bestOf);
   const M = DATA.model || {};
   let g = 1;
   if(M.rating === "glicko"){
@@ -578,15 +674,15 @@ function compute(){
     g = 1 / Math.sqrt(1 + 3*q*q*(A.rd*A.rd + B.rd*B.rd) / (Math.PI*Math.PI));
   }
   const pElo = 1 / (1 + Math.pow(10, -g*(A.elo - B.elo)/400));
-  const wFull = (M.w && M.w[state.tour] != null) ? M.w[state.tour] : 0.5, n0 = M.n0 || 0;
+  const wFull = (M.w && M.w[tour] != null) ? M.w[tour] : 0.5, n0 = M.n0 || 0;
   const n = Math.min(A.n, B.n), w = n0 > 0 ? wFull * n / (n + n0) : wFull;
   let pEns = w*pMkv + (1-w)*pElo;
-  const stack = M.stack && M.stack[state.tour];
+  const stack = M.stack && M.stack[tour];
   if(stack){                          // logistic stack (stack_features in model.py)
     const L = p => { p = Math.min(Math.max(p, 1e-4), 1 - 1e-4); return Math.log(p/(1-p)); };
     const info = P => (P && P.info) || {};
     const days = P => info(P).last ? Math.max(0, Math.round((Date.parse(todayISO()) - Date.parse(info(P).last)) / 864e5)) : 0;
-    const thin = 1 - n / (n + 500), t = tourAvg();
+    const thin = 1 - n / (n + 500);
     const mMin = Math.min(A.m, B.m), thinElo = 1 - mMin / (mMin + 3);
     const inter = ((A.spw - t)*(B.rpw - (1-t)) - (B.spw - t)*(A.rpw - (1-t))) * 100;
     const feats = [L(pElo), L(pMkv), L(pMkv)*thin, inter,
@@ -595,6 +691,12 @@ function compute(){
     const z = feats.reduce((acc, f, i) => acc + f * stack[i], 0);
     pEns = 1 / (1 + Math.exp(-Math.max(Math.min(z, 30), -30)));
   }
+  return {pa, pb, s, pMkv, pElo, pEns, w};
+}
+function compute(){
+  const A = statsFor(state.a, state.surface, readCustom("a"));
+  const B = statsFor(state.b, state.surface, readCustom("b"));
+  const {pa, pb, s, pMkv, pElo, pEns, w} = pairModel(A, B, state.tour, state.bestOf);
   const warn = state.a !== "custom" && state.a === state.b
     ? ["Same player on both sides — pick two different players for a meaningful number."]
     : [...playerFlags(A.raw, state.surface), ...playerFlags(B.raw, state.surface)];
@@ -938,6 +1040,116 @@ function matchExtras(m){
   if(fl.length) bits.push(`<div class="match__flags">${fl.map(t => "⚠ " + esc(t)).join("<br>")}</div>`);
   return bits.length ? `<div class="match__extra">${bits.join("")}</div>` : "";
 }
+/* ===================== live scores and start times (live.json) ========== */
+// tools/live.py (GitHub Actions, every minute) publishes live.json on the "live" branch;
+// read straight from GitHub so it is fresh without rebuilding the site.
+const LIVE_URL = "https://raw.githubusercontent.com/MoussaK1379/tennis-odds-engine/live/live.json";
+const LIVE_TAB = "\u0002live";
+let LIVE = null;
+async function loadLive(){
+  try{
+    const r = await fetch(LIVE_URL + "?t=" + Math.floor(Date.now() / 20000), { cache:"no-store" });
+    if(!r.ok) return;
+    LIVE = await r.json();
+    LIVE.liveKeys = new Set((LIVE.live || []).map(e => e.k));
+    LIVE.byPair = new Map();
+    for(const e of Object.values(LIVE.events || {})) LIVE.byPair.set(pairKey(e.first, e.second), e);
+    if(MATCHES) renderToday(MATCHES);
+  }catch(e){ /* offline or not published yet: the list works without it */ }
+}
+const slug = n => String(n || "").normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+// 'Luciano Darderi' and 'L. Darderi' -> 'l-darderi' (as loose_key in update_matches.py);
+// a short name shared by two players carries their key: 'M. Mrva (31143)'
+function looseName(n){
+  const p = slug(String(n || "").replace(/\s*\(\d+\)\s*$/, "")).split("-").filter(Boolean);
+  return p.length >= 2 ? p[0][0] + "-" + p.slice(1).join("-") : p.join("-");
+}
+const pairKey = (a, b) => [looseName(a), looseName(b)].sort().join("|");
+// The live event for a listed match, and whether its first player is our B side.
+function liveFor(m){
+  if(!LIVE) return null;
+  const e = (m.api_key && LIVE.events[m.api_key]) || LIVE.byPair.get(pairKey(m.a.name, m.b.name));
+  return e ? { e, swap: looseName(e.first) !== looseName(m.a.name) } : null;
+}
+const isOver = e => /^(finished|retired|walk ?over|awarded|defaulted|abandoned)$/i.test(e.status || "");
+const isCancelled = e => /^cancel/i.test(e.status || "");
+const hhmm = t => new Intl.DateTimeFormat(undefined, { hour:"2-digit", minute:"2-digit" }).format(new Date(t));
+// "6-3 3-1 · 40-30" from one side; the server gets a dot
+function scoreLine(e, swap){
+  const sets = (e.sets || []).map(([x, y]) => swap ? `${y}-${x}` : `${x}-${y}`).join(" ");
+  const g = String(e.game || "").split("-"), game = g.length === 2 && e.game !== "-" ? (swap ? `${g[1]}-${g[0]}` : `${g[0]}-${g[1]}`) : "";
+  return sets + (game ? ` · ${game}` : "");
+}
+// Players' entries in players.json for an event, if the model knows both.
+function liveKeyFor(name, apiKey, tour){
+  for(const k of [slug(`${name} ${apiKey}`), slug(name), slug(name) + "-" + tour.toLowerCase()])
+    if(DATA.players[k] && DATA.players[k].tour === tour) return k;
+  return null;
+}
+const LIVE_TUNE = new Map();     // event key -> [pa, pb] tuned to the pre-match chance
+// First player's chance of winning from the live score: the model's point chances, tuned so
+// that at 0-0 they give the pre-match pick (with bookmakers' prices when the match was priced).
+function liveChanceFor(e){
+  const ka = liveKeyFor(e.first, e.first_key, e.tour), kb = liveKeyFor(e.second, e.second_key, e.tour);
+  if(!ka || !kb) return null;
+  const surf = e.surface || "hard", bo = e.best_of || 3;
+  const A = statsFor(ka, surf), B = statsFor(kb, surf);
+  const m = MATCHES && (MATCHES.matches || []).find(x => x.api_key === e.k || pairKey(x.a.name, x.b.name) === pairKey(e.first, e.second));
+  let p0 = pairModel(A, B, e.tour, bo).pEns;
+  if(m){ const pA = m.a.bet ?? m.a.model; p0 = looseName(m.a.name) === looseName(e.first) ? pA : 1 - pA; }
+  const key = e.k + ":" + p0.toFixed(4);
+  if(!LIVE_TUNE.has(key)){
+    const md = pairModel(A, B, e.tour, bo);
+    LIVE_TUNE.set(key, tunedServe(md.pa, md.pb, p0, bo));
+  }
+  const [pa, pb] = LIVE_TUNE.get(key);
+  const p = liveChance(pa, pb, e, bo);
+  return p == null ? null : { p, p0 };
+}
+// The line under a listed match: live score, suspended, cancelled, moved or running late.
+function liveLine(m){
+  const L = liveFor(m); if(!L) return "";
+  const { e, swap } = L;
+  if(LIVE.liveKeys.has(e.k)){
+    const lc = liveChanceFor(e), who = lc ? ((lc.p >= 0.5) !== swap ? m.a.name : m.b.name) : "";
+    const q = lc ? (lc.p >= 0.5 ? lc.p : 1 - lc.p) : null;
+    const sus = /interrupt|suspend/i.test(e.status);
+    return `<div class="match__live${sus ? " match__live--sus" : ""}"><span class="lv-dot"></span>${sus ? "Suspended" : "Live"} · ${esc(e.status)} · ${esc(scoreLine(e, swap))}${q != null ? ` · ${esc(who)} ${pct(q)} to win now` : ""}</div>`;
+  }
+  if(isCancelled(e)) return `<div class="match__live match__live--sus">Cancelled</div>`;
+  if(isOver(e)) return "";
+  const bits = [];
+  if(e.start && e.first_start && e.start !== e.first_start) bits.push(`Moved to ${hhmm(e.start)} (was ${hhmm(e.first_start)})`);
+  if(e.start && Date.now() > Date.parse(e.start) + 10*60e3) bits.push(`Running late · was due ${hhmm(e.start)}, not started yet`);
+  return bits.length ? `<div class="match__live match__live--late">${bits.join(" · ")}</div>` : "";
+}
+// 'Florence (Italy) - Qualification' -> 'ATP Challenger Florence' (as the list names events)
+function eventTitle(e){
+  const base = String(e.tournament || "").replace(/\s*(\([^)]*\))?\s*-\s*qualification\s*$/i, "")
+    .replace(/\s+challenger(\s+(men|women))?\s*$/i, "").trim();
+  const lvl = e.level === "challenger" ? (e.tour === "ATP" ? "ATP Challenger" : "WTA 125") : e.tour;
+  return (base.startsWith(lvl) ? base : `${lvl} ${base}`) + (e.qualifying && !/qualifying/i.test(base) ? " (qualifying)" : "");
+}
+// A card in the Live tab (every ATP / WTA / Challenger singles match in play).
+function liveCard(e){
+  const lc = liveChanceFor(e), sus = /interrupt|suspend/i.test(e.status);
+  const row = (name, side) => {
+    const mine = side === "first" ? 0 : 1;
+    const games = (e.sets || []).map(st => `<span class="lv-set">${st[mine]}</span>`).join("");
+    const g = String(e.game || "").split("-"), pts = g.length === 2 && e.game !== "-" ? g[mine] : "";
+    const p = lc ? (side === "first" ? lc.p : 1 - lc.p) : null;
+    return `<div class="lv-row lv-row--${side === "first" ? "a" : "b"}"><span class="lv-srv">${e.serve === side ? "●" : ""}</span>
+      <span class="lv-name">${esc(name)}</span><span class="lv-sets">${games}<span class="lv-pts">${esc(pts)}</span></span>
+      <span class="lv-p">${p != null ? pct(p) : ""}</span></div>`;
+  };
+  const i = MATCHES ? (MATCHES.matches || []).findIndex(x => x.api_key === e.k || pairKey(x.a.name, x.b.name) === pairKey(e.first, e.second)) : -1;
+  const pre = lc ? ` · before the match: ${esc(lc.p0 >= 0.5 ? e.first : e.second)} ${pct(lc.p0 >= 0.5 ? lc.p0 : 1 - lc.p0)}` : "";
+  return `<div class="lv-card${sus ? " lv-card--sus" : ""}">
+    <div class="lv-head"><span class="lv-dot"></span>${sus ? "Suspended" : esc(e.status)} · ${esc(eventTitle(e))} · ${esc(String(e.round || "").replace(/^.* - /, ""))} · ${esc(e.surface || "")}</div>
+    ${row(e.first, "first")}${row(e.second, "second")}
+    <div class="lv-foot">${lc ? "Chance to win now (model, from the live score)" + pre : "No model numbers: a player isn't in our data yet"}${i >= 0 ? ` <button class="match__go lv-go" type="button" data-i="${i}">Analyse</button>` : ""}</div></div>`;
+}
+
 let TODAY_TAB = "";
 // the tab is remembered for this visit only, so the site always opens on All
 try { TODAY_TAB = sessionStorage.getItem("todayTab") || ""; localStorage.removeItem("todayTab"); } catch (e) { /* storage blocked */ }
@@ -951,8 +1163,15 @@ function renderToday(j){
   if(j.status === "quota_low") $("todayStamp").textContent += " · odds allowance low";
   if(j.scheduled_only) $("todayStamp").textContent += ` · ${j.scheduled_only} without odds yet`;
   if(j.status === "no_api_key" && !(j.matches || []).length){ list.innerHTML = '<div class="today__empty">Odds feed not connected yet — add the ODDS_API_KEY secret (see Docs).</div>'; return; }
-  const ms = (j.matches || []).filter(m => !m.start || new Date(m.start) > Date.now() - 3*3600e3);
-  if(!ms.length){ list.innerHTML = '<div class="today__empty">No priced ATP/WTA matches in the next day and a half.</div>'; return; }
+  // finished matches go as soon as the live feed says so; a match running late stays
+  // (the list keeps it up to 12 hours past its time) until it is played
+  const ms = (j.matches || []).filter(m => {
+    const L = liveFor(m);
+    if(L) return !isOver(L.e) && !(isCancelled(L.e) && Date.parse(L.e.start) < Date.now() - 3*3600e3);
+    return !m.start || new Date(m.start) > Date.now() - 3*3600e3;
+  });
+  const liveN = LIVE ? (LIVE.live || []).length : 0;
+  if(!ms.length && !liveN){ list.innerHTML = '<div class="today__empty">No priced ATP/WTA matches in the next day and a half.</div>'; return; }
   const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
   // one tab per tournament (the remembered one, or All, which groups them): tour events
   // first, then "All Challengers" and each Challenger event
@@ -961,27 +1180,36 @@ function renderToday(j){
   const tourEv = [...new Set(ms.filter(m => !isCh(m)).map(m => m.tournament))];
   const chEv = [...new Set(ms.filter(isCh).map(m => m.tournament))];
   const tours = [...tourEv, ...chEv];
-  if (TODAY_TAB && TODAY_TAB !== CH && !tours.includes(TODAY_TAB)) TODAY_TAB = "";
+  if (TODAY_TAB === LIVE_TAB && !LIVE) TODAY_TAB = "";
+  if (TODAY_TAB && TODAY_TAB !== CH && TODAY_TAB !== LIVE_TAB && !tours.includes(TODAY_TAB)) TODAY_TAB = "";
   if (TODAY_TAB === CH && !chEv.length) TODAY_TAB = "";
   const count = t => t === "" ? ms.length : t === CH ? ms.filter(isCh).length : ms.filter(m => m.tournament === t).length;
   const label = t => t === "" ? "All" : t === CH ? "All Challengers" : esc(t);
-  const tabs = `<div class="ttabs" role="tablist">${["", ...tourEv, ...(chEv.length ? [CH] : []), ...chEv].map(t =>
+  const liveTab = LIVE ? `<button type="button" role="tab" data-t="${LIVE_TAB}" aria-selected="${TODAY_TAB === LIVE_TAB}" class="ttabs__live"><span class="lv-dot"></span>Live <span>${liveN}</span></button>` : "";
+  const tabs = `<div class="ttabs" role="tablist">${liveTab}${["", ...tourEv, ...(chEv.length ? [CH] : []), ...chEv].map(t =>
       `<button type="button" role="tab" data-t="${esc(t)}" aria-selected="${t === TODAY_TAB}"${t === CH ? ' class="ttabs__ch"' : ""}>${label(t)} <span>${count(t)}</span></button>`
     ).join("")}</div>`;
+  const when = m => { const L = liveFor(m); return (L && L.e.start) || m.start; };   // the latest start time
   const card = (m, i) => `<div class="match">
-      <div class="match__when">${m.start ? fmt.format(new Date(m.start)) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
-      <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}${matchPick(m)}</div>
+      <div class="match__when">${when(m) ? fmt.format(new Date(when(m))) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
+      <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}${matchPick(m)}${liveLine(m)}</div>
       <button class="match__go" type="button" data-i="${i}">Analyse</button>
       ${matchExtras(m)}</div>`;
-  const shown = (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
-    `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t ? card(m, i) : "").join("")}</div>`).join("");
+  const stale = LIVE && Date.parse(LIVE.updated) < Date.now() - 10*60e3
+    ? `<div class="today__empty">Live scores paused: last update ${hhmm(LIVE.updated)}.</div>` : "";
+  const shown = TODAY_TAB === LIVE_TAB
+    ? stale + (liveN ? (LIVE.live || []).map(liveCard).join("") : '<div class="today__empty">No ATP, WTA or Challenger singles in play right now.</div>')
+      + `<div class="match__pin lv-note">Scores update every minute (as of ${hhmm(LIVE.updated)}). The chance to win now runs the model's point-by-point chain from the score.</div>`
+    : (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
+      `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t ? card(m, i) : "").join("")}</div>`).join("");
   list.innerHTML = tabs + shown;
   list.querySelectorAll(".ttabs button").forEach(b => b.addEventListener("click", () => {
     TODAY_TAB = b.dataset.t;
     try { sessionStorage.setItem("todayTab", TODAY_TAB); } catch (e) { /* storage blocked */ }
     renderToday(j);
   }));
-  list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () => loadMatch(ms[+b.dataset.i])));
+  list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () =>
+    loadMatch(b.classList.contains("lv-go") ? j.matches[+b.dataset.i] : ms[+b.dataset.i])));
   list.querySelectorAll(".addleg").forEach(b => b.addEventListener("click", () => pbToggle(b.dataset.id, b.dataset.side)));
   pbSyncButtons();
 }
@@ -1238,7 +1466,9 @@ function pbTotals(){
   $("pbNote").innerHTML = notes.join("<br>");
 }
 
-loadData().then(loadMatches);
+loadData().then(loadMatches).then(loadLive);
+setInterval(() => { if(!document.hidden) loadLive(); }, 30000);
+document.addEventListener("visibilitychange", () => { if(!document.hidden) loadLive(); });
 </script>
 </body>
 </html>

@@ -1038,6 +1038,8 @@ def newcomer(name, tour):
     return {"name": name, "tour": tour, "elo": {"overall": elo}, "n": 0, "new": True,
             "info": {"m12": 0, "surf12": {}}}
 
+LATE_HOURS = 12           # a match still not started this long after its time is dropped
+
 def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, odds=None):
     """Add the scheduled matches the odds feed doesn't have, with the model's number only."""
     have = {frozenset((m["a"].get("key"), m["b"].get("key"))): m for m in out["matches"]}
@@ -1076,10 +1078,13 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             ids.append(pid)
         ka, kb = ids
         if frozenset((ka, kb)) in have:
+            have[frozenset((ka, kb))].setdefault("api_key", f["key"])     # links the row to live data
             _drop("already listed from the odds feed")
             continue
-        if not (now < f["start"] <= now + timedelta(hours=hours)):
-            _drop("started or outside the window")
+        # a match past its time that api-tennis still lists as not started is running late:
+        # it stays listed (the site shows the delay) for up to LATE_HOURS
+        if not (now - timedelta(hours=LATE_HOURS) < f["start"] <= now + timedelta(hours=hours)):
+            _drop("outside the window")
             continue
         fa, fb = name_keys(f["a"]), name_keys(f["b"])
         if any((ua & fa and ub & fb) or (ua & fb and ub & fa) for ua, ub in unmatched):
@@ -1105,7 +1110,8 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
         if not ch:                         # same event, one name: use the odds feed's when it lists it
             title = feed_titles.get((f["tour"], court_id(f["tournament"], feed, month)), title)
         title += " (qualifying)" if f["qualifying"] else ""
-        row = {"id": "sched-" + f["key"], "tour": f["tour"], "tournament": title, "round": f["round"],
+        row = {"id": "sched-" + f["key"], "api_key": f["key"], "late": f["start"] <= now,
+               "tour": f["tour"], "tournament": title, "round": f["round"],
                "start": iso(f["start"]), "surface": surf, "indoor": indoor, "surface_known": known,
                "best_of": best_of, "a": no_odds(A["name"], ka, p),
                "b": no_odds(B["name"], kb, 1 - p), "books": 0, "no_odds": True,

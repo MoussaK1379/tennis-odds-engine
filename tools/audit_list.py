@@ -9,12 +9,15 @@ and lists the tournaments with the most misses. A clone needs the history: run
     python tools/audit_list.py 2026-10-14 2026-10-20
 """
 
-import collections, csv, json, os, subprocess, sys
+import collections, csv, json, os, re, subprocess, sys
 from datetime import date, timedelta
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 import update_matches as um                       # noqa: E402
+
+# 'M. Mrva (31143)': a player whose short name another player shares carries their api-tennis key
+key = lambda name: um.loose_key(re.sub(r"\s*\(\d+\)\s*$", "", name or ""))
 
 
 def shown_pairs(ref="origin/main"):
@@ -32,7 +35,7 @@ def shown_pairs(ref="origin/main"):
         times.append(t)
         for m in d.get("matches", []) + d.get("unmatched", []):
             if m.get("start"):
-                shown[m["start"][:10]].add(frozenset((um.loose_key(m["a"]["name"]), um.loose_key(m["b"]["name"]))))
+                shown[m["start"][:10]].add(frozenset((key(m["a"]["name"]), key(m["b"]["name"]))))
     return shown, sorted(times)
 
 
@@ -48,7 +51,7 @@ def main():
             continue
         k = (r["tour"], "qualifying" if r["qualifying"] == "True" else "main draw")
         tot[k] += 1
-        pair = frozenset((um.loose_key(r["winner"]), um.loose_key(r["loser"])))
+        pair = frozenset((key(r["winner"]), key(r["loser"])))
         d = date.fromisoformat(r["date"])
         if not any(pair in shown.get((d + timedelta(days=j)).isoformat(), set()) for j in (-1, 0, 1)):
             miss[k] += 1

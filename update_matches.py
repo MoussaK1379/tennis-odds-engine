@@ -1022,7 +1022,9 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             return {"name": name, "key": key, "model": round(q, 4), "fair_odds": round(1 / q, 2),
                     "market": None, "best_odds": None, "book": None, "ev": None, "kelly": None}
         level_name = ("ATP Challenger" if f["tour"] == "ATP" else "WTA 125") if ch else f["tour"]
-        title = f"{level_name} {challenger_name(f['tournament']) if ch else f['tournament']}"
+        # api-tennis writes some qualifying draws as 'Lyon (France) - Qualification'
+        name = challenger_name(f["tournament"]) if ch else (QUALI_NAME.sub("", f["tournament"] or "").strip() or f["tournament"])
+        title = f"{level_name} {name}"
         if not ch:                         # same event, one name: use the odds feed's when it lists it
             title = feed_titles.get((f["tour"], court_id(f["tournament"], feed, month)), title)
         title += " (qualifying)" if f["qualifying"] else ""

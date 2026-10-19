@@ -868,7 +868,8 @@ function matchExtras(m){
   return bits.length ? `<div class="match__extra">${bits.join("")}</div>` : "";
 }
 let TODAY_TAB = "";
-try { TODAY_TAB = localStorage.getItem("todayTab") || ""; } catch (e) { /* storage blocked */ }
+// the tab is remembered for this visit only, so the site always opens on All
+try { TODAY_TAB = sessionStorage.getItem("todayTab") || ""; localStorage.removeItem("todayTab"); } catch (e) { /* storage blocked */ }
 function renderToday(j){
   const list = $("todayList");
   if(!j){ list.innerHTML = '<div class="today__empty">No match list yet — it appears after the first daily run.</div>'; return; }
@@ -906,7 +907,7 @@ function renderToday(j){
   list.innerHTML = tabs + shown;
   list.querySelectorAll(".ttabs button").forEach(b => b.addEventListener("click", () => {
     TODAY_TAB = b.dataset.t;
-    try { localStorage.setItem("todayTab", TODAY_TAB); } catch (e) { /* storage blocked */ }
+    try { sessionStorage.setItem("todayTab", TODAY_TAB); } catch (e) { /* storage blocked */ }
     renderToday(j);
   }));
   list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () => loadMatch(ms[+b.dataset.i])));

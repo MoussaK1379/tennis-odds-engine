@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-19T03:57:42Z",
+  "updated": "2026-10-19T05:13:29Z",
   "odds_feed_at": "2026-10-19T03:57:42Z",
   "window_hours": 36,
   "status": "ok",
@@ -121,386 +121,20 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.57,
-          "odds": 1.703,
-          "ev": -0.0392,
+          "cost": 0.67,
+          "odds": 1.459,
+          "ev": -0.1768,
           "ticker": "KXWTAMATCH-26OCT19MERFER-MER"
         },
         "b": {
-          "cost": 0.46,
-          "odds": 2.095,
-          "ev": -0.087,
+          "cost": 0.34,
+          "odds": 2.811,
+          "ev": 0.225,
           "ticker": "KXWTAMATCH-26OCT19MERFER-FER"
         },
-        "market_a": 0.5539,
+        "market_a": 0.665,
         "event": "KXWTAMATCH-26OCT19MERFER",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19merfer"
-      }
-    },
-    {
-      "id": "apit-12172125",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou (qualifying)",
-      "round": "Guangzhou - Final",
-      "start": "2026-10-19T04:05:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "S. Purtseladze",
-        "key": "s-purtseladze",
-        "model": 0.4072,
-        "fair_odds": 2.46,
-        "market": 0.3601,
-        "best_odds": 2.62,
-        "book": "Pncl",
-        "ev": -0.1264,
-        "kelly": 0.0,
-        "bet": 0.3334
-      },
-      "b": {
-        "name": "K. Sultanov",
-        "key": "k-sultanov",
-        "model": 0.5928,
-        "fair_odds": 1.69,
-        "market": 0.6399,
-        "best_odds": 1.48,
-        "book": "Pncl",
-        "ev": -0.0135,
-        "kelly": 0.0,
-        "bet": 0.6666
-      },
-      "books": 4,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.4201,
-        "serve": 0.3937,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "retired",
-          "S. Purtseladze: retired from a match 29 days ago (2 in 6 months)"
-        ]
-      ],
-      "prices": {
-        "Marathon": [
-          2.58,
-          1.43
-        ],
-        "Pncl": [
-          2.62,
-          1.48
-        ],
-        "1xBet": [
-          2.59,
-          1.44
-        ],
-        "BetVictor": [
-          2.5,
-          1.44
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.361,
-      "kalshi": {
-        "a": {
-          "cost": 0.37,
-          "odds": 2.589,
-          "ev": -0.1368,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19PURSUL-PUR"
-        },
-        "b": {
-          "cost": 0.63,
-          "odds": 1.547,
-          "ev": 0.0312,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19PURSUL-SUL"
-        },
-        "market_a": 0.3687,
-        "event": "KXATPCHALLENGERMATCH-26OCT19PURSUL",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19pursul"
-      }
-    },
-    {
-      "id": "apit-12172126",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou (qualifying)",
-      "round": "Guangzhou - Final",
-      "start": "2026-10-19T04:05:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "D. Palan",
-        "key": "d-palan",
-        "model": 0.4273,
-        "fair_odds": 2.34,
-        "market": 0.3993,
-        "best_odds": 2.38,
-        "book": "WilliamHill",
-        "ev": -0.0976,
-        "kelly": 0.0,
-        "bet": 0.3792
-      },
-      "b": {
-        "name": "S. Pankin",
-        "key": "s-pankin",
-        "model": 0.5727,
-        "fair_odds": 1.75,
-        "market": 0.6007,
-        "best_odds": 1.58,
-        "book": "Pncl",
-        "ev": -0.0191,
-        "kelly": 0.0,
-        "bet": 0.6208
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.4075,
-        "serve": 0.4449,
-        "w": 0.4
-      },
-      "flags": [],
-      "prices": {
-        "Marathon": [
-          2.33,
-          1.52
-        ],
-        "Pncl": [
-          2.37,
-          1.58
-        ],
-        "1xBet": [
-          2.32,
-          1.54
-        ],
-        "BetVictor": [
-          2.3,
-          1.53
-        ],
-        "WilliamHill": [
-          2.38,
-          1.53
-        ],
-        "bet365": [
-          2.25,
-          1.57
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.4,
-      "kalshi": {
-        "a": {
-          "cost": 0.39,
-          "odds": 2.459,
-          "ev": -0.0675,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19PALPAN-PAL"
-        },
-        "b": {
-          "cost": 0.62,
-          "odds": 1.571,
-          "ev": -0.0247,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19PALPAN-PAN"
-        },
-        "market_a": 0.3869,
-        "event": "KXATPCHALLENGERMATCH-26OCT19PALPAN",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19palpan"
-      }
-    },
-    {
-      "id": "apit-12172128",
-      "tour": "ATP",
-      "tournament": "ATP Challenger Guangzhou (qualifying)",
-      "round": "Guangzhou - Final",
-      "start": "2026-10-19T04:05:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "O. Jasika",
-        "key": "o-jasika",
-        "model": 0.656,
-        "fair_odds": 1.52,
-        "market": 0.7738,
-        "best_odds": 1.22,
-        "book": "bet365",
-        "ev": -0.0069,
-        "kelly": 0.0,
-        "bet": 0.8141
-      },
-      "b": {
-        "name": "K. Matsuda",
-        "key": "k-matsuda",
-        "model": 0.344,
-        "fair_odds": 2.91,
-        "market": 0.2262,
-        "best_odds": 4.49,
-        "book": "Pncl",
-        "ev": -0.1651,
-        "kelly": 0.0,
-        "bet": 0.1859
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-guangzhou",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.5316,
-        "serve": 0.8519,
-        "w": 0.4
-      },
-      "flags": [
-        [
-          "retired",
-          "O. Jasika: retired from a match 34 days ago"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.2,
-          4.33
-        ],
-        "bet365": [
-          1.22,
-          4.0
-        ],
-        "Marathon": [
-          1.2,
-          3.98
-        ],
-        "BetVictor": [
-          1.2,
-          4.0
-        ],
-        "1xBet": [
-          1.21,
-          3.98
-        ],
-        "Pncl": [
-          1.2,
-          4.49
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.7891,
-      "kalshi": {
-        "a": {
-          "cost": 0.8,
-          "odds": 1.233,
-          "ev": 0.0038,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19JASMAT-JAS"
-        },
-        "b": {
-          "cost": 0.21,
-          "odds": 4.512,
-          "ev": -0.1612,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT19JASMAT-MAT"
-        },
-        "market_a": 0.795,
-        "event": "KXATPCHALLENGERMATCH-26OCT19JASMAT",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19jasmat"
-      }
-    },
-    {
-      "id": "apit-12172142",
-      "tour": "WTA",
-      "tournament": "WTA Osaka",
-      "round": "WTA Osaka - 1/16-finals",
-      "start": "2026-10-19T04:25:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "T. Gibson",
-        "key": "t-gibson",
-        "model": 0.4642,
-        "fair_odds": 2.15,
-        "market": 0.5547,
-        "best_odds": 1.79,
-        "book": "Pncl",
-        "ev": 0.0048,
-        "kelly": 0.0015,
-        "bet": 0.5614
-      },
-      "b": {
-        "name": "H. Dart",
-        "key": "h-dart",
-        "model": 0.5358,
-        "fair_odds": 1.87,
-        "market": 0.4453,
-        "best_odds": 2.2,
-        "book": "bet365",
-        "ev": -0.035,
-        "kelly": 0.0,
-        "bet": 0.4386
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "osaka",
-      "model_version": "2026-10-19",
-      "level": "tour",
-      "parts": {
-        "elo": 0.5488,
-        "serve": 0.3543,
-        "w": 0.3
-      },
-      "flags": [],
-      "prices": {
-        "WilliamHill": [
-          1.73,
-          2.1
-        ],
-        "bet365": [
-          1.66,
-          2.2
-        ],
-        "Marathon": [
-          1.7,
-          2.14
-        ],
-        "BetVictor": [
-          1.67,
-          2.1
-        ],
-        "Pncl": [
-          1.79,
-          2.13
-        ],
-        "1xBet": [
-          1.72,
-          2.12
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.5434,
-      "kalshi": {
-        "a": {
-          "cost": 0.56,
-          "odds": 1.732,
-          "ev": -0.0277,
-          "ticker": "KXWTAMATCH-26OCT18GIBDAR-GIB"
-        },
-        "b": {
-          "cost": 0.45,
-          "odds": 2.14,
-          "ev": -0.0614,
-          "ticker": "KXWTAMATCH-26OCT18GIBDAR-DAR"
-        },
-        "market_a": 0.5528,
-        "event": "KXWTAMATCH-26OCT18GIBDAR",
-        "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct18gibdar"
       }
     },
     {
@@ -623,18 +257,18 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.72,
-          "odds": 1.362,
-          "ev": 0.003,
+          "cost": 0.71,
+          "odds": 1.38,
+          "ev": 0.0162,
           "ticker": "KXWTAMATCH-26OCT19CIRSHI-CIR"
         },
         "b": {
-          "cost": 0.29,
-          "odds": 3.285,
-          "ev": -0.1341,
+          "cost": 0.3,
+          "odds": 3.178,
+          "ev": -0.1623,
           "ticker": "KXWTAMATCH-26OCT19CIRSHI-SHI"
         },
-        "market_a": 0.715,
+        "market_a": 0.705,
         "event": "KXWTAMATCH-26OCT19CIRSHI",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19cirshi"
       }
@@ -763,18 +397,18 @@
       "pinnacle_a": 0.7701,
       "kalshi": {
         "a": {
-          "cost": 0.8,
-          "odds": 1.233,
-          "ev": -0.013,
+          "cost": 0.79,
+          "odds": 1.247,
+          "ev": -0.0018,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19PURZHU-PUR"
         },
         "b": {
-          "cost": 0.22,
-          "odds": 4.31,
-          "ev": -0.1402,
+          "cost": 0.21,
+          "odds": 4.512,
+          "ev": -0.0999,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19PURZHU-ZHU"
         },
-        "market_a": 0.79,
+        "market_a": 0.7919,
         "event": "KXATPCHALLENGERMATCH-26OCT19PURZHU",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19purzhu"
       }
@@ -937,9 +571,9 @@
       "pinnacle_a": 0.5316,
       "kalshi": {
         "a": {
-          "cost": 0.55,
-          "odds": 1.763,
-          "ev": -0.0249,
+          "cost": 0.54,
+          "odds": 1.794,
+          "ev": -0.0077,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19SAMDEM-SAM"
         },
         "b": {
@@ -948,7 +582,7 @@
           "ev": -0.083,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19SAMDEM-DEM"
         },
-        "market_a": 0.5373,
+        "market_a": 0.535,
         "event": "KXATPCHALLENGERMATCH-26OCT19SAMDEM",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19samdem"
       }
@@ -1130,12 +764,12 @@
           "ticker": "KXATPMATCH-26OCT18KECDUC-KEC"
         },
         "b": {
-          "cost": 0.4,
-          "odds": 2.399,
-          "ev": -0.1083,
+          "cost": 0.39,
+          "odds": 2.459,
+          "ev": -0.086,
           "ticker": "KXATPMATCH-26OCT18KECDUC-DUC"
         },
-        "market_a": 0.61,
+        "market_a": 0.615,
         "event": "KXATPMATCH-26OCT18KECDUC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18kecduc"
       }
@@ -1630,18 +1264,18 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.43,
-          "odds": 2.236,
-          "ev": -0.0155,
+          "cost": 0.44,
+          "odds": 2.187,
+          "ev": -0.0371,
           "ticker": "KXWTAMATCH-26OCT19KASSAS-KAS"
         },
         "b": {
-          "cost": 0.58,
-          "odds": 1.675,
-          "ev": -0.0625,
+          "cost": 0.57,
+          "odds": 1.703,
+          "ev": -0.0468,
           "ticker": "KXWTAMATCH-26OCT19KASSAS-SAS"
         },
-        "market_a": 0.425,
+        "market_a": 0.435,
         "event": "KXWTAMATCH-26OCT19KASSAS",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19kassas"
       }
@@ -1726,9 +1360,9 @@
       "pinnacle_a": 0.6093,
       "kalshi": {
         "a": {
-          "cost": 0.61,
-          "odds": 1.596,
-          "ev": -0.002,
+          "cost": 0.62,
+          "odds": 1.571,
+          "ev": -0.0177,
           "ticker": "KXATPMATCH-26OCT18MANVUK-MAN"
         },
         "b": {
@@ -1737,7 +1371,7 @@
           "ev": -0.1011,
           "ticker": "KXATPMATCH-26OCT18MANVUK-VUK"
         },
-        "market_a": 0.605,
+        "market_a": 0.607,
         "event": "KXATPMATCH-26OCT18MANVUK",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18manvuk"
       }
@@ -1832,12 +1466,12 @@
           "ticker": "KXATPCHALLENGERMATCH-26OCT19PERSAK-PER"
         },
         "b": {
-          "cost": 0.29,
-          "odds": 3.285,
-          "ev": -0.1081,
+          "cost": 0.3,
+          "odds": 3.178,
+          "ev": -0.1372,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19PERSAK-SAK"
         },
-        "market_a": 0.7121,
+        "market_a": 0.7085,
         "event": "KXATPCHALLENGERMATCH-26OCT19PERSAK",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19persak"
       }
@@ -2036,12 +1670,12 @@
           "ticker": "KXATPCHALLENGERMATCH-26OCT19ALMMAR-ALM"
         },
         "b": {
-          "cost": 0.44,
-          "odds": 2.187,
-          "ev": -0.0618,
+          "cost": 0.45,
+          "odds": 2.14,
+          "ev": -0.0819,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19ALMMAR-MAR"
         },
-        "market_a": 0.565,
+        "market_a": 0.5622,
         "event": "KXATPCHALLENGERMATCH-26OCT19ALMMAR",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19almmar"
       }
@@ -2421,9 +2055,9 @@
       "pinnacle_a": 0.222,
       "kalshi": {
         "a": {
-          "cost": 0.22,
-          "odds": 4.31,
-          "ev": -0.207,
+          "cost": 0.21,
+          "odds": 4.512,
+          "ev": -0.1698,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19LEODOM-LEO"
         },
         "b": {
@@ -2432,7 +2066,7 @@
           "ev": 0.0176,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19LEODOM-DOM"
         },
-        "market_a": 0.2071,
+        "market_a": 0.203,
         "event": "KXATPCHALLENGERMATCH-26OCT19LEODOM",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19leodom"
       }
@@ -2568,7 +2202,7 @@
           "ev": -0.0102,
           "ticker": "KXWTAMATCH-26OCT19RAKBOU-BOU"
         },
-        "market_a": 0.2886,
+        "market_a": 0.2921,
         "event": "KXWTAMATCH-26OCT19RAKBOU",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19rakbou"
       }
@@ -2664,7 +2298,7 @@
           "ev": -0.0206,
           "ticker": "KXATPMATCH-26OCT18CILBAS-BAS"
         },
-        "market_a": 0.42,
+        "market_a": 0.4208,
         "event": "KXATPMATCH-26OCT18CILBAS",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18cilbas"
       }
@@ -3051,7 +2685,7 @@
           "ev": -0.0196,
           "ticker": "KXATPMATCH-26OCT19SACGOJ-GOJ"
         },
-        "market_a": 0.392,
+        "market_a": 0.395,
         "event": "KXATPMATCH-26OCT19SACGOJ",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct19sacgoj"
       }
@@ -3131,18 +2765,18 @@
       "pinnacle_a": 0.3035,
       "kalshi": {
         "a": {
-          "cost": 0.28,
-          "odds": 3.4,
-          "ev": -0.0779,
+          "cost": 0.3,
+          "odds": 3.178,
+          "ev": -0.1381,
           "ticker": "KXATPMATCH-26OCT19CINMUN-CIN"
         },
         "b": {
-          "cost": 0.72,
-          "odds": 1.362,
-          "ev": -0.0074,
+          "cost": 0.71,
+          "odds": 1.38,
+          "ev": 0.0057,
           "ticker": "KXATPMATCH-26OCT19CINMUN-MUN"
         },
-        "market_a": 0.2778,
+        "market_a": 0.295,
         "event": "KXATPMATCH-26OCT19CINMUN",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct19cinmun"
       }
@@ -3313,18 +2947,18 @@
       "pinnacle_a": 0.6525,
       "kalshi": {
         "a": {
-          "cost": 0.67,
-          "odds": 1.459,
-          "ev": -0.0104,
+          "cost": 0.68,
+          "odds": 1.438,
+          "ev": -0.0246,
           "ticker": "KXATPMATCH-26OCT19JACMMO-JAC"
         },
         "b": {
-          "cost": 0.34,
-          "odds": 2.811,
-          "ev": -0.0957,
+          "cost": 0.33,
+          "odds": 2.895,
+          "ev": -0.0687,
           "ticker": "KXATPMATCH-26OCT19JACMMO-MMO"
         },
-        "market_a": 0.665,
+        "market_a": 0.6734,
         "event": "KXATPMATCH-26OCT19JACMMO",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct19jacmmo"
       }
@@ -3488,12 +3122,12 @@
           "ticker": "KXATPCHALLENGERMATCH-26OCT19TABKRU-TAB"
         },
         "b": {
-          "cost": 0.35,
-          "odds": 2.733,
-          "ev": -0.0514,
+          "cost": 0.36,
+          "odds": 2.659,
+          "ev": -0.0771,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19TABKRU-KRU"
         },
-        "market_a": 0.655,
+        "market_a": 0.65,
         "event": "KXATPCHALLENGERMATCH-26OCT19TABKRU",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19tabkru"
       }
@@ -3597,7 +3231,7 @@
           "ev": 0.021,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19SCHGUL-GUL"
         },
-        "market_a": 0.4523,
+        "market_a": 0.4495,
         "event": "KXATPCHALLENGERMATCH-26OCT19SCHGUL",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19schgul"
       }
@@ -4038,9 +3672,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.73,
-          "odds": 1.344,
-          "ev": 0.0084,
+          "cost": 0.74,
+          "odds": 1.327,
+          "ev": -0.0044,
           "ticker": "KXWTAMATCH-26OCT19EALPAR-EAL"
         },
         "b": {
@@ -4049,7 +3683,7 @@
           "ev": -0.151,
           "ticker": "KXWTAMATCH-26OCT19EALPAR-PAR"
         },
-        "market_a": 0.725,
+        "market_a": 0.7277,
         "event": "KXWTAMATCH-26OCT19EALPAR",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19ealpar"
       }
@@ -4129,18 +3763,18 @@
       "pinnacle_a": 0.5448,
       "kalshi": {
         "a": {
-          "cost": 0.54,
-          "odds": 1.794,
-          "ev": -0.0196,
+          "cost": 0.52,
+          "odds": 1.861,
+          "ev": 0.017,
           "ticker": "KXATPMATCH-26OCT19HANDAM-HAN"
         },
         "b": {
-          "cost": 0.48,
-          "odds": 2.01,
-          "ev": -0.0885,
+          "cost": 0.49,
+          "odds": 1.97,
+          "ev": -0.1066,
           "ticker": "KXATPMATCH-26OCT19HANDAM-DAM"
         },
-        "market_a": 0.5274,
+        "market_a": 0.515,
         "event": "KXATPMATCH-26OCT19HANDAM",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct19handam"
       }
@@ -4220,9 +3854,9 @@
       "pinnacle_a": 0.4599,
       "kalshi": {
         "a": {
-          "cost": 0.47,
-          "odds": 2.052,
-          "ev": -0.0959,
+          "cost": 0.46,
+          "odds": 2.095,
+          "ev": -0.0769,
           "ticker": "KXATPMATCH-26OCT19TABBUD-TAB"
         },
         "b": {
@@ -4231,7 +3865,7 @@
           "ev": -0.0138,
           "ticker": "KXATPMATCH-26OCT19TABBUD-BUD"
         },
-        "market_a": 0.4577,
+        "market_a": 0.455,
         "event": "KXATPMATCH-26OCT19TABBUD",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct19tabbud"
       }
@@ -4404,7 +4038,7 @@
           "ev": -0.045,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19MONMOR-MOR"
         },
-        "market_a": 0.4747,
+        "market_a": 0.4774,
         "event": "KXATPCHALLENGERMATCH-26OCT19MONMOR",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19monmor"
       }
@@ -4504,7 +4138,7 @@
           "ev": -0.1574,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19SANWEH-WEH"
         },
-        "market_a": 0.736,
+        "market_a": 0.7323,
         "event": "KXATPCHALLENGERMATCH-26OCT19SANWEH",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19sanweh"
       }
@@ -4593,9 +4227,9 @@
       "pinnacle_a": 0.4095,
       "kalshi": {
         "a": {
-          "cost": 0.42,
-          "odds": 2.288,
-          "ev": -0.0981,
+          "cost": 0.41,
+          "odds": 2.342,
+          "ev": -0.0768,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19FORFOR2-FOR"
         },
         "b": {
@@ -4604,7 +4238,7 @@
           "ev": -0.018,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19FORFOR2-FOR2"
         },
-        "market_a": 0.41,
+        "market_a": 0.407,
         "event": "KXATPCHALLENGERMATCH-26OCT19FORFOR2",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19forfor2"
       }
@@ -4704,7 +4338,7 @@
           "ev": -0.0836,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19RIBVAS-VAS"
         },
-        "market_a": 0.57,
+        "market_a": 0.5721,
         "event": "KXATPCHALLENGERMATCH-26OCT19RIBVAS",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19ribvas"
       }
@@ -4795,12 +4429,12 @@
           "ticker": "KXATPMATCH-26OCT18FARBAL-FAR"
         },
         "b": {
-          "cost": 0.4,
-          "odds": 2.399,
-          "ev": -0.0766,
+          "cost": 0.39,
+          "odds": 2.459,
+          "ev": -0.0535,
           "ticker": "KXATPMATCH-26OCT18FARBAL-BAL"
         },
-        "market_a": 0.61,
+        "market_a": 0.6131,
         "event": "KXATPMATCH-26OCT18FARBAL",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18farbal"
       }
@@ -4885,9 +4519,9 @@
       "pinnacle_a": 0.1842,
       "kalshi": {
         "a": {
-          "cost": 0.17,
-          "odds": 5.559,
-          "ev": -0.1689,
+          "cost": 0.18,
+          "odds": 5.254,
+          "ev": -0.2145,
           "ticker": "KXATPMATCH-26OCT19GUEMIC-GUE"
         },
         "b": {
@@ -4896,7 +4530,7 @@
           "ev": 0.001,
           "ticker": "KXATPMATCH-26OCT19GUEMIC-MIC"
         },
-        "market_a": 0.1658,
+        "market_a": 0.17,
         "event": "KXATPMATCH-26OCT19GUEMIC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct19guemic"
       }
@@ -4995,7 +4629,7 @@
           "ev": -0.1439,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19ALCAND-AND"
         },
-        "market_a": 0.7172,
+        "market_a": 0.7186,
         "event": "KXATPCHALLENGERMATCH-26OCT19ALCAND",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19alcand"
       }
@@ -5153,9 +4787,9 @@
       "odds_source": "api-tennis",
       "kalshi": {
         "a": {
-          "cost": 0.4,
-          "odds": 2.399,
-          "ev": -0.0997,
+          "cost": 0.39,
+          "odds": 2.459,
+          "ev": -0.0771,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19CECGAU-CEC"
         },
         "b": {
@@ -5164,7 +4798,7 @@
           "ev": -0.0336,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19CECGAU-GAU"
         },
-        "market_a": 0.385,
+        "market_a": 0.3788,
         "event": "KXATPCHALLENGERMATCH-26OCT19CECGAU",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19cecgau"
       }
@@ -5411,18 +5045,18 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.81,
-          "odds": 1.218,
-          "ev": -0.0334,
+          "cost": 0.71,
+          "odds": 1.38,
+          "ev": 0.0952,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19MAGSAL-MAG"
         },
         "b": {
-          "cost": 0.81,
-          "odds": 1.218,
-          "ev": -0.7486,
+          "cost": 0.41,
+          "odds": 2.342,
+          "ev": -0.5166,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19MAGSAL-SAL"
         },
-        "market_a": 0.5,
+        "market_a": 0.6837,
         "event": "KXATPCHALLENGERMATCH-26OCT19MAGSAL",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19magsal"
       }
@@ -5510,18 +5144,18 @@
       "odds_source": "api-tennis",
       "kalshi": {
         "a": {
-          "cost": 0.77,
-          "odds": 1.278,
-          "ev": -0.0058,
+          "cost": 0.76,
+          "odds": 1.294,
+          "ev": 0.0066,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19ALVPER-ALV"
         },
         "b": {
-          "cost": 0.26,
-          "odds": 3.657,
-          "ev": -0.1878,
+          "cost": 0.25,
+          "odds": 3.8,
+          "ev": -0.156,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19ALVPER-PER"
         },
-        "market_a": 0.7576,
+        "market_a": 0.7626,
         "event": "KXATPCHALLENGERMATCH-26OCT19ALVPER",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19alvper"
       }
@@ -5615,12 +5249,12 @@
           "ticker": "KXATPCHALLENGERMATCH-26OCT19DEDREN-DED"
         },
         "b": {
-          "cost": 0.1,
-          "odds": 9.407,
-          "ev": -0.1722,
+          "cost": 0.09,
+          "odds": 10.446,
+          "ev": -0.0808,
           "ticker": "KXATPCHALLENGERMATCH-26OCT19DEDREN-REN"
         },
-        "market_a": 0.9154,
+        "market_a": 0.92,
         "event": "KXATPCHALLENGERMATCH-26OCT19DEDREN",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19dedren"
       }
@@ -5788,7 +5422,24 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.5277
+      "pinnacle_a": 0.5277,
+      "kalshi": {
+        "a": {
+          "cost": 0.54,
+          "odds": 1.794,
+          "ev": -0.0617,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19MIYJON-MIY"
+        },
+        "b": {
+          "cost": 0.47,
+          "odds": 2.052,
+          "ev": -0.0212,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19MIYJON-JON"
+        },
+        "market_a": 0.5381,
+        "event": "KXATPCHALLENGERMATCH-26OCT19MIYJON",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19miyjon"
+      }
     },
     {
       "id": "apit-12172192",
@@ -5863,7 +5514,24 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.3965
+      "pinnacle_a": 0.3965,
+      "kalshi": {
+        "a": {
+          "cost": 0.4,
+          "odds": 2.399,
+          "ev": -0.0903,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19YOUCHA-YOU"
+        },
+        "b": {
+          "cost": 0.61,
+          "odds": 1.596,
+          "ev": -0.0092,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19YOUCHA-CHA"
+        },
+        "market_a": 0.397,
+        "event": "KXATPCHALLENGERMATCH-26OCT19YOUCHA",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19youcha"
+      }
     },
     {
       "id": "apit-12172211",
@@ -5938,7 +5606,24 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.6357
+      "pinnacle_a": 0.6357,
+      "kalshi": {
+        "a": {
+          "cost": 0.65,
+          "odds": 1.502,
+          "ev": -0.0219,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19RYBART-RYB"
+        },
+        "b": {
+          "cost": 0.37,
+          "odds": 2.589,
+          "ev": -0.097,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19RYBART-ART"
+        },
+        "market_a": 0.6432,
+        "event": "KXATPCHALLENGERMATCH-26OCT19RYBART",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19rybart"
+      }
     },
     {
       "id": "apit-12172209",
@@ -6008,7 +5693,24 @@
           2.59
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "kalshi": {
+        "a": {
+          "cost": 0.68,
+          "odds": 1.438,
+          "ev": -0.0388,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19HERRIB-HER"
+        },
+        "b": {
+          "cost": 0.35,
+          "odds": 2.733,
+          "ev": -0.0937,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19HERRIB-RIB"
+        },
+        "market_a": 0.6667,
+        "event": "KXATPCHALLENGERMATCH-26OCT19HERRIB",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19herrib"
+      }
     },
     {
       "id": "apit-12172210",
@@ -6086,7 +5788,24 @@
           7.3
         ]
       },
-      "odds_source": "api-tennis"
+      "odds_source": "api-tennis",
+      "kalshi": {
+        "a": {
+          "cost": 0.93,
+          "odds": 1.07,
+          "ev": -0.0287,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19MELGOM-MEL"
+        },
+        "b": {
+          "cost": 0.08,
+          "odds": 11.744,
+          "ev": 0.0828,
+          "ticker": "KXATPCHALLENGERMATCH-26OCT19MELGOM-GOM"
+        },
+        "market_a": 0.9289,
+        "event": "KXATPCHALLENGERMATCH-26OCT19MELGOM",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19melgom"
+      }
     },
     {
       "id": "sched-12172216",
@@ -7266,18 +6985,18 @@
       ],
       "kalshi": {
         "a": {
-          "cost": 0.44,
-          "odds": 2.187,
-          "ev": -0.0386,
+          "cost": 0.46,
+          "odds": 2.095,
+          "ev": -0.079,
           "ticker": "KXWTAMATCH-26OCT19OSTBEN-OST"
         },
         "b": {
-          "cost": 0.56,
-          "odds": 1.732,
-          "ev": -0.0294,
+          "cost": 0.55,
+          "odds": 1.763,
+          "ev": -0.012,
           "ticker": "KXWTAMATCH-26OCT19OSTBEN-BEN"
         },
-        "market_a": 0.4394,
+        "market_a": 0.455,
         "event": "KXWTAMATCH-26OCT19OSTBEN",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19ostben"
       }
@@ -7389,9 +7108,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.5,
-          "odds": 1.932,
-          "ev": -0.0116,
+          "cost": 0.51,
+          "odds": 1.896,
+          "ev": -0.03,
           "ticker": "KXWTAMATCH-26OCT19BUCKUD-BUC"
         },
         "b": {
@@ -7400,7 +7119,7 @@
           "ev": -0.0564,
           "ticker": "KXWTAMATCH-26OCT19BUCKUD-KUD"
         },
-        "market_a": 0.5051,
+        "market_a": 0.5076,
         "event": "KXWTAMATCH-26OCT19BUCKUD",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19buckud"
       }
@@ -7527,12 +7246,12 @@
           "ticker": "KXWTAMATCH-26OCT19PUTSHN-PUT"
         },
         "b": {
-          "cost": 0.74,
-          "odds": 1.327,
-          "ev": -0.0018,
+          "cost": 0.75,
+          "odds": 1.31,
+          "ev": -0.0146,
           "ticker": "KXWTAMATCH-26OCT19PUTSHN-SHN"
         },
-        "market_a": 0.2576,
+        "market_a": 0.2563,
         "event": "KXWTAMATCH-26OCT19PUTSHN",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19putshn"
       }
@@ -7799,12 +7518,12 @@
           "ticker": "KXWTAMATCH-26OCT19BEJWAN-BEJ"
         },
         "b": {
-          "cost": 0.49,
-          "odds": 1.97,
-          "ev": -0.0138,
+          "cost": 0.5,
+          "odds": 1.932,
+          "ev": -0.0328,
           "ticker": "KXWTAMATCH-26OCT19BEJWAN-WAN"
         },
-        "market_a": 0.5101,
+        "market_a": 0.505,
         "event": "KXWTAMATCH-26OCT19BEJWAN",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19bejwan"
       }
@@ -7822,7 +7541,7 @@
     ]
   },
   "scheduled_only": 6,
-  "kalshi_matched": 58,
+  "kalshi_matched": 59,
   "record": {
     "settled": 663,
     "pending": 115,
@@ -7926,52 +7645,6 @@
   },
   "parlays": [
     {
-      "id": "6e1d9822f7c1ba1bb3ac78a2e705a02b:a+13f890177d71323c65766cec163e2a4b:a+1084968d985bd977015f2ba4c2a37e39:b",
-      "book": "Winamax (DE)",
-      "legs": [
-        {
-          "id": "6e1d9822f7c1ba1bb3ac78a2e705a02b",
-          "side": "a",
-          "name": "Elise Mertens",
-          "odds": 1.78,
-          "vs": "Leylah Fernandez",
-          "tournament": "WTA Ningbo Open",
-          "start": "2026-10-19T04:00:00Z",
-          "url": null,
-          "model": 0.5503
-        },
-        {
-          "id": "13f890177d71323c65766cec163e2a4b",
-          "side": "a",
-          "name": "Sorana Cirstea",
-          "odds": 1.34,
-          "vs": "Shi Han",
-          "tournament": "WTA Ningbo Open",
-          "start": "2026-10-19T05:30:00Z",
-          "url": null,
-          "model": 0.857
-        },
-        {
-          "id": "1084968d985bd977015f2ba4c2a37e39",
-          "side": "b",
-          "name": "Aliaksandra Sasnovich",
-          "odds": 1.78,
-          "vs": "Daria Kasatkina",
-          "tournament": "WTA Ningbo Open",
-          "start": "2026-10-19T08:00:00Z",
-          "url": null,
-          "model": 0.6034
-        }
-      ],
-      "odds": 4.25,
-      "model": 0.2706,
-      "market": 0.2136,
-      "ev": 0.1487,
-      "kelly": 0.0115,
-      "created": "2026-10-18T18:42:32Z",
-      "result": ""
-    },
-    {
       "id": "13f890177d71323c65766cec163e2a4b:a+1084968d985bd977015f2ba4c2a37e39:b",
       "book": "Pinnacle",
       "legs": [
@@ -8005,147 +7678,9 @@
       "kelly": 0.0221,
       "created": "2026-10-18T22:34:05Z",
       "result": ""
-    },
-    {
-      "id": "apit-12172142:b+apit-12172126:a+apit-12171851:b",
-      "book": "bet365",
-      "legs": [
-        {
-          "id": "apit-12172142",
-          "side": "b",
-          "name": "H. Dart",
-          "odds": 2.2,
-          "vs": "T. Gibson",
-          "tournament": "WTA Osaka",
-          "start": "2026-10-19T04:25:00Z",
-          "url": null,
-          "model": 0.5358
-        },
-        {
-          "id": "apit-12172126",
-          "side": "a",
-          "name": "D. Palan",
-          "odds": 2.25,
-          "vs": "S. Pankin",
-          "tournament": "ATP Challenger Guangzhou (qualifying)",
-          "start": "2026-10-19T04:05:00Z",
-          "url": null,
-          "model": 0.4273
-        },
-        {
-          "id": "apit-12171851",
-          "side": "b",
-          "name": "J. Tjen",
-          "odds": 2.2,
-          "vs": "A. Krueger",
-          "tournament": "WTA Osaka",
-          "start": "2026-10-19T05:55:00Z",
-          "url": null,
-          "model": 0.5038
-        }
-      ],
-      "odds": 10.89,
-      "model": 0.1319,
-      "market": 0.0795,
-      "ev": 0.4363,
-      "kelly": 0.011,
-      "created": "2026-10-19T00:47:14Z",
-      "result": ""
     }
   ],
   "kalshi_parlays": [
-    {
-      "id": "kalshi|apit-12172142:b+apit-12172126:a+apit-12171851:b",
-      "book": "Kalshi",
-      "legs": [
-        {
-          "id": "apit-12172142",
-          "side": "b",
-          "name": "H. Dart",
-          "odds": 2.14,
-          "vs": "T. Gibson",
-          "tournament": "WTA Osaka",
-          "start": "2026-10-19T04:25:00Z",
-          "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct18gibdar",
-          "model": 0.5358
-        },
-        {
-          "id": "apit-12172126",
-          "side": "a",
-          "name": "D. Palan",
-          "odds": 2.459,
-          "vs": "S. Pankin",
-          "tournament": "ATP Challenger Guangzhou (qualifying)",
-          "start": "2026-10-19T04:05:00Z",
-          "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19palpan",
-          "model": 0.4273
-        },
-        {
-          "id": "apit-12171851",
-          "side": "b",
-          "name": "J. Tjen",
-          "odds": 2.14,
-          "vs": "A. Krueger",
-          "tournament": "WTA Osaka",
-          "start": "2026-10-19T05:55:00Z",
-          "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct18krutje",
-          "model": 0.5038
-        }
-      ],
-      "odds": 11.26,
-      "model": 0.1319,
-      "market": 0.0766,
-      "ev": 0.4852,
-      "kelly": 0.0118,
-      "created": "2026-10-19T00:47:14Z",
-      "result": ""
-    },
-    {
-      "id": "kalshi|apit-12172142:b+apit-12172126:a+13f890177d71323c65766cec163e2a4b:a",
-      "book": "Kalshi",
-      "legs": [
-        {
-          "id": "apit-12172142",
-          "side": "b",
-          "name": "H. Dart",
-          "odds": 2.14,
-          "vs": "T. Gibson",
-          "tournament": "WTA Osaka",
-          "start": "2026-10-19T04:25:00Z",
-          "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct18gibdar",
-          "model": 0.5358
-        },
-        {
-          "id": "apit-12172126",
-          "side": "a",
-          "name": "D. Palan",
-          "odds": 2.459,
-          "vs": "S. Pankin",
-          "tournament": "ATP Challenger Guangzhou (qualifying)",
-          "start": "2026-10-19T04:05:00Z",
-          "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct19palpan",
-          "model": 0.4273
-        },
-        {
-          "id": "13f890177d71323c65766cec163e2a4b",
-          "side": "a",
-          "name": "Sorana Cirstea",
-          "odds": 1.344,
-          "vs": "Shi Han",
-          "tournament": "WTA Ningbo Open",
-          "start": "2026-10-19T05:30:00Z",
-          "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct19cirshi",
-          "model": 0.857
-        }
-      ],
-      "odds": 7.07,
-      "model": 0.21,
-      "market": 0.1242,
-      "ev": 0.4849,
-      "kelly": 0.02,
-      "created": "2026-10-19T00:47:14Z",
-      "result": ""
-    },
     {
       "id": "kalshi|13f890177d71323c65766cec163e2a4b:a+apit-12171851:b+apit-12172188:b",
       "book": "Kalshi",

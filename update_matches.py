@@ -129,7 +129,7 @@ WTA_EXTRA = [
 
 
 # ---------- model (shared with update_data.py and the backtest) ----------------
-from model import predict_export, bet_prob  # noqa: E402  (after the tables above, which model-free callers import)
+from model import predict_export, bet_prob, match_joint, joint_prob  # noqa: E402  (after the tables above, which model-free callers import)
 
 def kelly_fraction(p, d, frac=0.25):
     b = d - 1
@@ -426,6 +426,84 @@ def side(model_p, market_p, price, book, level="tour"):
     return {"model": round(model_p, 4), "fair_odds": round(1 / model_p, 2),
             "market": round(market_p, 4), "bet": round(p, 4), "best_odds": price, "book": book,
             "ev": round(ev, 4), "kelly": round(kelly_fraction(p, price), 4)}
+
+
+# ---------- set betting and total games ----------------------------------------------
+# Model chances come from model.match_joint (set score x total games, consistent with the
+# match pick). The betting probability blends them with the bookmakers' no-margin chance as
+# for the winner, with weights fitted by tools/market_backtest.py; until there are weights
+# for a market, value means the best price beats the bookmakers' own consensus.
+MARKET_LINES = 5              # total-games lines kept per match: the most widely priced
+DEFAULT_BLEND = [1.0, 0.0]    # market only, until fitted
+
+def _selection(model_p, market_p, bet_p, prices):
+    best = max(prices, key=prices.get) if prices else None
+    d = prices[best] if best else None
+    return {"model": round(model_p, 4), "market": None if market_p is None else round(market_p, 4),
+            "bet": None if bet_p is None else round(bet_p, 4), "best_odds": d, "book": best,
+            "ev": round(bet_p * d - 1, 4) if bet_p is not None and d else None, "prices": prices}
+
+def _sets_market(J, ex, swap, w):
+    probs = {f"{x}-{y}": sum(r) for (x, y), r in J[1].items()}
+    def api(k):                      # the feed's score is from its first player's side
+        x, y = k.split("-")
+        return f"{y}-{x}" if swap else k
+    prices = {k: (ex.get("sets") or {}).get(api(k), {}) for k in probs}
+    books = set.intersection(*(set(v) for v in prices.values())) if all(prices.values()) else set()
+    fair = None
+    if books:
+        fair = {k: statistics.mean((1 / prices[k][b]) / sum(1 / prices[j][b] for j in probs) for b in books)
+                for k in probs}
+    bet = None
+    if fair:
+        raw = {k: bet_prob(probs[k], fair[k], w) for k in probs}
+        bet = {k: v / sum(raw.values()) for k, v in raw.items()}
+    return {k: _selection(probs[k], fair and fair[k], bet and bet[k], prices[k]) for k in probs}
+
+def _totals_market(J, ex, w):
+    lines = {L: v for L, v in (ex.get("totals") or {}).items() if v.get("over") and v.get("under")}
+    keep = sorted(sorted(lines, key=lambda L: -len(set(lines[L]["over"]) & set(lines[L]["under"])))[:MARKET_LINES])
+    if not keep:                     # no prices yet: the model's lines around its median
+        t0, cells = J
+        dist = [sum(r[i] for r in cells.values()) for i in range(len(next(iter(cells.values()))))]
+        acc, med = 0.0, t0
+        for i, v in enumerate(dist):
+            acc += v
+            if acc >= 0.5:
+                med = t0 + i
+                break
+        keep = [med - 1.5, med - 0.5, med + 0.5]
+    out = []
+    for L in keep:
+        po = joint_prob(J, lambda a, b, t: t > L)
+        ov, un = (lines.get(L) or {}).get("over", {}), (lines.get(L) or {}).get("under", {})
+        both = set(ov) & set(un)
+        fo = statistics.mean((1 / ov[b]) / (1 / ov[b] + 1 / un[b]) for b in both) if both else None
+        bo_ = bet_prob(po, fo, w) if fo is not None else None
+        out.append({"line": L, "over": _selection(po, fo, bo_, ov),
+                    "under": _selection(1 - po, None if fo is None else 1 - fo, None if bo_ is None else 1 - bo_, un)})
+    return out
+
+def attach_markets(matches, mdl):
+    """Set betting and total games for every listed match (model, bookmakers, EV), and the
+    joint table the site uses for same-match parlays. -> number of matches done."""
+    hold, setm, n = mdl.get("hold_adj", 0.0) or 0.0, mdl.get("set_m") or {}, 0
+    wt, ws = MARKET_BLEND.get("totals") or DEFAULT_BLEND, MARKET_BLEND.get("sets") or DEFAULT_BLEND
+    for row in matches:
+        pt = row.get("parts") or {}
+        if "pa" not in pt or row["a"].get("model") is None:
+            continue
+        bo = row.get("best_of") or 3
+        J = match_joint(pt["pa"], pt["pb"], row["a"]["model"], bo,
+                        (setm.get(row["tour"]) or {}).get(str(bo), 0.0), hold)
+        ex = ODDS_EXTRA.get(str(row.get("api_key")), {})
+        t0, cells = J
+        row["markets"] = {"sets": _sets_market(J, ex, row.get("api_swap", False), ws),
+                          "totals": _totals_market(J, ex, wt),
+                          "exp_games": round(sum((t0 + i) * v for r in cells.values() for i, v in enumerate(r)), 1)}
+        row["joint"] = {"t0": t0, "p": {f"{x}-{y}": [round(v, 5) for v in r] for (x, y), r in cells.items()}}
+        n += 1
+    return n
 
 
 # ---------- parlays ---------------------------------------------------------------
@@ -960,8 +1038,50 @@ def fetch_schedule(key, now, hours, challenger=False):
 # smaller events) than the odds feed. Used only for matches the odds feed lacks.
 WIN_MARKETS = ("home/away", "match winner", "to win match", "winner", "1x2")
 
+# Total games and set betting, per api-tennis event: {"totals": {line: {"over": {book: price},
+# "under": {...}}}, "sets": {"2-0": {book: price}, ...}}, from the first player's side.
+# Filled by fetch_api_tennis_odds, priced against the model by attach_markets.
+ODDS_EXTRA = {}
+TOTALS_MARKET = "over/under by games in match"
+SETS_MARKET = "set betting"
+
+def _extra_markets(mk):
+    out = {}
+    for name, v in mk.items():
+        n = name.strip().lower()
+        if n == TOTALS_MARKET and isinstance(v, dict):
+            for side_name, lines in v.items():
+                side = "over" if side_name.strip().lower().endswith("over") else \
+                       "under" if side_name.strip().lower().endswith("under") else None
+                if not side or not isinstance(lines, dict):
+                    continue
+                for line, books in lines.items():
+                    try:
+                        ln = float(line)
+                    except ValueError:
+                        continue
+                    if ln % 1 != 0.5:
+                        continue                   # whole lines can push: half lines only
+                    px = {bk: float(d) for bk, d in (books or {}).items() if _price(d)}
+                    if px:
+                        out.setdefault("totals", {}).setdefault(ln, {})[side] = px
+        elif n == SETS_MARKET and isinstance(v, dict):
+            for score, books in v.items():
+                m_ = re.match(r"^\s*(\d)\s*[:-]\s*(\d)\s*$", score)
+                px = {bk: float(d) for bk, d in (books or {}).items() if _price(d)}
+                if m_ and px:
+                    out.setdefault("sets", {})[f"{m_.group(1)}-{m_.group(2)}"] = px
+    return out
+
+def _price(d):
+    try:
+        return float(d) > 1.0
+    except (TypeError, ValueError):
+        return False
+
 def fetch_api_tennis_odds(key, now, hours):
-    """{event_key: {bookmaker: [price first player, price second player]}}; {} if unavailable."""
+    """{event_key: {bookmaker: [price first player, price second player]}}; {} if unavailable.
+    Also fills ODDS_EXTRA (total games, set betting)."""
     from update_data import api_tennis_call
     end = now + timedelta(hours=hours)
     try:
@@ -974,9 +1094,13 @@ def fetch_api_tennis_odds(key, now, hours):
         print(f"  · api-tennis odds: unexpected reply ({type(res).__name__})", file=sys.stderr)
         return {}
     out, markets = {}, {}
+    ODDS_EXTRA.clear()
     for ev_key, mk in res.items():
         if not isinstance(mk, dict):
             continue
+        ex = _extra_markets(mk)
+        if ex:
+            ODDS_EXTRA[str(ev_key)] = ex
         for name in mk:
             markets[name] = markets.get(name, 0) + 1
         win = next((mk[n] for n in mk if n.strip().lower() in WIN_MARKETS), None)
@@ -1078,7 +1202,9 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             ids.append(pid)
         ka, kb = ids
         if frozenset((ka, kb)) in have:
-            have[frozenset((ka, kb))].setdefault("api_key", f["key"])     # links the row to live data
+            row_ = have[frozenset((ka, kb))]
+            if "api_key" not in row_:                                    # links the row to live data
+                row_["api_key"], row_["api_swap"] = f["key"], row_["a"].get("key") != ka
             _drop("already listed from the odds feed")
             continue
         # a match past its time that api-tennis still lists as not started is running late:
@@ -1117,7 +1243,8 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
                "b": no_odds(B["name"], kb, 1 - p), "books": 0, "no_odds": True,
                "court": court_id(f["tournament"], feed, month), "model_version": version,
                "level": f.get("level", "tour"),
-               "parts": {"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3)},
+               "parts": {"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3),
+                         "pa": round(r["pa"], 4), "pb": round(r["pb"], 4)},
                "flags": [fl for fl in match_flags(A, B, surf, today, p, p)]}
         books = (odds or {}).get(f["key"])
         if books:                          # priced by api-tennis's bookmakers
@@ -1195,6 +1322,8 @@ def main():
                       file=sys.stderr)
             odds = fetch_api_tennis_odds(tkey, now, args.hours)
             n = add_schedule(out, sched, players, tour_avgs, mdl, version, now.date(), args.hours, odds)
+            n_mk = attach_markets(out["matches"], mdl)
+            print(f"Markets: set betting and total games priced for {n_mk} matches", file=sys.stderr)
             n_priced = sum(1 for m in out["matches"] if m.get("odds_source") == "api-tennis")
             out["scheduled_only"] = sum(1 for m in out["matches"] if m.get("no_odds"))
             out["diagnostics"] = {**DIAG, "schedule_upcoming": len(sched), "schedule_added": n,
@@ -1361,7 +1490,8 @@ def main():
             row["a"].update(side(p, mkt_a, *best[a]))
             row["b"].update(side(1 - p, 1 - mkt_a, *best[b]))
             row.update(court=court, model_version=version,
-                       parts={"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3)})
+                       parts={"elo": round(r["p_elo"], 4), "serve": round(r["p_mkv"], 4), "w": round(r["w"], 3),
+                              "pa": round(r["pa"], 4), "pb": round(r["pb"], 4)})
             if pin_a is not None:
                 row["pinnacle_a"] = round(pin_a, 4)
             row["flags"] = match_flags(players[ka], players[kb], surf, today, p,

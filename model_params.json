@@ -44,7 +44,8 @@
     "init_elo_ch": 1250,
     "set_m_atp3": 0.5,
     "set_m_atp5": 0.55,
-    "set_m_wta3": 0.55
+    "set_m_wta3": 0.55,
+    "hold_adj": 0.05
   },
   "notes": "Re-tuned jointly (coordinate descent, tools/backtest.py --tune) on 2025-04-01..2026-03-31 with ratings built from results back to 2022. Stack adopted (tuning year 0.6016 vs blend 0.6041). Holdout 2026-04-01..2026-10-18: log loss 0.5994, Brier 0.2068, favourite won 67.0% (before the re-tune 0.6072 on the same history; 0.6149 with the original settings and the 2024 history).",
   "challenger_study": {
@@ -141,5 +142,29 @@
       }
     },
     "note": "value bets use bet_prob(model, market) with these weights; see tools/market_backtest.py"
+  },
+  "totals_fit": {
+    "hold_adj": 0.05,
+    "method": "tools/backtest.py totals_score: over/under log loss on lines 19.5-24.5 (bo3) / 34.5-40.5 (bo5), 1,500 tuning-year matches per setting",
+    "tuning_year": {
+      "0.0": 0.6647,
+      "0.03": 0.6597,
+      "0.045": 0.6587,
+      "0.06": 0.6583,
+      "0.075": 0.6584,
+      "0.09": 0.6588
+    },
+    "holdout_2000": {
+      "before": {
+        "ou_logloss": 0.6644,
+        "mean_pred": 24.32,
+        "mean_actual": 23.6
+      },
+      "after": {
+        "ou_logloss": 0.6619,
+        "mean_pred": 23.76,
+        "mean_actual": 23.6
+      }
+    }
   }
 }

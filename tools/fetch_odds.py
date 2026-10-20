@@ -22,7 +22,11 @@ import update_data as u                           # noqa: E402
 
 OUT = "data/odds_history.csv"
 STATE = "data/odds_history_state.json"
-FIELDS = ["event_key", "date", "tour", "first_key", "books", "best_1", "best_2", "fair_1", "pin_1"]
+FIELDS = ["event_key", "date", "tour", "first_key", "books", "best_1", "best_2", "fair_1", "pin_1",
+          # total games at the most widely priced half line, and set betting (JSON by score from
+          # the first player's side: no-margin chance and best price)
+          "ou_line", "ou_over_fair", "ou_over_best", "ou_under_best", "sets"]
+VERSION = 2                   # 2: totals and set betting too (history is walked again to add them)
 WINDOW = 3                    # days per request
 REFRESH = 7                   # recent days re-fetched every run
 WIN_MARKETS = ("home/away", "match winner", "to win match", "winner", "1x2")
@@ -59,6 +63,27 @@ def summarise(books):
             "best_2": max(v[1] for v in soft.values()), "fair_1": round(statistics.mean(fair), 4), "pin_1": pin}
 
 
+def extras(mk):
+    """Total games and set betting summaries for one event (see FIELDS)."""
+    import update_matches as um
+    ex, out = um._extra_markets(mk if isinstance(mk, dict) else {}), {}
+    lines = {L: v for L, v in (ex.get("totals") or {}).items() if v.get("over") and v.get("under")}
+    if lines:
+        L = max(lines, key=lambda x: len(set(lines[x]["over"]) & set(lines[x]["under"])))
+        ov, un = lines[L]["over"], lines[L]["under"]
+        both = set(ov) & set(un)
+        if both:
+            out.update(ou_line=L, ou_over_fair=round(statistics.mean((1 / ov[b]) / (1 / ov[b] + 1 / un[b]) for b in both), 4),
+                       ou_over_best=max(ov.values()), ou_under_best=max(un.values()))
+    sets = ex.get("sets") or {}
+    if len(sets) >= 4:
+        books = set.intersection(*(set(v) for v in sets.values()))
+        if books:
+            fair = {k: statistics.mean((1 / sets[k][b]) / sum(1 / sets[j][b] for j in sets) for b in books) for k in sets}
+            out["sets"] = json.dumps({k: [round(fair[k], 4), max(sets[k].values())] for k in sets}, separators=(",", ":"))
+    return out
+
+
 def fetch_window(key, a, b):
     """-> (rows for finished matches between a and b with prices, finished matches, events with odds)."""
     first = {}
@@ -76,7 +101,7 @@ def fetch_window(key, a, b):
         books = books_of(mk)
         if books:
             tour, d, fk = first[str(ek)]
-            rows.append({"event_key": str(ek), "date": d, "tour": tour, "first_key": fk, **summarise(books)})
+            rows.append({"event_key": str(ek), "date": d, "tour": tour, "first_key": fk, **summarise(books), **extras(mk)})
     return rows, len(first), len(res)
 
 
@@ -94,12 +119,14 @@ def main():
         with open(OUT, encoding="utf-8") as fh:
             rows = {r["event_key"]: r for r in csv.DictReader(fh)}
     state = u.load_json(STATE) or {}
+    if state.get("v") != VERSION:              # walk the history again to add the new columns
+        state = {"v": VERSION}
     start = datetime.strptime(min(r["date"] for r in u.load_api_cache(args.cache).values()), "%Y-%m-%d").date()
     today = date.today()
 
     def save():
         with open(OUT, "w", newline="", encoding="utf-8") as fh:
-            wr = csv.DictWriter(fh, fieldnames=FIELDS)
+            wr = csv.DictWriter(fh, fieldnames=FIELDS, restval="")
             wr.writeheader()
             wr.writerows(sorted(rows.values(), key=lambda r: (r["date"], r["event_key"])))
         with open(STATE, "w", encoding="utf-8") as fh:

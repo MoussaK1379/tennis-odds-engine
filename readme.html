@@ -179,6 +179,28 @@
       value bets that carried no warnings, and compares the model with Pinnacle where Pinnacle prices
       the match.</p>
 
+    <h2>Set betting, total games and parlays</h2>
+    <p>Every listed match has a <strong>Set betting · total games</strong> section: each set score
+      (2-0, 2-1, …) and the total-games lines bookmakers price (api-tennis: about six books, Pinnacle
+      included), with the model's chance, the best price and the EV. Any of them can go in the parlay
+      builder with <strong>+</strong>.</p>
+    <ul>
+      <li><strong>One table per match.</strong> <code>model.match_joint</code> gives the chance of every
+        (set score, total games) pair, consistent with the match pick: who wins each set follows the set
+        scores (with momentum), the games in a set come from the serve model given who won it. Winner, set
+        betting and every over/under are sums over it, so they always agree with each other.</li>
+      <li><strong>Calibrated on real totals.</strong> The raw serve chances hold serve a little too often
+        when counting games (too many games and tiebreaks), so they are lowered by <code>hold_adj</code>
+        for game counts only, fitted on the tuning year (<code>python tools/backtest.py --totals</code>).
+        Winner and set-score chances don't change.</li>
+      <li><strong>Same-match parlays</strong> (e.g. a player to win 2-0 and under 21.5 games) are priced
+        from the table, not by multiplying legs that depend on each other. Bookmakers only take these as a
+        bet builder at their own price, so the builder asks for that price to work out the EV.</li>
+      <li><strong>EV</strong> uses the bookmakers' no-margin chance for these markets (the model is shown
+        alongside) until the odds history (now saving totals and set betting too) is long enough to test
+        the model against them, as was done for the winner.</li>
+    </ul>
+
     <h2>Live scores and delays</h2>
     <p><code>tools/live.py</code> runs around the clock in GitHub Actions (<code>live-scores</code>,
       about six hours per run, each run starting the next). Every minute it reads api-tennis's live

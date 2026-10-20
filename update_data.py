@@ -346,6 +346,11 @@ def _first_set(games):
     done = (max(a, b) == 6 and abs(a - b) >= 2) or (max(a, b) == 7 and min(a, b) in (5, 6))
     return (a, b) if done else None
 
+def _total_games(games):
+    """'6-4 3-6 7.7-6.5 0-0' -> 32 games (a tiebreak counts as one game), or None."""
+    pairs = re.findall(r"(\d+)(?:\.\d+)?-(\d+)(?:\.\d+)?", games or "")
+    return sum(int(a) + int(b) for a, b in pairs) or None
+
 def from_api_cache(cache, tour_label, challenger=False):
     """Cached matches for one tour as model rows. challenger=True also includes that tour's
     Challenger level (ATP Challenger / WTA 125), marked level 'challenger'."""
@@ -379,6 +384,7 @@ def from_api_cache(cache, tour_label, challenger=False):
                     "winner": w, "loser": l, "status": r["status"], "tournament": r["tournament"],
                     "court": court_id(r["tournament"], feed, d.month),
                     "set1": _first_set(r.get("games")),
+                    "games_total": _total_games(r.get("games")) if r["status"] == "completed" else None,
                     "sets": ((int(r["w_sets"]), int(r["l_sets"]))
                              if (r.get("w_sets") or "").isdigit() and (r.get("l_sets") or "").isdigit() else None),
                     "best_of": 3 if qual or ch else guess_best_of(r["tournament"], tour_label),

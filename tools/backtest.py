@@ -51,7 +51,7 @@ def load(cache_path):
 
 def run(P, data, set_prob):
     """-> list of (tour, date, y, p, p_elo, p_mkv, n, prior_min, qualifying, stack features,
-    (sets won by a, sets won by b) or None, best of)."""
+    (sets won by a, sets won by b) or None, best of, pa, pb, first set games, level, total games)."""
     recs = []
     for tour, ms in data.items():
         eng = model.TourEngine(tour, P, set_prob=set_prob)
@@ -65,7 +65,7 @@ def run(P, data, set_prob):
                 recs.append((tour, m["date"], 1 if a == m["winner"] else 0, r["p"], r["p_elo"],
                              r["p_mkv"], r["n"], min(seen.get(a, 0), seen.get(b, 0)), m["qualifying"],
                              r["feats"], _sets_for(m, a), m["best_of"], r["pa"], r["pb"], _set1_for(m, a),
-                             m.get("level", "tour")))
+                             m.get("level", "tour"), m.get("games_total")))
             eng.update(m)
             seen[m["winner"]] = seen.get(m["winner"], 0) + 1
             seen[m["loser"]] = seen.get(m["loser"], 0) + 1
@@ -157,6 +157,43 @@ def fit_sets(recs, end, log, P):
                               "straight_sets_holdout": {"independent": sp0, "momentum": sp1, "actual": sa},
                               "n_holdout": len(hold_rows), "adopted": adopt}
     return out
+
+
+HOLD_GRID = (0.0, 0.02, 0.035, 0.05, 0.065, 0.08)
+TOTALS_SAMPLE = 1500          # matches per period scored (match_joint is slow in pure Python)
+
+
+def totals_score(recs, lo, hi, P, k, n=TOTALS_SAMPLE, seed=1):
+    """Total-games forecasts on finished tour matches between lo and hi: over/under log loss on
+    the usual lines, and the predicted vs actual mean total, with hold adjustment k."""
+    import random
+    rows = [r for r in recs if lo <= r[1] <= hi and r[15] == "tour" and r[16] and r[10]
+            and max(r[10]) == (3 if r[11] == 5 else 2)]
+    rows = random.Random(seed).sample(rows, min(n, len(rows)))
+    ll = cnt = pred = act = 0.0
+    for r in rows:
+        m = {"ATP": {3: P.set_m_atp3, 5: P.set_m_atp5}, "WTA": {3: P.set_m_wta3}}[r[0]].get(r[11], 0.0)
+        t0, cells = model.match_joint(r[12], r[13], r[3], r[11], m, k)
+        dist = [sum(c[i] for c in cells.values()) for i in range(len(next(iter(cells.values()))))]
+        pred += sum((t0 + i) * v for i, v in enumerate(dist)); act += r[16]
+        for L in ((19.5, 20.5, 21.5, 22.5, 23.5, 24.5) if r[11] == 3 else (34.5, 36.5, 38.5, 40.5)):
+            po = min(max(sum(v for i, v in enumerate(dist) if t0 + i > L), 1e-4), 1 - 1e-4)
+            ll -= math.log(po if r[16] > L else 1 - po); cnt += 1
+    return {"n": len(rows), "ou_logloss": ll / cnt, "mean_pred": pred / len(rows), "mean_actual": act / len(rows)}
+
+
+def fit_totals(recs, end, log, P):
+    """hold_adj (serve chances lowered when counting games) on the tuning year."""
+    res = [(totals_score(recs, *TUNE, P, k), k) for k in HOLD_GRID]
+    for st, k in res:
+        log(f"  hold_adj {k:.3f}: tuning year over/under log loss {st['ou_logloss']:.4f}, "
+            f"mean total predicted {st['mean_pred']:.2f} / actual {st['mean_actual']:.2f}")
+    best = min(res, key=lambda x: x[0]["ou_logloss"])[1]
+    h0, h1 = totals_score(recs, HOLD_START, end, P, 0.0), totals_score(recs, HOLD_START, end, P, best)
+    log(f"  -> hold_adj {best}; holdout over/under log loss {h0['ou_logloss']:.4f} -> {h1['ou_logloss']:.4f}, "
+        f"mean total {h0['mean_pred']:.2f} -> {h1['mean_pred']:.2f} (actual {h1['mean_actual']:.2f})")
+    P.hold_adj = best
+    return {"hold_adj": best, "holdout": {"before": h0, "after": h1}}
 
 
 def score(recs, lo, hi, col=3, tour=None, min_prior=0, level="tour"):
@@ -393,6 +430,7 @@ def main():
     ap.add_argument("--params", default="model_params.json")
     ap.add_argument("--tune", action="store_true")
     ap.add_argument("--sets", action="store_true", help="only (re)fit set momentum, keeping the other settings")
+    ap.add_argument("--totals", action="store_true", help="only (re)fit hold_adj for total games, keeping the rest")
     ap.add_argument("--report", default="backtest_report.json")
     ap.add_argument("--challenger", action="store_true", help="test feeding Challenger results into the ratings")
     ap.add_argument("--write", action="store_true", help="with --challenger: save the result to --params")
@@ -409,6 +447,14 @@ def main():
             saved = json.load(fh)
     except (OSError, ValueError):
         saved = {}
+    if args.totals:
+        P = model.Params.from_dict(saved["params"])
+        rep_ = fit_totals(run(P, data, set_prob), end, log, P)
+        saved.update({"params": P.to_dict(), "totals_fit": rep_})
+        with open(args.params, "w") as fh:
+            json.dump(saved, fh, indent=2, default=str)
+        log(f"wrote {args.params}")
+        return
     if args.challenger:
         P0 = model.Params.from_dict(saved["params"])
         P, rep = challenger_study(data, set_prob, P0, end, log)

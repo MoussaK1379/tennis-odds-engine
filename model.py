@@ -130,6 +130,8 @@ class Params:
     set_m_atp3: float = 0.0
     set_m_atp5: float = 0.0
     set_m_wta3: float = 0.0
+    # lowers both serve chances when counting games (total games, set-score games)
+    hold_adj: float = 0.0
 
     def stack(self, tour):
         return self.stack_atp if tour == "ATP" else self.stack_wta
@@ -248,6 +250,53 @@ def full_scorelines(pa, pb, dist, best_of, m=0.0, top=8):
             go(a, b + 1, ql, pr * (1 - q) * v, sets + [k])
     go(0, 0, s1, 1.0, [])
     return sorted(out, key=lambda x: -x[1])[:top]
+
+
+# ---------- set score x total games (set betting, over/under games, same-match parlays) --
+def match_joint(pa, pb, p_match, best_of, m=0.0, hold_adj=0.0):
+    """P(final set score, total games) for A, consistent with the headline chance p_match:
+    -> (t0, {(sets A, sets B): [P(total = t0), P(total = t0 + 1), ...]}). Who wins each set
+    follows the set-score distribution (with momentum m); the games of a set come from the
+    serve model given who won it (as full_scorelines). Every market on the site (winner,
+    set betting, total games) and any same-match parlay is a sum of cells of this table.
+    hold_adj lowers both serve chances for the game counts (the raw ones hold serve a little
+    too often: too many games and tiebreaks); fitted by tools/backtest.py --totals."""
+    need = 3 if best_of == 5 else 2
+    pa, pb = clip(pa - hold_adj), clip(pb - hold_adj)
+    s1 = first_set_chance(set_dist(p_match, best_of, m), best_of, m)
+    L = _logit(s1)
+    qw, ql = 1 / (1 + math.exp(-(L + m))), 1 / (1 + math.exp(-(L - m)))
+    g = first_set_scores(pa, pb, s1)
+    def games(a_won):
+        out = {}
+        for (a, b), v in g.items():
+            if (a > b) == a_won:
+                out[a + b] = out.get(a + b, 0.0) + v
+        t = sum(out.values())
+        return {k: v / t for k, v in out.items()}
+    gw, gl = games(True), games(False)
+    cells = {}
+    def go(a, b, q, dist):
+        if a == need or b == need:
+            c = cells.setdefault((a, b), {})
+            for t, v in dist.items():
+                c[t] = c.get(t, 0.0) + v
+            return
+        for won, pr, gd in ((True, q, gw), (False, 1 - q, gl)):
+            nd = {}
+            for t, v in dist.items():
+                for k, w in gd.items():
+                    nd[t + k] = nd.get(t + k, 0.0) + v * pr * w
+            go(a + 1, b, qw, nd) if won else go(a, b + 1, ql, nd)
+    go(0, 0, s1, {0: 1.0})
+    t0 = min(t for c in cells.values() for t in c)
+    t1 = max(t for c in cells.values() for t in c)
+    return t0, {k: [c.get(t, 0.0) for t in range(t0, t1 + 1)] for k, c in cells.items()}
+
+def joint_prob(joint, pred):
+    """Sum of the cells (sets A, sets B, total games) where pred(a, b, total) holds."""
+    t0, cells = joint
+    return sum(v for (a, b), row in cells.items() for i, v in enumerate(row) if pred(a, b, t0 + i))
 
 
 # ---------- stacking ------------------------------------------------------------
@@ -641,6 +690,7 @@ class TourEngine:
         blk = {"rating": "glicko" if self.P.rating == "glicko" else "elo",
                "w": {"ATP": self.P.w_atp, "WTA": self.P.w_wta}, "n0": self.P.n0}
         blk["set_m"] = {"ATP": {"3": self.P.set_m_atp3, "5": self.P.set_m_atp5}, "WTA": {"3": self.P.set_m_wta3}}
+        blk["hold_adj"] = self.P.hold_adj
         if self.P.ch_use:
             blk["challenger"] = True          # Challenger results are in the ratings; list their matches
         if self.P.stack_atp or self.P.stack_wta:

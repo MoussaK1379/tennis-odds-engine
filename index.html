@@ -161,6 +161,17 @@
   .lv-p{ font-family:var(--mono); font-size:.8rem; text-align:right; color:var(--mute); }
   .lv-foot{ font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:4px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
   .lv-note{ margin-top:10px; }
+  .mk{ grid-column:2 / -1; margin-top:4px; font-family:var(--mono); font-size:.74rem; }
+  .mk summary{ cursor:pointer; color:var(--mute); padding:2px 0; }
+  .mk summary:hover{ color:var(--ball); }
+  .mk__grid{ display:grid; grid-template-columns:1fr 1fr; gap:4px 18px; margin-top:6px; }
+  @media (max-width:640px){ .mk__grid{ grid-template-columns:1fr; } }
+  .mk__h{ font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ball); margin:2px 0 4px; }
+  .mk__sel{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; padding:2px 0; }
+  .mk__lab{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text, inherit); }
+  .mk__nums{ color:var(--mute); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .mk__nums small{ color:var(--faint); }
+  .mk__note{ color:var(--faint); font-size:.66rem; margin-top:6px; line-height:1.45; }
   .match__pick{ font-family:var(--mono); font-size:.76rem; color:var(--mute); margin-top:2px; }
   .match__pick b{ font-family:var(--display); font-size:.86rem; } .match__pick .pa{ color:var(--A); } .match__pick .pb{ color:var(--B); }
   .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
@@ -394,6 +405,8 @@
       <div class="score" id="scoreList"></div>
       <div class="score__sub">Most likely full scores</div>
       <div class="score" id="fullList"></div>
+      <div class="score__sub">Total games <span class="hint" id="totExp"></span></div>
+      <div class="score" id="totList"></div>
     </div>
   </section>
 
@@ -743,7 +756,7 @@ function render(d){
     <span class="score__p">${(p*100).toFixed(1)}%</span></div>`).join("");
 
   renderEV(pEns);
-  renderFullScores(A, B, dist, pa, pb);
+  renderFullScores(A, B, dist, pa, pb, pEns);
 }
 
 /* ===================== set scores (mirrors set_dist / set_markets in model.py) === */
@@ -796,6 +809,42 @@ function firstSetScores(pa, pb, target){
   return setGameScores(clip(pa + d), clip(pb - d));
 }
 
+/* set score x total games (mirrors match_joint in model.py): {t0, p: {"2-0": [P(total = t0), ...]}}.
+   Winner, set betting, total games and same-match parlays are all sums over this table. */
+function matchJoint(pa, pb, p, bo, m, hold){
+  const need = bo === 5 ? 3 : 2;
+  pa = clip(pa - (hold || 0)); pb = clip(pb - (hold || 0));
+  const s1 = firstSetChance(setDist(p, bo, m), bo, m), L = Math.log(s1 / (1 - s1));
+  const qw = 1 / (1 + Math.exp(-(L + m))), ql = 1 / (1 + Math.exp(-(L - m)));
+  const g = firstSetScores(pa, pb, s1);
+  const games = won => {
+    const out = {}; let t = 0;
+    for(const [k, v] of Object.entries(g)){ const [a, b] = k.split("-").map(Number); if((a > b) === won){ out[a + b] = (out[a + b] || 0) + v; t += v; } }
+    for(const k in out) out[k] /= t;
+    return out;
+  };
+  const gw = games(true), gl = games(false), cells = {};
+  const go = (a, b, q, dist) => {
+    if(a === need || b === need){ const c = cells[a + "-" + b] || (cells[a + "-" + b] = {}); for(const t in dist) c[t] = (c[t] || 0) + dist[t]; return; }
+    for(const [won, pr, gd] of [[true, q, gw], [false, 1 - q, gl]]){
+      const nd = {};
+      for(const t in dist) for(const k in gd){ const tt = +t + +k; nd[tt] = (nd[tt] || 0) + dist[t] * pr * gd[k]; }
+      won ? go(a + 1, b, qw, nd) : go(a, b + 1, ql, nd);
+    }
+  };
+  go(0, 0, s1, { 0: 1 });
+  let t0 = Infinity, t1 = -Infinity;
+  for(const c of Object.values(cells)) for(const t in c){ t0 = Math.min(t0, +t); t1 = Math.max(t1, +t); }
+  const out = {};
+  for(const [k, c] of Object.entries(cells)) out[k] = Array.from({ length: t1 - t0 + 1 }, (_, i) => c[t0 + i] || 0);
+  return { t0, p: out };
+}
+function jointProb(J, pred){
+  let s = 0;
+  for(const [k, row] of Object.entries(J.p)){ const [a, b] = k.split("-").map(Number); row.forEach((v, i) => { if(pred(a, b, J.t0 + i)) s += v; }); }
+  return s;
+}
+
 /* most likely full scorelines, games in every set (mirrors full_scorelines in model.py) */
 function fullScorelines(pa, pb, dist, bo, m, top){
   const need = bo === 5 ? 3 : 2, s1 = firstSetChance(dist, bo, m), L = Math.log(s1 / (1 - s1));
@@ -813,7 +862,7 @@ function fullScorelines(pa, pb, dist, bo, m, top){
   go(0, 0, s1, 1, []);
   return out.sort((x, y) => y[1] - x[1]).slice(0, top);
 }
-function renderFullScores(A, B, dist, pa, pb){
+function renderFullScores(A, B, dist, pa, pb, pEns){
   const rows = fullScorelines(pa, pb, dist, state.bestOf, setMomentum(), 8);
   const max = Math.max(...rows.map(r => r[1]), 1e-9);
   $("fullList").innerHTML = rows.map(([sets, p]) => {
@@ -823,6 +872,17 @@ function renderFullScores(A, B, dist, pa, pb){
     return `<div class="score__row score__row--full"><span class="score__lab">${esc(who)} <b>${score}</b></span>
       <span class="score__track"><span class="score__bar score__bar--${aWins ? "a" : "b"}" style="width:${p / max * 100}%"></span></span>
       <span class="score__p">${(p * 100).toFixed(1)}%</span></div>`; }).join("");
+  // total games: over/under around the middle of the distribution
+  const J = matchJoint(pa, pb, pEns, state.bestOf, setMomentum(), (DATA.model || {}).hold_adj);
+  const tot = Object.values(J.p).reduce((acc, r) => acc.map((v, i) => v + r[i]), new Array(Object.values(J.p)[0].length).fill(0));
+  const mean = tot.reduce((t, v, i) => t + (J.t0 + i) * v, 0);
+  let acc = 0, med = J.t0; for(let i = 0; i < tot.length; i++){ acc += tot[i]; if(acc >= 0.5){ med = J.t0 + i; break; } }
+  $("totExp").textContent = `expected ${mean.toFixed(1)}`;
+  $("totList").innerHTML = [med - 2.5, med - 1.5, med - 0.5, med + 0.5, med + 1.5].map(L => {
+    const po = jointProb(J, (a, b, t) => t > L);
+    return `<div class="score__row"><span class="score__lab">Over / under <b>${L}</b></span>
+      <span class="score__track"><span class="score__bar score__bar--a" style="width:${po * 100}%"></span></span>
+      <span class="score__p">${(po * 100).toFixed(0)}% / ${((1 - po) * 100).toFixed(0)}%</span></div>`; }).join("");
 }
 
 function evRow(model, d, fairImplied, ids, bet){
@@ -1012,9 +1072,32 @@ function matchSide(cls, p, m){
     return `<div class="match__p match__p--${cls}"><span class="n">${esc(p.name)}</span>
     <span class="nums">${pct(p.model)} · fair ${OddsFmt.show(p.fair_odds)}</span></div>`;
   const ev = (p.ev>=0?"+":"") + (p.ev*100).toFixed(1) + "%";
-  const add = m && m.prices ? `<button class="addleg" type="button" data-id="${esc(m.id)}" data-side="${cls}" aria-pressed="false" aria-label="Add ${esc(p.name)} to the parlay builder" title="Add to parlay">+</button>` : "";
+  const add = m && m.prices ? `<button class="addleg" type="button" data-id="${esc(m.id)}" data-mkt="win" data-sel="${cls}" data-side="${cls}" aria-pressed="false" aria-label="Add ${esc(p.name)} to the parlay builder" title="Add to parlay">+</button>` : "";
   return `<div class="match__p match__p--${cls}"><span class="n">${add}${esc(p.name)}</span>
     <span class="nums">${pct(p.model)} · ${OddsFmt.show(p.best_odds)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}"${p.bet != null ? ` title="EV uses ${pct(p.bet)}: the bookmakers' consensus, sharpened, with a little of the model (the model alone loses against real prices)"` : ""}>${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
+}
+/* Set betting and total games for a listed match (markets in matches.json), each with the
+   model's chance, the best price, EV on the betting probability, and a + to parlay it. */
+const MK_OPEN = new Set();          // matches whose markets are open (kept across refreshes)
+function mkCell(m, mkt, sel, line, label, s){
+  const ev = s.ev != null ? `<span class="${s.ev > 0 ? "ev-pos" : "ev-neg"}">${(s.ev >= 0 ? "+" : "") + (s.ev * 100).toFixed(1)}%</span>` : "";
+  const px = s.best_odds ? `${OddsFmt.show(s.best_odds)}${s.book ? ` <small>${esc(s.book)}</small>` : ""}` : "<small>no price</small>";
+  return `<div class="mk__sel"><button class="addleg" type="button" data-id="${esc(m.id)}" data-mkt="${mkt}" data-sel="${esc(sel)}"${line != null ? ` data-line="${line}"` : ""} aria-pressed="false" aria-label="Add ${esc(label)} to the parlay builder" title="Add to parlay">+</button>
+    <span class="mk__lab">${esc(label)}</span><span class="mk__nums">${pct(s.model)} · ${px} ${ev}</span></div>`;
+}
+function matchMarkets(m){
+  const mk = m.markets; if(!mk) return "";
+  const need = m.best_of === 5 ? 3 : 2;
+  const sets = Object.entries(mk.sets || {}).sort(([x], [y]) => {
+    const [a1, b1] = x.split("-").map(Number), [a2, b2] = y.split("-").map(Number);
+    return (b1 - a1 > 0) - (b2 - a2 > 0) || (a1 > b1 ? b1 - b2 : a2 - a1);
+  });
+  const setRows = sets.map(([k, v]) => { const [x, y] = k.split("-").map(Number);
+    return mkCell(m, "sets", k, null, `${(x > y ? m.a : m.b).name} ${Math.max(x, y)}-${Math.min(x, y)}`, v); }).join("");
+  const totRows = (mk.totals || []).map(T => mkCell(m, "total", "over", T.line, `Over ${T.line}`, T.over) + mkCell(m, "total", "under", T.line, `Under ${T.line}`, T.under)).join("");
+  return `<details class="mk" data-id="${esc(m.id)}"${MK_OPEN.has(m.id) ? " open" : ""}><summary>Set betting · total games (expected ${mk.exp_games})</summary>
+    <div class="mk__grid"><div><div class="mk__h">Set betting</div>${setRows}</div><div><div class="mk__h">Total games</div>${totRows}</div></div>
+    <div class="mk__note">Model chance · best price · EV. EV uses the bookmakers' no-margin chance (the model is shown for comparison); legs from one match can be combined in the parlay builder.</div></details>`;
 }
 /* The winner pick, as in the predictor's verdict: the betting probability when the match
    is priced (market and model, the sharper number), the model's otherwise. */
@@ -1198,7 +1281,7 @@ function renderToday(j){
       <div class="match__when">${when(m) ? fmt.format(new Date(when(m))) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
       <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}${matchPick(m)}${liveLine(m)}</div>
       <button class="match__go" type="button" data-i="${i}">Analyse</button>
-      ${matchExtras(m)}</div>`;
+      ${matchExtras(m)}${matchMarkets(m)}</div>`;
   const stale = LIVE && Date.parse(LIVE.updated) < Date.now() - 10*60e3
     ? `<div class="today__empty">Live scores paused: last update ${hhmm(LIVE.updated)}.</div>` : "";
   const shown = TODAY_TAB === LIVE_TAB
@@ -1214,7 +1297,9 @@ function renderToday(j){
   }));
   list.querySelectorAll(".match__go").forEach(b => b.addEventListener("click", () =>
     loadMatch(b.classList.contains("lv-go") ? j.matches[+b.dataset.i] : ms[+b.dataset.i])));
-  list.querySelectorAll(".addleg").forEach(b => b.addEventListener("click", () => pbToggle(b.dataset.id, b.dataset.side)));
+  list.querySelectorAll(".addleg").forEach(b => b.addEventListener("click", () =>
+    pbToggle(b.dataset.id, b.dataset.mkt || "win", b.dataset.sel || b.dataset.side, b.dataset.line != null ? +b.dataset.line : undefined)));
+  list.querySelectorAll("details.mk").forEach(d => d.addEventListener("toggle", () => { d.open ? MK_OPEN.add(d.dataset.id) : MK_OPEN.delete(d.dataset.id); }));
   pbSyncButtons();
 }
 function renderRecord(r){
@@ -1333,24 +1418,59 @@ OddsFmt.onChange((f, old) => {
 oddsInputMode();
 
 /* ===================== parlay builder ==================================== */
-// Legs live in this browser only. Each leg is one side of a match in matches.json;
-// the price comes from the chosen bookmaker, the best price per leg, or what was typed.
+// Legs live in this browser only. A leg is a selection in one match of matches.json: the
+// winner, a set score or a total-games line; the price comes from the chosen bookmaker, the
+// best price per leg, or what was typed. Legs from one match are priced together from the
+// match's joint table (set score x total games), since they depend on each other.
 const PB_KEY = "parlayBuilder", PB_MAX = 10;
 let PB = { legs: [], book: "auto", stake: 10 };
 try { const saved = JSON.parse(localStorage.getItem(PB_KEY) || "null"); if (saved && Array.isArray(saved.legs)) PB = { ...PB, ...saved }; } catch (e) { /* storage blocked */ }
 function pbSave(){ try { localStorage.setItem(PB_KEY, JSON.stringify(PB)); } catch (e) { /* storage blocked */ } }
 const pbMatch = id => ((MATCHES && MATCHES.matches) || []).find(m => m.id === id);
-function pbToggle(id, side){
-  const i = PB.legs.findIndex(l => l.id === id);
-  if (i >= 0 && PB.legs[i].side === side) PB.legs.splice(i, 1);          // tap again to remove
-  else if (i >= 0) PB.legs[i] = { id, side };                            // one side per match
-  else if (PB.legs.length < PB_MAX) PB.legs.push({ id, side });
+// saved legs from before other markets were {id, side}: the winner market
+const legNorm = l => l.mkt ? l : { id: l.id, mkt: "win", sel: l.side, odds: l.odds };
+PB.legs = PB.legs.map(legNorm);
+const sameLeg = (l, id, mkt, sel, line) => l.id === id && l.mkt === mkt && l.sel === sel && (mkt !== "total" || l.line === line);
+function pbToggle(id, mkt, sel, line){
+  const i = PB.legs.findIndex(l => sameLeg(l, id, mkt, sel, line));
+  // one pick per market in a match (a new set score or line replaces the old one)
+  const j = PB.legs.findIndex(l => l.id === id && l.mkt === mkt);
+  if (i >= 0) PB.legs.splice(i, 1);                                        // tap again to remove
+  else if (j >= 0) PB.legs[j] = { id, mkt, sel, line };
+  else if (PB.legs.length < PB_MAX) PB.legs.push({ id, mkt, sel, line });
   if (PB.book === "custom") PB.book = "auto";
   pbSave(); renderBuilder(); pbSyncButtons();
 }
 function pbSyncButtons(){
   document.querySelectorAll(".addleg").forEach(b => b.setAttribute("aria-pressed",
-    PB.legs.some(l => l.id === b.dataset.id && l.side === b.dataset.side) ? "true" : "false"));
+    PB.legs.some(l => sameLeg(l, b.dataset.id, b.dataset.mkt || "win", b.dataset.sel || b.dataset.side,
+                              b.dataset.line != null ? +b.dataset.line : undefined)) ? "true" : "false"));
+}
+// What a leg is: its label, chances, prices by bookmaker, and its condition on the match's
+// final (sets A, sets B, total games).
+function legInfo(l){
+  const m = l.m, need = m.best_of === 5 ? 3 : 2;
+  if (l.mkt === "win"){
+    const me = m[l.sel], vs = m[l.sel === "a" ? "b" : "a"]; if (!me) return null;
+    const prices = {};
+    for (const [bk, p] of Object.entries(pbPricesOf(m))) prices[bk] = p[l.sel === "a" ? 0 : 1];
+    return { label: me.name, sub: `to beat ${vs.name}`, side: l.sel, model: me.model, market: me.market, bet: me.bet ?? me.model,
+             prices, best: me.best_odds, pred: (a, b) => l.sel === "a" ? a === need : b === need };
+  }
+  if (l.mkt === "sets"){
+    const s = m.markets && m.markets.sets && m.markets.sets[l.sel]; if (!s) return null;
+    const [x, y] = l.sel.split("-").map(Number), aWins = x > y;
+    return { label: `${(aWins ? m.a : m.b).name} ${Math.max(x, y)}-${Math.min(x, y)} in sets`, sub: `${m.a.name} v ${m.b.name}`, side: aWins ? "a" : "b",
+             model: s.model, market: s.market, bet: s.bet ?? s.model, prices: s.prices || {}, best: s.best_odds, pred: (a, b) => a === x && b === y };
+  }
+  if (l.mkt === "total"){
+    const T = ((m.markets && m.markets.totals) || []).find(x => x.line === l.line); if (!T) return null;
+    const s = T[l.sel];
+    return { label: `${l.sel === "over" ? "Over" : "Under"} ${l.line} games`, sub: `${m.a.name} v ${m.b.name}`, side: null,
+             model: s.model, market: s.market, bet: s.bet ?? s.model, prices: s.prices || {}, best: s.best_odds,
+             pred: (a, b, t) => l.sel === "over" ? t > l.line : t < l.line };
+  }
+  return null;
 }
 // every price for a match: the bookmakers, plus Kalshi (after its fee) when it lists it
 function pbPricesOf(m){
@@ -1360,21 +1480,40 @@ function pbPricesOf(m){
 // bookmakers that price every leg, best combined odds first
 function pbBooks(legs){
   if (!legs.length) return [];
-  const names = Object.keys(pbPricesOf(legs[0].m)).filter(bk => legs.every(l => pbPricesOf(l.m)[bk]));
-  return names.map(bk => ({ book: bk, odds: legs.reduce((t, l) => t * pbPricesOf(l.m)[bk][l.side === "a" ? 0 : 1], 1) }))
+  const names = Object.keys(legs[0].info.prices).filter(bk => legs.every(l => l.info.prices[bk] > 1));
+  return names.map(bk => ({ book: bk, odds: legs.reduce((t, l) => t * l.info.prices[bk], 1) }))
     .sort((x, y) => y.odds - x.odds);
 }
 function pbBestPrice(l){
-  const px = Object.values(pbPricesOf(l.m)).map(p => p[l.side === "a" ? 0 : 1]).filter(x => x > 1);
-  return px.length ? Math.max(...px) : l.m[l.side].best_odds;
+  const px = Object.values(l.info.prices).filter(x => x > 1);
+  return px.length ? Math.max(...px) : l.info.best;
 }
 function pbPrice(l, book){
   if (book === "custom") return l.odds > 1 ? l.odds : pbBestPrice(l);
   if (book === "best") return pbBestPrice(l);
-  const p = pbPricesOf(l.m)[book];
-  return p ? p[l.side === "a" ? 0 : 1] : null;
+  return l.info.prices[book] || null;
 }
-function pbLegs(){ return PB.legs.map(l => ({ ...l, m: pbMatch(l.id) })).filter(l => l.m); }
+function pbLegs(){
+  return PB.legs.map(l => ({ ...legNorm(l), m: pbMatch(l.id) })).filter(l => l.m)
+    .map(l => ({ ...l, info: legInfo(l) })).filter(l => l.info);
+}
+// Chances for the whole ticket: matches multiply; legs within a match come from its joint
+// table. The betting and market chances keep the model's link between same-match legs.
+function pbChances(legs){
+  const groups = new Map();
+  legs.forEach(l => { if (!groups.has(l.id)) groups.set(l.id, []); groups.get(l.id).push(l); });
+  let model = 1, bet = 1, market = 1, linked = false;
+  for (const g of groups.values()){
+    const ind = g.reduce((t, l) => t * l.info.model, 1);
+    let joint = ind;
+    if (g.length > 1 && g[0].m.joint){ joint = jointProb(g[0].m.joint, (a, b, t) => g.every(l => l.info.pred(a, b, t))); linked = true; }
+    const ratio = ind > 0 ? joint / ind : 1;
+    model *= joint;
+    bet *= Math.min(g.reduce((t, l) => t * l.info.bet, 1) * ratio, ...g.map(l => l.info.bet));
+    market = market == null || g.some(l => l.info.market == null) ? null : market * Math.min(g.reduce((t, l) => t * l.info.market, 1) * ratio, ...g.map(l => l.info.market));
+  }
+  return { model, bet, market, linked, sameMatch: groups.size < legs.length };
+}
 function pbResolveBook(legs, books){
   if (PB.book === "custom" || PB.book === "best") return PB.book;
   if (PB.book !== "auto" && books.some(b => b.book === PB.book)) return PB.book;
@@ -1392,17 +1531,18 @@ function renderBuilder(){
   const books = pbBooks(legs), book = pbResolveBook(legs, books);
   const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
   body.innerHTML = `<div class="pb__legs">${legs.map((l, i) => {
-      const me = l.m[l.side], vs = l.m[l.side === "a" ? "b" : "a"];
+      const I = l.info;
       const started = new Date(l.m.start) <= Date.now();
       const fl = (l.m.flags || []).map(f => Array.isArray(f) ? f[1] : f);
       const warn = [started ? "already started" : "", ...fl].filter(Boolean);
+      const color = I.side ? `color:var(--${I.side === "a" ? "A" : "B"})` : "";
       return `<div class="pb__leg">
-        <button class="pb__rm" type="button" data-i="${i}" aria-label="Remove ${esc(me.name)}">×</button>
-        <div class="pb__who"><b class="side-${l.side}" style="color:var(--${l.side === "a" ? "A" : "B"})">${esc(me.name)}</b>
-          <small>to beat ${esc(vs.name)} · ${esc(l.m.tournament)} · ${fmt.format(new Date(l.m.start))}${book === "Kalshi" && l.m.kalshi ? ` · <a href="${esc(l.m.kalshi.url)}" target="_blank" rel="noopener">Kalshi ↗</a>` : ""}</small>
+        <button class="pb__rm" type="button" data-i="${i}" aria-label="Remove ${esc(I.label)}">×</button>
+        <div class="pb__who"><b style="${color}">${esc(I.label)}</b>
+          <small>${esc(I.sub)} · ${esc(l.m.tournament)} · ${fmt.format(new Date(l.m.start))}${book === "Kalshi" && l.m.kalshi ? ` · <a href="${esc(l.m.kalshi.url)}" target="_blank" rel="noopener">Kalshi ↗</a>` : ""}</small>
           ${warn.length ? `<small class="warn">⚠ ${warn.map(esc).join(" · ")}</small>` : ""}</div>
-        <div class="pb__nums">model ${pct(me.model)} · <span id="pbEv${i}"></span></div>
-        <input id="pbOdds${i}" type="text" autocomplete="off" inputmode="${OddsFmt.get() === "american" ? "text" : "decimal"}" aria-label="Odds for ${esc(me.name)}">
+        <div class="pb__nums">model ${pct(I.model)} · <span id="pbEv${i}"></span></div>
+        <input id="pbOdds${i}" type="text" autocomplete="off" inputmode="${OddsFmt.get() === "american" ? "text" : "decimal"}" aria-label="Odds for ${esc(I.label)}">
       </div>`; }).join("")}</div>
     <div class="pb__opts">
       <label>Bookmaker<select id="pbBook">
@@ -1411,6 +1551,7 @@ function renderBuilder(){
         <option value="custom">My own odds</option>
       </select></label>
       <label>Stake<input id="pbStake" type="text" inputmode="decimal" value="${esc(String(PB.stake))}"></label>
+      ${pbChances(legs).sameMatch ? `<label>Bet builder price<input id="pbCombo" type="text" autocomplete="off" inputmode="decimal" placeholder="the book's price" value="${PB.combo > 1 ? esc(OddsFmt.show(PB.combo)) : ""}"></label>` : ""}
       <button class="pb__clear" type="button" id="pbClear">Clear</button>
     </div>
     <div class="pb__grid" id="pbGrid"></div>
@@ -1422,6 +1563,7 @@ function renderBuilder(){
   }));
   $("pbBook").addEventListener("change", e => { PB.book = e.target.value; pbSave(); renderBuilder(); });
   $("pbStake").addEventListener("input", e => { PB.stake = e.target.value; pbSave(); pbTotals(); });
+  if ($("pbCombo")) $("pbCombo").addEventListener("input", e => { PB.combo = OddsFmt.parse(e.target.value, OddsFmt.get()) || null; pbSave(); pbTotals(); });
   $("pbClear").addEventListener("click", () => { PB.legs = []; PB.book = "auto"; pbSave(); renderBuilder(); pbSyncButtons(); });
   legs.forEach((l, i) => $("pbOdds" + i).addEventListener("input", () => {
     // typing a price switches to "my own odds", keeping the other legs' current prices
@@ -1439,34 +1581,41 @@ function pbTotals(){
   const book = $("pbBook").value;
   const odds = legs.map((l, i) => readOdds("pbOdds" + i));
   legs.forEach((l, i) => {
-    const el = $("pbEv" + i), p = l.m[l.side].bet ?? l.m[l.side].model, ev = odds[i] > 1 ? p * odds[i] - 1 : null;
+    const el = $("pbEv" + i), p = l.info.bet, ev = odds[i] > 1 ? p * odds[i] - 1 : null;
     el.textContent = ev == null ? "no price" : "EV " + (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%";
     el.className = ev == null ? "" : ev > 0 ? "ev-pos" : "ev-neg";
   });
   const ok = odds.every(o => o > 1);
-  const pModel = legs.reduce((t, l) => t * l.m[l.side].model, 1);
-  const pMkt = legs.reduce((t, l) => t * l.m[l.side].market, 1);
-  const tot = ok ? odds.reduce((t, o) => t * o, 1) : null;
-  const pBet = legs.reduce((t, l) => t * (l.m[l.side].bet ?? l.m[l.side].model), 1);   // EV on the betting probability
-  const ev = ok ? pBet * tot - 1 : null, kel = ok ? kellyFraction(pBet, tot) : 0;
+  const C = pbChances(legs), pModel = C.model, pMkt = C.market;
+  // legs from one match: bookmakers price the combination themselves (a bet builder), never
+  // at the legs' prices multiplied, so the EV needs the price they actually offer
+  const combo = C.sameMatch ? (PB.combo > 1 ? PB.combo : null) : undefined;
+  const tot = combo !== undefined ? combo : ok ? odds.reduce((t, o) => t * o, 1) : null;
+  const pBet = C.bet;                                       // EV on the betting probability
+  const priced = tot != null && tot > 1;
+  const ev = priced ? pBet * tot - 1 : null, kel = priced ? kellyFraction(pBet, tot) : 0;
   const stake = parseFloat(String(PB.stake).replace(",", ".")) || 0;
   const tile = (k, v, sub, cls = "") => `<div class="stat"><div class="stat__k">${k}</div><div class="stat__v ${cls}">${v}</div><div class="stat__sub">${sub}</div></div>`;
   $("pbGrid").innerHTML =
-    tile("Parlay odds", ok ? OddsFmt.show(tot) : "—", book === "best" ? "best price per leg" : book === "custom" ? "your prices" : esc(book)) +
+    (combo !== undefined
+      ? tile("Bet builder price", combo ? OddsFmt.show(combo) : "—", combo ? "as you entered it" : `enter the book's price · fair ${OddsFmt.show(1 / pBet)}`)
+      : tile("Parlay odds", ok ? OddsFmt.show(tot) : "—", book === "best" ? "best price per leg" : book === "custom" ? "your prices" : esc(book))) +
     tile("Model chance", pct(pModel), "fair odds " + OddsFmt.show(1 / pModel)) +
-    tile("Market chance", pct(pMkt), "no-margin prices multiplied") +
-    tile("EV", ok ? (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%" : "—", ok && ev > 0 ? "value at these prices" : "no value at these prices", ok ? (ev > 0 ? "ev-pos" : "ev-neg") : "") +
-    tile("¼-Kelly stake", ok && ev > 0 ? (kel * 100).toFixed(1) + "%" : "—", "of bankroll") +
-    tile("Returns", ok && stake ? (stake * tot).toFixed(2) : "—", stake ? `on ${stake} staked · profit ${ok ? (stake * (tot - 1)).toFixed(2) : "—"}` : "enter a stake");
+    tile("Market chance", pMkt == null ? "—" : pct(pMkt), pMkt == null ? "a leg has no bookmaker price" : C.sameMatch ? "no-margin prices, same-match legs linked as in the model" : "no-margin prices multiplied") +
+    tile("EV", priced ? (ev >= 0 ? "+" : "") + (ev * 100).toFixed(1) + "%" : "—", priced ? (ev > 0 ? "value at this price" : "no value at this price") : "needs a price", priced ? (ev > 0 ? "ev-pos" : "ev-neg") : "") +
+    tile("¼-Kelly stake", priced && ev > 0 ? (kel * 100).toFixed(1) + "%" : "—", "of bankroll") +
+    tile("Returns", priced && stake ? (stake * tot).toFixed(2) : "—", stake ? `on ${stake} staked · profit ${priced ? (stake * (tot - 1)).toFixed(2) : "—"}` : "enter a stake");
   const notes = [];
   if (legs.length === 1) notes.push("One leg is a single bet, add another to make a parlay.");
   if (book === "Kalshi") notes.push("Kalshi builds combos in its app: open each leg with its link. The price here multiplies the legs' prices after Kalshi's fee; Kalshi's own combo quote may differ a little.");
   if (book === "best") notes.push(`<span class="warn">Best prices come from different bookmakers, so you can't place this as one ticket. Pick a bookmaker for a price you can actually get.</span>`);
   if (legs.some(l => (l.m.flags || []).length)) notes.push(`<span class="warn">Some legs carry warnings, where the model is less reliable.</span>`);
   if (legs.some(l => new Date(l.m.start) <= Date.now())) notes.push(`<span class="warn">A leg has already started, so the price has probably moved.</span>`);
-  const sameEvent = new Set(legs.map(l => l.m.tournament)).size < legs.length;
+  const ids = [...new Set(legs.map(l => l.id))];
+  const sameEvent = new Set(ids.map(id => pbMatch(id).tournament)).size < ids.length;
   if (sameEvent) notes.push("Several legs in one tournament is fine, but some books won't combine matches that could meet later.");
-  notes.push("Model chance multiplies each leg's chance, treating the matches as independent. Every leg multiplies the bookmaker's margin too, so long parlays lose value fast unless each leg has an edge.");
+  if (C.sameMatch) notes.push(`<span class="warn">Legs from the same match depend on each other (a straight-sets win means fewer games), so the chance comes from the model's joint score table, not from multiplying the legs. Bookmakers only take these as a "bet builder" at their own price, never the legs' prices multiplied: enter the price they offer above to see the EV.</span>`);
+  notes.push("Different matches are treated as independent and their chances multiply. Every leg multiplies the bookmaker's margin too, so long parlays lose value fast unless each leg has an edge.");
   $("pbNote").innerHTML = notes.join("<br>");
 }
 

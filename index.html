@@ -161,17 +161,22 @@
   .lv-p{ font-family:var(--mono); font-size:.8rem; text-align:right; color:var(--mute); }
   .lv-foot{ font-family:var(--mono); font-size:.68rem; color:var(--faint); margin-top:4px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
   .lv-note{ margin-top:10px; }
-  .mk{ grid-column:2 / -1; margin-top:4px; font-family:var(--mono); font-size:.74rem; }
-  .mk summary{ cursor:pointer; color:var(--mute); padding:2px 0; }
-  .mk summary:hover{ color:var(--ball); }
-  .mk__grid{ display:grid; grid-template-columns:1fr 1fr; gap:4px 18px; margin-top:6px; }
-  @media (max-width:640px){ .mk__grid{ grid-template-columns:1fr; } }
-  .mk__h{ font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ball); margin:2px 0 4px; }
-  .mk__sel{ display:grid; grid-template-columns:auto 1fr auto; gap:8px; align-items:center; padding:2px 0; }
-  .mk__lab{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text, inherit); }
-  .mk__nums{ color:var(--mute); white-space:nowrap; font-variant-numeric:tabular-nums; }
-  .mk__nums small{ color:var(--faint); }
-  .mk__note{ color:var(--faint); font-size:.66rem; margin-top:6px; line-height:1.45; }
+  .mkp__h{ font-family:var(--mono); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:var(--ball); margin:14px 0 6px; }
+  .mkp__h span{ color:var(--mute); letter-spacing:0; text-transform:none; }
+  .mkp__sets{ display:grid; grid-template-columns:repeat(auto-fill, minmax(150px, 1fr)); gap:8px; }
+  .mkc{ position:relative; background:var(--ink); border:1px solid var(--ink-3); border-radius:10px; padding:9px 10px 8px; font-family:var(--mono); font-size:.78rem; }
+  .mkc__top{ font-family:var(--display); font-weight:600; font-size:.9rem; line-height:1.25; padding-right:28px; margin-bottom:4px; overflow-wrap:anywhere; }
+  .mkc__top b{ font-family:var(--mono); }
+  .mkc__top .side-a{ color:var(--A); } .mkc__top .side-b{ color:var(--B); }
+  .mkc__row{ color:var(--mute); line-height:1.5; font-variant-numeric:tabular-nums; }
+  .mkc__row small{ color:var(--faint); } .mkc__row b{ color:var(--chalk); }
+  .mkc .mkp__add{ position:absolute; top:8px; right:6px; margin:0; }
+  .mkp__tot{ display:flex; flex-direction:column; gap:6px; }
+  .mkt{ display:grid; grid-template-columns:1fr auto 1fr; gap:8px; align-items:stretch; }
+  .mkt__line{ align-self:center; font-family:var(--mono); font-weight:600; font-size:.9rem; color:var(--ball); min-width:3.2ch; text-align:center; }
+  .mkt__cell{ display:flex; gap:8px; align-items:flex-start; background:var(--ink); border:1px solid var(--ink-3); border-radius:10px; padding:8px 10px; font-family:var(--mono); font-size:.78rem; }
+  .mkt__cell .mkp__add{ margin:0; }
+  .mkp__note{ font-family:var(--mono); font-size:.66rem; color:var(--faint); margin-top:12px; line-height:1.5; }
   .match__pick{ font-family:var(--mono); font-size:.76rem; color:var(--mute); margin-top:2px; }
   .match__pick b{ font-family:var(--display); font-size:.86rem; } .match__pick .pa{ color:var(--A); } .match__pick .pb{ color:var(--B); }
   .match__go{ font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:uppercase; cursor:pointer;
@@ -428,6 +433,17 @@
       </tbody>
     </table>
     <div class="ev__margin" id="margin"></div>
+  </section>
+
+  <section class="ev mkp" id="mkPanel" hidden>
+    <h3>Set betting &amp; total games</h3>
+    <p class="ev__lede">For the match opened from Today's matches: the model's chance, the best bookmaker price and the EV
+      for each set score and total-games line. Press + to add one to the parlay builder.</p>
+    <div class="mkp__h">Set betting</div>
+    <div class="mkp__sets" id="mkSets"></div>
+    <div class="mkp__h">Total games <span id="mkExp"></span></div>
+    <div class="mkp__tot" id="mkTot"></div>
+    <div class="mkp__note">EV uses the bookmakers' no-margin chance (the model is shown for comparison). Legs from one match can be combined in the parlay builder; bookmakers price those as a bet builder.</div>
   </section>
 
 
@@ -722,6 +738,7 @@ function render(d){
   const {A,B,pa,pb,s,pMkv,pElo,pEns} = d;
   LAST = d;
   renderVerdict(A, B, pEns);
+  renderMarketsPanel();
   $("nameA").textContent = A.name; $("nameB").textContent = B.name;
   ["srvName","holdName","setName"].forEach(id => { $(id+"A").textContent = A.name; $(id+"B").textContent = B.name; });
   $("evNameA").textContent = A.name; $("evNameB").textContent = B.name;
@@ -1062,7 +1079,7 @@ function loadMatch(m){
   $("inA").value = nameFromKey(state.a); $("inB").value = nameFromKey(state.b);
   $("customA").classList.remove("show"); $("customB").classList.remove("show");
   setOddsInput("oddsA", m.a.best_odds); setOddsInput("oddsB", m.b.best_odds);
-  state.ctx = { a: m.a.key, b: m.b.key, market_a: m.a.market, level: m.level || "tour" };
+  state.ctx = { id: m.id, a: m.a.key, b: m.b.key, market_a: m.a.market, level: m.level || "tour" };
   renderEV(compute());
   if (m.no_odds) $("margin").textContent = "No bookmaker prices for this match yet: type the odds you're offered.";
   document.querySelector(".controls").scrollIntoView({ behavior:"smooth", block:"start" });
@@ -1076,28 +1093,46 @@ function matchSide(cls, p, m){
   return `<div class="match__p match__p--${cls}"><span class="n">${add}${esc(p.name)}</span>
     <span class="nums">${pct(p.model)} · ${OddsFmt.show(p.best_odds)} · <span class="${p.ev>0?"ev-pos":"ev-neg"}"${p.bet != null ? ` title="EV uses ${pct(p.bet)}: the bookmakers' consensus, sharpened, with a little of the model (the model alone loses against real prices)"` : ""}>${ev}</span>${p.ev>0?'<span class="badge badge--ev">value</span>':""}</span></div>`;
 }
-/* Set betting and total games for a listed match (markets in matches.json), each with the
-   model's chance, the best price, EV on the betting probability, and a + to parlay it. */
-const MK_OPEN = new Set();          // matches whose markets are open (kept across refreshes)
-function mkCell(m, mkt, sel, line, label, s, tag){
-  const ev = s.ev != null ? `<span class="${s.ev > 0 ? "ev-pos" : "ev-neg"}">${(s.ev >= 0 ? "+" : "") + (s.ev * 100).toFixed(1)}%</span>` : "";
-  const px = s.best_odds ? `${OddsFmt.show(s.best_odds)}${s.book ? ` <small>${esc(s.book)}</small>` : ""}` : "<small>no price</small>";
-  return `<div class="mk__sel"><button class="addleg" type="button" data-id="${esc(m.id)}" data-mkt="${mkt}" data-sel="${esc(sel)}"${line != null ? ` data-line="${line}"` : ""} aria-pressed="false" aria-label="Add ${esc(label)} to the parlay builder" title="Add to parlay">+</button>
-    <span class="mk__lab">${tag ? `<b>${esc(tag)}</b> ` : ""}${esc(label)}</span><span class="mk__nums">${pct(s.model)} · ${px} ${ev}</span></div>`;
+/* Set betting and total games for the match opened in the predictor (markets in
+   matches.json, already loaded with the list): model chance, best price, EV, + to parlay. */
+function ctxMatch(){
+  const c = state.ctx;
+  if(!c || !c.id || !MATCHES) return null;
+  if(!((c.a === state.a && c.b === state.b) || (c.a === state.b && c.b === state.a))) return null;
+  return (MATCHES.matches || []).find(m => m.id === c.id) || null;
 }
-function matchMarkets(m){
-  const mk = m.markets; if(!mk) return "";
-  const need = m.best_of === 5 ? 3 : 2;
+function mkNums(s){
+  const ev = s.ev != null ? `<span class="${s.ev > 0 ? "ev-pos" : "ev-neg"}">EV ${(s.ev >= 0 ? "+" : "") + (s.ev * 100).toFixed(1)}%</span>` : "";
+  const px = s.best_odds ? `${OddsFmt.show(s.best_odds)}${s.book ? ` <small>${esc(s.book)}</small>` : ""}` : "<small>no price yet</small>";
+  return { model: pct(s.model), px, ev };
+}
+function mkAdd(m, mkt, sel, line, label){
+  return `<button class="addleg mkp__add" type="button" data-id="${esc(m.id)}" data-mkt="${mkt}" data-sel="${esc(sel)}"${line != null ? ` data-line="${line}"` : ""} aria-pressed="false" aria-label="Add ${esc(label)} to the parlay builder" title="Add to parlay">+</button>`;
+}
+function renderMarketsPanel(){
+  const el = $("mkPanel"), m = ctxMatch();
+  if(!m || !m.markets){ el.hidden = true; return; }
+  el.hidden = false;
+  const mk = m.markets, aName = nameFromKey(state.a);
   const sets = Object.entries(mk.sets || {}).sort(([x], [y]) => {
     const [a1, b1] = x.split("-").map(Number), [a2, b2] = y.split("-").map(Number);
-    return (b1 - a1 > 0) - (b2 - a2 > 0) || (a1 > b1 ? b1 - b2 : a2 - a1);
+    return (b1 > a1) - (b2 > a2) || (a1 > b1 ? b1 - b2 : a2 - a1);
   });
-  const setRows = sets.map(([k, v]) => { const [x, y] = k.split("-").map(Number);
-    return mkCell(m, "sets", k, null, (x > y ? m.a : m.b).name, v, `${Math.max(x, y)}-${Math.min(x, y)}`); }).join("");
-  const totRows = (mk.totals || []).map(T => mkCell(m, "total", "over", T.line, `Over ${T.line}`, T.over) + mkCell(m, "total", "under", T.line, `Under ${T.line}`, T.under)).join("");
-  return `<details class="mk" data-id="${esc(m.id)}"${MK_OPEN.has(m.id) ? " open" : ""}><summary>Set betting · total games (expected ${mk.exp_games})</summary>
-    <div class="mk__grid"><div><div class="mk__h">Set betting</div>${setRows}</div><div><div class="mk__h">Total games</div>${totRows}</div></div>
-    <div class="mk__note">Model chance · best price · EV. EV uses the bookmakers' no-margin chance (the model is shown for comparison); legs from one match can be combined in the parlay builder.</div></details>`;
+  $("mkSets").innerHTML = sets.map(([k, s]) => {
+    const [x, y] = k.split("-").map(Number), who = (x > y ? m.a : m.b).name, score = `${Math.max(x, y)}-${Math.min(x, y)}`;
+    const side = looseName(who) === looseName(aName) ? "a" : "b", n = mkNums(s);
+    return `<div class="mkc">${mkAdd(m, "sets", k, null, `${who} ${score}`)}
+      <div class="mkc__top"><b>${score}</b> <span class="side-${side}">${esc(who)}</span></div>
+      <div class="mkc__row">model ${n.model}</div><div class="mkc__row">${n.px}</div><div class="mkc__row">${n.ev}</div></div>`;
+  }).join("");
+  $("mkExp").textContent = `· expected ${mk.exp_games}`;
+  const cell = (T, side) => { const s = T[side], n = mkNums(s);
+    return `<div class="mkt__cell mkt__cell--${side}">${mkAdd(m, "total", side, T.line, `${side === "over" ? "Over" : "Under"} ${T.line} games`)}
+      <div><div class="mkc__row"><b>${side === "over" ? "Over" : "Under"}</b> ${n.model}</div><div class="mkc__row">${n.px}</div><div class="mkc__row">${n.ev}</div></div></div>`; };
+  $("mkTot").innerHTML = (mk.totals || []).map(T => `<div class="mkt">${cell(T, "over")}<div class="mkt__line">${T.line}</div>${cell(T, "under")}</div>`).join("");
+  el.querySelectorAll(".addleg").forEach(b => b.addEventListener("click", () =>
+    pbToggle(b.dataset.id, b.dataset.mkt, b.dataset.sel, b.dataset.line != null ? +b.dataset.line : undefined)));
+  pbSyncButtons();
 }
 /* The winner pick, as in the predictor's verdict: the betting probability when the match
    is priced (market and model, the sharper number), the model's otherwise. */
@@ -1281,7 +1316,7 @@ function renderToday(j){
       <div class="match__when">${when(m) ? fmt.format(new Date(when(m))) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
       <div class="match__who">${matchSide("a", m.a, m)}${matchSide("b", m.b, m)}${matchPick(m)}${liveLine(m)}</div>
       <button class="match__go" type="button" data-i="${i}">Analyse</button>
-      ${matchExtras(m)}${matchMarkets(m)}</div>`;
+      ${matchExtras(m)}</div>`;
   const stale = LIVE && Date.parse(LIVE.updated) < Date.now() - 10*60e3
     ? `<div class="today__empty">Live scores paused: last update ${hhmm(LIVE.updated)}.</div>` : "";
   const shown = TODAY_TAB === LIVE_TAB
@@ -1299,7 +1334,6 @@ function renderToday(j){
     loadMatch(b.classList.contains("lv-go") ? j.matches[+b.dataset.i] : ms[+b.dataset.i])));
   list.querySelectorAll(".addleg").forEach(b => b.addEventListener("click", () =>
     pbToggle(b.dataset.id, b.dataset.mkt || "win", b.dataset.sel || b.dataset.side, b.dataset.line != null ? +b.dataset.line : undefined)));
-  list.querySelectorAll("details.mk").forEach(d => d.addEventListener("toggle", () => { d.open ? MK_OPEN.add(d.dataset.id) : MK_OPEN.delete(d.dataset.id); }));
   pbSyncButtons();
 }
 function renderRecord(r){
@@ -1373,6 +1407,7 @@ async function loadMatches(){
     const j = r.ok ? await r.json() : null;
     MATCHES = j;
     if (LAST) renderEV(compute());      // the verdict can use the market now
+    renderMarketsPanel();
     renderToday(j); renderBuilder(); renderRecord(j && j.record); renderParlays(j);
   }catch(e){ renderToday(null); renderRecord(null); renderParlays(null); renderBuilder(); }
 }

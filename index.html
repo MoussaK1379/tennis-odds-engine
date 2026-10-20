@@ -107,6 +107,7 @@
   .oddsbar{ display:flex; align-items:center; gap:.6rem; margin:0 0 12px; font-family:var(--mono); font-size:.66rem;
     letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
   .oddsbar .seg button{ padding:.3rem .65rem; font-size:.76rem; }
+  .evwrap{ overflow-x:auto; }          /* a narrow phone or large text scrolls the table, not the page */
   .evtable{ width:100%; border-collapse:collapse; }
   .evtable th{ font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; text-transform:uppercase;
     color:var(--faint); text-align:right; font-weight:500; padding:0 0 10px; }
@@ -236,10 +237,14 @@
   .today__empty{ font-family:var(--mono); font-size:.82rem; color:var(--faint); padding:.4rem 0; }
 
   @media (max-width:760px){
-    .match{ grid-template-columns:1fr auto; }
-    .match__when{ grid-column:1 / -1; }
-    .match__extra{ grid-column:1 / -1; }
+    /* one column on phones: details full width, Analyse on its own row, so nothing in a
+       card can squeeze the names (a wide item in a side column used to) */
+    .match{ grid-template-columns:minmax(0, 1fr); }
+    .match__when, .match__who, .match__extra{ grid-column:1 / -1; }
+    .match__go{ grid-column:1 / -1; justify-self:stretch; padding:.55rem .6rem; }
     .match__p{ flex-direction:column; gap:0; }
+    .match__p .n{ white-space:normal; overflow-wrap:anywhere; }
+    .match__p .nums{ white-space:normal; }
     .match__who{ gap:8px; }
     .today h3 .hint{ float:none; display:block; margin-top:4px; }
     .controls{ grid-template-columns:1fr; }
@@ -253,6 +258,11 @@
     .panels{ grid-template-columns:1fr; }
     .evtable th:nth-child(3), .evtable td:nth-child(3),
     .evtable th:nth-child(5), .evtable td:nth-child(5){ display:none; }
+  }
+  @media (max-width:420px){
+    .evtable td{ font-size:.84rem; }
+    .evtable input{ width:66px; }
+    .evtable th{ letter-spacing:.06em; }
   }
 </style>
 </head>
@@ -421,7 +431,7 @@
     <p class="ev__lede">Enter the book's odds for each player, decimal (1.80) or American (−125) as set above. The engine strips the bookmaker's
       margin to show the market's own view, compares it with the model, and sizes a quarter-Kelly stake
       on any positive-EV side. EV is worked out at the price you'd actually get.</p>
-    <table class="evtable">
+    <div class="evwrap"><table class="evtable">
       <thead><tr><th>Side</th><th>Book odds</th><th>Market (no margin)</th><th>Model</th><th>Fair odds</th><th>EV</th><th>¼-Kelly</th></tr></thead>
       <tbody>
         <tr><td class="side-a" id="evNameA">A</td>
@@ -431,7 +441,7 @@
           <td><input id="oddsB" type="text" inputmode="decimal" autocomplete="off" value="2.10" aria-label="Player B odds"></td>
           <td id="impB">—</td><td id="modB">—</td><td id="fairB">—</td><td id="evB">—</td><td id="kelB">—</td></tr>
       </tbody>
-    </table>
+    </table></div>
     <div class="ev__margin" id="margin"></div>
   </section>
 

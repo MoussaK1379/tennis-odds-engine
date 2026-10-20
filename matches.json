@@ -1,118 +1,109 @@
 {
-  "updated": "2026-10-20T13:24:05Z",
+  "updated": "2026-10-20T13:49:28Z",
   "odds_feed_at": "2026-10-20T11:37:52Z",
   "window_hours": 36,
   "status": "ok",
   "requests_remaining": "337",
   "matches": [
     {
-      "id": "apit-12172025",
-      "api_key": "12172025",
+      "id": "apit-12172008",
+      "api_key": "12172008",
       "late": false,
       "tour": "ATP",
-      "tournament": "ATP Challenger Florence",
-      "round": "Florence - 1/16-finals",
-      "start": "2026-10-20T13:40:00Z",
-      "surface": "clay",
-      "indoor": false,
+      "tournament": "ATP Lyon",
+      "round": "ATP Lyon - 1/16-finals",
+      "start": "2026-10-20T14:00:00Z",
+      "surface": "hard",
+      "indoor": true,
       "surface_known": true,
       "best_of": 3,
       "a": {
-        "name": "F. Romano",
-        "key": "f-romano",
-        "model": 0.4502,
-        "fair_odds": 2.22,
-        "market": 0.4862,
-        "best_odds": 2.04,
+        "name": "D. Altmaier",
+        "key": "d-altmaier",
+        "model": 0.3148,
+        "fair_odds": 3.18,
+        "market": 0.3561,
+        "best_odds": 2.85,
         "book": "Pncl",
-        "ev": -0.0168,
+        "ev": -0.0462,
         "kelly": 0.0,
-        "bet": 0.482
+        "bet": 0.3347
       },
       "b": {
-        "name": "F. C. Jianu",
-        "key": "f-c-jianu",
-        "model": 0.5498,
-        "fair_odds": 1.82,
-        "market": 0.5138,
-        "best_odds": 1.84,
-        "book": "Pncl",
-        "ev": -0.0468,
-        "kelly": 0.0,
-        "bet": 0.518
+        "name": "T. Droguet",
+        "key": "t-droguet",
+        "model": 0.6852,
+        "fair_odds": 1.46,
+        "market": 0.6439,
+        "best_odds": 1.53,
+        "book": "Betfair",
+        "ev": 0.0179,
+        "kelly": 0.0085,
+        "bet": 0.6653
       },
       "books": 9,
       "no_odds": false,
-      "court": "ch-florence",
+      "court": "lyon",
       "model_version": "2026-10-19",
-      "level": "challenger",
+      "level": "tour",
       "parts": {
-        "elo": 0.4484,
-        "serve": 0.508,
+        "elo": 0.3814,
+        "serve": 0.1644,
         "w": 0.4
       },
-      "flags": [
-        [
-          "specialist",
-          "F. C. Jianu: clay-court specialist (89% of matches on clay)"
-        ],
-        [
-          "retired",
-          "F. C. Jianu: retired from a match 91 days ago (2 in 6 months)"
-        ]
-      ],
+      "flags": [],
       "prices": {
         "WilliamHill": [
-          1.91,
-          1.8
+          2.6,
+          1.5
         ],
         "bet365": [
-          1.9,
-          1.8
+          2.62,
+          1.5
         ],
         "Marathon": [
-          1.88,
-          1.8
+          2.76,
+          1.44
         ],
         "BetVictor": [
-          1.87,
-          1.8
+          2.6,
+          1.44
         ],
         "Pncl": [
-          2.04,
-          1.84
+          2.85,
+          1.47
         ],
         "Sbo": [
-          1.91,
-          1.75
+          2.49,
+          1.4
         ],
         "1xBet": [
-          1.88,
-          1.8
+          2.75,
+          1.45
         ],
         "Betano": [
-          1.95,
-          1.82
+          2.72,
+          1.47
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4742,
+      "pinnacle_a": 0.3403,
       "kalshi": {
         "a": {
-          "cost": 0.49,
-          "odds": 1.97,
-          "ev": -0.0505,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT20ROMJIA-ROM"
+          "cost": 0.38,
+          "odds": 2.522,
+          "ev": -0.1559,
+          "ticker": "KXATPMATCH-26OCT18ALTDRO-ALT"
         },
         "b": {
-          "cost": 0.54,
-          "odds": 1.794,
-          "ev": -0.0707,
-          "ticker": "KXATPCHALLENGERMATCH-26OCT20ROMJIA-JIA"
+          "cost": 0.64,
+          "odds": 1.524,
+          "ev": 0.0139,
+          "ticker": "KXATPMATCH-26OCT18ALTDRO-DRO"
         },
-        "market_a": 0.475,
-        "event": "KXATPCHALLENGERMATCH-26OCT20ROMJIA",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct20romjia"
+        "market_a": 0.37,
+        "event": "KXATPMATCH-26OCT18ALTDRO",
+        "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18altdro"
       }
     },
     {
@@ -122,7 +113,7 @@
       "tour": "ATP",
       "tournament": "ATP Brussels",
       "round": "ATP Brussels - 1/16-finals",
-      "start": "2026-10-20T14:00:00Z",
+      "start": "2026-10-20T14:10:00Z",
       "surface": "hard",
       "indoor": true,
       "surface_known": true,
@@ -222,114 +213,13 @@
       }
     },
     {
-      "id": "apit-12172008",
-      "api_key": "12172008",
-      "late": false,
-      "tour": "ATP",
-      "tournament": "ATP Lyon",
-      "round": "ATP Lyon - 1/16-finals",
-      "start": "2026-10-20T14:00:00Z",
-      "surface": "hard",
-      "indoor": true,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "D. Altmaier",
-        "key": "d-altmaier",
-        "model": 0.3148,
-        "fair_odds": 3.18,
-        "market": 0.3566,
-        "best_odds": 2.85,
-        "book": "Pncl",
-        "ev": -0.0447,
-        "kelly": 0.0,
-        "bet": 0.3352
-      },
-      "b": {
-        "name": "T. Droguet",
-        "key": "t-droguet",
-        "model": 0.6852,
-        "fair_odds": 1.46,
-        "market": 0.6434,
-        "best_odds": 1.53,
-        "book": "Betfair",
-        "ev": 0.0172,
-        "kelly": 0.0081,
-        "bet": 0.6648
-      },
-      "books": 9,
-      "no_odds": false,
-      "court": "lyon",
-      "model_version": "2026-10-19",
-      "level": "tour",
-      "parts": {
-        "elo": 0.3814,
-        "serve": 0.1644,
-        "w": 0.4
-      },
-      "flags": [],
-      "prices": {
-        "WilliamHill": [
-          2.6,
-          1.5
-        ],
-        "bet365": [
-          2.62,
-          1.5
-        ],
-        "Marathon": [
-          2.76,
-          1.44
-        ],
-        "BetVictor": [
-          2.6,
-          1.44
-        ],
-        "Pncl": [
-          2.85,
-          1.47
-        ],
-        "Sbo": [
-          2.49,
-          1.4
-        ],
-        "1xBet": [
-          2.75,
-          1.45
-        ],
-        "Betano": [
-          2.67,
-          1.47
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.3403,
-      "kalshi": {
-        "a": {
-          "cost": 0.37,
-          "odds": 2.589,
-          "ev": -0.1322,
-          "ticker": "KXATPMATCH-26OCT18ALTDRO-ALT"
-        },
-        "b": {
-          "cost": 0.63,
-          "odds": 1.547,
-          "ev": 0.0284,
-          "ticker": "KXATPMATCH-26OCT18ALTDRO-DRO"
-        },
-        "market_a": 0.3687,
-        "event": "KXATPMATCH-26OCT18ALTDRO",
-        "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18altdro"
-      }
-    },
-    {
       "id": "apit-12172010",
       "api_key": "12172010",
       "late": false,
       "tour": "ATP",
       "tournament": "ATP Lyon",
       "round": "ATP Lyon - 1/16-finals",
-      "start": "2026-10-20T14:00:00Z",
+      "start": "2026-10-20T14:20:00Z",
       "surface": "hard",
       "indoor": true,
       "surface_known": true,
@@ -339,24 +229,24 @@
         "key": "b-bonzi",
         "model": 0.4531,
         "fair_odds": 2.21,
-        "market": 0.4704,
+        "market": 0.471,
         "best_odds": 2.1,
         "book": "Betfair",
-        "ev": -0.0224,
+        "ev": -0.021,
         "kelly": 0.0,
-        "bet": 0.4655
+        "bet": 0.4662
       },
       "b": {
         "name": "C. Norrie",
         "key": "c-norrie",
         "model": 0.5469,
         "fair_odds": 1.83,
-        "market": 0.5296,
+        "market": 0.529,
         "best_odds": 1.85,
         "book": "Pncl",
-        "ev": -0.0113,
+        "ev": -0.0125,
         "kelly": 0.0,
-        "bet": 0.5345
+        "bet": 0.5338
       },
       "books": 9,
       "no_odds": false,
@@ -379,8 +269,8 @@
           1.8
         ],
         "Marathon": [
-          2.02,
-          1.78
+          2.01,
+          1.79
         ],
         "BetVictor": [
           1.95,
@@ -395,8 +285,8 @@
           1.75
         ],
         "1xBet": [
-          2.02,
-          1.78
+          2.01,
+          1.79
         ],
         "Betano": [
           2.02,
@@ -407,18 +297,18 @@
       "pinnacle_a": 0.4756,
       "kalshi": {
         "a": {
-          "cost": 0.48,
-          "odds": 2.01,
-          "ev": -0.0643,
+          "cost": 0.49,
+          "odds": 1.97,
+          "ev": -0.0816,
           "ticker": "KXATPMATCH-26OCT18BONNOR-BON"
         },
         "b": {
           "cost": 0.53,
           "odds": 1.827,
-          "ev": -0.0235,
+          "ev": -0.0247,
           "ticker": "KXATPMATCH-26OCT18BONNOR-NOR"
         },
-        "market_a": 0.475,
+        "market_a": 0.48,
         "event": "KXATPMATCH-26OCT18BONNOR",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18bonnor"
       }
@@ -430,7 +320,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Lisbon",
       "round": "Lisbon - 1/16-finals",
-      "start": "2026-10-20T14:10:00Z",
+      "start": "2026-10-20T14:20:00Z",
       "surface": "clay",
       "indoor": false,
       "surface_known": true,
@@ -440,24 +330,24 @@
         "key": "f-passaro",
         "model": 0.9804,
         "fair_odds": 1.02,
-        "market": 0.855,
-        "best_odds": 1.12,
+        "market": 0.8586,
+        "best_odds": 1.1,
         "book": "bet365",
-        "ev": 0.0113,
-        "kelly": 0.0236,
-        "bet": 0.903
+        "ev": -0.0034,
+        "kelly": 0.0,
+        "bet": 0.906
       },
       "b": {
         "name": "G. Elias",
         "key": "g-elias",
         "model": 0.0196,
         "fair_odds": 51.0,
-        "market": 0.145,
+        "market": 0.1414,
         "best_odds": 8.07,
         "book": "Pncl",
-        "ev": -0.2171,
+        "ev": -0.2411,
         "kelly": 0.0,
-        "bet": 0.097
+        "bet": 0.094
       },
       "books": 9,
       "no_odds": false,
@@ -485,12 +375,12 @@
       ],
       "prices": {
         "WilliamHill": [
-          1.08,
-          7.0
+          1.07,
+          7.5
         ],
         "bet365": [
-          1.12,
-          6.0
+          1.1,
+          7.0
         ],
         "Marathon": [
           1.08,
@@ -514,7 +404,7 @@
         ],
         "Betano": [
           1.1,
-          6.7
+          6.8
         ]
       },
       "odds_source": "api-tennis",
@@ -523,16 +413,16 @@
         "a": {
           "cost": 0.91,
           "odds": 1.092,
-          "ev": -0.0139,
+          "ev": -0.0106,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20PASELI-PAS"
         },
         "b": {
-          "cost": 0.1,
-          "odds": 9.407,
-          "ev": -0.0875,
+          "cost": 0.11,
+          "odds": 8.558,
+          "ev": -0.1955,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20PASELI-ELI"
         },
-        "market_a": 0.905,
+        "market_a": 0.9005,
         "event": "KXATPCHALLENGERMATCH-26OCT20PASELI",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct20paseli"
       }
@@ -664,24 +554,24 @@
         "key": "r-sakamoto",
         "model": 0.3382,
         "fair_odds": 2.96,
-        "market": 0.314,
+        "market": 0.3129,
         "best_odds": 3.23,
         "book": "Pncl",
-        "ev": -0.0664,
+        "ev": -0.0704,
         "kelly": 0.0,
-        "bet": 0.289
+        "bet": 0.2878
       },
       "b": {
         "name": "K. Khachanov",
         "key": "k-khachanov",
         "model": 0.6618,
         "fair_odds": 1.51,
-        "market": 0.686,
-        "best_odds": 1.41,
-        "book": "1xBet",
-        "ev": 0.0024,
-        "kelly": 0.0015,
-        "bet": 0.711
+        "market": 0.6871,
+        "best_odds": 1.4,
+        "book": "Betfair",
+        "ev": -0.0029,
+        "kelly": 0.0,
+        "bet": 0.7122
       },
       "books": 9,
       "no_odds": false,
@@ -704,8 +594,8 @@
           1.36
         ],
         "Marathon": [
-          2.97,
-          1.39
+          3.02,
+          1.38
         ],
         "BetVictor": [
           2.88,
@@ -720,8 +610,8 @@
           1.33
         ],
         "1xBet": [
-          3.01,
-          1.41
+          3.06,
+          1.4
         ],
         "Betano": [
           3.15,
@@ -732,18 +622,18 @@
       "pinnacle_a": 0.3009,
       "kalshi": {
         "a": {
-          "cost": 0.31,
-          "odds": 3.077,
-          "ev": -0.1107,
+          "cost": 0.3,
+          "odds": 3.178,
+          "ev": -0.0854,
           "ticker": "KXATPMATCH-26OCT20SAKKHA-SAK"
         },
         "b": {
           "cost": 0.71,
           "odds": 1.38,
-          "ev": -0.0188,
+          "ev": -0.0172,
           "ticker": "KXATPMATCH-26OCT20SAKKHA-KHA"
         },
-        "market_a": 0.302,
+        "market_a": 0.2915,
         "event": "KXATPMATCH-26OCT20SAKKHA",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct20sakkha"
       }
@@ -875,24 +765,24 @@
         "key": "j-pereira",
         "model": 0.2046,
         "fair_odds": 4.89,
-        "market": 0.1376,
+        "market": 0.1399,
         "best_odds": 7.6,
         "book": "Betano",
-        "ev": -0.2533,
+        "ev": -0.2378,
         "kelly": 0.0,
-        "bet": 0.0983
+        "bet": 0.1003
       },
       "b": {
         "name": "M. Pucinelli de Almeida",
         "key": "m-pucinelli-de-almeida",
         "model": 0.7954,
         "fair_odds": 1.26,
-        "market": 0.8624,
-        "best_odds": 1.08,
+        "market": 0.8601,
+        "best_odds": 1.1,
         "book": "WilliamHill",
-        "ev": -0.0261,
+        "ev": -0.0103,
         "kelly": 0.0,
-        "bet": 0.9017
+        "bet": 0.8997
       },
       "books": 9,
       "no_odds": false,
@@ -916,8 +806,8 @@
       ],
       "prices": {
         "WilliamHill": [
-          7.0,
-          1.08
+          6.5,
+          1.1
         ],
         "bet365": [
           7.0,
@@ -932,16 +822,16 @@
           1.08
         ],
         "Pncl": [
-          7.58,
-          1.08
+          7.31,
+          1.09
         ],
         "Sbo": [
           6.26,
-          1.05
+          1.06
         ],
         "1xBet": [
-          6.05,
-          1.08
+          5.95,
+          1.09
         ],
         "Betano": [
           7.6,
@@ -949,18 +839,18 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.1247,
+      "pinnacle_a": 0.1298,
       "kalshi": {
         "a": {
           "cost": 0.11,
           "odds": 8.558,
-          "ev": -0.1587,
+          "ev": -0.1416,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20PERPDA-PER"
         },
         "b": {
           "cost": 0.91,
           "odds": 1.092,
-          "ev": -0.0153,
+          "ev": -0.0175,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20PERPDA-PDA"
         },
         "market_a": 0.104,
@@ -985,24 +875,24 @@
         "key": "d-salazar",
         "model": 0.295,
         "fair_odds": 3.39,
-        "market": 0.215,
-        "best_odds": 4.56,
+        "market": 0.2181,
+        "best_odds": 4.52,
         "book": "Pncl",
-        "ev": -0.2089,
+        "ev": -0.2018,
         "kelly": 0.0,
-        "bet": 0.1735
+        "bet": 0.1766
       },
       "b": {
         "name": "J. B. Torres",
         "key": "j-b-torres",
         "model": 0.705,
         "fair_odds": 1.42,
-        "market": 0.785,
-        "best_odds": 1.21,
-        "book": "Pncl",
-        "ev": 0.0001,
-        "kelly": 0.0001,
-        "bet": 0.8265
+        "market": 0.7819,
+        "best_odds": 1.22,
+        "book": "WilliamHill",
+        "ev": 0.0045,
+        "kelly": 0.0052,
+        "bet": 0.8234
       },
       "books": 6,
       "no_odds": false,
@@ -1026,8 +916,8 @@
       ],
       "prices": {
         "WilliamHill": [
-          4.33,
-          1.2
+          4.0,
+          1.22
         ],
         "Marathon": [
           4.3,
@@ -1038,27 +928,27 @@
           1.18
         ],
         "Pncl": [
-          4.56,
+          4.52,
           1.21
         ],
         "1xBet": [
-          4.3,
+          4.29,
           1.18
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.2097,
+      "pinnacle_a": 0.2112,
       "kalshi": {
         "a": {
           "cost": 0.2,
           "odds": 4.735,
-          "ev": -0.1785,
+          "ev": -0.1638,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20SALTOR-SAL"
         },
         "b": {
           "cost": 0.82,
           "odds": 1.204,
-          "ev": -0.0049,
+          "ev": -0.0086,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20SALTOR-TOR"
         },
         "market_a": 0.194,
@@ -1073,7 +963,7 @@
       "tour": "ATP",
       "tournament": "ATP Lyon",
       "round": "ATP Lyon - 1/16-finals",
-      "start": "2026-10-20T15:30:00Z",
+      "start": "2026-10-20T15:40:00Z",
       "surface": "hard",
       "indoor": true,
       "surface_known": true,
@@ -1083,24 +973,24 @@
         "key": "l-van-assche",
         "model": 0.5632,
         "fair_odds": 1.78,
-        "market": 0.6036,
-        "best_odds": 1.6,
-        "book": "Betano",
-        "ev": -0.0107,
+        "market": 0.605,
+        "best_odds": 1.59,
+        "book": "Pncl",
+        "ev": -0.0144,
         "kelly": 0.0,
-        "bet": 0.6183
+        "bet": 0.6199
       },
       "b": {
         "name": "C. Tabur",
         "key": "c-tabur",
         "model": 0.4368,
         "fair_odds": 2.29,
-        "market": 0.3964,
+        "market": 0.395,
         "best_odds": 2.5,
         "book": "Pncl",
-        "ev": -0.0458,
+        "ev": -0.0497,
         "kelly": 0.0,
-        "bet": 0.3817
+        "bet": 0.3801
       },
       "books": 9,
       "no_odds": false,
@@ -1143,8 +1033,8 @@
           2.38
         ],
         "Betano": [
-          1.6,
-          2.37
+          1.57,
+          2.45
         ]
       },
       "odds_source": "api-tennis",
@@ -1153,16 +1043,16 @@
         "a": {
           "cost": 0.62,
           "odds": 1.571,
-          "ev": -0.0287,
+          "ev": -0.0261,
           "ticker": "KXATPMATCH-26OCT20VANTAB-VAN"
         },
         "b": {
-          "cost": 0.39,
-          "odds": 2.459,
-          "ev": -0.0614,
+          "cost": 0.4,
+          "odds": 2.399,
+          "ev": -0.0881,
           "ticker": "KXATPMATCH-26OCT20VANTAB-TAB"
         },
-        "market_a": 0.615,
+        "market_a": 0.61,
         "event": "KXATPMATCH-26OCT20VANTAB",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct20vantab"
       }
@@ -1184,24 +1074,24 @@
         "key": "t-torres",
         "model": 0.4513,
         "fair_odds": 2.22,
-        "market": 0.5374,
+        "market": 0.5375,
         "best_odds": 1.78,
         "book": "Pncl",
-        "ev": -0.0342,
+        "ev": -0.034,
         "kelly": 0.0,
-        "bet": 0.5426
+        "bet": 0.5427
       },
       "b": {
         "name": "A. Martin",
         "key": "a-martin",
         "model": 0.5487,
         "fair_odds": 1.82,
-        "market": 0.4626,
-        "best_odds": 2.1,
-        "book": "Betfair",
-        "ev": -0.0394,
+        "market": 0.4625,
+        "best_odds": 2.11,
+        "book": "Pncl",
+        "ev": -0.0351,
         "kelly": 0.0,
-        "bet": 0.4574
+        "bet": 0.4573
       },
       "books": 9,
       "no_odds": false,
@@ -1242,7 +1132,7 @@
         ],
         "Pncl": [
           1.78,
-          2.1
+          2.11
         ],
         "Sbo": [
           1.73,
@@ -1258,18 +1148,18 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.5412,
+      "pinnacle_a": 0.5424,
       "kalshi": {
         "a": {
           "cost": 0.56,
           "odds": 1.732,
-          "ev": -0.0602,
+          "ev": -0.06,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20TORMAR-TOR"
         },
         "b": {
           "cost": 0.46,
           "odds": 2.095,
-          "ev": -0.0417,
+          "ev": -0.042,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20TORMAR-MAR"
         },
         "market_a": 0.5495,
@@ -1610,24 +1500,24 @@
         "key": "k-bigun",
         "model": 0.3153,
         "fair_odds": 3.17,
-        "market": 0.2743,
-        "best_odds": 3.63,
+        "market": 0.2754,
+        "best_odds": 3.56,
         "book": "Pncl",
-        "ev": -0.1448,
+        "ev": -0.1572,
         "kelly": 0.0,
-        "bet": 0.2356
+        "bet": 0.2367
       },
       "b": {
         "name": "T. Svajda",
         "key": "t-svajda",
         "model": 0.6847,
         "fair_odds": 1.46,
-        "market": 0.7257,
+        "market": 0.7246,
         "best_odds": 1.3,
         "book": "WilliamHill",
-        "ev": -0.0063,
+        "ev": -0.0078,
         "kelly": 0.0,
-        "bet": 0.7644
+        "bet": 0.7633
       },
       "books": 9,
       "no_odds": false,
@@ -1658,8 +1548,8 @@
           1.29
         ],
         "Pncl": [
-          3.63,
-          1.29
+          3.56,
+          1.3
         ],
         "Sbo": [
           3.38,
@@ -1670,23 +1560,23 @@
           1.28
         ],
         "Betano": [
-          3.55,
-          1.28
+          3.5,
+          1.29
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.2622,
+      "pinnacle_a": 0.2675,
       "kalshi": {
         "a": {
           "cost": 0.27,
           "odds": 3.524,
-          "ev": -0.1697,
+          "ev": -0.1659,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20BIGSVA-BIG"
         },
         "b": {
           "cost": 0.74,
           "odds": 1.327,
-          "ev": 0.0144,
+          "ev": 0.0129,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20BIGSVA-SVA"
         },
         "market_a": 0.2613,
@@ -1884,24 +1774,24 @@
         "key": "r-pacheco-mendez",
         "model": 0.6882,
         "fair_odds": 1.45,
-        "market": 0.7096,
+        "market": 0.7101,
         "best_odds": 1.36,
         "book": "WilliamHill",
-        "ev": 0.0161,
-        "kelly": 0.0112,
-        "bet": 0.7471
+        "ev": 0.0169,
+        "kelly": 0.0117,
+        "bet": 0.7477
       },
       "b": {
         "name": "S. Rodriguez Taverna",
         "key": "s-rodriguez-taverna",
         "model": 0.3118,
         "fair_odds": 3.21,
-        "market": 0.2904,
+        "market": 0.2899,
         "best_odds": 3.7,
         "book": "Betfair",
-        "ev": -0.0643,
+        "ev": -0.0665,
         "kelly": 0.0,
-        "bet": 0.2529
+        "bet": 0.2523
       },
       "books": 9,
       "no_odds": false,
@@ -1949,8 +1839,8 @@
           3.15
         ],
         "Betano": [
-          1.35,
-          3.15
+          1.34,
+          3.2
         ]
       },
       "odds_source": "api-tennis",
@@ -1959,13 +1849,13 @@
         "a": {
           "cost": 0.74,
           "odds": 1.327,
-          "ev": -0.0086,
+          "ev": -0.0078,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20PACROD-PAC"
         },
         "b": {
           "cost": 0.26,
           "odds": 3.657,
-          "ev": -0.0751,
+          "ev": -0.0773,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20PACROD-ROD"
         },
         "market_a": 0.7424,
@@ -2276,12 +2166,12 @@
           "ticker": "KXATPCHALLENGERMATCH-26OCT20MIYCAS-MIY"
         },
         "b": {
-          "cost": 0.58,
-          "odds": 1.675,
-          "ev": -0.0168,
+          "cost": 0.59,
+          "odds": 1.648,
+          "ev": -0.0326,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20MIYCAS-CAS"
         },
-        "market_a": 0.425,
+        "market_a": 0.4229,
         "event": "KXATPCHALLENGERMATCH-26OCT20MIYCAS",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct20miycas"
       }
@@ -2501,7 +2391,7 @@
           "ev": -0.0516,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20YOURYB-RYB"
         },
-        "market_a": 0.43,
+        "market_a": 0.4328,
         "event": "KXATPCHALLENGERMATCH-26OCT20YOURYB",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct20youryb"
       }
@@ -2600,18 +2490,18 @@
       "pinnacle_a": 0.7524,
       "kalshi": {
         "a": {
-          "cost": 0.78,
-          "odds": 1.263,
-          "ev": -0.0094,
+          "cost": 0.77,
+          "odds": 1.278,
+          "ev": 0.0023,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20SOTHER-SOT"
         },
         "b": {
-          "cost": 0.22,
-          "odds": 4.31,
-          "ev": -0.0703,
+          "cost": 0.24,
+          "odds": 3.956,
+          "ev": -0.1467,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20SOTHER-HER"
         },
-        "market_a": 0.7828,
+        "market_a": 0.765,
         "event": "KXATPCHALLENGERMATCH-26OCT20SOTHER",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct20sother"
       }
@@ -3132,24 +3022,24 @@
         "key": "a-martin",
         "model": 0.4708,
         "fair_odds": 2.12,
-        "market": 0.5555,
+        "market": 0.5585,
         "best_odds": 1.72,
         "book": "bet365",
-        "ev": -0.0289,
+        "ev": -0.0229,
         "kelly": 0.0,
-        "bet": 0.5646
+        "bet": 0.5681
       },
       "b": {
         "name": "E. Arutiunian",
         "key": "e-arutiunian",
         "model": 0.5292,
         "fair_odds": 1.89,
-        "market": 0.4445,
+        "market": 0.4415,
         "best_odds": 2.2,
         "book": "Pncl",
-        "ev": -0.0421,
+        "ev": -0.0497,
         "kelly": 0.0,
-        "bet": 0.4354
+        "bet": 0.4319
       },
       "books": 8,
       "no_odds": false,
@@ -3177,24 +3067,24 @@
           2.0
         ],
         "Marathon": [
-          1.64,
-          2.1
+          1.61,
+          2.15
         ],
         "BetVictor": [
-          1.67,
-          2.05
+          1.62,
+          2.1
         ],
         "Pncl": [
           1.69,
           2.2
         ],
         "Sbo": [
-          1.6,
-          2.14
+          1.63,
+          2.09
         ],
         "1xBet": [
-          1.66,
-          2.1
+          1.63,
+          2.15
         ]
       },
       "odds_source": "api-tennis",
@@ -3203,13 +3093,13 @@
         "a": {
           "cost": 0.57,
           "odds": 1.703,
-          "ev": -0.0385,
+          "ev": -0.0325,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20MARARU-MAR"
         },
         "b": {
           "cost": 0.43,
           "odds": 2.236,
-          "ev": -0.0264,
+          "ev": -0.0343,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20MARARU-ARU"
         },
         "market_a": 0.5707,
@@ -3520,12 +3410,12 @@
           "ticker": "KXATPCHALLENGERMATCH-26OCT20WOLZIN-WOL"
         },
         "b": {
-          "cost": 0.2,
-          "odds": 4.735,
-          "ev": -0.098,
+          "cost": 0.21,
+          "odds": 4.512,
+          "ev": -0.1405,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20WOLZIN-ZIN"
         },
-        "market_a": 0.804,
+        "market_a": 0.8,
         "event": "KXATPCHALLENGERMATCH-26OCT20WOLZIN",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26oct20wolzin"
       }
@@ -3547,24 +3437,24 @@
         "key": "s-jong",
         "model": 0.7928,
         "fair_odds": 1.26,
-        "market": 0.4607,
-        "best_odds": 2.1,
-        "book": "bet365",
-        "ev": -0.0239,
+        "market": 0.4784,
+        "best_odds": 2.01,
+        "book": "Pncl",
+        "ev": -0.0237,
         "kelly": 0.0,
-        "bet": 0.4648
+        "bet": 0.4857
       },
       "b": {
         "name": "L. Maxted",
         "key": "l-maxted",
         "model": 0.2072,
         "fair_odds": 4.83,
-        "market": 0.5393,
+        "market": 0.5216,
         "best_odds": 1.83,
         "book": "Betfair",
-        "ev": -0.0206,
+        "ev": -0.0589,
         "kelly": 0.0,
-        "bet": 0.5352
+        "bet": 0.5143
       },
       "books": 9,
       "no_odds": false,
@@ -3583,56 +3473,56 @@
         ],
         [
           "disagree",
-          "Model and market differ by 34 points"
+          "Model and market differ by 32 points"
         ]
       ],
       "prices": {
         "WilliamHill": [
-          2.0,
-          1.73
+          1.91,
+          1.8
         ],
         "bet365": [
-          2.1,
-          1.66
+          1.9,
+          1.8
         ],
         "Marathon": [
-          2.01,
-          1.7
+          1.97,
+          1.73
         ],
         "BetVictor": [
-          2.0,
-          1.7
-        ],
-        "Pncl": [
-          2.1,
+          1.91,
           1.75
         ],
-        "Sbo": [
+        "Pncl": [
           2.01,
-          1.69
+          1.82
+        ],
+        "Sbo": [
+          1.94,
+          1.75
         ],
         "1xBet": [
-          2.01,
-          1.7
+          1.97,
+          1.73
         ],
         "Betano": [
-          2.07,
-          1.72
+          2.0,
+          1.78
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4545,
+      "pinnacle_a": 0.4752,
       "kalshi": {
         "a": {
           "cost": 0.48,
           "odds": 2.01,
-          "ev": -0.0658,
+          "ev": -0.0237,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20JONMAX-JON"
         },
         "b": {
           "cost": 0.53,
           "odds": 1.827,
-          "ev": -0.0222,
+          "ev": -0.0604,
           "ticker": "KXATPCHALLENGERMATCH-26OCT20JONMAX-MAX"
         },
         "market_a": 0.475,
@@ -4079,24 +3969,24 @@
         "key": "t-valentova",
         "model": 0.4867,
         "fair_odds": 2.05,
-        "market": 0.5414,
-        "best_odds": 1.83,
-        "book": "Betfair",
-        "ev": 0.0006,
-        "kelly": 0.0002,
-        "bet": 0.5468
+        "market": 0.5345,
+        "best_odds": 1.85,
+        "book": "WilliamHill",
+        "ev": -0.003,
+        "kelly": 0.0,
+        "bet": 0.5389
       },
       "b": {
         "name": "L. Tagger",
         "key": "l-tagger",
         "model": 0.5133,
         "fair_odds": 1.95,
-        "market": 0.4586,
+        "market": 0.4655,
         "best_odds": 2.2,
-        "book": "WilliamHill",
-        "ev": -0.0029,
-        "kelly": 0.0,
-        "bet": 0.4532
+        "book": "bet365",
+        "ev": 0.0144,
+        "kelly": 0.003,
+        "bet": 0.4611
       },
       "books": 8,
       "no_odds": false,
@@ -4111,8 +4001,8 @@
       "flags": [],
       "prices": {
         "WilliamHill": [
-          1.67,
-          2.2
+          1.85,
+          1.95
         ],
         "Marathon": [
           1.79,
@@ -4127,12 +4017,12 @@
           2.04
         ],
         "1xBet": [
-          1.79,
-          2.01
+          1.78,
+          2.02
         ],
         "Betano": [
-          1.78,
-          2.05
+          1.85,
+          1.98
         ],
         "bet365": [
           1.66,
@@ -4142,18 +4032,18 @@
       "odds_source": "api-tennis",
       "kalshi": {
         "a": {
-          "cost": 0.53,
-          "odds": 1.827,
-          "ev": -0.001,
+          "cost": 0.5,
+          "odds": 1.932,
+          "ev": 0.0412,
           "ticker": "KXWTAMATCH-26OCT20VALTAG-VAL"
         },
         "b": {
-          "cost": 0.49,
-          "odds": 1.97,
-          "ev": -0.1072,
+          "cost": 0.5,
+          "odds": 1.932,
+          "ev": -0.1092,
           "ticker": "KXWTAMATCH-26OCT20VALTAG-TAG"
         },
-        "market_a": 0.5174,
+        "market_a": 0.5025,
         "event": "KXWTAMATCH-26OCT20VALTAG",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct20valtag"
       }
@@ -4175,24 +4065,24 @@
         "key": "j-d-hara-friend",
         "model": 0.7857,
         "fair_odds": 1.27,
-        "market": 0.6068,
+        "market": 0.6097,
         "best_odds": 1.55,
         "book": "Betano",
-        "ev": -0.0145,
+        "ev": -0.0093,
         "kelly": 0.0,
-        "bet": 0.6358
+        "bet": 0.6392
       },
       "b": {
         "name": "J. McCabe",
         "key": "j-mccabe",
         "model": 0.2143,
         "fair_odds": 4.67,
-        "market": 0.3932,
+        "market": 0.3903,
         "best_odds": 2.42,
         "book": "Betano",
-        "ev": -0.1187,
+        "ev": -0.1268,
         "kelly": 0.0,
-        "bet": 0.3642
+        "bet": 0.3608
       },
       "books": 6,
       "no_odds": false,
@@ -4212,8 +4102,8 @@
       ],
       "prices": {
         "Marathon": [
-          1.51,
-          2.35
+          1.5,
+          2.38
         ],
         "1xBet": [
           1.51,
@@ -4224,8 +4114,8 @@
           2.38
         ],
         "BetVictor": [
-          1.53,
-          2.3
+          1.5,
+          2.38
         ],
         "Betano": [
           1.55,
@@ -4340,12 +4230,12 @@
           "ticker": "KXWTAMATCH-26OCT21BOUZAK-BOU"
         },
         "b": {
-          "cost": 0.26,
-          "odds": 3.657,
-          "ev": -0.1443,
+          "cost": 0.23,
+          "odds": 4.125,
+          "ev": -0.0347,
           "ticker": "KXWTAMATCH-26OCT21BOUZAK-ZAK"
         },
-        "market_a": 0.76,
+        "market_a": 0.7766,
         "event": "KXWTAMATCH-26OCT21BOUZAK",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct21bouzak"
       }
@@ -4437,7 +4327,7 @@
           "ev": -0.034,
           "ticker": "KXWTAMATCH-26OCT20BOUGOL-GOL"
         },
-        "market_a": 0.5051,
+        "market_a": 0.5075,
         "event": "KXWTAMATCH-26OCT20BOUGOL",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct20bougol"
       }
@@ -4459,24 +4349,24 @@
         "key": "k-sultanov",
         "model": 0.4962,
         "fair_odds": 2.02,
-        "market": 0.3487,
+        "market": 0.3525,
         "best_odds": 2.75,
         "book": "bet365",
-        "ev": -0.1115,
+        "ev": -0.0995,
         "kelly": 0.0,
-        "bet": 0.3231
+        "bet": 0.3275
       },
       "b": {
         "name": "A. Ilagan",
         "key": "a-ilagan",
         "model": 0.5038,
         "fair_odds": 1.98,
-        "market": 0.6513,
+        "market": 0.6475,
         "best_odds": 1.44,
         "book": "Betfair",
-        "ev": -0.0252,
+        "ev": -0.0316,
         "kelly": 0.0,
-        "bet": 0.6769
+        "bet": 0.6725
       },
       "books": 7,
       "no_odds": false,
@@ -4495,16 +4385,16 @@
           1.4
         ],
         "Marathon": [
-          2.68,
-          1.4
+          2.58,
+          1.43
         ],
         "BetVictor": [
           2.6,
           1.4
         ],
         "1xBet": [
-          2.69,
-          1.41
+          2.59,
+          1.44
         ],
         "WilliamHill": [
           2.62,
@@ -4534,24 +4424,24 @@
         "key": "m-bellucci",
         "model": 0.6264,
         "fair_odds": 1.6,
-        "market": 0.5227,
+        "market": 0.5189,
         "best_odds": 1.89,
         "book": "Pncl",
-        "ev": -0.0018,
+        "ev": -0.0099,
         "kelly": 0.0,
-        "bet": 0.5282
+        "bet": 0.5239
       },
       "b": {
         "name": "T. M. Etcheverry",
         "key": "t-m-etcheverry",
         "model": 0.3736,
         "fair_odds": 2.68,
-        "market": 0.4773,
-        "best_odds": 2.1,
-        "book": "Betfair",
-        "ev": -0.0092,
+        "market": 0.4811,
+        "best_odds": 2.0,
+        "book": "bet365",
+        "ev": -0.0477,
         "kelly": 0.0,
-        "bet": 0.4718
+        "bet": 0.4761
       },
       "books": 9,
       "no_odds": false,
@@ -4578,8 +4468,8 @@
           1.97
         ],
         "BetVictor": [
-          1.75,
-          1.95
+          1.8,
+          1.91
         ],
         "Pncl": [
           1.89,
@@ -4602,18 +4492,18 @@
       "pinnacle_a": 0.5141,
       "kalshi": {
         "a": {
-          "cost": 0.52,
-          "odds": 1.861,
-          "ev": -0.017,
+          "cost": 0.53,
+          "odds": 1.827,
+          "ev": -0.0428,
           "ticker": "KXATPMATCH-26OCT18BELETC-BEL"
         },
         "b": {
           "cost": 0.49,
           "odds": 1.97,
-          "ev": -0.0706,
+          "ev": -0.0621,
           "ticker": "KXATPMATCH-26OCT18BELETC-ETC"
         },
-        "market_a": 0.515,
+        "market_a": 0.5174,
         "event": "KXATPMATCH-26OCT18BELETC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18beletc"
       }
@@ -4714,7 +4604,7 @@
           "ev": -0.0149,
           "ticker": "KXATPMATCH-26OCT18NURMAC-MAC"
         },
-        "market_a": 0.035,
+        "market_a": 0.0302,
         "event": "KXATPMATCH-26OCT18NURMAC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18nurmac"
       }
@@ -4736,24 +4626,24 @@
         "key": "j-duckworth",
         "model": 0.4664,
         "fair_odds": 2.14,
-        "market": 0.4707,
-        "best_odds": 2.05,
-        "book": "Pncl",
-        "ev": -0.0445,
+        "market": 0.4749,
+        "best_odds": 2.04,
+        "book": "1xBet",
+        "ev": -0.0395,
         "kelly": 0.0,
-        "bet": 0.4661
+        "bet": 0.4709
       },
       "b": {
         "name": "L. Darderi",
         "key": "l-darderi",
         "model": 0.5336,
         "fair_odds": 1.87,
-        "market": 0.5293,
-        "best_odds": 1.83,
+        "market": 0.5251,
+        "best_odds": 1.88,
         "book": "Pncl",
-        "ev": -0.0229,
+        "ev": -0.0052,
         "kelly": 0.0,
-        "bet": 0.5339
+        "bet": 0.5291
       },
       "books": 9,
       "no_odds": false,
@@ -4777,51 +4667,51 @@
       ],
       "prices": {
         "WilliamHill": [
-          2.0,
-          1.8
+          1.95,
+          1.85
         ],
         "bet365": [
           2.0,
           1.8
         ],
         "Marathon": [
-          2.02,
-          1.78
+          2.01,
+          1.79
         ],
         "BetVictor": [
           1.95,
           1.75
         ],
         "Pncl": [
-          2.05,
-          1.83
+          1.99,
+          1.88
         ],
         "Sbo": [
           1.98,
           1.7
         ],
         "1xBet": [
-          2.05,
-          1.81
+          2.04,
+          1.82
         ],
         "Betano": [
-          2.02,
-          1.8
+          2.0,
+          1.82
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4716,
+      "pinnacle_a": 0.4858,
       "kalshi": {
         "a": {
           "cost": 0.47,
           "odds": 2.052,
-          "ev": -0.0436,
+          "ev": -0.0337,
           "ticker": "KXATPMATCH-26OCT20DUCDAR-DUC"
         },
         "b": {
           "cost": 0.53,
           "odds": 1.827,
-          "ev": -0.0246,
+          "ev": -0.0333,
           "ticker": "KXATPMATCH-26OCT20DUCDAR-DAR"
         },
         "market_a": 0.4697,
@@ -4947,24 +4837,24 @@
         "key": "f-diaz-acosta",
         "model": 0.3857,
         "fair_odds": 2.59,
-        "market": 0.3847,
-        "best_odds": 2.57,
+        "market": 0.3843,
+        "best_odds": 2.59,
         "book": "Pncl",
-        "ev": -0.055,
+        "ev": -0.0487,
         "kelly": 0.0,
-        "bet": 0.3677
+        "bet": 0.3673
       },
       "b": {
         "name": "N. Basilashvili",
         "key": "n-basilashvili",
         "model": 0.6143,
         "fair_odds": 1.63,
-        "market": 0.6153,
+        "market": 0.6157,
         "best_odds": 1.57,
         "book": "bet365",
-        "ev": -0.0073,
+        "ev": -0.0066,
         "kelly": 0.0,
-        "bet": 0.6323
+        "bet": 0.6327
       },
       "books": 9,
       "no_odds": false,
@@ -5004,8 +4894,8 @@
           1.53
         ],
         "Pncl": [
-          2.57,
-          1.55
+          2.59,
+          1.54
         ],
         "Sbo": [
           2.47,
@@ -5021,21 +4911,21 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.3762,
+      "pinnacle_a": 0.3729,
       "kalshi": {
         "a": {
           "cost": 0.38,
           "odds": 2.522,
-          "ev": -0.0727,
+          "ev": -0.0737,
           "ticker": "KXATPMATCH-26OCT21DIABAS-DIA"
         },
         "b": {
-          "cost": 0.63,
-          "odds": 1.547,
-          "ev": -0.0218,
+          "cost": 0.64,
+          "odds": 1.524,
+          "ev": -0.0358,
           "ticker": "KXATPMATCH-26OCT21DIABAS-BAS"
         },
-        "market_a": 0.375,
+        "market_a": 0.3713,
         "event": "KXATPMATCH-26OCT21DIABAS",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct21diabas"
       }
@@ -5057,26 +4947,26 @@
         "key": "d-medvedev",
         "model": 0.9283,
         "fair_odds": 1.08,
-        "market": 0.8867,
+        "market": 0.8852,
         "best_odds": 1.08,
         "book": "Betano",
-        "ev": -0.0111,
+        "ev": -0.0126,
         "kelly": 0.0,
-        "bet": 0.9156
+        "bet": 0.9143
       },
       "b": {
         "name": "S. Shimabukuro",
         "key": "s-shimabukuro",
         "model": 0.0717,
         "fair_odds": 13.95,
-        "market": 0.1133,
+        "market": 0.1148,
         "best_odds": 9.65,
         "book": "1xBet",
-        "ev": -0.1859,
+        "ev": -0.173,
         "kelly": 0.0,
-        "bet": 0.0844
+        "bet": 0.0857
       },
-      "books": 8,
+      "books": 9,
       "no_odds": false,
       "court": "almaty",
       "model_version": "2026-10-19",
@@ -5093,16 +4983,16 @@
           8.8
         ],
         "BetVictor": [
-          1.06,
-          7.5
+          1.07,
+          7.0
         ],
         "1xBet": [
           1.07,
           9.65
         ],
         "WilliamHill": [
-          1.06,
-          9.0
+          1.07,
+          8.0
         ],
         "Sbo": [
           1.04,
@@ -5115,20 +5005,25 @@
         "bet365": [
           1.07,
           9.0
+        ],
+        "Pncl": [
+          1.07,
+          9.05
         ]
       },
       "odds_source": "api-tennis",
+      "pinnacle_a": 0.8943,
       "kalshi": {
         "a": {
           "cost": 0.91,
           "odds": 1.092,
-          "ev": -0.0002,
+          "ev": -0.0016,
           "ticker": "KXATPMATCH-26OCT21MEDSHI-MED"
         },
         "b": {
           "cost": 0.1,
           "odds": 9.407,
-          "ev": -0.206,
+          "ev": -0.1938,
           "ticker": "KXATPMATCH-26OCT21MEDSHI-SHI"
         },
         "market_a": 0.905,
@@ -5345,24 +5240,24 @@
         "key": "c-wong",
         "model": 0.7748,
         "fair_odds": 1.29,
-        "market": 0.8746,
+        "market": 0.8722,
         "best_odds": 1.08,
         "book": "bet365",
-        "ev": -0.015,
+        "ev": -0.0172,
         "kelly": 0.0,
-        "bet": 0.9121
+        "bet": 0.91
       },
       "b": {
         "name": "K. Samrej",
         "key": "k-samrej",
         "model": 0.2252,
         "fair_odds": 4.44,
-        "market": 0.1254,
+        "market": 0.1278,
         "best_odds": 9.0,
         "book": "WilliamHill",
-        "ev": -0.2087,
+        "ev": -0.1901,
         "kelly": 0.0,
-        "bet": 0.0879
+        "bet": 0.09
       },
       "books": 7,
       "no_odds": false,
@@ -5378,11 +5273,11 @@
       "prices": {
         "Marathon": [
           1.06,
-          7.1
+          6.95
         ],
         "1xBet": [
           1.06,
-          7.1
+          6.95
         ],
         "WilliamHill": [
           1.05,
@@ -5393,12 +5288,12 @@
           7.0
         ],
         "BetVictor": [
-          1.06,
+          1.07,
           6.5
         ],
         "Betano": [
           1.08,
-          7.6
+          7.4
         ]
       },
       "odds_source": "api-tennis"
@@ -5615,12 +5510,12 @@
           "ticker": "KXATPMATCH-26OCT18PRIDZU-PRI"
         },
         "b": {
-          "cost": 0.3,
-          "odds": 3.178,
-          "ev": -0.0752,
+          "cost": 0.31,
+          "odds": 3.077,
+          "ev": -0.1046,
           "ticker": "KXATPMATCH-26OCT18PRIDZU-DZU"
         },
-        "market_a": 0.699,
+        "market_a": 0.6954,
         "event": "KXATPMATCH-26OCT18PRIDZU",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18pridzu"
       }
@@ -5710,18 +5605,18 @@
       "pinnacle_a": 0.402,
       "kalshi": {
         "a": {
-          "cost": 0.41,
-          "odds": 2.342,
-          "ev": -0.0913,
+          "cost": 0.39,
+          "odds": 2.459,
+          "ev": -0.0459,
           "ticker": "KXATPMATCH-26OCT18WAWLAN-WAW"
         },
         "b": {
-          "cost": 0.61,
-          "odds": 1.596,
-          "ev": -0.0232,
+          "cost": 0.62,
+          "odds": 1.571,
+          "ev": -0.0385,
           "ticker": "KXATPMATCH-26OCT18WAWLAN-LAN"
         },
-        "market_a": 0.4,
+        "market_a": 0.385,
         "event": "KXATPMATCH-26OCT18WAWLAN",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct18wawlan"
       }
@@ -5903,9 +5798,9 @@
       "odds_source": "api-tennis",
       "kalshi": {
         "a": {
-          "cost": 0.77,
-          "odds": 1.278,
-          "ev": -0.0239,
+          "cost": 0.75,
+          "odds": 1.31,
+          "ev": 0.0006,
           "ticker": "KXATPMATCH-26OCT21FILMUN-FIL"
         },
         "b": {
@@ -5914,7 +5809,7 @@
           "ev": -0.1362,
           "ticker": "KXATPMATCH-26OCT21FILMUN-MUN"
         },
-        "market_a": 0.7538,
+        "market_a": 0.7487,
         "event": "KXATPMATCH-26OCT21FILMUN",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct21filmun"
       }
@@ -5999,9 +5894,9 @@
       "odds_source": "api-tennis",
       "kalshi": {
         "a": {
-          "cost": 0.36,
-          "odds": 2.659,
-          "ev": -0.1273,
+          "cost": 0.34,
+          "odds": 2.811,
+          "ev": -0.0774,
           "ticker": "KXATPMATCH-26OCT21DAMCER-DAM"
         },
         "b": {
@@ -6010,7 +5905,7 @@
           "ev": -0.0198,
           "ticker": "KXATPMATCH-26OCT21DAMCER-CER"
         },
-        "market_a": 0.3467,
+        "market_a": 0.335,
         "event": "KXATPMATCH-26OCT21DAMCER",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct21damcer"
       }
@@ -6032,24 +5927,24 @@
         "key": "m-kouame",
         "model": 0.1465,
         "fair_odds": 6.82,
-        "market": 0.2736,
-        "best_odds": 3.6,
+        "market": 0.2748,
+        "best_odds": 3.55,
         "book": "Marathon",
-        "ev": -0.1287,
+        "ev": -0.1366,
         "kelly": 0.0,
-        "bet": 0.242
+        "bet": 0.2432
       },
       "b": {
         "name": "L. Musetti",
         "key": "l-musetti",
         "model": 0.8535,
         "fair_odds": 1.17,
-        "market": 0.7264,
+        "market": 0.7252,
         "best_odds": 1.33,
         "book": "WilliamHill",
-        "ev": 0.0081,
-        "kelly": 0.0061,
-        "bet": 0.758
+        "ev": 0.0065,
+        "kelly": 0.0049,
+        "bet": 0.7568
       },
       "books": 7,
       "no_odds": false,
@@ -6072,19 +5967,19 @@
           1.3
         ],
         "Marathon": [
-          3.6,
-          1.28
+          3.55,
+          1.29
         ],
         "BetVictor": [
           3.25,
-          1.29
+          1.3
         ],
         "Sbo": [
           3.38,
           1.23
         ],
         "1xBet": [
-          3.56,
+          3.52,
           1.3
         ]
       },
@@ -6093,16 +5988,16 @@
         "a": {
           "cost": 0.25,
           "odds": 3.8,
-          "ev": -0.0804,
+          "ev": -0.0758,
           "ticker": "KXATPMATCH-26OCT21KOUMUS-KOU"
         },
         "b": {
           "cost": 0.75,
           "odds": 1.31,
-          "ev": -0.007,
+          "ev": -0.0086,
           "ticker": "KXATPMATCH-26OCT21KOUMUS-MUS"
         },
-        "market_a": 0.2475,
+        "market_a": 0.2487,
         "event": "KXATPMATCH-26OCT21KOUMUS",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct21koumus"
       }
@@ -6170,7 +6065,7 @@
           "ev": -0.2553,
           "ticker": "KXATPMATCH-26OCT21NAVGRI-GRI"
         },
-        "market_a": 0.4573,
+        "market_a": 0.4577,
         "event": "KXATPMATCH-26OCT21NAVGRI",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct21navgri"
       }
@@ -6222,9 +6117,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.49,
-          "odds": 1.97,
-          "ev": -0.6746,
+          "cost": 0.47,
+          "odds": 2.052,
+          "ev": -0.661,
           "ticker": "KXATPMATCH-26OCT21HERFRI-HER"
         },
         "b": {
@@ -6233,7 +6128,7 @@
           "ev": 0.0051,
           "ticker": "KXATPMATCH-26OCT21HERFRI-FRI"
         },
-        "market_a": 0.3081,
+        "market_a": 0.298,
         "event": "KXATPMATCH-26OCT21HERFRI",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26oct21herfri"
       }
@@ -6415,24 +6310,24 @@
         "key": "m-ribecai",
         "model": 0.4427,
         "fair_odds": 2.26,
-        "market": 0.4244,
-        "best_odds": 2.18,
+        "market": 0.4914,
+        "best_odds": 1.87,
         "book": "Marathon",
-        "ev": -0.1084,
+        "ev": -0.0877,
         "kelly": 0.0,
-        "bet": 0.409
+        "bet": 0.4879
       },
       "b": {
         "name": "M. Houkes",
         "key": "m-houkes",
         "model": 0.5573,
         "fair_odds": 1.79,
-        "market": 0.5756,
-        "best_odds": 1.61,
-        "book": "1xBet",
-        "ev": -0.0485,
+        "market": 0.5086,
+        "best_odds": 1.81,
+        "book": "Marathon",
+        "ev": -0.073,
         "kelly": 0.0,
-        "bet": 0.591
+        "bet": 0.5121
       },
       "books": 3,
       "no_odds": false,
@@ -6456,12 +6351,12 @@
       ],
       "prices": {
         "Marathon": [
-          2.18,
-          1.59
+          1.87,
+          1.81
         ],
         "1xBet": [
-          2.18,
-          1.61
+          1.87,
+          1.81
         ]
       },
       "odds_source": "api-tennis"
@@ -6622,24 +6517,24 @@
         "key": "m-alcala-gurri",
         "model": 0.5772,
         "fair_odds": 1.73,
-        "market": 0.4796,
+        "market": 0.4794,
         "best_odds": 2.0,
         "book": "WilliamHill",
-        "ev": -0.043,
+        "ev": -0.0435,
         "kelly": 0.0,
-        "bet": 0.4785
+        "bet": 0.4783
       },
       "b": {
         "name": "E. Moller (39675)",
         "key": "e-moller-39675",
         "model": 0.4228,
         "fair_odds": 2.37,
-        "market": 0.5204,
+        "market": 0.5206,
         "best_odds": 1.82,
         "book": "Betano",
-        "ev": -0.0508,
+        "ev": -0.0504,
         "kelly": 0.0,
-        "bet": 0.5215
+        "bet": 0.5217
       },
       "books": 7,
       "no_odds": false,
@@ -6679,7 +6574,7 @@
           1.8
         ],
         "BetVictor": [
-          1.9,
+          1.91,
           1.75
         ],
         "1xBet": [
@@ -6833,24 +6728,24 @@
         "key": "z-zhang",
         "model": 0.5344,
         "fair_odds": 1.87,
-        "market": 0.4629,
+        "market": 0.4609,
         "best_odds": 2.05,
         "book": "Betano",
-        "ev": -0.0624,
+        "ev": -0.0675,
         "kelly": 0.0,
-        "bet": 0.4574
+        "bet": 0.4549
       },
       "b": {
         "name": "Y. Zhou (39862)",
         "key": "y-zhou-39862",
         "model": 0.4656,
         "fair_odds": 2.15,
-        "market": 0.5371,
+        "market": 0.5391,
         "best_odds": 1.75,
         "book": "Betano",
-        "ev": -0.0504,
+        "ev": -0.0461,
         "kelly": 0.0,
-        "bet": 0.5426
+        "bet": 0.5451
       },
       "books": 7,
       "no_odds": false,
@@ -6869,8 +6764,8 @@
           1.71
         ],
         "1xBet": [
-          1.99,
-          1.71
+          2.01,
+          1.7
         ],
         "WilliamHill": [
           2.0,
@@ -7062,7 +6957,7 @@
           "ev": -0.109,
           "ticker": "KXWTAMATCH-26OCT20STOUCH-UCH"
         },
-        "market_a": 0.6548,
+        "market_a": 0.6515,
         "event": "KXWTAMATCH-26OCT20STOUCH",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct20stouch"
       }
@@ -7084,24 +6979,24 @@
         "key": "a-li",
         "model": 0.667,
         "fair_odds": 1.5,
-        "market": 0.6218,
+        "market": 0.6208,
         "best_odds": 1.57,
         "book": "WilliamHill",
-        "ev": 0.0056,
-        "kelly": 0.0024,
-        "bet": 0.6405
+        "ev": 0.0039,
+        "kelly": 0.0017,
+        "bet": 0.6394
       },
       "b": {
         "name": "Z. Sonmez",
         "key": "z-sonmez",
         "model": 0.333,
         "fair_odds": 3.0,
-        "market": 0.3782,
-        "best_odds": 2.62,
+        "market": 0.3792,
+        "best_odds": 2.6,
         "book": "Marathon",
-        "ev": -0.0581,
+        "ev": -0.0625,
         "kelly": 0.0,
-        "bet": 0.3595
+        "bet": 0.3606
       },
       "books": 8,
       "no_odds": false,
@@ -7120,16 +7015,16 @@
           2.38
         ],
         "Marathon": [
-          1.48,
-          2.62
+          1.49,
+          2.6
         ],
         "BetVictor": [
           1.5,
           2.4
         ],
         "1xBet": [
-          1.49,
-          2.62
+          1.5,
+          2.59
         ],
         "Betano": [
           1.53,
@@ -7149,16 +7044,16 @@
         "a": {
           "cost": 0.65,
           "odds": 1.502,
-          "ev": -0.038,
+          "ev": -0.0396,
           "ticker": "KXWTAMATCH-26OCT20ANNSON-ANN"
         },
         "b": {
-          "cost": 0.38,
-          "odds": 2.522,
-          "ev": -0.0933,
+          "cost": 0.37,
+          "odds": 2.589,
+          "ev": -0.0664,
           "ticker": "KXWTAMATCH-26OCT20ANNSON-SON"
         },
-        "market_a": 0.6332,
+        "market_a": 0.64,
         "event": "KXWTAMATCH-26OCT20ANNSON",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct20annson"
       }
@@ -7210,9 +7105,9 @@
       "flags": [],
       "kalshi": {
         "a": {
-          "cost": 0.54,
-          "odds": 1.794,
-          "ev": -0.0766,
+          "cost": 0.52,
+          "odds": 1.861,
+          "ev": -0.0421,
           "ticker": "KXWTAMATCH-26OCT20RUZDAY-RUZ"
         },
         "b": {
@@ -7221,7 +7116,7 @@
           "ev": -0.044,
           "ticker": "KXWTAMATCH-26OCT20RUZDAY-DAY"
         },
-        "market_a": 0.5276,
+        "market_a": 0.515,
         "event": "KXWTAMATCH-26OCT20RUZDAY",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct20ruzday"
       }
@@ -7243,24 +7138,24 @@
         "key": "m-linette",
         "model": 0.3279,
         "fair_odds": 3.05,
-        "market": 0.3612,
+        "market": 0.3624,
         "best_odds": 2.75,
         "book": "Betfair",
-        "ev": -0.0635,
+        "ev": -0.0599,
         "kelly": 0.0,
-        "bet": 0.3405
+        "bet": 0.3418
       },
       "b": {
         "name": "K. Siniakova",
         "key": "k-siniakova",
         "model": 0.6721,
         "fair_odds": 1.49,
-        "market": 0.6388,
+        "market": 0.6376,
         "best_odds": 1.52,
         "book": "Betano",
-        "ev": 0.0024,
-        "kelly": 0.0011,
-        "bet": 0.6595
+        "ev": 0.0004,
+        "kelly": 0.0002,
+        "bet": 0.6582
       },
       "books": 7,
       "no_odds": false,
@@ -7279,12 +7174,12 @@
           1.5
         ],
         "Marathon": [
-          2.69,
-          1.46
+          2.66,
+          1.47
         ],
         "1xBet": [
-          2.68,
-          1.47
+          2.65,
+          1.48
         ],
         "BetVictor": [
           2.6,
@@ -7302,18 +7197,18 @@
       "odds_source": "api-tennis",
       "kalshi": {
         "a": {
-          "cost": 0.36,
-          "odds": 2.659,
-          "ev": -0.0946,
+          "cost": 0.34,
+          "odds": 2.811,
+          "ev": -0.0392,
           "ticker": "KXWTAMATCH-26OCT20LINSIN-LIN"
         },
         "b": {
-          "cost": 0.68,
-          "odds": 1.438,
-          "ev": -0.0516,
+          "cost": 0.67,
+          "odds": 1.459,
+          "ev": -0.0397,
           "ticker": "KXWTAMATCH-26OCT20LINSIN-SIN"
         },
-        "market_a": 0.34,
+        "market_a": 0.3367,
         "event": "KXWTAMATCH-26OCT20LINSIN",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26oct20linsin"
       }
@@ -7338,10 +7233,10 @@
         "upcoming": 24,
         "status": {
           "Cancelled": 2,
-          "Finished": 22,
+          "Finished": 24,
           "Retired": 1,
           "(blank)": 12,
-          "Set 2": 3,
+          "Set 2": 1,
           "1": 12
         }
       },
@@ -7352,20 +7247,20 @@
           "Finished": 24,
           "Retired": 3,
           "Cancelled": 5,
-          "Set 2": 1,
+          "Set 3": 1,
           "1": 8,
           "(blank)": 6
         }
       },
       "ATP_CH": {
         "events": 128,
-        "upcoming": 43,
+        "upcoming": 42,
         "status": {
-          "Finished": 74,
+          "Finished": 75,
           "Cancelled": 3,
           "Set 1": 2,
           "Retired": 3,
-          "(blank)": 33,
+          "(blank)": 32,
           "Set 2": 3,
           "1": 10
         }
@@ -7380,14 +7275,14 @@
       "already listed from the odds feed": 3,
       "outside the window": 5
     },
-    "schedule_upcoming": 81,
-    "schedule_added": 73,
+    "schedule_upcoming": 80,
+    "schedule_added": 72,
     "kept_from_last_run": 0
   },
-  "kalshi_matched": 61,
+  "kalshi_matched": 60,
   "record": {
-    "settled": 772,
-    "pending": 119,
+    "settled": 773,
+    "pending": 118,
     "by_model": {
       "2026-10-03": {
         "settled": 4,
@@ -7458,19 +7353,19 @@
         "clean_profit": 2.0
       },
       "2026-10-19": {
-        "settled": 109,
-        "pending": 97,
-        "model_right": 0.6055,
-        "market_right": 0.6422,
-        "brier_model": 0.2234,
-        "brier_market": 0.2135,
+        "settled": 110,
+        "pending": 96,
+        "model_right": 0.6091,
+        "market_right": 0.6364,
+        "brier_model": 0.2235,
+        "brier_market": 0.2143,
         "value_bets": 43,
         "value_wins": 33,
         "profit_units": 2.19,
         "roi": 0.0509,
-        "pinnacle_n": 102,
+        "pinnacle_n": 103,
         "brier_model_pin": 0.2231,
-        "brier_pinnacle": 0.214,
+        "brier_pinnacle": 0.2149,
         "clean_bets": 20,
         "clean_profit": -1.15
       },
@@ -7489,17 +7384,17 @@
         "clean_profit": 0
       }
     },
-    "model_right": 0.6256,
-    "market_right": 0.6308,
+    "model_right": 0.6261,
+    "market_right": 0.63,
     "brier_model": 0.2242,
-    "brier_market": 0.2157,
+    "brier_market": 0.2159,
     "value_bets": 654,
     "value_wins": 290,
     "profit_units": 15.87,
     "roi": 0.0243,
-    "pinnacle_n": 649,
+    "pinnacle_n": 650,
     "brier_model_pin": 0.2253,
-    "brier_pinnacle": 0.2174,
+    "brier_pinnacle": 0.2175,
     "clean_bets": 247,
     "clean_profit": 23.26
   },

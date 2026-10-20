@@ -59,6 +59,24 @@ def main():
     for e in fx:
         by.setdefault(e.get("event_status") or "(blank)", []).append(trim(e))
     save("fixtures_by_status.json", {k: v[:3] for k, v in by.items()})
+    # bookmaker markets: names, and the full structure of a few for one priced event
+    try:
+        odds = u.api_tennis_call(key, method="get_odds", date_start=today.isoformat(),
+                                 date_stop=(today + timedelta(days=1)).isoformat())
+    except Exception as e:                           # noqa: BLE001
+        odds, rep["odds_error"] = {}, str(e).replace(key, "***")
+    odds = odds if isinstance(odds, dict) else {}
+    names = Counter(n for mk in odds.values() if isinstance(mk, dict) for n in mk)
+    rep["odds_events"] = len(odds)
+    rep["odds_markets"] = names.most_common(60)
+    ours = {str(e.get("event_key")) for e in fx}
+    sample = {}
+    for ek, mk in odds.items():
+        if str(ek) in ours and isinstance(mk, dict) and len(mk) > 3:
+            sample[ek] = {n: v for n, v in mk.items()}
+            if len(sample) >= 2:
+                break
+    save("odds_sample.json", sample)
     save("report.json", rep)
     print(json.dumps(rep, indent=1)[:3000])
 

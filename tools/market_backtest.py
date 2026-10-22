@@ -17,6 +17,7 @@ model_params.json as "market_blend": the probability update_matches.py uses for 
 bets (model.bet_prob).
 
     python tools/market_backtest.py [--json market_report.json] [--write]
+    python tools/market_backtest.py --markets [--write]     # total games and set betting instead
 """
 
 import argparse, csv, json, math, os, random, sys
@@ -73,6 +74,131 @@ def L(p):
     return math.log(p / (1 - p))
 
 
+# ---------- total games and set betting ----------------------------------------------
+def market_rows(P, data, set_prob, odds_path, cache):
+    """Finished matches with total-games or set-betting prices (data/odds_history.csv), with the
+    model's chances for them: the total-games over at the bookmakers' main line from
+    model.match_joint (hold_adj included), and each set score from model.set_dist."""
+    odds = {}
+    with open(odds_path, encoding="utf-8") as fh:
+        for o in csv.DictReader(fh):
+            if o.get("ou_line") or o.get("sets"):
+                odds[o["event_key"]] = o
+    mom = lambda tour, bo: {"ATP": {3: P.set_m_atp3, 5: P.set_m_atp5}, "WTA": {3: P.set_m_wta3}}[tour].get(bo, 0.0)
+    rows = []
+    for tour, ms in data.items():
+        eng = model.TourEngine(tour, P, set_prob=set_prob)
+        for m in ms:
+            if m.get("level") == "challenger" and not P.ch_use:
+                continue
+            k = str(m["order"][1])
+            if m["status"] == "completed" and k in odds and k in cache and m.get("sets"):
+                a, b = sorted((m["winner"], m["loser"]))
+                r = eng.predict(a, b, m["surface"], m["best_of"], m["date"], m.get("court"), m["qualifying"])
+                o, c, bo = odds[k], cache[k], m["best_of"]
+                first_won = str(o["first_key"]) == str(c["winner_key"])
+                a_is_first = (a == m["winner"]) == first_won
+                pf = r["p"] if a_is_first else 1 - r["p"]            # first player's chance
+                w, l = m["sets"]
+                row = {"date": m["date"], "level": m.get("level", "tour"), "tour": tour}
+                if o.get("ou_line") and m.get("games_total"):
+                    Lg = float(o["ou_line"])
+                    J = model.match_joint(r["pa"], r["pb"], r["p"], bo, mom(tour, bo), P.hold_adj)
+                    row["ou"] = {"line": Lg, "model": model.joint_prob(J, lambda x, y, t: t > Lg),
+                                 "market": float(o["ou_over_fair"]), "y": 1 if m["games_total"] > Lg else 0,
+                                 "best_over": float(o["ou_over_best"]), "best_under": float(o["ou_under_best"])}
+                if o.get("sets"):
+                    mk = json.loads(o["sets"])
+                    dist = model.set_dist(pf, bo, mom(tour, bo))       # first player's side
+                    actual = f"{w}-{l}" if first_won else f"{l}-{w}"
+                    sel = {f"{x}-{y}": v for (x, y), v in dist.items()}
+                    if set(mk) == set(sel) and actual in sel:
+                        row["sets"] = {"model": sel, "market": {k_: v[0] for k_, v in mk.items()},
+                                       "best": {k_: v[1] for k_, v in mk.items()}, "actual": actual}
+                if "ou" in row or "sets" in row:
+                    rows.append(row)
+            eng.update(m)
+    return rows
+
+
+def blend_sets(model_p, market_p, w):
+    raw = {k: model.stack_prob(w, [L(market_p[k]), L(model_p[k])]) for k in model_p}
+    t = sum(raw.values())
+    return {k: v / t for k, v in raw.items()}
+
+
+def markets_report(rows, log, write, params_path):
+    tune = [r for r in rows if r["date"] < bt.HOLD_START]
+    hold = [r for r in rows if r["date"] >= bt.HOLD_START]
+    rep = {}
+    # total games
+    ou_t, ou_h = [r["ou"] for r in tune if "ou" in r], [r["ou"] for r in hold if "ou" in r]
+    if len(ou_t) >= 300 and ou_h:
+        w = bt.fit_logistic([([L(o["market"]), L(o["model"])], o["y"]) for o in ou_t])
+        for o in ou_t + ou_h:
+            o["blend"] = model.stack_prob(w, [L(o["market"]), L(o["model"])])
+        ll = lambda os_, k: sum(-math.log(min(max(o[k] if o["y"] else 1 - o[k], 1e-6), 1)) for o in os_) / len(os_)
+        rep["totals"] = {"weights": w, "n_tune": len(ou_t), "n_holdout": len(ou_h),
+                         "holdout_logloss": {k: ll(ou_h, k) for k in ("model", "market", "blend")}}
+        log(f"total games ({len(ou_t)} earlier / {len(ou_h)} holdout matches at the main line): holdout log loss "
+            + ", ".join(f"{k} {v:.4f}" for k, v in rep["totals"]["holdout_logloss"].items())
+            + f"; blend weights market {w[0]:+.3f}, model {w[1]:+.3f}")
+        for key in ("model", "market", "blend"):
+            for thr in (0.0, 0.03):
+                b = []
+                for o in ou_h:
+                    for q, price, won in ((o[key], o["best_over"], o["y"] == 1), (1 - o[key], o["best_under"], o["y"] == 0)):
+                        if q * price - 1 > thr:
+                            b.append((price, won))
+                if b:
+                    lo, hi = ci(b)
+                    rep["totals"][f"bets {key} >{thr:.0%}"] = {"n": len(b), "roi": roi(b), "ci90": [lo, hi]}
+                    log(f"  bet total games on {key:6} edge >{thr:3.0%}: {len(b):5} bets, ROI {roi(b):+.3f} [90% {lo:+.3f}, {hi:+.3f}]")
+    else:
+        log(f"total games: only {len(ou_t)} earlier matches with prices, not enough to fit")
+    # set betting
+    st_t, st_h = [r["sets"] for r in tune if "sets" in r], [r["sets"] for r in hold if "sets" in r]
+    if len(st_t) >= 300 and st_h:
+        w = bt.fit_logistic([([L(s_["market"][k]), L(s_["model"][k])], 1 if k == s_["actual"] else 0)
+                             for s_ in st_t for k in s_["model"]])
+        for s_ in st_t + st_h:
+            s_["blend"] = blend_sets(s_["model"], s_["market"], w)
+        mll = lambda ss, k: sum(-math.log(max(s_[k][s_["actual"]], 1e-6)) for s_ in ss) / len(ss)
+        rep["sets"] = {"weights": w, "n_tune": len(st_t), "n_holdout": len(st_h),
+                       "holdout_logloss": {k: mll(st_h, k) for k in ("model", "market", "blend")}}
+        log(f"set betting ({len(st_t)} earlier / {len(st_h)} holdout matches): holdout log loss (exact set score) "
+            + ", ".join(f"{k} {v:.4f}" for k, v in rep["sets"]["holdout_logloss"].items())
+            + f"; blend weights market {w[0]:+.3f}, model {w[1]:+.3f}")
+        for key in ("model", "market", "blend"):
+            for thr in (0.0, 0.03):
+                b = [(s_["best"][k], k == s_["actual"]) for s_ in st_h for k in s_["model"]
+                     if s_["best"][k] and s_[key][k] * s_["best"][k] - 1 > thr]
+                if b:
+                    lo, hi = ci(b)
+                    rep["sets"][f"bets {key} >{thr:.0%}"] = {"n": len(b), "roi": roi(b), "ci90": [lo, hi]}
+                    log(f"  bet set scores on {key:6} edge >{thr:3.0%}: {len(b):5} bets, ROI {roi(b):+.3f} [90% {lo:+.3f}, {hi:+.3f}]")
+    else:
+        log(f"set betting: only {len(st_t)} earlier matches with prices, not enough to fit")
+    if write and rep:
+        with open(params_path) as fh:
+            saved = json.load(fh)
+        mb = saved.setdefault("market_blend", {"weights": {}})
+        for k in ("totals", "sets"):
+            if k in rep:
+                # a market gets the blend only if it beats the bookmakers' own chance on the
+                # holdout; otherwise value stays "best price beats the no-margin chance"
+                hl = rep[k]["holdout_logloss"]
+                use = hl["blend"] <= hl["market"]
+                mb["weights"][k] = [round(x, 4) for x in rep[k]["weights"]] if use else [1.0, 0.0]
+                mb[f"{k}_holdout"] = {**{x: y for x, y in rep[k].items() if x != "weights"},
+                                      "fitted_weights": rep[k]["weights"], "blend_adopted": use}
+                log(f"  {k}: {'blend adopted' if use else 'blend no better than the market: market only'}")
+        with open(params_path, "w") as fh:
+            json.dump(saved, fh, indent=2, default=str)
+        log(f"wrote totals / sets blend weights to {params_path}")
+    return rep
+
+
 def logloss(rows, key):
     rs = [r for r in rows if r[key] is not None]
     if not rs:
@@ -111,6 +237,7 @@ def main():
     ap.add_argument("--params", default="model_params.json")
     ap.add_argument("--json", default=None, help="also write the report here")
     ap.add_argument("--write", action="store_true", help="save the blend refitted on all odds to --params")
+    ap.add_argument("--markets", action="store_true", help="total games and set betting instead of the winner")
     args = ap.parse_args()
     log = lambda s="": print(s, file=sys.stderr)
 
@@ -118,6 +245,14 @@ def main():
         P = model.Params.from_dict(json.load(fh)["params"])
     data = bt.load(args.cache)
     cache = update_data.load_api_cache(args.cache)
+    if args.markets:
+        rows = market_rows(P, data, model.SetTable(), args.odds, cache)
+        log(f"{len(rows)} finished matches with total-games or set-betting prices")
+        rep = markets_report(rows, log, args.write, args.params)
+        if args.json:
+            with open(args.json, "w") as fh:
+                json.dump(rep, fh, indent=1, default=str)
+        return
     rows = joined(predictions(P, data, model.SetTable()), args.odds, cache)
     rows = [r for r in rows if r["date"] > bt.WARM_END]
     tune = [r for r in rows if bt.TUNE[0] <= r["date"] <= bt.TUNE[1]]

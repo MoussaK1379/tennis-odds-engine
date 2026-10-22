@@ -152,21 +152,21 @@
     <p><strong>Against the bookmakers.</strong> <code>tools/market_backtest.py</code> joins every
       walk-forward prediction with the real pre-match prices (api-tennis, saved daily by
       <code>tools/fetch_odds.py</code> in <code>data/odds_history.csv</code>; they agree with the prices
-      the site logged before each match). On 12,410 holdout matches:</p>
+      the site logged before each match). On 12,566 holdout matches (refitted 22 Oct 2026 on 50,000 matches of odds):</p>
     <table class="bt">
       <tr><th></th><th>Log loss</th></tr>
-      <tr><td>Model</td><td>0.620</td></tr>
-      <tr><td>Bookmakers' de-vigged average</td><td>0.579</td></tr>
+      <tr><td>Model</td><td>0.615</td></tr>
+      <tr><td>Bookmakers' de-vigged average</td><td>0.580</td></tr>
       <tr><td>Pinnacle (where it priced the match)</td><td>0.582</td></tr>
     </table>
-    <p>The market is far sharper, and betting the model's own "value" lost about 7% per bet at
+    <p>The market is far sharper, and betting the model's own "value" lost about 6% per bet at
       every threshold, tour and level (90% intervals entirely below zero). Fitted on 19,000 earlier
-      matches, a blend of market and model gives the model a weight of about 0.02: it knows nothing
-      the prices don't. So value bets, Kelly stakes and parlays now use the <em>betting probability</em>
+      matches, a blend of market and model gives the model a weight of about 0.05 at tour level and
+      about 0 for Challengers: it knows little the prices don't. So value bets, Kelly stakes and parlays now use the <em>betting probability</em>
       (<code>model.bet_prob</code>): the bookmakers' consensus, stretched slightly (it is a little
       too timid), plus that sliver of model. A value flag now mostly means one bookmaker is offering
-      more than the fair price. On the holdout that rule returned +2.0% on 5,176 bets (90%: −0.5% to
-      +4.7%), and +13% on the 697 bets with a 3%+ edge (−2% to +30%): promising, not proven, and
+      more than the fair price. On the holdout that rule returned +2.0% on 5,269 bets (90%: −0.7% to
+      +4.6%), and +14% on the 726 bets with a 3%+ edge (−1% to +30%): promising, not proven, and
       soft bookmakers limit accounts that win this way. The model's own percentage is still shown.
       Refit with <code>python tools/market_backtest.py --write</code>.</p>
     <p>The live track record is the real test. On the first 608 settled live picks (model-based
@@ -196,9 +196,15 @@
       <li><strong>Same-match parlays</strong> (e.g. a player to win 2-0 and under 21.5 games) are priced
         from the table, not by multiplying legs that depend on each other. Bookmakers only take these as a
         bet builder at their own price, so the builder asks for that price to work out the EV.</li>
-      <li><strong>EV</strong> uses the bookmakers' no-margin chance for these markets (the model is shown
-        alongside) until the odds history (now saving totals and set betting too) is long enough to test
-        the model against them, as was done for the winner.</li>
+      <li><strong>Tested against the bookmakers</strong> (<code>python tools/market_backtest.py --markets</code>,
+        odds from Nov 2025, holdout from Apr 2026). <em>Set betting</em> (12,320 matches): market log loss
+        1.226, model 1.269; betting the model's edges lost 10.6%, and so did trusting the bookmakers'
+        no-margin chances (−12.8%: correct-score books load their margin on the long shots). A blend fitted on
+        the earlier months, essentially the market stretched (weights 1.07 / 0.004), scores 1.224 and broke
+        about even (+1.1%, 90%: −6% to +8%), so set-betting EV uses it. <em>Total games</em> (4,270 matches at
+        the main line): market 0.689, model 0.712; the model's edges lost 6.4%; the blend was no better than
+        the market, so EV there means the best price beats the no-margin chance (+1.4%, 90%: −6% to +8%).
+        The model's chances are shown for comparison; neither market shows an edge yet.</li>
     </ul>
 
     <h2>Live scores and delays</h2>

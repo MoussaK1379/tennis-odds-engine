@@ -507,10 +507,9 @@ def attach_markets(matches, mdl):
 
 
 # ---------- parlays ---------------------------------------------------------------
-# A parlay multiplies the bookmaker's margin and the model's errors, so legs are
-# held to a stricter standard than single picks, and the whole ticket is priced
-# at ONE bookmaker that offers every leg (prices can't be mixed across books).
-PARLAY_LEG_MIN_EV = 0.03     # each leg must be value at the parlay's bookmaker
+# A parlay multiplies the bookmaker's margin and the model's errors, so the whole
+# ticket must be clear value, and it is priced at ONE bookmaker that offers every
+# leg (prices can't be mixed across books). Single legs needn't be value on their own.
 PARLAY_LEG_MIN_P = 0.40      # no long shots
 PARLAY_MIN_EV = 0.05
 PARLAY_SIZES = (2, 3)
@@ -526,7 +525,7 @@ def build_parlays(matches, now, show=PARLAY_SHOW):
         for book, prices in (m.get("prices") or {}).items():
             for side, price in zip(("a", "b"), prices):
                 p = m[side].get("bet") or m[side]["model"]          # the betting probability
-                if p >= PARLAY_LEG_MIN_P and p * price - 1 >= PARLAY_LEG_MIN_EV:
+                if p >= PARLAY_LEG_MIN_P:
                     books.setdefault(book, []).append({
                         "id": m["id"], "side": side, "name": m[side]["name"],
                         "vs": m["b" if side == "a" else "a"]["name"], "tournament": m["tournament"],

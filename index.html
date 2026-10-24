@@ -310,8 +310,9 @@
 
   <section class="today parlays" id="parlays">
     <h3>Recommended parlays <span class="hint" id="parlayStamp"></span></h3>
-    <p class="today__lede">Built from matches with no warnings, each leg a 40%+ chance by the model and the
-      whole ticket at least +5% EV, priced at <b>one</b> bookmaker that offers every leg. A parlay multiplies the
+    <p class="today__lede">Built from matches with no warnings, each leg a 40%+ chance by the model, priced at
+      <b>one</b> bookmaker that offers every leg, best EV first. There's no EV minimum, so a ticket can be priced
+      below its fair odds (EV in red). A parlay multiplies the
       bookmaker's margin and the model's mistakes, so treat these as small stakes at most.
       Up to three at a time: a parlay stays, unchanged, until its first match starts, then moves to
       <a href="history.html">Past predictions</a>, and a new one from upcoming matches takes its place at the next refresh.</p>
@@ -1432,13 +1433,13 @@ function renderParlayList(j, ps, list, kalshi){
     : started(c) ? '<span class="badge" style="background:var(--ink-3);color:var(--chalk)">in play</span>' : "";
   if(!j || (j.status === "no_api_key" && !kalshi)){ list.innerHTML = '<div class="today__empty">Needs the odds feed.</div>'; }
   else if(!ps.length){ list.innerHTML = kalshi
-    ? `<div class="today__empty">No Kalshi parlay right now${j.kalshi_matched ? "" : " (no Kalshi prices matched to the list)"}: fewer than two upcoming picks pass the rules at Kalshi. New ones come in at the next refresh. Started ones are in <a href="history.html">Past predictions</a>.</div>`
-    : '<div class="today__empty">No parlay right now: fewer than two upcoming picks pass the rules at the same bookmaker. New ones come in at the next refresh. Started ones are in <a href="history.html">Past predictions</a>.</div>'; }
+    ? `<div class="today__empty">No Kalshi parlay right now${j.kalshi_matched ? "" : " (no Kalshi prices matched to the list)"}: fewer than two upcoming players with a 40%+ chance are priced at Kalshi. New ones come in at the next refresh. Started ones are in <a href="history.html">Past predictions</a>.</div>`
+    : '<div class="today__empty">No parlay right now: fewer than two upcoming players with a 40%+ chance are priced at the same bookmaker. New ones come in at the next refresh. Started ones are in <a href="history.html">Past predictions</a>.</div>'; }
   else {
     const fmt = new Intl.DateTimeFormat(undefined, { weekday:"short", hour:"2-digit", minute:"2-digit" });
     list.innerHTML = ps.map(c => `<div class="parlay">
       <div class="parlay__head"><span><span class="parlay__odds">${OddsFmt.show(c.odds)}</span> at ${esc(c.book)} · ${c.legs.length} legs${status(c)}</span>
-        <span class="parlay__nums">model ${pct(c.model)} · market ${pct(c.market)} · <span class="ev-pos">EV +${(c.ev*100).toFixed(1)}%</span> · ¼-Kelly ${(c.kelly*100).toFixed(1)}%</span></div>
+        <span class="parlay__nums">model ${pct(c.model)} · market ${pct(c.market)} · <span class="${c.ev > 0 ? "ev-pos" : "ev-neg"}">EV ${(c.ev >= 0 ? "+" : "") + (c.ev*100).toFixed(1)}%</span>${c.kelly > 0 ? ` · ¼-Kelly ${(c.kelly*100).toFixed(1)}%` : ""}</span></div>
       <ul class="parlay__legs">${c.legs.map(l => `<li><span class="who">${esc(l.name)}${l.url ? `<a href="${esc(l.url)}" target="_blank" rel="noopener">Kalshi ↗</a>` : ""} <small>to beat ${esc(l.vs)} · ${esc(l.tournament)} · ${fmt.format(new Date(l.start))}</small></span>
         <span class="px">${OddsFmt.show(l.odds)} · ${pct(l.model)}</span></li>`).join("")}</ul>
       ${started(c) ? "" : `<button class="parlay__edit" type="button" data-i="${ps.indexOf(c)}">Open in builder</button>`}</div>`).join("");

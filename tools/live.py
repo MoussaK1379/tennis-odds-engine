@@ -47,8 +47,7 @@ def describe(ev, feed):
     st = start_of(ev)
     tour, level = feed[:3], ("challenger" if feed.endswith("_CH") else "tour")
     surf, indoor, _ = um.surface_for(ev.get("tournament_name", ""), feed, st.month if st else None)
-    qual = um.is_qualifying(ev.get("event_qualification") == "True", ev.get("tournament_name"),
-                            ev.get("tournament_round"))
+    qual = um.is_qualifying(ev.get("event_qualification") == "True", ev.get("tournament_round"))
     sets = []
     for sc in sorted(ev.get("scores") or [], key=lambda x: u.to_float(x.get("score_set")) or 0):
         a, b = u.to_float(sc.get("score_first")), u.to_float(sc.get("score_second"))

@@ -291,15 +291,15 @@ def _challenger_event(title, feed):
     return court, "hard", False, False
 
 QUALI_NAME = re.compile(r"\s*(\([^)]*\))?\s*-\s*qualification\s*$", re.I)
-# api-tennis names qualifying rounds Quarter-finals / Semi-finals / Final; a "1/16-finals"
-# style round is always the main draw, even when api-tennis files the match under the
-# qualifying event or flags it as qualifying (seen at Lyon 2026)
+# api-tennis names qualifying rounds Quarter-finals / Semi-finals / Final, and files some
+# whole events, main draw included, as 'Lyon (France) - Qualification', so its qualifying
+# flag tells the draws apart, not the name (in the match cache the flag splits every such
+# event into qualifying rounds and a full main draw). A "1/16-finals" style round is always
+# the main draw, even when it's flagged as qualifying (seen at Lyon 2026).
 MAIN_ROUND = re.compile(r"\b1/\d+-finals\b", re.I)
 
-def is_qualifying(flag, tournament, rnd):
-    if MAIN_ROUND.search(rnd or ""):
-        return False
-    return bool(flag) or bool(QUALI_NAME.search(tournament or ""))
+def is_qualifying(flag, rnd):
+    return bool(flag) and not MAIN_ROUND.search(rnd or "")
 
 def challenger_name(name):
     """'Olbia Challenger Men' -> 'Olbia', 'Catania (Italy) - Qualification' -> 'Catania'
@@ -507,17 +507,16 @@ def attach_markets(matches, mdl):
 
 
 # ---------- parlays ---------------------------------------------------------------
-# A parlay multiplies the bookmaker's margin and the model's errors, so the whole
-# ticket must be clear value, and it is priced at ONE bookmaker that offers every
-# leg (prices can't be mixed across books). Single legs needn't be value on their own.
+# Every leg needs a 40%+ chance by the model; there's no EV floor, so a ticket can be
+# priced below its fair odds (the site shows its EV either way). Each ticket is priced
+# at ONE bookmaker that offers every leg (prices can't be mixed across books).
 PARLAY_LEG_MIN_P = 0.40      # no long shots
-PARLAY_MIN_EV = 0.05
 PARLAY_SIZES = (2, 3)
 PARLAY_SHOW = 3
 
 def build_parlays(matches, now, show=PARLAY_SHOW):
-    from itertools import combinations
-    books = {}
+    import heapq
+    books, pos = {}, {m["id"]: i for i, m in enumerate(matches)}
     for m in matches:
         st = parse_iso(m.get("start"))
         if not st or st <= now or m.get("flags"):
@@ -530,35 +529,56 @@ def build_parlays(matches, now, show=PARLAY_SHOW):
                         "id": m["id"], "side": side, "name": m[side]["name"],
                         "vs": m["b" if side == "a" else "a"]["name"], "tournament": m["tournament"],
                         "start": m["start"], "odds": price, "model": p, "market": m[side]["market"]})
-    cands = []
-    for book, legs in books.items():
-        for k in PARLAY_SIZES:
-            for combo in combinations(legs, k):
-                if len({l["id"] for l in combo}) < k:
-                    continue                       # both sides of one match
-                odds = math.prod(l["odds"] for l in combo)
-                p = math.prod(l["model"] for l in combo)       # matches are independent
-                ev = p * odds - 1
-                if ev >= PARLAY_MIN_EV:
-                    cands.append({"book": book, "legs": sorted(combo, key=lambda l: l["start"]),
-                                  "odds": round(odds, 2), "model": round(p, 4),
-                                  "market": round(math.prod(l["market"] for l in combo), 4),
-                                  "ev": round(ev, 4), "kelly": round(kelly_fraction(p, odds), 4)})
+    # A ticket's EV + 1 is the product of its legs' chance x price, so with each book's legs
+    # sorted by that, tickets come off a heap best first: taking one adds the tickets with one
+    # leg a step further down the list. A full day's card has millions of combinations; this
+    # only scores the ones it takes to choose `show`.
+    heap, seen, rank = [], set(), {b: i for i, b in enumerate(books)}   # ties: the first book listed
+    def push(book, idx):
+        if (book, idx) not in seen:
+            seen.add((book, idx))
+            legs = books[book]
+            heapq.heappush(heap, (-math.prod(legs[i]["model"] * legs[i]["odds"] for i in idx),
+                                  -math.prod(legs[i]["model"] for i in idx), rank[book], book, idx))
+    def start():
+        heap.clear(); seen.clear()
+        for book, legs in books.items():
+            for k in PARLAY_SIZES:
+                if len(legs) >= k:
+                    push(book, tuple(range(k)))
+    for legs in books.values():
+        legs.sort(key=lambda l: -l["model"] * l["odds"])
+    start()
     # Best first, but keep the list varied: each new ticket must differ from the ones
     # already chosen by at least one leg, and no match appears in more than two.
-    cands.sort(key=lambda c: (-c["ev"], -c["model"]))
     chosen, used = [], {}
-    for c in cands:
-        ids = frozenset(l["id"] for l in c["legs"])
+    while heap and len(chosen) < show:
+        *_, book, idx = heapq.heappop(heap)
+        legs = books[book]
+        for j in range(len(idx)):
+            if idx[j] + 1 < (idx[j + 1] if j + 1 < len(idx) else len(legs)):
+                push(book, idx[:j] + (idx[j] + 1,) + idx[j + 1:])
+        combo = [legs[i] for i in idx]
+        ids = frozenset(l["id"] for l in combo)
+        if len(ids) < len(combo):
+            continue                               # both sides of one match
         if any(ids == frozenset(l["id"] for l in x["legs"]) for x in chosen):
             continue
-        if any(used.get(i, 0) >= 2 for i in ids):
-            continue
-        chosen.append(c)
+        odds = math.prod(l["odds"] for l in combo)
+        p = math.prod(l["model"] for l in combo)       # matches are independent
+        chosen.append({"book": book, "legs": sorted(combo, key=lambda l: (l["start"], pos[l["id"]])),
+                       "odds": round(odds, 2), "model": round(p, 4),
+                       "market": round(math.prod(l["market"] for l in combo), 4),
+                       "ev": round(p * odds - 1, 4), "kelly": round(kelly_fraction(p, odds), 4)})
         for i in ids:
             used[i] = used.get(i, 0) + 1
-        if len(chosen) >= show:
-            break
+        full = {i for i in ids if used[i] >= 2}
+        if full:
+            # a match in two tickets can't go in another: drop its legs and start again from
+            # the top (the tickets passed over before are passed over again)
+            for book in books:
+                books[book] = [l for l in books[book] if l["id"] not in full]
+            start()
     for c in chosen:
         c["id"] = "+".join(f"{l['id']}:{l['side']}" for l in c["legs"])
     return chosen
@@ -1027,8 +1047,7 @@ def fetch_schedule(key, now, hours, challenger=False):
             out.append({"key": str(ev.get("event_key")), "tour": feed[:3], "feed": feed,
                         "level": "challenger" if feed.endswith("_CH") else "tour",
                         "tournament": ev.get("tournament_name", ""), "round": ev.get("tournament_round", ""),
-                        "qualifying": is_qualifying(ev.get("event_qualification") == "True",
-                                                    ev.get("tournament_name"), ev.get("tournament_round")),
+                        "qualifying": is_qualifying(ev.get("event_qualification") == "True", ev.get("tournament_round")),
                         "start": start,
                         "a": a, "a_key": ev.get("first_player_key"), "b": b, "b_key": ev.get("second_player_key")})
     return out
@@ -1217,8 +1236,7 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             continue                       # priced, but the odds feed's names didn't resolve
         month = f["start"].month
         feed, ch = f.get("feed", f["tour"]), f.get("level") == "challenger"
-        # 'Lisbon (Portugal) - Qualification' is the qualifying draw, unless the round is a main-draw one
-        f = {**f, "qualifying": is_qualifying(f["qualifying"], f["tournament"], f["round"])}
+        f = {**f, "qualifying": is_qualifying(f["qualifying"], f["round"])}
         surf, indoor, known = surface_for(f["tournament"], feed, month)
         best_of = 3 if f["qualifying"] or ch else guess_best_of(f["tournament"], f["tour"])
         t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)

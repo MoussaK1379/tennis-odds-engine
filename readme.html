@@ -300,14 +300,14 @@ ODDS_API_KEY=your-key python update_matches.py --hours 48 --regions eu,uk</code>
       posted parlay stays on the predictor, unchanged and at its logged price, until its first match starts;
       then it moves to <a href="history.html">Past predictions</a> and the next refresh fills the slot with a new
       ticket from matches that haven't started (no match in more than two live tickets). Each leg must
-      have a 40%+ chance by the model, and the whole ticket must be at least +5% EV <em>at the parlay's
-      bookmaker</em>; a leg doesn't have to be value on its own. Every ticket is priced at one bookmaker that offers all its legs,
+      have a 40%+ chance by the model. There's no EV minimum: tickets are ranked by their EV <em>at the
+      parlay's bookmaker</em> and the best ones are posted even when that EV is negative. Every ticket is priced at one bookmaker that offers all its legs,
       because prices from different books can't be combined into one bet. Legs are treated as
       independent (different matches). Each recommendation is logged to
       <code>history/parlays.csv</code> at the price first shown and settled from the match results
       (a void leg counts as odds 1.0); the site shows how many won against how many the model expected.
-      A parlay multiplies the bookmaker's margin and any model error, so legs without an edge of their
-      own drag the ticket down; until the single-pick track record shows the model beats the market, treat these as entertainment-sized stakes.</p>
+      A parlay multiplies the bookmaker's margin and any model error, so without an edge on its legs a
+      ticket usually has negative EV; until the single-pick track record shows the model beats the market, treat these as entertainment-sized stakes.</p>
 
     <h2>Challengers (ATP Challenger, WTA 125)</h2>
     <p>The updater also keeps api-tennis.com's Challenger singles (men's ATP Challenger and women's WTA 125)

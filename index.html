@@ -202,6 +202,13 @@
   .ttabs button[aria-selected="true"]{ background:var(--ball); border-color:var(--ball); color:var(--ink); }
   .ttabs button[aria-selected="true"] span{ color:var(--ink); }
   .ttabs button.ttabs__ch{ border-style:dashed; }
+  /* a mouse wheel can't scroll the strip sideways, so with a mouse every tab wraps into view */
+  @media (hover:hover) and (pointer:fine){ .ttabs{ flex-wrap:wrap; overflow-x:visible; } }
+  .tsearch{ margin:0 0 12px; }
+  .tsearch input{ width:100%; max-width:360px; font-family:var(--mono); font-size:1rem; color:var(--chalk); background:var(--ink-3);
+    border:1px solid var(--ink-4); border-radius:var(--r-sm); padding:.5rem .7rem; }   /* 16px+: iPhones zoom into smaller text boxes */
+  .tsearch input:focus{ outline:none; border-color:var(--ball); }
+  .tsearch__n{ font-family:var(--mono); font-size:.72rem; color:var(--mute); margin:0 0 4px; }
   .ttour__head{ font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ball); margin:14px 0 2px; }
   .parlay__legs .who a{ font-family:var(--mono); font-size:.7rem; margin-left:.3rem; }
   .addleg{ width:22px; height:22px; margin-right:.45rem; vertical-align:1px; flex:0 0 auto; cursor:pointer; line-height:1;
@@ -296,6 +303,8 @@
     <p class="today__lede">Upcoming ATP &amp; WTA matches with the best bookmaker price, refreshed every
       morning. Model win chance · best odds · EV. Press <b>Analyse</b> to load a match into the predictor below.</p>
     <div class="oddsbar">Odds <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div></div>
+    <div class="tsearch"><input id="todaySearch" type="search" autocomplete="off" spellcheck="false"
+      placeholder="Find a player…" aria-label="Find a player in today's matches" aria-controls="todayList"></div>
     <div class="today__list" id="todayList"><div class="today__empty">Loading…</div></div>
   </section>
 
@@ -1282,7 +1291,19 @@ function liveCard(e){
     <div class="lv-foot">${lc ? "Chance to win now (model, from the live score)" + pre : "No model numbers: a player isn't in our data yet"}${i >= 0 ? ` <button class="match__go lv-go" type="button" data-i="${i}">Analyse</button>` : ""}</div></div>`;
 }
 
-let TODAY_TAB = "";
+let TODAY_TAB = "", TODAY_Q = "";
+const nameWords = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
+// Does a name match every word typed? "medv", "daniil medvedev" and "d medvedev" all find
+// "D. Medvedev" (a typed first name matches the initial, but a first name alone finds nobody).
+function nameHit(name, words){
+  const t = nameWords(name);
+  let surname = false;
+  for (const w of words){
+    if (t.some(x => x.length > 1 && (x.startsWith(w) || (w.length >= 3 && x.includes(w))))) surname = true;
+    else if (!t.some(x => x.length === 1 && w.startsWith(x))) return false;
+  }
+  return surname;
+}
 // the tab is remembered for this visit only, so the site always opens on All
 try { TODAY_TAB = sessionStorage.getItem("todayTab") || ""; localStorage.removeItem("todayTab"); } catch (e) { /* storage blocked */ }
 function renderToday(j){
@@ -1321,6 +1342,8 @@ function renderToday(j){
   const tabs = `<div class="ttabs" role="tablist">${liveTab}${["", ...tourEv, ...(chEv.length ? [CH] : []), ...chEv].map(t =>
       `<button type="button" role="tab" data-t="${esc(t)}" aria-selected="${t === TODAY_TAB}"${t === CH ? ' class="ttabs__ch"' : ""}>${label(t)} <span>${count(t)}</span></button>`
     ).join("")}</div>`;
+  // a player search looks through every tournament, whatever the tab
+  const q = nameWords(TODAY_Q), hit = m => nameHit(m.a.name, q) || nameHit(m.b.name, q);
   const when = m => { const L = liveFor(m); return (L && L.e.start) || m.start; };   // the latest start time
   const card = (m, i) => `<div class="match">
       <div class="match__when">${when(m) ? fmt.format(new Date(when(m))) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
@@ -1329,12 +1352,28 @@ function renderToday(j){
       ${matchExtras(m)}</div>`;
   const stale = LIVE && Date.parse(LIVE.updated) < Date.now() - 10*60e3
     ? `<div class="today__empty">Live scores paused: last update ${hhmm(LIVE.updated)}.</div>` : "";
-  const shown = TODAY_TAB === LIVE_TAB
+  const nHit = q.length ? ms.filter(hit).length : 0;
+  const shown = q.length
+    ? `<div class="tsearch__n">${nHit ? `${nHit} match${nHit === 1 ? "" : "es"} for “${esc(TODAY_Q.trim())}”` : ""}</div>`
+      + (nHit ? tours.filter(t => ms.some(m => m.tournament === t && hit(m))).map(t =>
+        `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t && hit(m) ? card(m, i) : "").join("")}</div>`).join("")
+        : `<div class="today__empty">No upcoming match for “${esc(TODAY_Q.trim())}”. Try part of the surname.</div>`)
+    : TODAY_TAB === LIVE_TAB
     ? stale + (liveN ? (LIVE.live || []).map(liveCard).join("") : '<div class="today__empty">No ATP, WTA or Challenger singles in play right now.</div>')
       + `<div class="match__pin lv-note">Scores refresh about every minute (as of ${hhmm(LIVE.updated)}). The chance to win now runs the model's point-by-point chain from the score.</div>`
     : (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
       `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t ? card(m, i) : "").join("")}</div>`).join("");
-  list.innerHTML = tabs + shown;
+  // re-rendering (a tab tap, the minute's live scores) would scroll the strip back to its
+  // start, so it keeps where it was, with the chosen tab in view
+  const old = list.querySelector(".ttabs"), x0 = old ? old.scrollLeft : 0;
+  list.innerHTML = (q.length ? "" : tabs) + shown;
+  const strip = list.querySelector(".ttabs"), sel = strip && strip.querySelector('[aria-selected="true"]');
+  if (strip && sel){
+    strip.scrollLeft = x0;
+    const a = strip.getBoundingClientRect(), b = sel.getBoundingClientRect();
+    if (b.left < a.left) strip.scrollLeft -= a.left - b.left + 12;
+    else if (b.right > a.right) strip.scrollLeft += b.right - a.right + 12;
+  }
   list.querySelectorAll(".ttabs button").forEach(b => b.addEventListener("click", () => {
     TODAY_TAB = b.dataset.t;
     try { sessionStorage.setItem("todayTab", TODAY_TAB); } catch (e) { /* storage blocked */ }
@@ -1423,6 +1462,10 @@ async function loadMatches(){
 }
 
 bindSeg("segSurface", "surface");
+$("todaySearch").addEventListener("input", e => { TODAY_Q = e.target.value; if (MATCHES) renderToday(MATCHES); });
+$("todaySearch").addEventListener("keydown", e => {
+  if (e.key === "Escape" && e.target.value){ e.target.value = TODAY_Q = ""; if (MATCHES) renderToday(MATCHES); }
+});
 bindSeg("segFormat", "bestOf", v => parseInt(v,10));
 $("segTour").querySelectorAll("button").forEach(btn => btn.addEventListener("click", () => {
   if(btn.dataset.v === state.tour) return;

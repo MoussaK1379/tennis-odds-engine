@@ -291,15 +291,15 @@ def _challenger_event(title, feed):
     return court, "hard", False, False
 
 QUALI_NAME = re.compile(r"\s*(\([^)]*\))?\s*-\s*qualification\s*$", re.I)
-# api-tennis names qualifying rounds Quarter-finals / Semi-finals / Final; a "1/16-finals"
-# style round is always the main draw, even when api-tennis files the match under the
-# qualifying event or flags it as qualifying (seen at Lyon 2026)
+# api-tennis names qualifying rounds Quarter-finals / Semi-finals / Final, and files some
+# whole events, main draw included, as 'Lyon (France) - Qualification', so its qualifying
+# flag tells the draws apart, not the name (in the match cache the flag splits every such
+# event into qualifying rounds and a full main draw). A "1/16-finals" style round is always
+# the main draw, even when it's flagged as qualifying (seen at Lyon 2026).
 MAIN_ROUND = re.compile(r"\b1/\d+-finals\b", re.I)
 
-def is_qualifying(flag, tournament, rnd):
-    if MAIN_ROUND.search(rnd or ""):
-        return False
-    return bool(flag) or bool(QUALI_NAME.search(tournament or ""))
+def is_qualifying(flag, rnd):
+    return bool(flag) and not MAIN_ROUND.search(rnd or "")
 
 def challenger_name(name):
     """'Olbia Challenger Men' -> 'Olbia', 'Catania (Italy) - Qualification' -> 'Catania'
@@ -1047,8 +1047,7 @@ def fetch_schedule(key, now, hours, challenger=False):
             out.append({"key": str(ev.get("event_key")), "tour": feed[:3], "feed": feed,
                         "level": "challenger" if feed.endswith("_CH") else "tour",
                         "tournament": ev.get("tournament_name", ""), "round": ev.get("tournament_round", ""),
-                        "qualifying": is_qualifying(ev.get("event_qualification") == "True",
-                                                    ev.get("tournament_name"), ev.get("tournament_round")),
+                        "qualifying": is_qualifying(ev.get("event_qualification") == "True", ev.get("tournament_round")),
                         "start": start,
                         "a": a, "a_key": ev.get("first_player_key"), "b": b, "b_key": ev.get("second_player_key")})
     return out
@@ -1237,8 +1236,7 @@ def add_schedule(out, sched, players, tour_avgs, mdl, version, today, hours=36, 
             continue                       # priced, but the odds feed's names didn't resolve
         month = f["start"].month
         feed, ch = f.get("feed", f["tour"]), f.get("level") == "challenger"
-        # 'Lisbon (Portugal) - Qualification' is the qualifying draw, unless the round is a main-draw one
-        f = {**f, "qualifying": is_qualifying(f["qualifying"], f["tournament"], f["round"])}
+        f = {**f, "qualifying": is_qualifying(f["qualifying"], f["round"])}
         surf, indoor, known = surface_for(f["tournament"], feed, month)
         best_of = 3 if f["qualifying"] or ch else guess_best_of(f["tournament"], f["tour"])
         t_avg = tour_avgs.get(f["tour"]) or (0.64 if f["tour"] == "ATP" else 0.56)

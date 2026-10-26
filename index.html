@@ -202,6 +202,7 @@
   .ttabs button[aria-selected="true"]{ background:var(--ball); border-color:var(--ball); color:var(--ink); }
   .ttabs button[aria-selected="true"] span{ color:var(--ink); }
   .ttabs button.ttabs__ch{ border-style:dashed; }
+  .ttabs button.ttabs__none{ opacity:.45; }        /* nothing at the chosen win chance */
   /* a mouse wheel can't scroll the strip sideways, so with a mouse every tab wraps into view */
   @media (hover:hover) and (pointer:fine){ .ttabs{ flex-wrap:wrap; overflow-x:visible; } }
   .tsearch{ margin:0 0 12px; }
@@ -303,6 +304,8 @@
     <p class="today__lede">Upcoming ATP &amp; WTA matches with the best bookmaker price, refreshed every
       morning. Model win chance · best odds · EV. Press <b>Analyse</b> to load a match into the predictor below.</p>
     <div class="oddsbar">Odds <div class="seg" data-odds-toggle role="group" aria-label="Odds format"></div></div>
+    <div class="oddsbar">Win chance <div class="seg" id="segMin" role="group" aria-label="Only matches whose pick has at least this chance">
+      <button type="button" data-v="0">Any</button><button type="button" data-v="0.6">60%+</button><button type="button" data-v="0.7">70%+</button><button type="button" data-v="0.8">80%+</button></div></div>
     <div class="tsearch"><input id="todaySearch" type="search" autocomplete="off" spellcheck="false"
       placeholder="Find a player…" aria-label="Find a player in today's matches" aria-controls="todayList"></div>
     <div class="today__list" id="todayList"><div class="today__empty">Loading…</div></div>
@@ -1292,7 +1295,10 @@ function liveCard(e){
     <div class="lv-foot">${lc ? "Chance to win now (model, from the live score)" + pre : "No model numbers: a player isn't in our data yet"}${i >= 0 ? ` <button class="match__go lv-go" type="button" data-i="${i}">Analyse</button>` : ""}</div></div>`;
 }
 
-let TODAY_TAB = "", TODAY_Q = "";
+let TODAY_TAB = "", TODAY_Q = "", TODAY_MIN = 0;
+try { TODAY_MIN = +sessionStorage.getItem("todayMin") || 0; } catch (e) { /* storage blocked */ }
+// the chance on the card's Pick line (with the bookmakers' prices when priced), to 3 decimals as shown
+const pickChance = m => { const p = m.a.bet ?? m.a.model; return p == null ? null : Math.round(Math.max(p, 1 - p) * 1000) / 1000; };
 const nameWords = s => String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().split(/[^a-z0-9]+/).filter(Boolean);
 // Does a name match every word typed? "medv", "daniil medvedev" and "d medvedev" all find
 // "D. Medvedev" (a typed first name matches the initial, but a first name alone finds nobody).
@@ -1337,14 +1343,18 @@ function renderToday(j){
   if (TODAY_TAB === LIVE_TAB && !LIVE) TODAY_TAB = "";
   if (TODAY_TAB && TODAY_TAB !== CH && TODAY_TAB !== LIVE_TAB && !tours.includes(TODAY_TAB)) TODAY_TAB = "";
   if (TODAY_TAB === CH && !chEv.length) TODAY_TAB = "";
-  const count = t => t === "" ? ms.length : t === CH ? ms.filter(isCh).length : ms.filter(m => m.tournament === t).length;
+  // the win-chance filter: tabs stay put, their counts and the list show only matches whose pick is at least TODAY_MIN
+  const ok = m => !TODAY_MIN || pickChance(m) >= TODAY_MIN;
+  const inTab = (m, t) => t === "" || (t === CH ? isCh(m) : m.tournament === t);
+  const count = t => ms.filter(m => inTab(m, t) && ok(m)).length;
   const label = t => t === "" ? "All" : t === CH ? "All Challengers" : esc(t);
   const liveTab = LIVE ? `<button type="button" role="tab" data-t="${LIVE_TAB}" aria-selected="${TODAY_TAB === LIVE_TAB}" class="ttabs__live"><span class="lv-dot"></span>Live <span>${liveN}</span></button>` : "";
   const tabs = `<div class="ttabs" role="tablist">${liveTab}${["", ...tourEv, ...(chEv.length ? [CH] : []), ...chEv].map(t =>
-      `<button type="button" role="tab" data-t="${esc(t)}" aria-selected="${t === TODAY_TAB}"${t === CH ? ' class="ttabs__ch"' : ""}>${label(t)} <span>${count(t)}</span></button>`
+      `<button type="button" role="tab" data-t="${esc(t)}" aria-selected="${t === TODAY_TAB}" class="${t === CH ? "ttabs__ch" : ""}${t && !count(t) ? " ttabs__none" : ""}">${label(t)} <span>${count(t)}</span></button>`
     ).join("")}</div>`;
   // a player search looks through every tournament, whatever the tab
-  const q = nameWords(TODAY_Q), hit = m => nameHit(m.a.name, q) || nameHit(m.b.name, q);
+  const q = nameWords(TODAY_Q), hit = m => ok(m) && (nameHit(m.a.name, q) || nameHit(m.b.name, q));
+  const atMin = TODAY_MIN ? ` with ${TODAY_MIN === 0.8 ? "an" : "a"} ${Math.round(TODAY_MIN * 100)}%+ pick` : "";
   const when = m => { const L = liveFor(m); return (L && L.e.start) || m.start; };   // the latest start time
   const card = (m, i) => `<div class="match">
       <div class="match__when">${when(m) ? fmt.format(new Date(when(m))) : ""}<br>${esc(m.tournament)} · ${m.surface}${m.indoor ? " (indoor)" : ""}${m.surface_known === false ? "?" : ""} · Bo${m.best_of}</div>
@@ -1355,15 +1365,16 @@ function renderToday(j){
     ? `<div class="today__empty">Live scores paused: last update ${hhmm(LIVE.updated)}.</div>` : "";
   const nHit = q.length ? ms.filter(hit).length : 0;
   const shown = q.length
-    ? `<div class="tsearch__n">${nHit ? `${nHit} match${nHit === 1 ? "" : "es"} for “${esc(TODAY_Q.trim())}”` : ""}</div>`
+    ? `<div class="tsearch__n">${nHit ? `${nHit} match${nHit === 1 ? "" : "es"} for “${esc(TODAY_Q.trim())}”${atMin}` : ""}</div>`
       + (nHit ? tours.filter(t => ms.some(m => m.tournament === t && hit(m))).map(t =>
         `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t && hit(m) ? card(m, i) : "").join("")}</div>`).join("")
-        : `<div class="today__empty">No upcoming match for “${esc(TODAY_Q.trim())}”. Try part of the surname.</div>`)
+        : `<div class="today__empty">No upcoming match for “${esc(TODAY_Q.trim())}”${atMin}.${atMin ? "" : " Try part of the surname."}</div>`)
     : TODAY_TAB === LIVE_TAB
     ? stale + (liveN ? (LIVE.live || []).map(liveCard).join("") : '<div class="today__empty">No ATP, WTA or Challenger singles in play right now.</div>')
       + `<div class="match__pin lv-note">Scores refresh about every minute (as of ${hhmm(LIVE.updated)}). The chance to win now runs the model's point-by-point chain from the score.</div>`
-    : (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).map(t =>
-      `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t ? card(m, i) : "").join("")}</div>`).join("");
+    : (TODAY_TAB === CH ? chEv : TODAY_TAB ? [TODAY_TAB] : tours).filter(t => ms.some(m => m.tournament === t && ok(m))).map(t =>
+      `<div class="ttour"><div class="ttour__head">${esc(t)}</div>${ms.map((m, i) => m.tournament === t && ok(m) ? card(m, i) : "").join("")}</div>`).join("")
+      || `<div class="today__empty">No upcoming match${TODAY_TAB ? " here" : ""}${atMin} right now.${atMin ? " Try a lower win chance." : ""}</div>`;
   // re-rendering (a tab tap, the minute's live scores) would scroll the strip back to its
   // start, so it keeps where it was, with the chosen tab in view
   const old = list.querySelector(".ttabs"), x0 = old ? old.scrollLeft : 0;
@@ -1463,6 +1474,15 @@ async function loadMatches(){
 }
 
 bindSeg("segSurface", "surface");
+$("segMin").querySelectorAll("button").forEach(btn => {
+  btn.setAttribute("aria-pressed", +btn.dataset.v === TODAY_MIN ? "true" : "false");
+  btn.addEventListener("click", () => {
+    TODAY_MIN = +btn.dataset.v;
+    try { sessionStorage.setItem("todayMin", String(TODAY_MIN)); } catch (e) { /* storage blocked */ }
+    $("segMin").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+    if (MATCHES) renderToday(MATCHES);
+  });
+});
 $("todaySearch").addEventListener("input", e => { TODAY_Q = e.target.value; if (MATCHES) renderToday(MATCHES); });
 $("todaySearch").addEventListener("keydown", e => {
   if (e.key === "Escape" && e.target.value){ e.target.value = TODAY_Q = ""; if (MATCHES) renderToday(MATCHES); }

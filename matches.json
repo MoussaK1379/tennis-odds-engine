@@ -1,455 +1,10 @@
 {
-  "updated": "2026-11-06T01:38:12Z",
+  "updated": "2026-11-06T02:46:38Z",
   "odds_feed_at": "2026-11-06T01:38:12Z",
   "window_hours": 36,
   "status": "ok",
   "requests_remaining": "480",
   "matches": [
-    {
-      "id": "apit-12177752",
-      "api_key": "12177752",
-      "late": false,
-      "tour": "ATP",
-      "tournament": "ATP Challenger Taipei",
-      "round": "Taipei - Quarter-finals",
-      "start": "2026-11-06T02:00:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "Y. Shimizu",
-        "key": "y-shimizu",
-        "model": 0.5064,
-        "fair_odds": 1.97,
-        "market": 0.6224,
-        "best_odds": 1.55,
-        "book": "Betano",
-        "ev": 0.0005,
-        "kelly": 0.0002,
-        "bet": 0.6455
-      },
-      "b": {
-        "name": "O. Jasika",
-        "key": "o-jasika",
-        "model": 0.4936,
-        "fair_odds": 2.03,
-        "market": 0.3776,
-        "best_odds": 2.67,
-        "book": "1xBet",
-        "ev": -0.0535,
-        "kelly": 0.0,
-        "bet": 0.3545
-      },
-      "books": 9,
-      "no_odds": false,
-      "court": "ch-taipei",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.5757,
-        "serve": 0.4317,
-        "w": 0.4,
-        "pa": 0.6186,
-        "pb": 0.6322
-      },
-      "flags": [
-        [
-          "retired",
-          "O. Jasika: retired from a match 52 days ago"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.5,
-          2.5
-        ],
-        "Marathon": [
-          1.48,
-          2.43
-        ],
-        "BetVictor": [
-          1.5,
-          2.4
-        ],
-        "1xBet": [
-          1.42,
-          2.67
-        ],
-        "Betano": [
-          1.55,
-          2.42
-        ],
-        "bet365": [
-          1.53,
-          2.37
-        ],
-        "Pncl": [
-          1.55,
-          2.62
-        ],
-        "Sbo": [
-          1.48,
-          2.38
-        ]
-      },
-      "odds_source": "api-tennis",
-      "pinnacle_a": 0.6283,
-      "markets": {
-        "sets": {
-          "2-0": {
-            "model": 0.316,
-            "market": 0.3987,
-            "bet": 0.4147,
-            "best_odds": 2.25,
-            "book": "WilliamHill",
-            "ev": -0.067,
-            "prices": {
-              "WilliamHill": 2.25,
-              "Marathon": 2.23,
-              "1xBet": 2.23,
-              "Betano": 2.15,
-              "bet365": 2.2
-            }
-          },
-          "2-1": {
-            "model": 0.1904,
-            "market": 0.2169,
-            "bet": 0.2124,
-            "best_odds": 4.35,
-            "book": "Betano",
-            "ev": -0.0759,
-            "prices": {
-              "WilliamHill": 3.9,
-              "Marathon": 3.9,
-              "1xBet": 3.9,
-              "Betano": 4.35,
-              "bet365": 4.33
-            }
-          },
-          "1-2": {
-            "model": 0.1871,
-            "market": 0.1661,
-            "bet": 0.1586,
-            "best_odds": 5.55,
-            "book": "Marathon",
-            "ev": -0.12,
-            "prices": {
-              "WilliamHill": 5.0,
-              "Marathon": 5.55,
-              "1xBet": 5.55,
-              "Betano": 5.0,
-              "bet365": 5.5
-            }
-          },
-          "0-2": {
-            "model": 0.3065,
-            "market": 0.2183,
-            "bet": 0.2144,
-            "best_odds": 4.2,
-            "book": "WilliamHill",
-            "ev": -0.0997,
-            "prices": {
-              "WilliamHill": 4.2,
-              "Marathon": 3.98,
-              "1xBet": 3.98,
-              "Betano": 4.05,
-              "bet365": 4.0
-            }
-          }
-        },
-        "totals": [
-          {
-            "line": 19.5,
-            "over": {
-              "model": 0.6881,
-              "market": 0.6297,
-              "bet": 0.6297,
-              "best_odds": 1.47,
-              "book": "Betano",
-              "ev": -0.0743,
-              "prices": {
-                "Betano": 1.47
-              }
-            },
-            "under": {
-              "model": 0.3119,
-              "market": 0.3703,
-              "bet": 0.3703,
-              "best_odds": 2.5,
-              "book": "Betano",
-              "ev": -0.0743,
-              "prices": {
-                "Betano": 2.5
-              }
-            }
-          },
-          {
-            "line": 20.5,
-            "over": {
-              "model": 0.6102,
-              "market": 0.5689,
-              "bet": 0.5689,
-              "best_odds": 1.71,
-              "book": "Pncl",
-              "ev": -0.0273,
-              "prices": {
-                "Marathon": 1.57,
-                "1xBet": 1.57,
-                "Betano": 1.67,
-                "Pncl": 1.71
-              }
-            },
-            "under": {
-              "model": 0.3898,
-              "market": 0.4311,
-              "bet": 0.4311,
-              "best_odds": 2.21,
-              "book": "Pncl",
-              "ev": -0.0472,
-              "prices": {
-                "Marathon": 2.16,
-                "1xBet": 2.16,
-                "Betano": 2.07,
-                "Pncl": 2.21
-              }
-            }
-          },
-          {
-            "line": 21.5,
-            "over": {
-              "model": 0.5487,
-              "market": 0.5122,
-              "bet": 0.5122,
-              "best_odds": 1.92,
-              "book": "Pncl",
-              "ev": -0.0167,
-              "prices": {
-                "Marathon": 1.75,
-                "1xBet": 1.75,
-                "Betano": 1.83,
-                "bet365": 1.83,
-                "Pncl": 1.92
-              }
-            },
-            "under": {
-              "model": 0.4513,
-              "market": 0.4878,
-              "bet": 0.4878,
-              "best_odds": 1.95,
-              "book": "Pncl",
-              "ev": -0.0487,
-              "prices": {
-                "Marathon": 1.94,
-                "1xBet": 1.94,
-                "Betano": 1.87,
-                "bet365": 1.83,
-                "Pncl": 1.95
-              }
-            }
-          },
-          {
-            "line": 22.5,
-            "over": {
-              "model": 0.4665,
-              "market": 0.4502,
-              "bet": 0.4502,
-              "best_odds": 2.2,
-              "book": "Pncl",
-              "ev": -0.0095,
-              "prices": {
-                "Marathon": 1.97,
-                "1xBet": 1.97,
-                "Betano": 2.1,
-                "Pncl": 2.2
-              }
-            },
-            "under": {
-              "model": 0.5335,
-              "market": 0.5498,
-              "bet": 0.5498,
-              "best_odds": 1.71,
-              "book": "Pncl",
-              "ev": -0.0599,
-              "prices": {
-                "Marathon": 1.69,
-                "1xBet": 1.69,
-                "Betano": 1.65,
-                "Pncl": 1.71
-              }
-            }
-          },
-          {
-            "line": 23.5,
-            "over": {
-              "model": 0.412,
-              "market": 0.4005,
-              "bet": 0.4005,
-              "best_odds": 2.32,
-              "book": "Betano",
-              "ev": -0.0708,
-              "prices": {
-                "Betano": 2.32
-              }
-            },
-            "under": {
-              "model": 0.588,
-              "market": 0.5995,
-              "bet": 0.5995,
-              "best_odds": 1.55,
-              "book": "Betano",
-              "ev": -0.0708,
-              "prices": {
-                "Betano": 1.55
-              }
-            }
-          }
-        ],
-        "exp_games": 23.4
-      },
-      "joint": {
-        "t0": 12,
-        "p": {
-          "2-0": [
-            0.00013,
-            0.00105,
-            0.00399,
-            0.01056,
-            0.02195,
-            0.03451,
-            0.04205,
-            0.04465,
-            0.03938,
-            0.03076,
-            0.04028,
-            0.02439,
-            0.0042,
-            0.01096,
-            0.00714,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "2-1": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            2e-05,
-            0.00011,
-            0.00043,
-            0.00129,
-            0.00312,
-            0.00619,
-            0.01036,
-            0.01487,
-            0.01845,
-            0.02061,
-            0.0217,
-            0.02123,
-            0.01976,
-            0.01741,
-            0.01143,
-            0.00841,
-            0.00806,
-            0.00363,
-            0.00115,
-            0.0015,
-            0.00065
-          ],
-          "1-2": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            2e-05,
-            0.00011,
-            0.00042,
-            0.00125,
-            0.00303,
-            0.00604,
-            0.01012,
-            0.01455,
-            0.01809,
-            0.02023,
-            0.02132,
-            0.02088,
-            0.01946,
-            0.01717,
-            0.01128,
-            0.0083,
-            0.00797,
-            0.0036,
-            0.00114,
-            0.00149,
-            0.00065
-          ],
-          "0-2": [
-            0.00012,
-            0.00098,
-            0.00376,
-            0.01001,
-            0.02095,
-            0.03315,
-            0.04063,
-            0.04335,
-            0.03829,
-            0.0299,
-            0.0394,
-            0.02399,
-            0.00411,
-            0.01078,
-            0.00706,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      },
-      "kalshi": {
-        "a": {
-          "cost": 0.63,
-          "odds": 1.547,
-          "ev": -0.0014,
-          "ticker": "KXATPCHALLENGERMATCH-26NOV05SHIJAS-SHI"
-        },
-        "b": {
-          "cost": 0.38,
-          "odds": 2.522,
-          "ev": -0.106,
-          "ticker": "KXATPCHALLENGERMATCH-26NOV05SHIJAS-JAS"
-        },
-        "market_a": 0.625,
-        "event": "KXATPCHALLENGERMATCH-26NOV05SHIJAS",
-        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov05shijas"
-      }
-    },
     {
       "id": "apit-12177757",
       "api_key": "12177757",
@@ -467,24 +22,24 @@
         "key": "j-kumstat",
         "model": 0.4533,
         "fair_odds": 2.21,
-        "market": 0.4118,
+        "market": 0.4126,
         "best_odds": 2.36,
         "book": "Pncl",
-        "ev": -0.0693,
+        "ev": -0.067,
         "kelly": 0.0,
-        "bet": 0.3944
+        "bet": 0.3953
       },
       "b": {
         "name": "H. Mayot",
         "key": "h-mayot",
         "model": 0.5467,
         "fair_odds": 1.83,
-        "market": 0.5882,
+        "market": 0.5874,
         "best_odds": 1.65,
         "book": "Pncl",
-        "ev": -0.0007,
+        "ev": -0.0023,
         "kelly": 0.0,
-        "bet": 0.6056
+        "bet": 0.6047
       },
       "books": 9,
       "no_odds": false,
@@ -522,8 +77,8 @@
           1.57
         ],
         "1xBet": [
-          2.29,
-          1.55
+          2.25,
+          1.57
         ],
         "Betano": [
           2.32,
@@ -552,7 +107,7 @@
             "bet": 0.2238,
             "best_odds": 4.05,
             "book": "Betano",
-            "ev": -0.0936,
+            "ev": -0.0937,
             "prices": {
               "WilliamHill": 3.9,
               "bet365": 4.0,
@@ -563,16 +118,16 @@
           },
           "2-1": {
             "model": 0.1761,
-            "market": 0.184,
-            "bet": 0.1777,
-            "best_odds": 5.2,
-            "book": "1xBet",
-            "ev": -0.076,
+            "market": 0.1846,
+            "bet": 0.1784,
+            "best_odds": 5.15,
+            "book": "Marathon",
+            "ev": -0.0812,
             "prices": {
               "WilliamHill": 4.6,
               "bet365": 4.5,
               "Marathon": 5.15,
-              "1xBet": 5.2,
+              "1xBet": 5.1,
               "Betano": 4.55
             }
           },
@@ -593,16 +148,16 @@
           },
           "0-2": {
             "model": 0.3467,
-            "market": 0.3597,
-            "bet": 0.3717,
+            "market": 0.3591,
+            "bet": 0.371,
             "best_odds": 2.5,
             "book": "WilliamHill",
-            "ev": -0.0708,
+            "ev": -0.0725,
             "prices": {
               "WilliamHill": 2.5,
               "bet365": 2.5,
               "Marathon": 2.4,
-              "1xBet": 2.38,
+              "1xBet": 2.4,
               "Betano": 2.45
             }
           }
@@ -662,26 +217,26 @@
             "line": 21.5,
             "over": {
               "model": 0.5876,
-              "market": 0.5998,
-              "bet": 0.5998,
+              "market": 0.5986,
+              "bet": 0.5986,
               "best_odds": 1.62,
               "book": "Betano",
-              "ev": -0.0283,
+              "ev": -0.0302,
               "prices": {
-                "Marathon": 1.48,
+                "Marathon": 1.49,
                 "1xBet": 1.48,
                 "Betano": 1.62
               }
             },
             "under": {
               "model": 0.4124,
-              "market": 0.4002,
-              "bet": 0.4002,
+              "market": 0.4014,
+              "bet": 0.4014,
               "best_odds": 2.36,
-              "book": "Marathon",
-              "ev": -0.0556,
+              "book": "1xBet",
+              "ev": -0.0527,
               "prices": {
-                "Marathon": 2.36,
+                "Marathon": 2.34,
                 "1xBet": 2.36,
                 "Betano": 2.15
               }
@@ -691,14 +246,14 @@
             "line": 22.5,
             "over": {
               "model": 0.4947,
-              "market": 0.5205,
-              "bet": 0.5205,
+              "market": 0.52,
+              "bet": 0.52,
               "best_odds": 1.85,
               "book": "Betano",
-              "ev": -0.037,
+              "ev": -0.038,
               "prices": {
                 "bet365": 1.8,
-                "Marathon": 1.74,
+                "Marathon": 1.75,
                 "1xBet": 1.74,
                 "Betano": 1.85,
                 "Pncl": 1.81
@@ -706,14 +261,14 @@
             },
             "under": {
               "model": 0.5053,
-              "market": 0.4795,
-              "bet": 0.4795,
+              "market": 0.48,
+              "bet": 0.48,
               "best_odds": 2.06,
               "book": "Pncl",
-              "ev": -0.0123,
+              "ev": -0.0112,
               "prices": {
                 "bet365": 1.9,
-                "Marathon": 1.95,
+                "Marathon": 1.94,
                 "1xBet": 1.95,
                 "Betano": 1.85,
                 "Pncl": 2.06
@@ -724,14 +279,14 @@
             "line": 23.5,
             "over": {
               "model": 0.4269,
-              "market": 0.4653,
-              "bet": 0.4653,
+              "market": 0.4658,
+              "bet": 0.4658,
               "best_odds": 2.11,
               "book": "Pncl",
-              "ev": -0.0183,
+              "ev": -0.0171,
               "prices": {
                 "Marathon": 1.96,
-                "1xBet": 1.96,
+                "1xBet": 1.95,
                 "Betano": 2.05,
                 "Pncl": 2.11,
                 "bet365": 1.9
@@ -739,14 +294,14 @@
             },
             "under": {
               "model": 0.5731,
-              "market": 0.5347,
-              "bet": 0.5347,
+              "market": 0.5342,
+              "bet": 0.5342,
               "best_odds": 1.8,
               "book": "bet365",
-              "ev": -0.0375,
+              "ev": -0.0385,
               "prices": {
                 "Marathon": 1.7,
-                "1xBet": 1.7,
+                "1xBet": 1.71,
                 "Betano": 1.7,
                 "Pncl": 1.78,
                 "bet365": 1.8
@@ -885,13 +440,13 @@
         "a": {
           "cost": 0.41,
           "odds": 2.342,
-          "ev": -0.0763,
+          "ev": -0.0742,
           "ticker": "KXATPCHALLENGERMATCH-26NOV05KUMMAY-KUM"
         },
         "b": {
           "cost": 0.6,
           "odds": 1.621,
-          "ev": -0.0183,
+          "ev": -0.0198,
           "ticker": "KXATPCHALLENGERMATCH-26NOV05KUMMAY-MAY"
         },
         "market_a": 0.405,
@@ -1008,45 +563,45 @@
           },
           "2-1": {
             "model": 0.212,
-            "market": 0.2207,
-            "bet": 0.2165,
+            "market": 0.2209,
+            "bet": 0.2168,
             "best_odds": 4.33,
             "book": "bet365",
-            "ev": -0.0625,
+            "ev": -0.0614,
             "prices": {
               "WilliamHill": 3.75,
               "Marathon": 3.84,
-              "1xBet": 3.84,
+              "1xBet": 3.82,
               "Betano": 4.3,
               "bet365": 4.33
             }
           },
           "1-2": {
             "model": 0.1579,
-            "market": 0.1655,
-            "bet": 0.1578,
+            "market": 0.1658,
+            "bet": 0.1581,
             "best_odds": 5.55,
             "book": "Marathon",
-            "ev": -0.1245,
+            "ev": -0.1228,
             "prices": {
               "WilliamHill": 5.0,
               "Marathon": 5.55,
-              "1xBet": 5.55,
+              "1xBet": 5.5,
               "Betano": 5.1,
               "bet365": 5.5
             }
           },
           "0-2": {
             "model": 0.2353,
-            "market": 0.2091,
-            "bet": 0.2041,
+            "market": 0.2085,
+            "bet": 0.2036,
             "best_odds": 4.4,
             "book": "WilliamHill",
-            "ev": -0.1018,
+            "ev": -0.1043,
             "prices": {
               "WilliamHill": 4.4,
               "Marathon": 4.05,
-              "1xBet": 4.05,
+              "1xBet": 4.1,
               "Betano": 4.3,
               "bet365": 4.33
             }
@@ -1111,13 +666,13 @@
             "line": 21.5,
             "over": {
               "model": 0.5303,
-              "market": 0.54,
-              "bet": 0.54,
+              "market": 0.5379,
+              "bet": 0.5379,
               "best_odds": 1.82,
               "book": "Betano",
-              "ev": -0.0171,
+              "ev": -0.021,
               "prices": {
-                "Marathon": 1.62,
+                "Marathon": 1.65,
                 "1xBet": 1.61,
                 "Betano": 1.82,
                 "bet365": 1.8,
@@ -1126,13 +681,13 @@
             },
             "under": {
               "model": 0.4697,
-              "market": 0.46,
-              "bet": 0.46,
+              "market": 0.4621,
+              "bet": 0.4621,
               "best_odds": 2.14,
               "book": "Pncl",
-              "ev": -0.0157,
+              "ev": -0.0112,
               "prices": {
-                "Marathon": 2.08,
+                "Marathon": 2.03,
                 "1xBet": 2.09,
                 "Betano": 1.88,
                 "bet365": 1.9,
@@ -1144,28 +699,28 @@
             "line": 22.5,
             "over": {
               "model": 0.4511,
-              "market": 0.4751,
-              "bet": 0.4751,
+              "market": 0.4737,
+              "bet": 0.4737,
               "best_odds": 2.07,
               "book": "Betano",
-              "ev": -0.0166,
+              "ev": -0.0194,
               "prices": {
-                "Marathon": 1.87,
-                "1xBet": 1.87,
+                "Marathon": 1.9,
+                "1xBet": 1.86,
                 "Betano": 2.07,
                 "Pncl": 2.04
               }
             },
             "under": {
               "model": 0.5489,
-              "market": 0.5249,
-              "bet": 0.5249,
-              "best_odds": 1.81,
-              "book": "Marathon",
-              "ev": -0.0499,
+              "market": 0.5263,
+              "bet": 0.5263,
+              "best_odds": 1.82,
+              "book": "1xBet",
+              "ev": -0.0422,
               "prices": {
-                "Marathon": 1.81,
-                "1xBet": 1.81,
+                "Marathon": 1.78,
+                "1xBet": 1.82,
                 "Betano": 1.67,
                 "Pncl": 1.81
               }
@@ -1175,28 +730,28 @@
             "line": 23.5,
             "over": {
               "model": 0.3998,
-              "market": 0.4261,
-              "bet": 0.4261,
+              "market": 0.4265,
+              "bet": 0.4265,
               "best_odds": 2.3,
               "book": "Betano",
-              "ev": -0.02,
+              "ev": -0.0191,
               "prices": {
-                "Marathon": 2.08,
+                "Marathon": 2.09,
                 "Betano": 2.3,
-                "1xBet": 2.08
+                "1xBet": 2.06
               }
             },
             "under": {
               "model": 0.6002,
-              "market": 0.5739,
-              "bet": 0.5739,
-              "best_odds": 1.62,
-              "book": "Marathon",
-              "ev": -0.0703,
+              "market": 0.5735,
+              "bet": 0.5735,
+              "best_odds": 1.63,
+              "book": "1xBet",
+              "ev": -0.0652,
               "prices": {
-                "Marathon": 1.62,
+                "Marathon": 1.61,
                 "Betano": 1.55,
-                "1xBet": 1.62
+                "1xBet": 1.63
               }
             }
           }
@@ -1335,7 +890,7 @@
       "late": false,
       "tour": "WTA",
       "tournament": "WTA Hong Kong",
-      "round": null,
+      "round": "WTA Hong Kong - Quarter-finals",
       "start": "2026-11-06T06:00:00Z",
       "surface": "hard",
       "indoor": false,
@@ -1346,24 +901,24 @@
         "key": "z-sonmez",
         "model": 0.4659,
         "fair_odds": 2.15,
-        "market": 0.4818,
-        "best_odds": 2.03,
+        "market": 0.4796,
+        "best_odds": 2.05,
         "book": "Pncl",
-        "ev": -0.0293,
+        "ev": -0.0247,
         "kelly": 0.0,
-        "bet": 0.4782
+        "bet": 0.4758
       },
       "b": {
         "name": "C. Liu",
         "key": "c-liu",
         "model": 0.5341,
         "fair_odds": 1.87,
-        "market": 0.5182,
+        "market": 0.5204,
         "best_odds": 1.9,
         "book": "bet365",
-        "ev": -0.0085,
+        "ev": -0.004,
         "kelly": 0.0,
-        "bet": 0.5218
+        "bet": 0.5242
       },
       "books": 9,
       "no_odds": false,
@@ -1384,8 +939,8 @@
           1.8
         ],
         "Marathon": [
-          1.94,
-          1.85
+          2.0,
+          1.8
         ],
         "1xBet": [
           1.97,
@@ -1408,24 +963,24 @@
           1.72
         ],
         "Pncl": [
-          2.03,
-          1.85
+          2.05,
+          1.83
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4768,
+      "pinnacle_a": 0.4716,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.2918,
-            "market": 0.2821,
-            "bet": 0.2851,
+            "market": 0.2802,
+            "bet": 0.283,
             "best_odds": 3.3,
             "book": "WilliamHill",
-            "ev": -0.059,
+            "ev": -0.066,
             "prices": {
               "WilliamHill": 3.3,
-              "Marathon": 3.04,
+              "Marathon": 3.14,
               "1xBet": 3.1,
               "bet365": 3.25,
               "Betano": 3.2
@@ -1433,14 +988,14 @@
           },
           "2-1": {
             "model": 0.1741,
-            "market": 0.2066,
-            "bet": 0.2022,
-            "best_odds": 4.8,
-            "book": "1xBet",
-            "ev": -0.0296,
+            "market": 0.2058,
+            "bet": 0.2013,
+            "best_odds": 4.85,
+            "book": "Marathon",
+            "ev": -0.0236,
             "prices": {
               "WilliamHill": 4.0,
-              "Marathon": 4.75,
+              "Marathon": 4.85,
               "1xBet": 4.8,
               "bet365": 4.0,
               "Betano": 4.25
@@ -1448,14 +1003,14 @@
           },
           "1-2": {
             "model": 0.1911,
-            "market": 0.2118,
-            "bet": 0.2078,
-            "best_odds": 4.55,
-            "book": "Marathon",
-            "ev": -0.0543,
+            "market": 0.2127,
+            "bet": 0.2088,
+            "best_odds": 4.5,
+            "book": "1xBet",
+            "ev": -0.0605,
             "prices": {
               "WilliamHill": 4.0,
-              "Marathon": 4.55,
+              "Marathon": 4.45,
               "1xBet": 4.5,
               "bet365": 4.0,
               "Betano": 4.15
@@ -1463,14 +1018,14 @@
           },
           "0-2": {
             "model": 0.343,
-            "market": 0.2996,
-            "bet": 0.3048,
+            "market": 0.3014,
+            "bet": 0.3069,
             "best_odds": 3.4,
             "book": "bet365",
-            "ev": 0.0365,
+            "ev": 0.0433,
             "prices": {
               "WilliamHill": 2.9,
-              "Marathon": 2.85,
+              "Marathon": 2.77,
               "1xBet": 2.81,
               "bet365": 3.4,
               "Betano": 3.05
@@ -1540,26 +1095,26 @@
             "line": 21.5,
             "over": {
               "model": 0.5152,
-              "market": 0.5297,
-              "bet": 0.5297,
+              "market": 0.5292,
+              "bet": 0.5292,
               "best_odds": 1.83,
               "book": "Pncl",
-              "ev": -0.0306,
+              "ev": -0.0316,
               "prices": {
                 "Marathon": 1.77,
                 "1xBet": 1.74,
-                "BetVictor": 1.73,
+                "BetVictor": 1.75,
                 "Betano": 1.72,
                 "Pncl": 1.83
               }
             },
             "under": {
               "model": 0.4848,
-              "market": 0.4703,
-              "bet": 0.4703,
+              "market": 0.4708,
+              "bet": 0.4708,
               "best_odds": 2.01,
               "book": "Pncl",
-              "ev": -0.0548,
+              "ev": -0.0536,
               "prices": {
                 "Marathon": 1.97,
                 "1xBet": 1.97,
@@ -1765,13 +1320,13 @@
         "a": {
           "cost": 0.47,
           "odds": 2.052,
-          "ev": -0.0187,
+          "ev": -0.0237,
           "ticker": "KXWTAMATCH-26NOV06SONLIU-SON"
         },
         "b": {
           "cost": 0.53,
           "odds": 1.827,
-          "ev": -0.0467,
+          "ev": -0.0423,
           "ticker": "KXWTAMATCH-26NOV06SONLIU-LIU"
         },
         "market_a": 0.4697,
@@ -1796,7 +1351,7 @@
         "key": "c-wong",
         "model": 0.8377,
         "fair_odds": 1.19,
-        "market": 0.8111,
+        "market": 0.8112,
         "best_odds": 1.17,
         "book": "Betano",
         "ev": -0.0013,
@@ -1808,10 +1363,10 @@
         "key": "k-samrej",
         "model": 0.1623,
         "fair_odds": 6.16,
-        "market": 0.1889,
-        "best_odds": 5.58,
+        "market": 0.1888,
+        "best_odds": 5.6,
         "book": "Pncl",
-        "ev": -0.1829,
+        "ev": -0.1801,
         "kelly": 0.0,
         "bet": 0.1464
       },
@@ -1831,7 +1386,7 @@
       "prices": {
         "Marathon": [
           1.14,
-          4.8
+          4.75
         ],
         "1xBet": [
           1.14,
@@ -1858,56 +1413,56 @@
           4.84
         ],
         "Pncl": [
-          1.17,
-          5.58
+          1.16,
+          5.6
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.8267,
+      "pinnacle_a": 0.8284,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.6217,
-            "market": 0.5623,
-            "bet": 0.5911,
+            "market": 0.5629,
+            "bet": 0.5918,
             "best_odds": 1.62,
             "book": "WilliamHill",
-            "ev": -0.0424,
+            "ev": -0.0412,
             "prices": {
               "Marathon": 1.57,
               "WilliamHill": 1.62,
               "bet365": 1.57,
-              "1xBet": 1.57,
+              "1xBet": 1.56,
               "Betano": 1.53
             }
           },
           "2-1": {
             "model": 0.216,
-            "market": 0.239,
-            "bet": 0.2321,
+            "market": 0.2387,
+            "bet": 0.2318,
             "best_odds": 3.75,
             "book": "bet365",
-            "ev": -0.1297,
+            "ev": -0.1308,
             "prices": {
               "Marathon": 3.72,
               "WilliamHill": 3.6,
               "bet365": 3.75,
-              "1xBet": 3.72,
+              "1xBet": 3.74,
               "Betano": 3.7
             }
           },
           "1-2": {
             "model": 0.0726,
-            "market": 0.0983,
-            "bet": 0.0873,
-            "best_odds": 9.7,
-            "book": "Marathon",
-            "ev": -0.1532,
+            "market": 0.0979,
+            "bet": 0.0869,
+            "best_odds": 9.9,
+            "book": "1xBet",
+            "ev": -0.1394,
             "prices": {
               "Marathon": 9.7,
               "WilliamHill": 9.0,
               "bet365": 8.5,
-              "1xBet": 9.7,
+              "1xBet": 9.9,
               "Betano": 8.25
             }
           },
@@ -1917,7 +1472,7 @@
             "bet": 0.0895,
             "best_odds": 10.25,
             "book": "Betano",
-            "ev": -0.0829,
+            "ev": -0.0831,
             "prices": {
               "Marathon": 7.9,
               "WilliamHill": 8.5,
@@ -1992,13 +1547,13 @@
             "line": 20.5,
             "over": {
               "model": 0.5311,
-              "market": 0.5612,
-              "bet": 0.5612,
+              "market": 0.562,
+              "bet": 0.562,
               "best_odds": 1.83,
               "book": "bet365",
-              "ev": 0.027,
+              "ev": 0.0284,
               "prices": {
-                "Marathon": 1.55,
+                "Marathon": 1.54,
                 "bet365": 1.83,
                 "1xBet": 1.55,
                 "Betano": 1.65,
@@ -2007,13 +1562,13 @@
             },
             "under": {
               "model": 0.4689,
-              "market": 0.4388,
-              "bet": 0.4388,
+              "market": 0.438,
+              "bet": 0.438,
               "best_odds": 2.23,
               "book": "Pncl",
-              "ev": -0.0215,
+              "ev": -0.0232,
               "prices": {
-                "Marathon": 2.2,
+                "Marathon": 2.22,
                 "bet365": 1.83,
                 "1xBet": 2.2,
                 "Betano": 2.12,
@@ -2025,32 +1580,32 @@
             "line": 21.5,
             "over": {
               "model": 0.4666,
-              "market": 0.5198,
-              "bet": 0.5198,
+              "market": 0.5206,
+              "bet": 0.5206,
               "best_odds": 1.83,
               "book": "bet365",
-              "ev": -0.0488,
+              "ev": -0.0473,
               "prices": {
-                "Marathon": 1.75,
+                "Marathon": 1.73,
                 "1xBet": 1.75,
                 "Betano": 1.78,
                 "bet365": 1.83,
-                "Pncl": 1.82
+                "Pncl": 1.83
               }
             },
             "under": {
               "model": 0.5334,
-              "market": 0.4802,
-              "bet": 0.4802,
-              "best_odds": 2.03,
+              "market": 0.4794,
+              "bet": 0.4794,
+              "best_odds": 2.02,
               "book": "Pncl",
-              "ev": -0.0252,
+              "ev": -0.0316,
               "prices": {
-                "Marathon": 1.94,
+                "Marathon": 1.97,
                 "1xBet": 1.94,
                 "Betano": 1.93,
                 "bet365": 1.83,
-                "Pncl": 2.03
+                "Pncl": 2.02
               }
             }
           },
@@ -2060,28 +1615,28 @@
               "model": 0.3823,
               "market": 0.4402,
               "bet": 0.4402,
-              "best_odds": 2.18,
+              "best_odds": 2.2,
               "book": "Pncl",
-              "ev": -0.0404,
+              "ev": -0.0315,
               "prices": {
-                "Marathon": 2.06,
+                "Marathon": 2.04,
                 "Betano": 2.12,
                 "1xBet": 2.06,
-                "Pncl": 2.18
+                "Pncl": 2.2
               }
             },
             "under": {
               "model": 0.6177,
               "market": 0.5598,
               "bet": 0.5598,
-              "best_odds": 1.71,
+              "best_odds": 1.7,
               "book": "Pncl",
-              "ev": -0.0427,
+              "ev": -0.0484,
               "prices": {
-                "Marathon": 1.63,
+                "Marathon": 1.64,
                 "Betano": 1.65,
                 "1xBet": 1.63,
-                "Pncl": 1.71
+                "Pncl": 1.7
               }
             }
           }
@@ -2237,7 +1792,7 @@
       "late": false,
       "tour": "WTA",
       "tournament": "WTA Hong Kong",
-      "round": null,
+      "round": "WTA Hong Kong - Quarter-finals",
       "start": "2026-11-06T08:30:00Z",
       "surface": "hard",
       "indoor": false,
@@ -2413,11 +1968,11 @@
             "line": 19.5,
             "over": {
               "model": 0.6249,
-              "market": 0.5428,
-              "bet": 0.5428,
+              "market": 0.5425,
+              "bet": 0.5425,
               "best_odds": 1.81,
               "book": "Pncl",
-              "ev": -0.0175,
+              "ev": -0.0181,
               "prices": {
                 "Marathon": 1.67,
                 "1xBet": 1.63,
@@ -2427,16 +1982,16 @@
             },
             "under": {
               "model": 0.3751,
-              "market": 0.4572,
-              "bet": 0.4572,
+              "market": 0.4575,
+              "bet": 0.4575,
               "best_odds": 2.13,
               "book": "1xBet",
-              "ev": -0.0262,
+              "ev": -0.0256,
               "prices": {
                 "Marathon": 2.07,
                 "1xBet": 2.13,
                 "Betano": 1.93,
-                "Pncl": 2.05
+                "Pncl": 2.04
               }
             }
           },
@@ -2696,24 +2251,24 @@
         "key": "j-tjen",
         "model": 0.5792,
         "fair_odds": 1.73,
-        "market": 0.6284,
+        "market": 0.6286,
         "best_odds": 1.53,
         "book": "bet365",
-        "ev": -0.013,
+        "ev": -0.0126,
         "kelly": 0.0,
-        "bet": 0.6451
+        "bet": 0.6453
       },
       "b": {
         "name": "P. Kudermetova",
         "key": "p-kudermetova",
         "model": 0.4208,
         "fair_odds": 2.38,
-        "market": 0.3716,
-        "best_odds": 2.68,
+        "market": 0.3714,
+        "best_odds": 2.7,
         "book": "Pncl",
-        "ev": -0.0489,
+        "ev": -0.0424,
         "kelly": 0.0,
-        "bet": 0.3549
+        "bet": 0.3547
       },
       "books": 8,
       "no_odds": false,
@@ -2760,20 +2315,20 @@
         ],
         "Pncl": [
           1.52,
-          2.68
+          2.7
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.6381,
+      "pinnacle_a": 0.6398,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.3786,
-            "market": 0.4077,
-            "bet": 0.4248,
+            "market": 0.4073,
+            "bet": 0.4243,
             "best_odds": 2.25,
             "book": "Betano",
-            "ev": -0.0442,
+            "ev": -0.0453,
             "prices": {
               "WilliamHill": 2.1,
               "bet365": 2.2,
@@ -2784,13 +2339,13 @@
           },
           "2-1": {
             "model": 0.2006,
-            "market": 0.2233,
-            "bet": 0.2192,
+            "market": 0.2224,
+            "bet": 0.2183,
             "best_odds": 4.33,
             "book": "bet365",
-            "ev": -0.051,
+            "ev": -0.0549,
             "prices": {
-              "WilliamHill": 3.75,
+              "WilliamHill": 3.8,
               "bet365": 4.33,
               "Marathon": 4.05,
               "1xBet": 4.05,
@@ -2799,13 +2354,13 @@
           },
           "1-2": {
             "model": 0.1613,
-            "market": 0.1592,
-            "bet": 0.1511,
+            "market": 0.1607,
+            "bet": 0.1527,
             "best_odds": 5.95,
             "book": "Marathon",
-            "ev": -0.1009,
+            "ev": -0.0917,
             "prices": {
-              "WilliamHill": 5.8,
+              "WilliamHill": 5.5,
               "bet365": 5.5,
               "Marathon": 5.95,
               "1xBet": 5.9,
@@ -2814,11 +2369,11 @@
           },
           "0-2": {
             "model": 0.2595,
-            "market": 0.2098,
-            "bet": 0.2049,
+            "market": 0.2096,
+            "bet": 0.2047,
             "best_odds": 4.65,
             "book": "Betano",
-            "ev": -0.047,
+            "ev": -0.048,
             "prices": {
               "WilliamHill": 4.33,
               "bet365": 4.0,
@@ -2862,32 +2417,32 @@
             "line": 20.5,
             "over": {
               "model": 0.5938,
-              "market": 0.5399,
-              "bet": 0.5399,
+              "market": 0.5394,
+              "bet": 0.5394,
               "best_odds": 1.8,
               "book": "bet365",
-              "ev": -0.0282,
+              "ev": -0.0291,
               "prices": {
                 "bet365": 1.8,
                 "Marathon": 1.7,
                 "1xBet": 1.7,
                 "Betano": 1.67,
-                "Pncl": 1.76
+                "Pncl": 1.77
               }
             },
             "under": {
               "model": 0.4062,
-              "market": 0.4601,
-              "bet": 0.4601,
-              "best_odds": 2.12,
+              "market": 0.4606,
+              "bet": 0.4606,
+              "best_odds": 2.11,
               "book": "Pncl",
-              "ev": -0.0245,
+              "ev": -0.0281,
               "prices": {
                 "bet365": 1.9,
                 "Marathon": 2.02,
                 "1xBet": 2.02,
                 "Betano": 2.07,
-                "Pncl": 2.12
+                "Pncl": 2.11
               }
             }
           },
@@ -2928,30 +2483,30 @@
             "line": 22.5,
             "over": {
               "model": 0.449,
-              "market": 0.4358,
-              "bet": 0.4358,
-              "best_odds": 2.28,
+              "market": 0.4352,
+              "bet": 0.4352,
+              "best_odds": 2.29,
               "book": "Pncl",
-              "ev": -0.0064,
+              "ev": -0.0035,
               "prices": {
                 "Marathon": 2.13,
                 "1xBet": 2.13,
                 "Betano": 2.05,
-                "Pncl": 2.28
+                "Pncl": 2.29
               }
             },
             "under": {
               "model": 0.551,
-              "market": 0.5642,
-              "bet": 0.5642,
+              "market": 0.5648,
+              "bet": 0.5648,
               "best_odds": 1.7,
               "book": "Betano",
-              "ev": -0.0408,
+              "ev": -0.0398,
               "prices": {
                 "Marathon": 1.63,
                 "1xBet": 1.63,
                 "Betano": 1.7,
-                "Pncl": 1.67
+                "Pncl": 1.66
               }
             }
           },
@@ -2959,27 +2514,27 @@
             "line": 23.5,
             "over": {
               "model": 0.3953,
-              "market": 0.4063,
-              "bet": 0.4063,
-              "best_odds": 2.29,
-              "book": "Marathon",
-              "ev": -0.0695,
+              "market": 0.4051,
+              "bet": 0.4051,
+              "best_odds": 2.31,
+              "book": "1xBet",
+              "ev": -0.0642,
               "prices": {
                 "Marathon": 2.29,
-                "1xBet": 2.29,
+                "1xBet": 2.31,
                 "Betano": 2.2
               }
             },
             "under": {
               "model": 0.6047,
-              "market": 0.5937,
-              "bet": 0.5937,
+              "market": 0.5949,
+              "bet": 0.5949,
               "best_odds": 1.6,
               "book": "Betano",
-              "ev": -0.0501,
+              "ev": -0.0482,
               "prices": {
                 "Marathon": 1.52,
-                "1xBet": 1.52,
+                "1xBet": 1.51,
                 "Betano": 1.6
               }
             }
@@ -3116,16 +2671,16 @@
         "a": {
           "cost": 0.65,
           "odds": 1.502,
-          "ev": -0.0311,
+          "ev": -0.0308,
           "ticker": "KXWTAMATCH-26NOV06TJEKUD-TJE"
         },
         "b": {
-          "cost": 0.37,
-          "odds": 2.589,
-          "ev": -0.0812,
+          "cost": 0.36,
+          "odds": 2.659,
+          "ev": -0.0569,
           "ticker": "KXWTAMATCH-26NOV06TJEKUD-KUD"
         },
-        "market_a": 0.64,
+        "market_a": 0.645,
         "event": "KXWTAMATCH-26NOV06TJEKUD",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26nov06tjekud"
       }
@@ -3647,62 +3202,62 @@
         "sets": {
           "2-0": {
             "model": 0.2729,
-            "market": 0.2434,
-            "bet": 0.2422,
+            "market": 0.2447,
+            "bet": 0.2436,
             "best_odds": 3.75,
             "book": "bet365",
-            "ev": -0.0916,
+            "ev": -0.0866,
             "prices": {
               "bet365": 3.75,
               "Marathon": 3.54,
-              "1xBet": 3.54,
+              "1xBet": 3.48,
               "Betano": 3.75,
-              "WilliamHill": 3.75
+              "WilliamHill": 3.7
             }
           },
           "2-1": {
             "model": 0.1667,
-            "market": 0.1876,
-            "bet": 0.1816,
-            "best_odds": 5.15,
-            "book": "Marathon",
-            "ev": -0.0648,
+            "market": 0.187,
+            "bet": 0.181,
+            "best_odds": 5.2,
+            "book": "1xBet",
+            "ev": -0.0589,
             "prices": {
               "bet365": 4.5,
               "Marathon": 5.15,
-              "1xBet": 5.15,
+              "1xBet": 5.2,
               "Betano": 4.55,
               "WilliamHill": 4.5
             }
           },
           "1-2": {
             "model": 0.1968,
-            "market": 0.2238,
-            "bet": 0.2206,
-            "best_odds": 4.2,
-            "book": "Marathon",
-            "ev": -0.0734,
+            "market": 0.2231,
+            "bet": 0.2198,
+            "best_odds": 4.25,
+            "book": "1xBet",
+            "ev": -0.066,
             "prices": {
               "bet365": 3.75,
               "Marathon": 4.2,
-              "1xBet": 4.2,
+              "1xBet": 4.25,
               "Betano": 4.0,
               "WilliamHill": 3.8
             }
           },
           "0-2": {
             "model": 0.3636,
-            "market": 0.3452,
-            "bet": 0.3556,
+            "market": 0.3453,
+            "bet": 0.3557,
             "best_odds": 2.62,
             "book": "bet365",
-            "ev": -0.0684,
+            "ev": -0.0681,
             "prices": {
               "bet365": 2.62,
               "Marathon": 2.53,
               "1xBet": 2.53,
               "Betano": 2.62,
-              "WilliamHill": 2.62
+              "WilliamHill": 2.6
             }
           }
         },
@@ -3740,11 +3295,11 @@
             "line": 20.5,
             "over": {
               "model": 0.5744,
-              "market": 0.5725,
-              "bet": 0.5725,
+              "market": 0.5722,
+              "bet": 0.5722,
               "best_odds": 1.69,
               "book": "Pncl",
-              "ev": -0.0325,
+              "ev": -0.033,
               "prices": {
                 "Marathon": 1.61,
                 "Pncl": 1.69,
@@ -3754,14 +3309,14 @@
             },
             "under": {
               "model": 0.4256,
-              "market": 0.4275,
-              "bet": 0.4275,
-              "best_odds": 2.24,
+              "market": 0.4278,
+              "bet": 0.4278,
+              "best_odds": 2.23,
               "book": "Pncl",
-              "ev": -0.0424,
+              "ev": -0.046,
               "prices": {
                 "Marathon": 2.16,
-                "Pncl": 2.24,
+                "Pncl": 2.23,
                 "1xBet": 2.18,
                 "Betano": 2.15
               }
@@ -3771,32 +3326,32 @@
             "line": 21.5,
             "over": {
               "model": 0.5129,
-              "market": 0.5147,
-              "bet": 0.5147,
+              "market": 0.5142,
+              "bet": 0.5142,
               "best_odds": 1.9,
               "book": "bet365",
-              "ev": -0.0221,
+              "ev": -0.0229,
               "prices": {
                 "bet365": 1.9,
                 "Marathon": 1.79,
                 "BetVictor": 1.75,
-                "Pncl": 1.89,
+                "Pncl": 1.9,
                 "1xBet": 1.79,
                 "Betano": 1.78
               }
             },
             "under": {
               "model": 0.4871,
-              "market": 0.4853,
-              "bet": 0.4853,
+              "market": 0.4858,
+              "bet": 0.4858,
               "best_odds": 1.98,
-              "book": "Pncl",
-              "ev": -0.0391,
+              "book": "Betano",
+              "ev": -0.0382,
               "prices": {
                 "bet365": 1.8,
                 "Marathon": 1.95,
                 "BetVictor": 1.9,
-                "Pncl": 1.98,
+                "Pncl": 1.97,
                 "1xBet": 1.95,
                 "Betano": 1.98
               }
@@ -3806,30 +3361,30 @@
             "line": 22.5,
             "over": {
               "model": 0.4358,
-              "market": 0.4647,
-              "bet": 0.4647,
-              "best_odds": 2.15,
+              "market": 0.4642,
+              "bet": 0.4642,
+              "best_odds": 2.16,
               "book": "Pncl",
-              "ev": -0.0008,
+              "ev": 0.0027,
               "prices": {
                 "bet365": 1.9,
                 "Marathon": 2.01,
-                "Pncl": 2.15,
+                "Pncl": 2.16,
                 "1xBet": 2.01,
                 "Betano": 1.98
               }
             },
             "under": {
               "model": 0.5642,
-              "market": 0.5353,
-              "bet": 0.5353,
+              "market": 0.5358,
+              "bet": 0.5358,
               "best_odds": 1.8,
               "book": "bet365",
-              "ev": -0.0365,
+              "ev": -0.0356,
               "prices": {
                 "bet365": 1.8,
                 "Marathon": 1.71,
-                "Pncl": 1.75,
+                "Pncl": 1.74,
                 "1xBet": 1.71,
                 "Betano": 1.75
               }
@@ -4027,24 +3582,24 @@
         "key": "s-lansere",
         "model": 0.3119,
         "fair_odds": 3.21,
-        "market": 0.3605,
+        "market": 0.3604,
         "best_odds": 2.81,
         "book": "1xBet",
-        "ev": -0.0644,
+        "ev": -0.0647,
         "kelly": 0.0,
-        "bet": 0.333
+        "bet": 0.3329
       },
       "b": {
         "name": "M. Kubka",
         "key": "m-kubka",
         "model": 0.6881,
         "fair_odds": 1.45,
-        "market": 0.6395,
+        "market": 0.6396,
         "best_odds": 1.5,
         "book": "WilliamHill",
-        "ev": 0.0005,
-        "kelly": 0.0003,
-        "bet": 0.667
+        "ev": 0.0007,
+        "kelly": 0.0004,
+        "bet": 0.6671
       },
       "books": 9,
       "no_odds": false,
@@ -4094,36 +3649,36 @@
           1.5
         ],
         "Pncl": [
-          2.63,
+          2.64,
           1.5
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.3632,
+      "pinnacle_a": 0.3623,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.1856,
-            "market": 0.21,
-            "bet": 0.2047,
-            "best_odds": 4.5,
-            "book": "1xBet",
-            "ev": -0.0788,
+            "market": 0.2142,
+            "bet": 0.2092,
+            "best_odds": 4.4,
+            "book": "Betano",
+            "ev": -0.0796,
             "prices": {
               "WilliamHill": 4.33,
               "bet365": 4.0,
-              "Marathon": 3.9,
-              "1xBet": 4.5,
+              "Marathon": 3.92,
+              "1xBet": 3.9,
               "Betano": 4.4
             }
           },
           "2-1": {
             "model": 0.1263,
-            "market": 0.1577,
-            "bet": 0.1493,
+            "market": 0.1566,
+            "bet": 0.1482,
             "best_odds": 6.55,
             "book": "1xBet",
-            "ev": -0.0222,
+            "ev": -0.0293,
             "prices": {
               "WilliamHill": 5.0,
               "bet365": 5.5,
@@ -4134,11 +3689,11 @@
           },
           "1-2": {
             "model": 0.2161,
-            "market": 0.2153,
-            "bet": 0.2105,
+            "market": 0.2136,
+            "bet": 0.2088,
             "best_odds": 4.5,
             "book": "Betano",
-            "ev": -0.0526,
+            "ev": -0.0606,
             "prices": {
               "WilliamHill": 3.75,
               "bet365": 4.33,
@@ -4149,13 +3704,13 @@
           },
           "0-2": {
             "model": 0.472,
-            "market": 0.417,
-            "bet": 0.4355,
-            "best_odds": 2.25,
+            "market": 0.4156,
+            "bet": 0.4339,
+            "best_odds": 2.2,
             "book": "WilliamHill",
-            "ev": -0.0202,
+            "ev": -0.0455,
             "prices": {
-              "WilliamHill": 2.25,
+              "WilliamHill": 2.2,
               "bet365": 2.2,
               "Marathon": 2.14,
               "1xBet": 1.97,
@@ -4195,27 +3750,27 @@
             "line": 20.5,
             "over": {
               "model": 0.5415,
-              "market": 0.5213,
-              "bet": 0.5213,
+              "market": 0.521,
+              "bet": 0.521,
               "best_odds": 1.84,
               "book": "Marathon",
-              "ev": -0.0409,
+              "ev": -0.0413,
               "prices": {
                 "bet365": 1.8,
                 "Marathon": 1.84,
                 "BetVictor": 1.75,
                 "1xBet": 1.71,
                 "Betano": 1.78,
-                "Pncl": 1.77
+                "Pncl": 1.78
               }
             },
             "under": {
               "model": 0.4585,
-              "market": 0.4787,
-              "bet": 0.4787,
+              "market": 0.479,
+              "bet": 0.479,
               "best_odds": 2.05,
               "book": "Pncl",
-              "ev": -0.0186,
+              "ev": -0.0181,
               "prices": {
                 "bet365": 1.9,
                 "Marathon": 1.84,
@@ -4230,28 +3785,30 @@
             "line": 21.5,
             "over": {
               "model": 0.4806,
-              "market": 0.4738,
-              "bet": 0.4738,
+              "market": 0.4746,
+              "bet": 0.4746,
               "best_odds": 2.01,
               "book": "Marathon",
-              "ev": -0.0476,
+              "ev": -0.046,
               "prices": {
                 "Marathon": 2.01,
                 "1xBet": 1.89,
-                "Pncl": 1.96
+                "Pncl": 1.97,
+                "BetVictor": 1.91
               }
             },
             "under": {
               "model": 0.5194,
-              "market": 0.5262,
-              "bet": 0.5262,
+              "market": 0.5254,
+              "bet": 0.5254,
               "best_odds": 1.84,
               "book": "Pncl",
-              "ev": -0.0319,
+              "ev": -0.0333,
               "prices": {
                 "Marathon": 1.66,
                 "1xBet": 1.78,
-                "Pncl": 1.84
+                "Pncl": 1.84,
+                "BetVictor": 1.75
               }
             }
           },
@@ -4437,16 +3994,16 @@
         "a": {
           "cost": 0.35,
           "odds": 2.733,
-          "ev": -0.0899,
+          "ev": -0.0902,
           "ticker": "KXWTACHALLENGERMATCH-26NOV06LANKUB-LAN"
         },
         "b": {
-          "cost": 0.66,
-          "odds": 1.48,
-          "ev": -0.0128,
+          "cost": 0.65,
+          "odds": 1.502,
+          "ev": 0.002,
           "ticker": "KXWTACHALLENGERMATCH-26NOV06LANKUB-KUB"
         },
-        "market_a": 0.3467,
+        "market_a": 0.3485,
         "event": "KXWTACHALLENGERMATCH-26NOV06LANKUB",
         "url": "https://kalshi.com/markets/kxwtachallengermatch/challenger-wta/kxwtachallengermatch-26nov06lankub"
       }
@@ -4468,24 +4025,24 @@
         "key": "r-montgomery",
         "model": 0.6064,
         "fair_odds": 1.65,
-        "market": 0.8154,
-        "best_odds": 1.19,
+        "market": 0.8156,
+        "best_odds": 1.18,
         "book": "Pncl",
-        "ev": 0.0011,
-        "kelly": 0.0015,
-        "bet": 0.8413
+        "ev": -0.007,
+        "kelly": 0.0,
+        "bet": 0.8415
       },
       "b": {
         "name": "M. Rajeshwaran Revathi",
         "key": "m-rajeshwaran-revathi",
         "model": 0.3936,
         "fair_odds": 2.54,
-        "market": 0.1846,
+        "market": 0.1844,
         "best_odds": 5.5,
         "book": "bet365",
-        "ev": -0.127,
+        "ev": -0.1282,
         "kelly": 0.0,
-        "bet": 0.1587
+        "bet": 0.1585
       },
       "books": 8,
       "no_odds": false,
@@ -4527,8 +4084,8 @@
           4.75
         ],
         "Pncl": [
-          1.19,
-          5.4
+          1.18,
+          5.42
         ],
         "Sbo": [
           1.12,
@@ -4540,49 +4097,49 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.8194,
+      "pinnacle_a": 0.8212,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.4009,
-            "market": 0.5931,
-            "bet": 0.6232,
-            "best_odds": 1.53,
-            "book": "Marathon",
-            "ev": -0.0465,
+            "market": 0.5893,
+            "bet": 0.6193,
+            "best_odds": 1.54,
+            "book": "1xBet",
+            "ev": -0.0462,
             "prices": {
-              "WilliamHill": 1.5,
+              "WilliamHill": 1.53,
               "bet365": 1.44,
               "Marathon": 1.53,
-              "1xBet": 1.53
+              "1xBet": 1.54
             }
           },
           "2-1": {
             "model": 0.2055,
-            "market": 0.2167,
-            "bet": 0.208,
+            "market": 0.2174,
+            "bet": 0.2088,
             "best_odds": 4.33,
             "book": "bet365",
-            "ev": -0.0995,
+            "ev": -0.0959,
             "prices": {
               "WilliamHill": 3.9,
               "bet365": 4.33,
               "Marathon": 4.1,
-              "1xBet": 4.1
+              "1xBet": 4.05
             }
           },
           "1-2": {
             "model": 0.1531,
-            "market": 0.0876,
-            "bet": 0.0771,
+            "market": 0.0907,
+            "bet": 0.0801,
             "best_odds": 11.25,
             "book": "Marathon",
-            "ev": -0.1327,
+            "ev": -0.0992,
             "prices": {
-              "WilliamHill": 9.5,
+              "WilliamHill": 8.5,
               "bet365": 9.0,
               "Marathon": 11.25,
-              "1xBet": 11.2
+              "1xBet": 11.0
             }
           },
           "0-2": {
@@ -4591,7 +4148,7 @@
             "bet": 0.0918,
             "best_odds": 11.0,
             "book": "bet365",
-            "ev": 0.0093,
+            "ev": 0.0098,
             "prices": {
               "WilliamHill": 8.0,
               "bet365": 11.0,
@@ -4659,11 +4216,11 @@
             "line": 18.5,
             "over": {
               "model": 0.7433,
-              "market": 0.5483,
-              "bet": 0.5483,
+              "market": 0.5481,
+              "bet": 0.5481,
               "best_odds": 1.75,
               "book": "BetVictor",
-              "ev": -0.0405,
+              "ev": -0.0409,
               "prices": {
                 "bet365": 1.72,
                 "Marathon": 1.66,
@@ -4674,16 +4231,16 @@
             },
             "under": {
               "model": 0.2567,
-              "market": 0.4517,
-              "bet": 0.4517,
-              "best_odds": 2.26,
+              "market": 0.4519,
+              "bet": 0.4519,
+              "best_odds": 2.25,
               "book": "Pncl",
-              "ev": 0.0209,
+              "ev": 0.0169,
               "prices": {
                 "bet365": 2.0,
                 "Marathon": 2.08,
                 "BetVictor": 1.9,
-                "Pncl": 2.26,
+                "Pncl": 2.25,
                 "1xBet": 2.07
               }
             }
@@ -4692,30 +4249,30 @@
             "line": 19.5,
             "over": {
               "model": 0.6542,
-              "market": 0.4854,
-              "bet": 0.4854,
-              "best_odds": 2.0,
+              "market": 0.4848,
+              "bet": 0.4848,
+              "best_odds": 2.01,
               "book": "Pncl",
-              "ev": -0.0293,
+              "ev": -0.0255,
               "prices": {
                 "Marathon": 1.92,
                 "BetVictor": 1.9,
-                "Pncl": 2.0,
+                "Pncl": 2.01,
                 "1xBet": 1.93,
                 "bet365": 1.9
               }
             },
             "under": {
               "model": 0.3458,
-              "market": 0.5146,
-              "bet": 0.5146,
-              "best_odds": 1.87,
+              "market": 0.5152,
+              "bet": 0.5152,
+              "best_odds": 1.86,
               "book": "Pncl",
-              "ev": -0.0376,
+              "ev": -0.0418,
               "prices": {
                 "Marathon": 1.82,
                 "BetVictor": 1.8,
-                "Pncl": 1.87,
+                "Pncl": 1.86,
                 "1xBet": 1.81,
                 "bet365": 1.8
               }
@@ -4725,27 +4282,27 @@
             "line": 20.5,
             "over": {
               "model": 0.5748,
-              "market": 0.4244,
-              "bet": 0.4244,
-              "best_odds": 2.3,
+              "market": 0.4236,
+              "bet": 0.4236,
+              "best_odds": 2.31,
               "book": "Pncl",
-              "ev": -0.0238,
+              "ev": -0.0215,
               "prices": {
                 "Marathon": 2.16,
-                "Pncl": 2.3,
+                "Pncl": 2.31,
                 "1xBet": 2.16
               }
             },
             "under": {
               "model": 0.4252,
-              "market": 0.5756,
-              "bet": 0.5756,
-              "best_odds": 1.66,
+              "market": 0.5764,
+              "bet": 0.5764,
+              "best_odds": 1.65,
               "book": "Pncl",
-              "ev": -0.0446,
+              "ev": -0.0489,
               "prices": {
                 "Marathon": 1.61,
-                "Pncl": 1.66,
+                "Pncl": 1.65,
                 "1xBet": 1.61
               }
             }
@@ -4882,16 +4439,16 @@
         "a": {
           "cost": 0.84,
           "odds": 1.177,
-          "ev": -0.0098,
+          "ev": -0.0096,
           "ticker": "KXWTAMATCH-26NOV06MONRAJ-MON"
         },
         "b": {
           "cost": 0.18,
           "odds": 5.254,
-          "ev": -0.1662,
+          "ev": -0.1672,
           "ticker": "KXWTAMATCH-26NOV06MONRAJ-RAJ"
         },
-        "market_a": 0.8259,
+        "market_a": 0.8267,
         "event": "KXWTAMATCH-26NOV06MONRAJ",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26nov06monraj"
       }
@@ -5569,28 +5126,28 @@
             "line": 21.5,
             "over": {
               "model": 0.4879,
-              "market": 0.4803,
-              "bet": 0.4803,
+              "market": 0.4834,
+              "bet": 0.4834,
               "best_odds": 1.95,
               "book": "Marathon",
-              "ev": -0.0634,
+              "ev": -0.0574,
               "prices": {
                 "Marathon": 1.95,
-                "BetVictor": 1.91,
+                "BetVictor": 1.87,
                 "1xBet": 1.88,
                 "Pncl": 1.95
               }
             },
             "under": {
               "model": 0.5121,
-              "market": 0.5197,
-              "bet": 0.5197,
+              "market": 0.5166,
+              "bet": 0.5166,
               "best_odds": 1.87,
               "book": "Pncl",
-              "ev": -0.0282,
+              "ev": -0.0339,
               "prices": {
                 "Marathon": 1.71,
-                "BetVictor": 1.75,
+                "BetVictor": 1.8,
                 "1xBet": 1.78,
                 "Pncl": 1.87
               }
@@ -5780,9 +5337,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.55,
-          "odds": 1.763,
-          "ev": -0.0614,
+          "cost": 0.54,
+          "odds": 1.794,
+          "ev": -0.0449,
           "ticker": "KXWTACHALLENGERMATCH-26NOV06ZAYFEI-ZAY"
         },
         "b": {
@@ -5791,7 +5348,7 @@
           "ev": -0.0405,
           "ticker": "KXWTACHALLENGERMATCH-26NOV06ZAYFEI-FEI"
         },
-        "market_a": 0.54,
+        "market_a": 0.5354,
         "event": "KXWTACHALLENGERMATCH-26NOV06ZAYFEI",
         "url": "https://kalshi.com/markets/kxwtachallengermatch/challenger-wta/kxwtachallengermatch-26nov06zayfei"
       }
@@ -5802,7 +5359,7 @@
       "late": false,
       "tour": "WTA",
       "tournament": "WTA Hong Kong",
-      "round": null,
+      "round": "WTA Hong Kong - Quarter-finals",
       "start": "2026-11-06T12:00:00Z",
       "surface": "hard",
       "indoor": false,
@@ -5813,24 +5370,24 @@
         "key": "a-ruzic",
         "model": 0.1882,
         "fair_odds": 5.31,
-        "market": 0.2478,
-        "best_odds": 4.16,
+        "market": 0.2479,
+        "best_odds": 4.13,
         "book": "Pncl",
-        "ev": -0.1091,
+        "ev": -0.1149,
         "kelly": 0.0,
-        "bet": 0.2142
+        "bet": 0.2143
       },
       "b": {
         "name": "A. Eala",
         "key": "a-eala",
         "model": 0.8118,
         "fair_odds": 1.23,
-        "market": 0.7522,
+        "market": 0.7521,
         "best_odds": 1.3,
         "book": "bet365",
-        "ev": 0.0216,
-        "kelly": 0.018,
-        "bet": 0.7858
+        "ev": 0.0214,
+        "kelly": 0.0178,
+        "bet": 0.7857
       },
       "books": 9,
       "no_odds": false,
@@ -5875,12 +5432,12 @@
           1.19
         ],
         "Pncl": [
-          4.16,
+          4.13,
           1.26
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.2325,
+      "pinnacle_a": 0.2338,
       "markets": {
         "sets": {
           "2-0": {
@@ -5903,12 +5460,12 @@
             "market": 0.1215,
             "bet": 0.1109,
             "best_odds": 8.7,
-            "book": "Marathon",
+            "book": "1xBet",
             "ev": -0.0355,
             "prices": {
               "WilliamHill": 7.0,
-              "Marathon": 8.7,
-              "1xBet": 8.6,
+              "Marathon": 8.6,
+              "1xBet": 8.7,
               "Betano": 6.6,
               "bet365": 6.5
             }
@@ -5922,8 +5479,8 @@
             "ev": -0.0324,
             "prices": {
               "WilliamHill": 3.5,
-              "Marathon": 3.96,
-              "1xBet": 3.94,
+              "Marathon": 3.94,
+              "1xBet": 3.96,
               "Betano": 4.45,
               "bet365": 4.5
             }
@@ -5937,8 +5494,8 @@
             "ev": -0.0159,
             "prices": {
               "WilliamHill": 1.8,
-              "Marathon": 1.71,
-              "1xBet": 1.72,
+              "Marathon": 1.72,
+              "1xBet": 1.71,
               "Betano": 1.67,
               "bet365": 1.72
             }
@@ -5980,32 +5537,32 @@
             "line": 19.5,
             "over": {
               "model": 0.552,
-              "market": 0.5189,
-              "bet": 0.5189,
-              "best_odds": 1.85,
+              "market": 0.5202,
+              "bet": 0.5202,
+              "best_odds": 1.83,
               "book": "Pncl",
-              "ev": -0.04,
+              "ev": -0.048,
               "prices": {
-                "Marathon": 1.77,
-                "1xBet": 1.78,
+                "Marathon": 1.78,
+                "1xBet": 1.77,
                 "Betano": 1.82,
                 "bet365": 1.8,
-                "Pncl": 1.85
+                "Pncl": 1.83
               }
             },
             "under": {
               "model": 0.448,
-              "market": 0.4811,
-              "bet": 0.4811,
-              "best_odds": 1.99,
+              "market": 0.4798,
+              "bet": 0.4798,
+              "best_odds": 2.02,
               "book": "Pncl",
-              "ev": -0.0427,
+              "ev": -0.0308,
               "prices": {
-                "Marathon": 1.97,
-                "1xBet": 1.96,
+                "Marathon": 1.96,
+                "1xBet": 1.97,
                 "Betano": 1.91,
                 "bet365": 1.9,
-                "Pncl": 1.99
+                "Pncl": 2.02
               }
             }
           },
@@ -6013,32 +5570,32 @@
             "line": 20.5,
             "over": {
               "model": 0.4739,
-              "market": 0.468,
-              "bet": 0.468,
-              "best_odds": 2.09,
+              "market": 0.469,
+              "bet": 0.469,
+              "best_odds": 2.06,
               "book": "Pncl",
-              "ev": -0.0219,
+              "ev": -0.0339,
               "prices": {
                 "Marathon": 1.98,
                 "1xBet": 1.98,
                 "BetVictor": 1.87,
                 "Betano": 2.02,
-                "Pncl": 2.09
+                "Pncl": 2.06
               }
             },
             "under": {
               "model": 0.5261,
-              "market": 0.532,
-              "bet": 0.532,
+              "market": 0.531,
+              "bet": 0.531,
               "best_odds": 1.8,
               "book": "BetVictor",
-              "ev": -0.0424,
+              "ev": -0.0442,
               "prices": {
                 "Marathon": 1.73,
                 "1xBet": 1.73,
                 "BetVictor": 1.8,
                 "Betano": 1.7,
-                "Pncl": 1.78
+                "Pncl": 1.79
               }
             }
           },
@@ -6232,13 +5789,13 @@
         "a": {
           "cost": 0.23,
           "odds": 4.125,
-          "ev": -0.1164,
+          "ev": -0.116,
           "ticker": "KXWTAMATCH-26NOV06RUZEAL-RUZ"
         },
         "b": {
           "cost": 0.79,
           "odds": 1.247,
-          "ev": -0.0201,
+          "ev": -0.0202,
           "ticker": "KXWTAMATCH-26NOV06RUZEAL-EAL"
         },
         "market_a": 0.2228,
@@ -6263,24 +5820,24 @@
         "key": "j-mikulskyte",
         "model": 0.3403,
         "fair_odds": 2.94,
-        "market": 0.1855,
-        "best_odds": 5.8,
+        "market": 0.1833,
+        "best_odds": 5.81,
         "book": "Pncl",
-        "ev": -0.1631,
+        "ev": -0.1739,
         "kelly": 0.0,
-        "bet": 0.1443
+        "bet": 0.1422
       },
       "b": {
         "name": "N. Noha Akugue",
         "key": "n-noha-akugue",
         "model": 0.6597,
         "fair_odds": 1.52,
-        "market": 0.8145,
+        "market": 0.8167,
         "best_odds": 1.15,
         "book": "Betfair",
-        "ev": -0.0159,
+        "ev": -0.0135,
         "kelly": 0.0,
-        "bet": 0.8557
+        "bet": 0.8578
       },
       "books": 7,
       "no_odds": false,
@@ -6310,12 +5867,12 @@
           1.14
         ],
         "1xBet": [
-          4.85,
+          4.8,
           1.14
         ],
         "WilliamHill": [
-          5.0,
-          1.14
+          5.5,
+          1.12
         ],
         "BetVictor": [
           4.75,
@@ -6326,63 +5883,63 @@
           1.12
         ],
         "Pncl": [
-          5.8,
+          5.81,
           1.14
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.1643,
+      "pinnacle_a": 0.164,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.2044,
-            "market": 0.1088,
-            "bet": 0.0978,
-            "best_odds": 9.0,
-            "book": "bet365",
-            "ev": -0.12,
+            "market": 0.1062,
+            "bet": 0.0952,
+            "best_odds": 9.5,
+            "book": "WilliamHill",
+            "ev": -0.0952,
             "prices": {
-              "Marathon": 7.4,
-              "1xBet": 7.5,
-              "WilliamHill": 8.5,
+              "Marathon": 7.5,
+              "1xBet": 7.4,
+              "WilliamHill": 9.5,
               "bet365": 9.0
             }
           },
           "2-1": {
             "model": 0.1359,
-            "market": 0.0856,
-            "bet": 0.0752,
+            "market": 0.0846,
+            "bet": 0.0742,
             "best_odds": 10.75,
             "book": "Marathon",
-            "ev": -0.1921,
+            "ev": -0.2028,
             "prices": {
               "Marathon": 10.75,
               "1xBet": 10.7,
-              "WilliamHill": 9.5,
+              "WilliamHill": 10.0,
               "bet365": 10.0
             }
           },
           "1-2": {
             "model": 0.2132,
-            "market": 0.2142,
-            "bet": 0.2053,
+            "market": 0.2169,
+            "bet": 0.2082,
             "best_odds": 4.5,
             "book": "bet365",
-            "ev": -0.0759,
+            "ev": -0.0632,
             "prices": {
-              "Marathon": 4.1,
-              "1xBet": 4.05,
-              "WilliamHill": 3.75,
+              "Marathon": 4.05,
+              "1xBet": 4.1,
+              "WilliamHill": 3.6,
               "bet365": 4.5
             }
           },
           "0-2": {
             "model": 0.4465,
-            "market": 0.5915,
-            "bet": 0.6217,
+            "market": 0.5923,
+            "bet": 0.6224,
             "best_odds": 1.51,
             "book": "Marathon",
-            "ev": -0.0612,
+            "ev": -0.0601,
             "prices": {
               "Marathon": 1.51,
               "1xBet": 1.51,
@@ -6396,25 +5953,25 @@
             "line": 17.5,
             "over": {
               "model": 0.8221,
-              "market": 0.6228,
-              "bet": 0.6228,
+              "market": 0.6206,
+              "bet": 0.6206,
               "best_odds": 1.48,
               "book": "Marathon",
-              "ev": -0.0782,
+              "ev": -0.0815,
               "prices": {
-                "1xBet": 1.45,
+                "1xBet": 1.46,
                 "Marathon": 1.48
               }
             },
             "under": {
               "model": 0.1779,
-              "market": 0.3772,
-              "bet": 0.3772,
-              "best_odds": 2.48,
+              "market": 0.3794,
+              "bet": 0.3794,
+              "best_odds": 2.45,
               "book": "1xBet",
-              "ev": -0.0646,
+              "ev": -0.0704,
               "prices": {
-                "1xBet": 2.48,
+                "1xBet": 2.45,
                 "Marathon": 2.36
               }
             }
@@ -6423,32 +5980,32 @@
             "line": 18.5,
             "over": {
               "model": 0.7333,
-              "market": 0.5314,
-              "bet": 0.5314,
+              "market": 0.5309,
+              "bet": 0.5309,
               "best_odds": 1.8,
               "book": "bet365",
-              "ev": -0.0435,
+              "ev": -0.0444,
               "prices": {
                 "Marathon": 1.73,
                 "1xBet": 1.7,
                 "bet365": 1.8,
                 "BetVictor": 1.73,
-                "Pncl": 1.75
+                "Pncl": 1.76
               }
             },
             "under": {
               "model": 0.2667,
-              "market": 0.4686,
-              "bet": 0.4686,
-              "best_odds": 2.08,
+              "market": 0.4691,
+              "bet": 0.4691,
+              "best_odds": 2.07,
               "book": "Pncl",
-              "ev": -0.0253,
+              "ev": -0.0289,
               "prices": {
                 "Marathon": 1.97,
                 "1xBet": 1.98,
                 "bet365": 1.9,
                 "BetVictor": 1.95,
-                "Pncl": 2.08
+                "Pncl": 2.07
               }
             }
           },
@@ -6456,30 +6013,30 @@
             "line": 19.5,
             "over": {
               "model": 0.6434,
-              "market": 0.4647,
-              "bet": 0.4647,
-              "best_odds": 2.07,
+              "market": 0.4634,
+              "bet": 0.4634,
+              "best_odds": 2.08,
               "book": "Pncl",
-              "ev": -0.0381,
+              "ev": -0.0362,
               "prices": {
-                "Marathon": 1.95,
+                "Marathon": 1.96,
                 "1xBet": 1.98,
                 "BetVictor": 1.95,
-                "Pncl": 2.07
+                "Pncl": 2.08
               }
             },
             "under": {
               "model": 0.3566,
-              "market": 0.5353,
-              "bet": 0.5353,
-              "best_odds": 1.76,
+              "market": 0.5366,
+              "bet": 0.5366,
+              "best_odds": 1.75,
               "book": "Pncl",
-              "ev": -0.0579,
+              "ev": -0.0609,
               "prices": {
-                "Marathon": 1.71,
+                "Marathon": 1.7,
                 "1xBet": 1.7,
                 "BetVictor": 1.73,
-                "Pncl": 1.76
+                "Pncl": 1.75
               }
             }
           },
@@ -6487,25 +6044,25 @@
             "line": 20.5,
             "over": {
               "model": 0.5638,
-              "market": 0.4032,
-              "bet": 0.4032,
-              "best_odds": 2.31,
+              "market": 0.4056,
+              "bet": 0.4056,
+              "best_odds": 2.3,
               "book": "1xBet",
-              "ev": -0.0686,
+              "ev": -0.0671,
               "prices": {
-                "Marathon": 2.22,
-                "1xBet": 2.31
+                "Marathon": 2.2,
+                "1xBet": 2.3
               }
             },
             "under": {
               "model": 0.4362,
-              "market": 0.5968,
-              "bet": 0.5968,
-              "best_odds": 1.54,
+              "market": 0.5944,
+              "bet": 0.5944,
+              "best_odds": 1.55,
               "book": "Marathon",
-              "ev": -0.081,
+              "ev": -0.0787,
               "prices": {
-                "Marathon": 1.54,
+                "Marathon": 1.55,
                 "1xBet": 1.52
               }
             }
@@ -6514,24 +6071,24 @@
             "line": 21.5,
             "over": {
               "model": 0.5019,
-              "market": 0.3483,
-              "bet": 0.3483,
-              "best_odds": 2.62,
+              "market": 0.355,
+              "bet": 0.355,
+              "best_odds": 2.58,
               "book": "1xBet",
-              "ev": -0.0876,
+              "ev": -0.0841,
               "prices": {
-                "1xBet": 2.62
+                "1xBet": 2.58
               }
             },
             "under": {
               "model": 0.4981,
-              "market": 0.6517,
-              "bet": 0.6517,
-              "best_odds": 1.4,
+              "market": 0.645,
+              "bet": 0.645,
+              "best_odds": 1.42,
               "book": "1xBet",
-              "ev": -0.0876,
+              "ev": -0.0841,
               "prices": {
-                "1xBet": 1.4
+                "1xBet": 1.42
               }
             }
           }
@@ -6667,16 +6224,16 @@
         "a": {
           "cost": 0.16,
           "odds": 5.903,
-          "ev": -0.1482,
+          "ev": -0.1606,
           "ticker": "KXWTACHALLENGERMATCH-26NOV06MIKNOH-MIK"
         },
         "b": {
-          "cost": 0.85,
-          "odds": 1.164,
-          "ev": -0.004,
+          "cost": 0.84,
+          "odds": 1.177,
+          "ev": 0.0096,
           "ticker": "KXWTACHALLENGERMATCH-26NOV06MIKNOH-NOH"
         },
-        "market_a": 0.155,
+        "market_a": 0.1566,
         "event": "KXWTACHALLENGERMATCH-26NOV06MIKNOH",
         "url": "https://kalshi.com/markets/kxwtachallengermatch/challenger-wta/kxwtachallengermatch-26nov06miknoh"
       }
@@ -6699,11 +6256,11 @@
         "model": 0.33,
         "fair_odds": 3.03,
         "market": 0.3189,
-        "best_odds": 3.18,
+        "best_odds": 3.19,
         "book": "Pncl",
-        "ev": -0.0641,
+        "ev": -0.0614,
         "kelly": 0.0,
-        "bet": 0.2943
+        "bet": 0.2942
       },
       "b": {
         "name": "M. Linette",
@@ -6713,9 +6270,9 @@
         "market": 0.6811,
         "best_odds": 1.4,
         "book": "Betfair",
-        "ev": -0.012,
+        "ev": -0.0119,
         "kelly": 0.0,
-        "bet": 0.7057
+        "bet": 0.7058
       },
       "books": 9,
       "no_odds": false,
@@ -6752,7 +6309,7 @@
           1.4
         ],
         "Pncl": [
-          3.18,
+          3.19,
           1.39
         ],
         "bet365": [
@@ -6765,50 +6322,50 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.3042,
+      "pinnacle_a": 0.3035,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.1975,
-            "market": 0.1736,
-            "bet": 0.1655,
+            "market": 0.1731,
+            "bet": 0.1651,
             "best_odds": 5.5,
             "book": "WilliamHill",
-            "ev": -0.0898,
+            "ev": -0.0921,
             "prices": {
               "Marathon": 4.85,
               "WilliamHill": 5.5,
-              "1xBet": 4.85,
+              "1xBet": 4.9,
               "Betano": 5.1,
               "bet365": 5.5
             }
           },
           "2-1": {
             "model": 0.1325,
-            "market": 0.143,
-            "bet": 0.1336,
+            "market": 0.1431,
+            "bet": 0.1337,
             "best_odds": 6.9,
             "book": "Marathon",
-            "ev": -0.0784,
+            "ev": -0.0772,
             "prices": {
               "Marathon": 6.9,
               "WilliamHill": 6.0,
-              "1xBet": 6.9,
+              "1xBet": 6.85,
               "Betano": 5.6,
               "bet365": 6.0
             }
           },
           "1-2": {
             "model": 0.2144,
-            "market": 0.2214,
-            "bet": 0.2162,
+            "market": 0.2217,
+            "bet": 0.2165,
             "best_odds": 4.5,
             "book": "Betano",
-            "ev": -0.0271,
+            "ev": -0.0256,
             "prices": {
               "Marathon": 3.98,
               "WilliamHill": 3.5,
-              "1xBet": 3.98,
+              "1xBet": 3.95,
               "Betano": 4.5,
               "bet365": 4.33
             }
@@ -6819,7 +6376,7 @@
             "bet": 0.4847,
             "best_odds": 2.0,
             "book": "1xBet",
-            "ev": -0.0305,
+            "ev": -0.0307,
             "prices": {
               "Marathon": 1.97,
               "WilliamHill": 1.95,
@@ -6870,23 +6427,23 @@
               "ev": -0.0306,
               "prices": {
                 "Marathon": 1.63,
-                "1xBet": 1.63,
+                "1xBet": 1.62,
                 "Betano": 1.72,
-                "Pncl": 1.65
+                "Pncl": 1.66
               }
             },
             "under": {
               "model": 0.3732,
               "market": 0.4364,
               "bet": 0.4364,
-              "best_odds": 2.29,
+              "best_odds": 2.28,
               "book": "Pncl",
-              "ev": -0.0006,
+              "ev": -0.005,
               "prices": {
                 "Marathon": 2.13,
-                "1xBet": 2.13,
+                "1xBet": 2.14,
                 "Betano": 2.02,
-                "Pncl": 2.29
+                "Pncl": 2.28
               }
             }
           },
@@ -6901,10 +6458,10 @@
               "ev": -0.0377,
               "prices": {
                 "Marathon": 1.85,
-                "1xBet": 1.85,
+                "1xBet": 1.84,
                 "BetVictor": 1.83,
                 "Betano": 1.93,
-                "Pncl": 1.88,
+                "Pncl": 1.89,
                 "bet365": 1.9
               }
             },
@@ -6912,15 +6469,15 @@
               "model": 0.4523,
               "market": 0.5014,
               "bet": 0.5014,
-              "best_odds": 1.97,
+              "best_odds": 1.96,
               "book": "Pncl",
-              "ev": -0.0122,
+              "ev": -0.0173,
               "prices": {
                 "Marathon": 1.88,
-                "1xBet": 1.88,
+                "1xBet": 1.89,
                 "BetVictor": 1.85,
                 "Betano": 1.8,
-                "Pncl": 1.97,
+                "Pncl": 1.96,
                 "bet365": 1.8
               }
             }
@@ -6929,32 +6486,32 @@
             "line": 21.5,
             "over": {
               "model": 0.4868,
-              "market": 0.4592,
-              "bet": 0.4592,
+              "market": 0.4587,
+              "bet": 0.4587,
               "best_odds": 2.1,
               "book": "Betano",
-              "ev": -0.0357,
+              "ev": -0.0368,
               "prices": {
                 "Marathon": 2.02,
                 "BetVictor": 1.91,
                 "1xBet": 2.02,
                 "Betano": 2.1,
-                "Pncl": 2.07
+                "Pncl": 2.08
               }
             },
             "under": {
               "model": 0.5132,
-              "market": 0.5408,
-              "bet": 0.5408,
-              "best_odds": 1.79,
+              "market": 0.5413,
+              "bet": 0.5413,
+              "best_odds": 1.78,
               "book": "Pncl",
-              "ev": -0.0319,
+              "ev": -0.0364,
               "prices": {
                 "Marathon": 1.7,
                 "BetVictor": 1.75,
                 "1xBet": 1.7,
                 "Betano": 1.65,
-                "Pncl": 1.79
+                "Pncl": 1.78
               }
             }
           },
@@ -7119,13 +6676,13 @@
         "a": {
           "cost": 0.31,
           "odds": 3.077,
-          "ev": -0.0944,
+          "ev": -0.0947,
           "ticker": "KXWTAMATCH-26NOV06HONLIN-HON"
         },
         "b": {
           "cost": 0.7,
           "odds": 1.399,
-          "ev": -0.0127,
+          "ev": -0.0126,
           "ticker": "KXWTAMATCH-26NOV06HONLIN-LIN"
         },
         "market_a": 0.305,
@@ -7139,7 +6696,7 @@
       "late": false,
       "tour": "ATP",
       "tournament": "ATP Challenger Bratislava 2",
-      "round": null,
+      "round": "Bratislava 2 - Quarter-finals",
       "start": "2026-11-06T12:30:00Z",
       "surface": "hard",
       "indoor": false,
@@ -7597,24 +7154,24 @@
         "key": "k-feldbausch",
         "model": 0.5508,
         "fair_odds": 1.82,
-        "market": 0.5716,
+        "market": 0.5712,
         "best_odds": 1.67,
         "book": "Betano",
-        "ev": -0.0212,
+        "ev": -0.0221,
         "kelly": 0.0,
-        "bet": 0.5861
+        "bet": 0.5856
       },
       "b": {
         "name": "S. Nagal",
         "key": "s-nagal",
         "model": 0.4492,
         "fair_odds": 2.23,
-        "market": 0.4284,
+        "market": 0.4288,
         "best_odds": 2.31,
         "book": "Pncl",
-        "ev": -0.0439,
+        "ev": -0.0427,
         "kelly": 0.0,
-        "bet": 0.4139
+        "bet": 0.4144
       },
       "books": 6,
       "no_odds": false,
@@ -7652,8 +7209,8 @@
           2.1
         ],
         "Marathon": [
-          1.6,
-          2.16
+          1.61,
+          2.15
         ],
         "Betano": [
           1.67,
@@ -7759,24 +7316,28 @@
             "line": 20.5,
             "over": {
               "model": 0.5873,
-              "market": 0.5995,
-              "bet": 0.5995,
-              "best_odds": 1.55,
-              "book": "Betano",
-              "ev": -0.0708,
+              "market": 0.5872,
+              "bet": 0.5872,
+              "best_odds": 1.57,
+              "book": "1xBet",
+              "ev": -0.0782,
               "prices": {
-                "Betano": 1.55
+                "Betano": 1.55,
+                "Marathon": 1.56,
+                "1xBet": 1.57
               }
             },
             "under": {
               "model": 0.4127,
-              "market": 0.4005,
-              "bet": 0.4005,
+              "market": 0.4128,
+              "bet": 0.4128,
               "best_odds": 2.32,
               "book": "Betano",
-              "ev": -0.0708,
+              "ev": -0.0422,
               "prices": {
-                "Betano": 2.32
+                "Betano": 2.32,
+                "Marathon": 2.18,
+                "1xBet": 2.16
               }
             }
           },
@@ -7784,25 +7345,25 @@
             "line": 21.5,
             "over": {
               "model": 0.5266,
-              "market": 0.5356,
-              "bet": 0.5356,
+              "market": 0.5335,
+              "bet": 0.5335,
               "best_odds": 1.83,
               "book": "Pncl",
-              "ev": -0.0198,
+              "ev": -0.0238,
               "prices": {
-                "Marathon": 1.71,
-                "1xBet": 1.71,
+                "Marathon": 1.74,
+                "1xBet": 1.74,
                 "Betano": 1.67,
                 "Pncl": 1.83
               }
             },
             "under": {
               "model": 0.4734,
-              "market": 0.4644,
-              "bet": 0.4644,
+              "market": 0.4665,
+              "bet": 0.4665,
               "best_odds": 2.07,
               "book": "Betano",
-              "ev": -0.0387,
+              "ev": -0.0343,
               "prices": {
                 "Marathon": 1.95,
                 "1xBet": 1.95,
@@ -7815,30 +7376,30 @@
             "line": 22.5,
             "over": {
               "model": 0.4496,
-              "market": 0.4749,
-              "bet": 0.4749,
+              "market": 0.4742,
+              "bet": 0.4742,
               "best_odds": 2.08,
               "book": "Pncl",
-              "ev": -0.0121,
+              "ev": -0.0136,
               "prices": {
                 "bet365": 1.9,
-                "Marathon": 1.97,
-                "1xBet": 1.97,
+                "Marathon": 1.95,
+                "1xBet": 1.96,
                 "Betano": 1.88,
                 "Pncl": 2.08
               }
             },
             "under": {
               "model": 0.5504,
-              "market": 0.5251,
-              "bet": 0.5251,
+              "market": 0.5258,
+              "bet": 0.5258,
               "best_odds": 1.82,
               "book": "Betano",
-              "ev": -0.0444,
+              "ev": -0.0431,
               "prices": {
                 "bet365": 1.8,
-                "Marathon": 1.73,
-                "1xBet": 1.73,
+                "Marathon": 1.71,
+                "1xBet": 1.7,
                 "Betano": 1.82,
                 "Pncl": 1.78
               }
@@ -8003,18 +7564,18 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.6,
-          "odds": 1.621,
-          "ev": -0.0499,
+          "cost": 0.59,
+          "odds": 1.648,
+          "ev": -0.0349,
           "ticker": "KXATPCHALLENGERMATCH-26NOV06FELNAG-FEL"
         },
         "b": {
           "cost": 0.42,
           "odds": 2.288,
-          "ev": -0.053,
+          "ev": -0.0519,
           "ticker": "KXATPCHALLENGERMATCH-26NOV06FELNAG-NAG"
         },
-        "market_a": 0.5879,
+        "market_a": 0.585,
         "event": "KXATPCHALLENGERMATCH-26NOV06FELNAG",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov06felnag"
       }
@@ -8694,28 +8255,28 @@
             "line": 20.5,
             "over": {
               "model": 0.5752,
-              "market": 0.5612,
-              "bet": 0.5612,
+              "market": 0.5605,
+              "bet": 0.5605,
               "best_odds": 1.78,
               "book": "Pncl",
-              "ev": -0.0011,
+              "ev": -0.0023,
               "prices": {
                 "Marathon": 1.63,
-                "1xBet": 1.62,
+                "1xBet": 1.63,
                 "Betano": 1.62,
                 "Pncl": 1.78
               }
             },
             "under": {
               "model": 0.4248,
-              "market": 0.4388,
-              "bet": 0.4388,
+              "market": 0.4395,
+              "bet": 0.4395,
               "best_odds": 2.15,
               "book": "Betano",
-              "ev": -0.0566,
+              "ev": -0.0551,
               "prices": {
                 "Marathon": 2.13,
-                "1xBet": 2.14,
+                "1xBet": 2.13,
                 "Betano": 2.15,
                 "Pncl": 2.08
               }
@@ -8725,15 +8286,15 @@
             "line": 21.5,
             "over": {
               "model": 0.5138,
-              "market": 0.5167,
-              "bet": 0.5167,
+              "market": 0.5164,
+              "bet": 0.5164,
               "best_odds": 1.97,
               "book": "Pncl",
-              "ev": 0.0178,
+              "ev": 0.0174,
               "prices": {
-                "Marathon": 1.82,
+                "Marathon": 1.81,
                 "BetVictor": 1.75,
-                "1xBet": 1.81,
+                "1xBet": 1.82,
                 "Betano": 1.78,
                 "bet365": 1.72,
                 "Pncl": 1.97
@@ -8741,15 +8302,15 @@
             },
             "under": {
               "model": 0.4862,
-              "market": 0.4833,
-              "bet": 0.4833,
+              "market": 0.4836,
+              "bet": 0.4836,
               "best_odds": 2.0,
               "book": "bet365",
-              "ev": -0.0333,
+              "ev": -0.0329,
               "prices": {
-                "Marathon": 1.92,
-                "BetVictor": 1.91,
-                "1xBet": 1.93,
+                "Marathon": 1.93,
+                "BetVictor": 1.9,
+                "1xBet": 1.92,
                 "Betano": 1.95,
                 "bet365": 2.0,
                 "Pncl": 1.88
@@ -8760,28 +8321,28 @@
             "line": 22.5,
             "over": {
               "model": 0.4368,
-              "market": 0.4525,
-              "bet": 0.4525,
+              "market": 0.4519,
+              "bet": 0.4519,
               "best_odds": 2.23,
               "book": "Pncl",
-              "ev": 0.0091,
+              "ev": 0.0076,
               "prices": {
                 "Marathon": 2.03,
-                "1xBet": 2.02,
+                "1xBet": 2.03,
                 "Betano": 1.98,
                 "Pncl": 2.23
               }
             },
             "under": {
               "model": 0.5632,
-              "market": 0.5475,
-              "bet": 0.5475,
+              "market": 0.5481,
+              "bet": 0.5481,
               "best_odds": 1.75,
               "book": "Betano",
-              "ev": -0.0419,
+              "ev": -0.0408,
               "prices": {
                 "Marathon": 1.69,
-                "1xBet": 1.7,
+                "1xBet": 1.69,
                 "Betano": 1.75,
                 "Pncl": 1.68
               }
@@ -8952,12 +8513,12 @@
           "ticker": "KXWTAMATCH-26NOV06ZAKSTE-ZAK"
         },
         "b": {
-          "cost": 0.52,
-          "odds": 1.861,
-          "ev": -0.0276,
+          "cost": 0.51,
+          "odds": 1.896,
+          "ev": -0.0093,
           "ticker": "KXWTAMATCH-26NOV06ZAKSTE-STE"
         },
-        "market_a": 0.4901,
+        "market_a": 0.495,
         "event": "KXWTAMATCH-26NOV06ZAKSTE",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26nov06zakste"
       }
@@ -9399,7 +8960,7 @@
           "ev": -0.0241,
           "ticker": "KXATPCHALLENGERMATCH-26NOV06BASKYM-KYM"
         },
-        "market_a": 0.4824,
+        "market_a": 0.485,
         "event": "KXATPCHALLENGERMATCH-26NOV06BASKYM",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov06baskym"
       }
@@ -9421,24 +8982,24 @@
         "key": "o-roca-batalla",
         "model": 0.5687,
         "fair_odds": 1.76,
-        "market": 0.6256,
+        "market": 0.6257,
         "best_odds": 1.52,
         "book": "Betano",
-        "ev": -0.0124,
+        "ev": -0.0122,
         "kelly": 0.0,
-        "bet": 0.6498
+        "bet": 0.6499
       },
       "b": {
         "name": "N. Kicker",
         "key": "n-kicker",
         "model": 0.4313,
         "fair_odds": 2.32,
-        "market": 0.3744,
-        "best_odds": 2.66,
+        "market": 0.3743,
+        "best_odds": 2.67,
         "book": "Pncl",
-        "ev": -0.0684,
+        "ev": -0.0652,
         "kelly": 0.0,
-        "bet": 0.3502
+        "bet": 0.3501
       },
       "books": 9,
       "no_odds": false,
@@ -9497,50 +9058,50 @@
         ],
         "Pncl": [
           1.51,
-          2.66
+          2.67
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.6379,
+      "pinnacle_a": 0.6388,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.3639,
-            "market": 0.3932,
-            "bet": 0.4088,
+            "market": 0.3949,
+            "bet": 0.4107,
             "best_odds": 2.3,
             "book": "WilliamHill",
-            "ev": -0.0599,
+            "ev": -0.0554,
             "prices": {
               "WilliamHill": 2.3,
               "bet365": 2.25,
-              "Marathon": 2.21,
-              "1xBet": 2.21,
+              "Marathon": 2.19,
+              "1xBet": 2.19,
               "Betano": 2.25
             }
           },
           "2-1": {
             "model": 0.2048,
-            "market": 0.2287,
-            "bet": 0.2253,
+            "market": 0.2278,
+            "bet": 0.2243,
             "best_odds": 4.0,
             "book": "bet365",
-            "ev": -0.0989,
+            "ev": -0.103,
             "prices": {
-              "WilliamHill": 3.75,
+              "WilliamHill": 3.8,
               "bet365": 4.0,
-              "Marathon": 3.9,
-              "1xBet": 3.9,
+              "Marathon": 3.92,
+              "1xBet": 3.92,
               "Betano": 3.75
             }
           },
           "1-2": {
             "model": 0.1697,
-            "market": 0.1694,
-            "bet": 0.162,
+            "market": 0.1695,
+            "bet": 0.1621,
             "best_odds": 5.65,
             "book": "Marathon",
-            "ev": -0.0848,
+            "ev": -0.0842,
             "prices": {
               "WilliamHill": 5.0,
               "bet365": 5.0,
@@ -9551,16 +9112,16 @@
           },
           "0-2": {
             "model": 0.2616,
-            "market": 0.2087,
-            "bet": 0.204,
+            "market": 0.2078,
+            "bet": 0.203,
             "best_odds": 4.45,
             "book": "Betano",
-            "ev": -0.0922,
+            "ev": -0.0968,
             "prices": {
               "WilliamHill": 4.4,
               "bet365": 4.33,
-              "Marathon": 4.0,
-              "1xBet": 4.0,
+              "Marathon": 4.05,
+              "1xBet": 4.05,
               "Betano": 4.45
             }
           }
@@ -9620,30 +9181,30 @@
             "line": 20.5,
             "over": {
               "model": 0.5838,
-              "market": 0.5689,
-              "bet": 0.5689,
-              "best_odds": 1.69,
+              "market": 0.568,
+              "bet": 0.568,
+              "best_odds": 1.7,
               "book": "Pncl",
-              "ev": -0.0386,
+              "ev": -0.0345,
               "prices": {
                 "Marathon": 1.6,
                 "1xBet": 1.6,
                 "Betano": 1.62,
-                "Pncl": 1.69
+                "Pncl": 1.7
               }
             },
             "under": {
               "model": 0.4162,
-              "market": 0.4311,
-              "bet": 0.4311,
-              "best_odds": 2.22,
+              "market": 0.432,
+              "bet": 0.432,
+              "best_odds": 2.2,
               "book": "Pncl",
-              "ev": -0.0429,
+              "ev": -0.0495,
               "prices": {
                 "Marathon": 2.11,
                 "1xBet": 2.11,
                 "Betano": 2.15,
-                "Pncl": 2.22
+                "Pncl": 2.2
               }
             }
           },
@@ -9651,32 +9212,32 @@
             "line": 21.5,
             "over": {
               "model": 0.5232,
-              "market": 0.5126,
-              "bet": 0.5126,
-              "best_odds": 1.87,
+              "market": 0.5118,
+              "bet": 0.5118,
+              "best_odds": 1.88,
               "book": "Pncl",
-              "ev": -0.0415,
+              "ev": -0.0378,
               "prices": {
                 "bet365": 1.83,
                 "Marathon": 1.79,
                 "1xBet": 1.79,
                 "Betano": 1.78,
-                "Pncl": 1.87
+                "Pncl": 1.88
               }
             },
             "under": {
               "model": 0.4768,
-              "market": 0.4874,
-              "bet": 0.4874,
-              "best_odds": 1.99,
+              "market": 0.4882,
+              "bet": 0.4882,
+              "best_odds": 1.97,
               "book": "Pncl",
-              "ev": -0.03,
+              "ev": -0.0383,
               "prices": {
                 "bet365": 1.83,
                 "Marathon": 1.89,
                 "1xBet": 1.89,
                 "Betano": 1.93,
-                "Pncl": 1.99
+                "Pncl": 1.97
               }
             }
           },
@@ -9684,30 +9245,30 @@
             "line": 22.5,
             "over": {
               "model": 0.4467,
-              "market": 0.4575,
-              "bet": 0.4575,
-              "best_odds": 2.11,
+              "market": 0.4569,
+              "bet": 0.4569,
+              "best_odds": 2.12,
               "book": "Pncl",
-              "ev": -0.0346,
+              "ev": -0.0314,
               "prices": {
                 "Marathon": 2.01,
                 "1xBet": 2.01,
                 "Betano": 1.98,
-                "Pncl": 2.11
+                "Pncl": 2.12
               }
             },
             "under": {
               "model": 0.5533,
-              "market": 0.5425,
-              "bet": 0.5425,
-              "best_odds": 1.76,
-              "book": "Pncl",
-              "ev": -0.0452,
+              "market": 0.5431,
+              "bet": 0.5431,
+              "best_odds": 1.75,
+              "book": "Betano",
+              "ev": -0.0495,
               "prices": {
                 "Marathon": 1.66,
                 "1xBet": 1.67,
                 "Betano": 1.75,
-                "Pncl": 1.76
+                "Pncl": 1.75
               }
             }
           }
@@ -9838,6 +9399,23 @@
             0.0
           ]
         }
+      },
+      "kalshi": {
+        "a": {
+          "cost": 0.64,
+          "odds": 1.524,
+          "ev": -0.0096,
+          "ticker": "KXATPCHALLENGERMATCH-26NOV06ROCKIC-ROC"
+        },
+        "b": {
+          "cost": 0.37,
+          "odds": 2.589,
+          "ev": -0.0936,
+          "ticker": "KXATPCHALLENGERMATCH-26NOV06ROCKIC-KIC"
+        },
+        "market_a": 0.6414,
+        "event": "KXATPCHALLENGERMATCH-26NOV06ROCKIC",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov06rockic"
       }
     },
     {
@@ -10122,6 +9700,23 @@
             0.0
           ]
         }
+      },
+      "kalshi": {
+        "a": {
+          "cost": 0.57,
+          "odds": 1.703,
+          "ev": -0.0635,
+          "ticker": "KXATPCHALLENGERMATCH-26NOV06MAECAN-MAE"
+        },
+        "b": {
+          "cost": 0.45,
+          "odds": 2.14,
+          "ev": -0.0368,
+          "ticker": "KXATPCHALLENGERMATCH-26NOV06MAECAN-CAN"
+        },
+        "market_a": 0.5578,
+        "event": "KXATPCHALLENGERMATCH-26NOV06MAECAN",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov06maecan"
       }
     },
     {
@@ -10259,13 +9854,13 @@
         "sets": {
           "2-0": {
             "model": 0.28,
-            "market": 0.3613,
-            "bet": 0.3731,
+            "market": 0.3629,
+            "bet": 0.3748,
             "best_odds": 2.62,
             "book": "bet365",
-            "ev": -0.0225,
+            "ev": -0.018,
             "prices": {
-              "WilliamHill": 2.45,
+              "WilliamHill": 2.4,
               "Betano": 2.5,
               "Marathon": 2.39,
               "bet365": 2.62,
@@ -10274,43 +9869,43 @@
           },
           "2-1": {
             "model": 0.1772,
-            "market": 0.2377,
-            "bet": 0.2354,
-            "best_odds": 4.0,
+            "market": 0.2387,
+            "bet": 0.2365,
+            "best_odds": 3.96,
             "book": "Marathon",
-            "ev": -0.0583,
+            "ev": -0.0636,
             "prices": {
               "WilliamHill": 3.5,
               "Betano": 3.8,
-              "Marathon": 4.0,
+              "Marathon": 3.96,
               "bet365": 3.5,
-              "1xBet": 4.0
+              "1xBet": 3.96
             }
           },
           "1-2": {
             "model": 0.1991,
-            "market": 0.1814,
-            "bet": 0.1751,
-            "best_odds": 5.4,
+            "market": 0.1808,
+            "bet": 0.1745,
+            "best_odds": 5.45,
             "book": "Marathon",
-            "ev": -0.0546,
+            "ev": -0.0492,
             "prices": {
               "WilliamHill": 4.75,
               "Betano": 4.65,
-              "Marathon": 5.4,
+              "Marathon": 5.45,
               "bet365": 4.5,
-              "1xBet": 5.4
+              "1xBet": 5.45
             }
           },
           "0-2": {
             "model": 0.3437,
-            "market": 0.2196,
-            "bet": 0.2164,
+            "market": 0.2176,
+            "bet": 0.2142,
             "best_odds": 4.33,
             "book": "bet365",
-            "ev": -0.0628,
+            "ev": -0.0723,
             "prices": {
-              "WilliamHill": 4.0,
+              "WilliamHill": 4.2,
               "Betano": 4.2,
               "Marathon": 3.9,
               "bet365": 4.33,
@@ -10925,24 +10520,24 @@
         "key": "a-blinkova",
         "model": 0.7521,
         "fair_odds": 1.33,
-        "market": 0.8593,
+        "market": 0.8586,
         "best_odds": 1.11,
         "book": "Betano",
-        "ev": -0.0028,
+        "ev": -0.0035,
         "kelly": 0.0,
-        "bet": 0.8984
+        "bet": 0.8978
       },
       "b": {
         "name": "Y. Kabbaj",
         "key": "y-kabbaj",
         "model": 0.2479,
         "fair_odds": 4.03,
-        "market": 0.1407,
+        "market": 0.1414,
         "best_odds": 7.5,
         "book": "Betfair",
-        "ev": -0.2379,
+        "ev": -0.2334,
         "kelly": 0.0,
-        "bet": 0.1016
+        "bet": 0.1022
       },
       "books": 9,
       "no_odds": false,
@@ -10968,8 +10563,8 @@
           7.0
         ],
         "Marathon": [
-          1.07,
-          6.45
+          1.08,
+          6.2
         ],
         "1xBet": [
           1.08,
@@ -11002,14 +10597,14 @@
         "sets": {
           "2-0": {
             "model": 0.5335,
-            "market": 0.6383,
-            "bet": 0.6699,
+            "market": 0.6366,
+            "bet": 0.6682,
             "best_odds": 1.44,
             "book": "WilliamHill",
-            "ev": -0.0353,
+            "ev": -0.0378,
             "prices": {
               "WilliamHill": 1.44,
-              "Marathon": 1.37,
+              "Marathon": 1.39,
               "1xBet": 1.39,
               "Betano": 1.39,
               "bet365": 1.33
@@ -11017,14 +10612,14 @@
           },
           "2-1": {
             "model": 0.2186,
-            "market": 0.2039,
-            "bet": 0.1935,
+            "market": 0.2043,
+            "bet": 0.1939,
             "best_odds": 5.0,
             "book": "bet365",
-            "ev": -0.0326,
+            "ev": -0.0307,
             "prices": {
               "WilliamHill": 4.0,
-              "Marathon": 4.33,
+              "Marathon": 4.3,
               "1xBet": 4.3,
               "Betano": 4.15,
               "bet365": 5.0
@@ -11032,14 +10627,14 @@
           },
           "1-2": {
             "model": 0.1033,
-            "market": 0.0745,
-            "bet": 0.0642,
-            "best_odds": 14.0,
+            "market": 0.0753,
+            "bet": 0.0649,
+            "best_odds": 13.25,
             "book": "Marathon",
-            "ev": -0.1017,
+            "ev": -0.1406,
             "prices": {
               "WilliamHill": 11.0,
-              "Marathon": 14.0,
+              "Marathon": 13.25,
               "1xBet": 13.2,
               "Betano": 10.75,
               "bet365": 11.0
@@ -11047,14 +10642,14 @@
           },
           "0-2": {
             "model": 0.1446,
-            "market": 0.0832,
-            "bet": 0.0724,
+            "market": 0.0838,
+            "bet": 0.073,
             "best_odds": 14.5,
             "book": "Betano",
-            "ev": 0.0504,
+            "ev": 0.0591,
             "prices": {
               "WilliamHill": 11.0,
-              "Marathon": 9.6,
+              "Marathon": 9.3,
               "1xBet": 9.3,
               "Betano": 14.5,
               "bet365": 10.0
@@ -11093,15 +10688,15 @@
             "line": 17.5,
             "over": {
               "model": 0.7826,
-              "market": 0.5475,
-              "bet": 0.5475,
+              "market": 0.5479,
+              "bet": 0.5479,
               "best_odds": 1.8,
               "book": "bet365",
-              "ev": -0.0146,
+              "ev": -0.0137,
               "prices": {
-                "Marathon": 1.62,
+                "Marathon": 1.6,
                 "BetVictor": 1.73,
-                "1xBet": 1.59,
+                "1xBet": 1.6,
                 "Betano": 1.75,
                 "bet365": 1.8,
                 "Pncl": 1.65
@@ -11109,15 +10704,15 @@
             },
             "under": {
               "model": 0.2174,
-              "market": 0.4525,
-              "bet": 0.4525,
+              "market": 0.4521,
+              "bet": 0.4521,
               "best_odds": 2.24,
               "book": "Pncl",
-              "ev": 0.0137,
+              "ev": 0.0127,
               "prices": {
-                "Marathon": 2.08,
+                "Marathon": 2.11,
                 "BetVictor": 1.95,
-                "1xBet": 2.13,
+                "1xBet": 2.11,
                 "Betano": 1.98,
                 "bet365": 1.9,
                 "Pncl": 2.24
@@ -11128,14 +10723,14 @@
             "line": 18.5,
             "over": {
               "model": 0.6888,
-              "market": 0.4872,
-              "bet": 0.4872,
+              "market": 0.4876,
+              "bet": 0.4876,
               "best_odds": 2.0,
               "book": "bet365",
-              "ev": -0.0256,
+              "ev": -0.0247,
               "prices": {
-                "Marathon": 1.9,
-                "1xBet": 1.87,
+                "Marathon": 1.88,
+                "1xBet": 1.88,
                 "BetVictor": 1.91,
                 "Betano": 1.78,
                 "bet365": 2.0,
@@ -11144,14 +10739,14 @@
             },
             "under": {
               "model": 0.3112,
-              "market": 0.5128,
-              "bet": 0.5128,
+              "market": 0.5124,
+              "bet": 0.5124,
               "best_odds": 1.93,
               "book": "Betano",
-              "ev": -0.0103,
+              "ev": -0.0112,
               "prices": {
-                "Marathon": 1.78,
-                "1xBet": 1.81,
+                "Marathon": 1.8,
+                "1xBet": 1.8,
                 "BetVictor": 1.75,
                 "Betano": 1.93,
                 "bet365": 1.72,
@@ -11163,13 +10758,13 @@
             "line": 19.5,
             "over": {
               "model": 0.5978,
-              "market": 0.43,
-              "bet": 0.43,
+              "market": 0.4316,
+              "bet": 0.4316,
               "best_odds": 2.28,
               "book": "Pncl",
-              "ev": -0.0196,
+              "ev": -0.0159,
               "prices": {
-                "Marathon": 2.18,
+                "Marathon": 2.15,
                 "Betano": 2.0,
                 "Pncl": 2.28,
                 "1xBet": 2.15
@@ -11177,13 +10772,13 @@
             },
             "under": {
               "model": 0.4022,
-              "market": 0.57,
-              "bet": 0.57,
+              "market": 0.5684,
+              "bet": 0.5684,
               "best_odds": 1.72,
               "book": "Betano",
-              "ev": -0.0196,
+              "ev": -0.0224,
               "prices": {
-                "Marathon": 1.56,
+                "Marathon": 1.58,
                 "Betano": 1.72,
                 "Pncl": 1.63,
                 "1xBet": 1.58
@@ -11325,7 +10920,7 @@
       "late": false,
       "tour": "ATP",
       "tournament": "ATP Challenger Bratislava 2",
-      "round": null,
+      "round": "Bratislava 2 - Quarter-finals",
       "start": "2026-11-06T16:00:00Z",
       "surface": "hard",
       "indoor": false,
@@ -11336,24 +10931,24 @@
         "key": "d-svrcina",
         "model": 0.6024,
         "fair_odds": 1.66,
-        "market": 0.5629,
+        "market": 0.5465,
         "best_odds": 1.7,
         "book": "Betfair",
-        "ev": -0.0204,
+        "ev": -0.0536,
         "kelly": 0.0,
-        "bet": 0.5762
+        "bet": 0.5567
       },
       "b": {
         "name": "Z. Piros",
         "key": "z-piros",
         "model": 0.3976,
         "fair_odds": 2.52,
-        "market": 0.4371,
-        "best_odds": 2.37,
+        "market": 0.4535,
+        "best_odds": 2.1,
         "book": "bet365",
-        "ev": 0.0043,
-        "kelly": 0.0008,
-        "bet": 0.4238
+        "ev": -0.0691,
+        "kelly": 0.0,
+        "bet": 0.4433
       },
       "books": 3,
       "no_odds": false,
@@ -11375,8 +10970,8 @@
       ],
       "prices": {
         "bet365": [
-          1.53,
-          2.37
+          1.66,
+          2.1
         ],
         "BetVictor": [
           1.7,
@@ -11603,24 +11198,24 @@
         "key": "m-h-rehberg",
         "model": 0.4146,
         "fair_odds": 2.41,
-        "market": 0.4205,
-        "best_odds": 2.33,
+        "market": 0.4176,
+        "best_odds": 2.35,
         "book": "Pncl",
-        "ev": -0.0581,
+        "ev": -0.0579,
         "kelly": 0.0,
-        "bet": 0.4042
+        "bet": 0.4009
       },
       "b": {
         "name": "A. Mayo",
         "key": "a-mayo",
         "model": 0.5854,
         "fair_odds": 1.71,
-        "market": 0.5795,
-        "best_odds": 1.65,
+        "market": 0.5824,
+        "best_odds": 1.63,
         "book": "Pncl",
-        "ev": -0.017,
+        "ev": -0.0234,
         "kelly": 0.0,
-        "bet": 0.5958
+        "bet": 0.5991
       },
       "books": 8,
       "no_odds": false,
@@ -11642,8 +11237,8 @@
       ],
       "prices": {
         "WilliamHill": [
-          2.2,
-          1.62
+          2.25,
+          1.57
         ],
         "bet365": [
           2.2,
@@ -11655,15 +11250,15 @@
         ],
         "BetVictor": [
           2.2,
-          1.6
+          1.57
         ],
         "1xBet": [
           2.18,
           1.61
         ],
         "Pncl": [
-          2.33,
-          1.65
+          2.35,
+          1.63
         ],
         "Betano": [
           2.25,
@@ -11671,16 +11266,16 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4146,
+      "pinnacle_a": 0.4095,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.25,
-            "market": 0.2399,
-            "bet": 0.2381,
+            "market": 0.2397,
+            "bet": 0.2379,
             "best_odds": 3.9,
             "book": "Betano",
-            "ev": -0.0715,
+            "ev": -0.0723,
             "prices": {
               "WilliamHill": 3.75,
               "bet365": 3.75,
@@ -11691,43 +11286,43 @@
           },
           "2-1": {
             "model": 0.1646,
-            "market": 0.1822,
-            "bet": 0.1757,
-            "best_odds": 5.05,
+            "market": 0.1813,
+            "bet": 0.1749,
+            "best_odds": 5.1,
             "book": "Marathon",
-            "ev": -0.1126,
+            "ev": -0.1083,
             "prices": {
               "WilliamHill": 4.8,
               "bet365": 5.0,
-              "Marathon": 5.05,
-              "1xBet": 5.05,
+              "Marathon": 5.1,
+              "1xBet": 5.1,
               "Betano": 4.5
             }
           },
           "1-2": {
             "model": 0.2081,
-            "market": 0.2207,
-            "bet": 0.2172,
+            "market": 0.2205,
+            "bet": 0.2169,
             "best_odds": 4.33,
             "book": "bet365",
-            "ev": -0.0597,
+            "ev": -0.0607,
             "prices": {
-              "WilliamHill": 3.9,
+              "WilliamHill": 4.0,
               "bet365": 4.33,
-              "Marathon": 4.05,
-              "1xBet": 4.05,
+              "Marathon": 4.0,
+              "1xBet": 4.0,
               "Betano": 3.8
             }
           },
           "0-2": {
             "model": 0.3773,
-            "market": 0.3573,
-            "bet": 0.369,
+            "market": 0.3585,
+            "bet": 0.3703,
             "best_odds": 2.52,
             "book": "Betano",
-            "ev": -0.07,
+            "ev": -0.0667,
             "prices": {
-              "WilliamHill": 2.5,
+              "WilliamHill": 2.45,
               "bet365": 2.5,
               "Marathon": 2.45,
               "1xBet": 2.45,
@@ -11790,29 +11385,29 @@
             "line": 21.5,
             "over": {
               "model": 0.5522,
-              "market": 0.5839,
-              "bet": 0.5839,
-              "best_odds": 1.62,
+              "market": 0.5802,
+              "bet": 0.5802,
+              "best_odds": 1.64,
               "book": "Pncl",
-              "ev": -0.0541,
+              "ev": -0.0484,
               "prices": {
-                "Marathon": 1.55,
-                "1xBet": 1.55,
-                "Pncl": 1.62,
+                "Marathon": 1.56,
+                "1xBet": 1.56,
+                "Pncl": 1.64,
                 "Betano": 1.62
               }
             },
             "under": {
               "model": 0.4478,
-              "market": 0.4161,
-              "bet": 0.4161,
-              "best_odds": 2.35,
+              "market": 0.4198,
+              "bet": 0.4198,
+              "best_odds": 2.31,
               "book": "Pncl",
-              "ev": -0.0221,
+              "ev": -0.0303,
               "prices": {
-                "Marathon": 2.2,
-                "1xBet": 2.2,
-                "Pncl": 2.35,
+                "Marathon": 2.18,
+                "1xBet": 2.18,
+                "Pncl": 2.31,
                 "Betano": 2.15
               }
             }
@@ -11821,31 +11416,31 @@
             "line": 22.5,
             "over": {
               "model": 0.4678,
-              "market": 0.5008,
-              "bet": 0.5008,
-              "best_odds": 1.92,
+              "market": 0.4993,
+              "bet": 0.4993,
+              "best_odds": 1.95,
               "book": "Pncl",
-              "ev": -0.0384,
+              "ev": -0.0265,
               "prices": {
                 "bet365": 1.9,
                 "Marathon": 1.82,
                 "1xBet": 1.82,
-                "Pncl": 1.92,
+                "Pncl": 1.95,
                 "Betano": 1.83
               }
             },
             "under": {
               "model": 0.5322,
-              "market": 0.4992,
-              "bet": 0.4992,
-              "best_odds": 1.93,
+              "market": 0.5007,
+              "bet": 0.5007,
+              "best_odds": 1.9,
               "book": "Pncl",
-              "ev": -0.0366,
+              "ev": -0.0486,
               "prices": {
                 "bet365": 1.8,
                 "Marathon": 1.86,
                 "1xBet": 1.86,
-                "Pncl": 1.93,
+                "Pncl": 1.9,
                 "Betano": 1.87
               }
             }
@@ -11854,29 +11449,29 @@
             "line": 23.5,
             "over": {
               "model": 0.4107,
-              "market": 0.4509,
-              "bet": 0.4509,
-              "best_odds": 2.17,
+              "market": 0.4485,
+              "bet": 0.4485,
+              "best_odds": 2.22,
               "book": "Pncl",
-              "ev": -0.0214,
+              "ev": -0.0044,
               "prices": {
                 "Marathon": 2.01,
                 "1xBet": 2.01,
-                "Pncl": 2.17,
+                "Pncl": 2.22,
                 "Betano": 2.02
               }
             },
             "under": {
               "model": 0.5893,
-              "market": 0.5491,
-              "bet": 0.5491,
-              "best_odds": 1.72,
-              "book": "Pncl",
-              "ev": -0.0556,
+              "market": 0.5515,
+              "bet": 0.5515,
+              "best_odds": 1.7,
+              "book": "Betano",
+              "ev": -0.0624,
               "prices": {
                 "Marathon": 1.66,
                 "1xBet": 1.66,
-                "Pncl": 1.72,
+                "Pncl": 1.69,
                 "Betano": 1.7
               }
             }
@@ -12193,27 +11788,27 @@
             "line": 20.5,
             "over": {
               "model": 0.5817,
-              "market": 0.5817,
-              "bet": 0.5817,
-              "best_odds": 1.71,
+              "market": 0.5809,
+              "bet": 0.5809,
+              "best_odds": 1.72,
               "book": "Pncl",
-              "ev": -0.0053,
+              "ev": -0.0009,
               "prices": {
                 "Betano": 1.53,
-                "Pncl": 1.71,
+                "Pncl": 1.72,
                 "Marathon": 1.57
               }
             },
             "under": {
               "model": 0.4183,
-              "market": 0.4183,
-              "bet": 0.4183,
+              "market": 0.4191,
+              "bet": 0.4191,
               "best_odds": 2.35,
               "book": "Betano",
-              "ev": -0.017,
+              "ev": -0.015,
               "prices": {
                 "Betano": 2.35,
-                "Pncl": 2.18,
+                "Pncl": 2.17,
                 "Marathon": 2.16
               }
             }
@@ -12222,30 +11817,30 @@
             "line": 21.5,
             "over": {
               "model": 0.5214,
-              "market": 0.5309,
-              "bet": 0.5309,
-              "best_odds": 1.88,
+              "market": 0.5303,
+              "bet": 0.5303,
+              "best_odds": 1.89,
               "book": "Pncl",
-              "ev": -0.0019,
+              "ev": 0.0022,
               "prices": {
                 "Marathon": 1.75,
                 "1xBet": 1.71,
                 "Betano": 1.67,
-                "Pncl": 1.88
+                "Pncl": 1.89
               }
             },
             "under": {
               "model": 0.4786,
-              "market": 0.4691,
-              "bet": 0.4691,
+              "market": 0.4697,
+              "bet": 0.4697,
               "best_odds": 2.07,
               "book": "Betano",
-              "ev": -0.029,
+              "ev": -0.0277,
               "prices": {
                 "Marathon": 1.94,
                 "1xBet": 1.95,
                 "Betano": 2.07,
-                "Pncl": 1.97
+                "Pncl": 1.96
               }
             }
           },
@@ -12253,32 +11848,32 @@
             "line": 22.5,
             "over": {
               "model": 0.4459,
-              "market": 0.4771,
-              "bet": 0.4771,
-              "best_odds": 2.11,
+              "market": 0.4739,
+              "bet": 0.4739,
+              "best_odds": 2.12,
               "book": "Pncl",
-              "ev": 0.0066,
+              "ev": 0.0046,
               "prices": {
-                "bet365": 1.83,
+                "bet365": 1.9,
                 "Marathon": 1.96,
                 "1xBet": 1.95,
                 "Betano": 1.87,
-                "Pncl": 2.11
+                "Pncl": 2.12
               }
             },
             "under": {
               "model": 0.5541,
-              "market": 0.5229,
-              "bet": 0.5229,
+              "market": 0.5261,
+              "bet": 0.5261,
               "best_odds": 1.83,
-              "book": "bet365",
-              "ev": -0.0431,
+              "book": "Betano",
+              "ev": -0.0372,
               "prices": {
-                "bet365": 1.83,
+                "bet365": 1.8,
                 "Marathon": 1.7,
                 "1xBet": 1.74,
                 "Betano": 1.83,
-                "Pncl": 1.76
+                "Pncl": 1.75
               }
             }
           },
@@ -12457,24 +12052,24 @@
         "key": "l-romero-gormaz",
         "model": 0.5282,
         "fair_odds": 1.89,
-        "market": 0.5592,
-        "best_odds": 1.75,
+        "market": 0.5597,
+        "best_odds": 1.74,
         "book": "Pncl",
-        "ev": -0.0006,
+        "ev": -0.0054,
         "kelly": 0.0,
-        "bet": 0.5711
+        "bet": 0.5716
       },
       "b": {
         "name": "J. Riera",
         "key": "j-riera",
         "model": 0.4718,
         "fair_odds": 2.12,
-        "market": 0.4408,
+        "market": 0.4403,
         "best_odds": 2.2,
         "book": "bet365",
-        "ev": -0.0564,
+        "ev": -0.0576,
         "kelly": 0.0,
-        "bet": 0.4289
+        "bet": 0.4284
       },
       "books": 8,
       "no_odds": false,
@@ -12516,8 +12111,8 @@
           2.1
         ],
         "Pncl": [
-          1.75,
-          2.14
+          1.74,
+          2.16
         ],
         "1xBet": [
           1.68,
@@ -12529,7 +12124,7 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.5501,
+      "pinnacle_a": 0.5538,
       "markets": {
         "sets": {
           "2-0": {
@@ -12598,26 +12193,26 @@
             "line": 19.5,
             "over": {
               "model": 0.6531,
-              "market": 0.6152,
-              "bet": 0.6152,
-              "best_odds": 1.47,
-              "book": "Marathon",
-              "ev": -0.0957,
+              "market": 0.6134,
+              "bet": 0.6134,
+              "best_odds": 1.48,
+              "book": "1xBet",
+              "ev": -0.0922,
               "prices": {
                 "Marathon": 1.47,
-                "1xBet": 1.47
+                "1xBet": 1.48
               }
             },
             "under": {
               "model": 0.3469,
-              "market": 0.3848,
-              "bet": 0.3848,
+              "market": 0.3866,
+              "bet": 0.3866,
               "best_odds": 2.35,
               "book": "Marathon",
-              "ev": -0.0957,
+              "ev": -0.0914,
               "prices": {
                 "Marathon": 2.35,
-                "1xBet": 2.35
+                "1xBet": 2.33
               }
             }
           },
@@ -12625,28 +12220,28 @@
             "line": 20.5,
             "over": {
               "model": 0.574,
-              "market": 0.5513,
-              "bet": 0.5513,
-              "best_odds": 1.75,
+              "market": 0.5482,
+              "bet": 0.5482,
+              "best_odds": 1.76,
               "book": "Pncl",
-              "ev": -0.0353,
+              "ev": -0.0352,
               "prices": {
                 "Marathon": 1.65,
-                "Pncl": 1.75,
-                "1xBet": 1.64
+                "Pncl": 1.76,
+                "1xBet": 1.66
               }
             },
             "under": {
               "model": 0.426,
-              "market": 0.4487,
-              "bet": 0.4487,
-              "best_odds": 2.12,
+              "market": 0.4518,
+              "bet": 0.4518,
+              "best_odds": 2.11,
               "book": "Pncl",
-              "ev": -0.0487,
+              "ev": -0.0467,
               "prices": {
                 "Marathon": 2.03,
-                "Pncl": 2.12,
-                "1xBet": 2.04
+                "Pncl": 2.11,
+                "1xBet": 2.01
               }
             }
           },
@@ -12654,33 +12249,33 @@
             "line": 21.5,
             "over": {
               "model": 0.5126,
-              "market": 0.5036,
-              "bet": 0.5036,
-              "best_odds": 1.94,
+              "market": 0.5023,
+              "bet": 0.5023,
+              "best_odds": 1.96,
               "book": "Pncl",
-              "ev": -0.023,
+              "ev": -0.0155,
               "prices": {
                 "bet365": 1.83,
                 "Marathon": 1.84,
                 "BetVictor": 1.83,
-                "Pncl": 1.94,
-                "1xBet": 1.83,
+                "Pncl": 1.96,
+                "1xBet": 1.84,
                 "Betano": 1.78
               }
             },
             "under": {
               "model": 0.4874,
-              "market": 0.4964,
-              "bet": 0.4964,
+              "market": 0.4977,
+              "bet": 0.4977,
               "best_odds": 1.93,
               "book": "Betano",
-              "ev": -0.042,
+              "ev": -0.0395,
               "prices": {
                 "bet365": 1.83,
                 "Marathon": 1.84,
                 "BetVictor": 1.85,
-                "Pncl": 1.91,
-                "1xBet": 1.85,
+                "Pncl": 1.89,
+                "1xBet": 1.84,
                 "Betano": 1.93
               }
             }
@@ -12689,28 +12284,28 @@
             "line": 22.5,
             "over": {
               "model": 0.4359,
-              "market": 0.4415,
-              "bet": 0.4415,
-              "best_odds": 2.19,
+              "market": 0.4411,
+              "bet": 0.4411,
+              "best_odds": 2.2,
               "book": "Pncl",
-              "ev": -0.0332,
+              "ev": -0.0296,
               "prices": {
-                "Marathon": 2.06,
-                "Pncl": 2.19,
-                "1xBet": 2.04
+                "Marathon": 2.04,
+                "Pncl": 2.2,
+                "1xBet": 2.06
               }
             },
             "under": {
               "model": 0.5641,
-              "market": 0.5585,
-              "bet": 0.5585,
+              "market": 0.5589,
+              "bet": 0.5589,
               "best_odds": 1.7,
               "book": "Pncl",
-              "ev": -0.0505,
+              "ev": -0.0499,
               "prices": {
-                "Marathon": 1.63,
+                "Marathon": 1.64,
                 "Pncl": 1.7,
-                "1xBet": 1.64
+                "1xBet": 1.63
               }
             }
           },
@@ -12718,26 +12313,26 @@
             "line": 23.5,
             "over": {
               "model": 0.3886,
-              "market": 0.4067,
-              "bet": 0.4067,
+              "market": 0.4043,
+              "bet": 0.4043,
               "best_odds": 2.24,
               "book": "Marathon",
-              "ev": -0.0891,
+              "ev": -0.0945,
               "prices": {
                 "Marathon": 2.24,
-                "1xBet": 2.21
+                "1xBet": 2.24
               }
             },
             "under": {
               "model": 0.6114,
-              "market": 0.5933,
-              "bet": 0.5933,
-              "best_odds": 1.53,
-              "book": "1xBet",
-              "ev": -0.0922,
+              "market": 0.5957,
+              "bet": 0.5957,
+              "best_odds": 1.52,
+              "book": "Marathon",
+              "ev": -0.0945,
               "prices": {
                 "Marathon": 1.52,
-                "1xBet": 1.53
+                "1xBet": 1.52
               }
             }
           }
@@ -12887,24 +12482,24 @@
         "key": "s-kozlov",
         "model": 0.5531,
         "fair_odds": 1.81,
-        "market": 0.6093,
+        "market": 0.6094,
         "best_odds": 1.57,
         "book": "bet365",
-        "ev": -0.01,
+        "ev": -0.0098,
         "kelly": 0.0,
-        "bet": 0.6306
+        "bet": 0.6307
       },
       "b": {
         "name": "B. Shick",
         "key": "b-shick",
         "model": 0.4469,
         "fair_odds": 2.24,
-        "market": 0.3907,
-        "best_odds": 2.56,
+        "market": 0.3906,
+        "best_odds": 2.57,
         "book": "Pncl",
-        "ev": -0.0542,
+        "ev": -0.0509,
         "kelly": 0.0,
-        "bet": 0.3694
+        "bet": 0.3693
       },
       "books": 9,
       "no_odds": false,
@@ -12946,7 +12541,7 @@
         ],
         "Pncl": [
           1.54,
-          2.56
+          2.57
         ],
         "Sbo": [
           1.46,
@@ -12954,66 +12549,66 @@
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.6244,
+      "pinnacle_a": 0.6253,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.3517,
-            "market": 0.3776,
-            "bet": 0.3914,
+            "market": 0.3789,
+            "bet": 0.3929,
             "best_odds": 2.5,
             "book": "bet365",
-            "ev": -0.0215,
+            "ev": -0.0178,
             "prices": {
               "WilliamHill": 2.3,
               "bet365": 2.5,
-              "Marathon": 2.27,
-              "1xBet": 2.27,
+              "Marathon": 2.25,
+              "1xBet": 2.25,
               "Betano": 2.35
             }
           },
           "2-1": {
             "model": 0.2014,
-            "market": 0.2268,
-            "bet": 0.2234,
+            "market": 0.2265,
+            "bet": 0.2232,
             "best_odds": 4.0,
             "book": "bet365",
-            "ev": -0.1062,
+            "ev": -0.1074,
             "prices": {
               "WilliamHill": 3.75,
               "bet365": 4.0,
-              "Marathon": 3.95,
-              "1xBet": 3.95,
+              "Marathon": 3.96,
+              "1xBet": 3.96,
               "Betano": 3.8
             }
           },
           "1-2": {
             "model": 0.1742,
-            "market": 0.1741,
-            "bet": 0.1671,
-            "best_odds": 5.5,
+            "market": 0.1735,
+            "bet": 0.1665,
+            "best_odds": 5.55,
             "book": "Marathon",
-            "ev": -0.081,
+            "ev": -0.0762,
             "prices": {
               "WilliamHill": 5.0,
               "bet365": 4.75,
-              "Marathon": 5.5,
-              "1xBet": 5.5,
+              "Marathon": 5.55,
+              "1xBet": 5.55,
               "Betano": 4.7
             }
           },
           "0-2": {
             "model": 0.2727,
-            "market": 0.2215,
-            "bet": 0.2181,
+            "market": 0.221,
+            "bet": 0.2175,
             "best_odds": 4.25,
             "book": "Betano",
-            "ev": -0.0732,
+            "ev": -0.0756,
             "prices": {
               "WilliamHill": 4.0,
               "bet365": 4.0,
-              "Marathon": 3.84,
-              "1xBet": 3.84,
+              "Marathon": 3.86,
+              "1xBet": 3.86,
               "Betano": 4.25
             }
           }
@@ -13048,30 +12643,30 @@
             "line": 20.5,
             "over": {
               "model": 0.5855,
-              "market": 0.5707,
-              "bet": 0.5707,
+              "market": 0.5681,
+              "bet": 0.5681,
               "best_odds": 1.73,
               "book": "Pncl",
-              "ev": -0.0127,
+              "ev": -0.0172,
               "prices": {
                 "Betano": 1.57,
                 "Pncl": 1.73,
-                "Marathon": 1.6,
-                "1xBet": 1.6
+                "Marathon": 1.61,
+                "1xBet": 1.62
               }
             },
             "under": {
               "model": 0.4145,
-              "market": 0.4293,
-              "bet": 0.4293,
+              "market": 0.4319,
+              "bet": 0.4319,
               "best_odds": 2.27,
               "book": "Betano",
-              "ev": -0.0255,
+              "ev": -0.0195,
               "prices": {
                 "Betano": 2.27,
                 "Pncl": 2.15,
-                "Marathon": 2.11,
-                "1xBet": 2.11
+                "Marathon": 2.09,
+                "1xBet": 2.08
               }
             }
           },
@@ -13079,28 +12674,28 @@
             "line": 21.5,
             "over": {
               "model": 0.5249,
-              "market": 0.5179,
-              "bet": 0.5179,
+              "market": 0.5158,
+              "bet": 0.5158,
               "best_odds": 1.92,
               "book": "Pncl",
-              "ev": -0.0057,
+              "ev": -0.0096,
               "prices": {
-                "Marathon": 1.79,
-                "1xBet": 1.79,
+                "Marathon": 1.8,
+                "1xBet": 1.81,
                 "Betano": 1.7,
                 "Pncl": 1.92
               }
             },
             "under": {
               "model": 0.4751,
-              "market": 0.4821,
-              "bet": 0.4821,
+              "market": 0.4842,
+              "bet": 0.4842,
               "best_odds": 2.02,
               "book": "Betano",
-              "ev": -0.0261,
+              "ev": -0.022,
               "prices": {
-                "Marathon": 1.89,
-                "1xBet": 1.89,
+                "Marathon": 1.88,
+                "1xBet": 1.87,
                 "Betano": 2.02,
                 "Pncl": 1.93
               }
@@ -13110,32 +12705,32 @@
             "line": 22.5,
             "over": {
               "model": 0.4483,
-              "market": 0.4606,
-              "bet": 0.4606,
+              "market": 0.4595,
+              "bet": 0.4595,
               "best_odds": 2.22,
               "book": "Pncl",
-              "ev": 0.0226,
+              "ev": 0.0202,
               "prices": {
                 "bet365": 1.9,
                 "Marathon": 2.01,
-                "1xBet": 2.01,
+                "1xBet": 2.03,
                 "Betano": 1.93,
                 "Pncl": 2.22
               }
             },
             "under": {
               "model": 0.5517,
-              "market": 0.5394,
-              "bet": 0.5394,
+              "market": 0.5405,
+              "bet": 0.5405,
               "best_odds": 1.8,
               "book": "bet365",
-              "ev": -0.0291,
+              "ev": -0.0272,
               "prices": {
                 "bet365": 1.8,
                 "Marathon": 1.66,
-                "1xBet": 1.66,
+                "1xBet": 1.65,
                 "Betano": 1.78,
-                "Pncl": 1.69
+                "Pncl": 1.68
               }
             }
           },
@@ -13303,7 +12898,7 @@
       "late": false,
       "tour": "ATP",
       "tournament": "ATP Challenger Bratislava 2",
-      "round": null,
+      "round": "Bratislava 2 - Quarter-finals",
       "start": "2026-11-06T17:30:00Z",
       "surface": "hard",
       "indoor": false,
@@ -13314,26 +12909,26 @@
         "key": "k-coppejans",
         "model": 0.3687,
         "fair_odds": 2.71,
-        "market": 0.3154,
+        "market": 0.3234,
         "best_odds": 3.29,
         "book": "Pncl",
-        "ev": -0.0721,
+        "ev": -0.0423,
         "kelly": 0.0,
-        "bet": 0.2821
+        "bet": 0.2911
       },
       "b": {
         "name": "J. Rodionov",
         "key": "j-rodionov",
         "model": 0.6313,
         "fair_odds": 1.58,
-        "market": 0.6846,
-        "best_odds": 1.44,
-        "book": "Betano",
-        "ev": 0.0338,
-        "kelly": 0.0192,
-        "bet": 0.7179
+        "market": 0.6766,
+        "best_odds": 1.5,
+        "book": "bet365",
+        "ev": 0.0633,
+        "kelly": 0.0317,
+        "bet": 0.7089
       },
-      "books": 5,
+      "books": 7,
       "no_odds": false,
       "court": "ch-bratislava-2",
       "model_version": "2026-10-19",
@@ -13367,6 +12962,14 @@
         "Betano": [
           2.75,
           1.44
+        ],
+        "WilliamHill": [
+          3.0,
+          1.36
+        ],
+        "bet365": [
+          2.5,
+          1.5
         ]
       },
       "odds_source": "api-tennis",
@@ -13375,54 +12978,62 @@
         "sets": {
           "2-0": {
             "model": 0.2187,
-            "market": 0.1781,
-            "bet": 0.1706,
-            "best_odds": 5.0,
-            "book": "Betano",
-            "ev": -0.1468,
+            "market": 0.1761,
+            "bet": 0.1687,
+            "best_odds": 5.8,
+            "book": "WilliamHill",
+            "ev": -0.0216,
             "prices": {
-              "Marathon": 4.9,
+              "Marathon": 4.85,
               "1xBet": 4.9,
-              "Betano": 5.0
+              "Betano": 5.0,
+              "WilliamHill": 5.8,
+              "bet365": 4.5
             }
           },
           "2-1": {
             "model": 0.15,
-            "market": 0.1468,
-            "bet": 0.1378,
+            "market": 0.1551,
+            "bet": 0.1465,
             "best_odds": 6.55,
-            "book": "Marathon",
-            "ev": -0.0971,
+            "book": "1xBet",
+            "ev": -0.0401,
             "prices": {
-              "Marathon": 6.55,
+              "Marathon": 6.45,
               "1xBet": 6.55,
-              "Betano": 5.1
+              "Betano": 5.1,
+              "WilliamHill": 5.5,
+              "bet365": 5.0
             }
           },
           "1-2": {
             "model": 0.216,
-            "market": 0.2364,
-            "bet": 0.2328,
+            "market": 0.2418,
+            "bet": 0.2388,
             "best_odds": 3.75,
-            "book": "Marathon",
-            "ev": -0.127,
+            "book": "1xBet",
+            "ev": -0.1046,
             "prices": {
-              "Marathon": 3.75,
+              "Marathon": 3.74,
               "1xBet": 3.75,
-              "Betano": 3.65
+              "Betano": 3.65,
+              "WilliamHill": 3.4,
+              "bet365": 3.6
             }
           },
           "0-2": {
             "model": 0.4153,
-            "market": 0.4386,
-            "bet": 0.4587,
-            "best_odds": 2.12,
-            "book": "Betano",
-            "ev": -0.0276,
+            "market": 0.427,
+            "bet": 0.446,
+            "best_odds": 2.25,
+            "book": "bet365",
+            "ev": 0.0035,
             "prices": {
-              "Marathon": 1.95,
+              "Marathon": 1.97,
               "1xBet": 1.95,
-              "Betano": 2.12
+              "Betano": 2.12,
+              "WilliamHill": 2.0,
+              "bet365": 2.25
             }
           }
         },
@@ -13462,9 +13073,9 @@
               "book": "Pncl",
               "ev": -0.0236,
               "prices": {
-                "Marathon": 1.59,
+                "Marathon": 1.58,
                 "Pncl": 1.68,
-                "1xBet": 1.59,
+                "1xBet": 1.6,
                 "Betano": 1.52
               }
             },
@@ -13476,9 +13087,9 @@
               "book": "Betano",
               "ev": -0.0074,
               "prices": {
-                "Marathon": 2.13,
+                "Marathon": 2.15,
                 "Pncl": 2.23,
-                "1xBet": 2.13,
+                "1xBet": 2.11,
                 "Betano": 2.37
               }
             }
@@ -13487,28 +13098,28 @@
             "line": 21.5,
             "over": {
               "model": 0.5154,
-              "market": 0.5274,
-              "bet": 0.5274,
+              "market": 0.5277,
+              "bet": 0.5277,
               "best_odds": 1.86,
               "book": "Pncl",
-              "ev": -0.0191,
+              "ev": -0.0185,
               "prices": {
-                "Marathon": 1.78,
-                "1xBet": 1.78,
+                "Marathon": 1.77,
+                "1xBet": 1.79,
                 "Pncl": 1.86,
                 "Betano": 1.65
               }
             },
             "under": {
               "model": 0.4846,
-              "market": 0.4726,
-              "bet": 0.4726,
+              "market": 0.4723,
+              "bet": 0.4723,
               "best_odds": 2.1,
               "book": "Betano",
-              "ev": -0.0075,
+              "ev": -0.0082,
               "prices": {
-                "Marathon": 1.9,
-                "1xBet": 1.9,
+                "Marathon": 1.92,
+                "1xBet": 1.89,
                 "Pncl": 1.99,
                 "Betano": 2.1
               }
@@ -13518,30 +13129,32 @@
             "line": 22.5,
             "over": {
               "model": 0.439,
-              "market": 0.4606,
-              "bet": 0.4606,
+              "market": 0.468,
+              "bet": 0.468,
               "best_odds": 2.15,
               "book": "Pncl",
-              "ev": -0.0097,
+              "ev": 0.0062,
               "prices": {
                 "Marathon": 2.01,
-                "1xBet": 2.01,
+                "1xBet": 2.03,
                 "Pncl": 2.15,
-                "Betano": 1.88
+                "Betano": 1.88,
+                "bet365": 1.83
               }
             },
             "under": {
               "model": 0.561,
-              "market": 0.5394,
-              "bet": 0.5394,
-              "best_odds": 1.82,
-              "book": "Betano",
-              "ev": -0.0183,
+              "market": 0.532,
+              "bet": 0.532,
+              "best_odds": 1.83,
+              "book": "bet365",
+              "ev": -0.0264,
               "prices": {
-                "Marathon": 1.66,
-                "1xBet": 1.66,
+                "Marathon": 1.67,
+                "1xBet": 1.65,
                 "Pncl": 1.73,
-                "Betano": 1.82
+                "Betano": 1.82,
+                "bet365": 1.83
               }
             }
           },
@@ -13829,11 +13442,11 @@
         "sets": {
           "2-0": {
             "model": 0.1331,
-            "market": 0.1517,
-            "bet": 0.1424,
+            "market": 0.1515,
+            "bet": 0.1422,
             "best_odds": 6.4,
             "book": "Betano",
-            "ev": -0.0883,
+            "ev": -0.09,
             "prices": {
               "Marathon": 5.7,
               "Betano": 6.4,
@@ -13843,44 +13456,44 @@
           },
           "2-1": {
             "model": 0.1017,
-            "market": 0.1387,
-            "bet": 0.129,
-            "best_odds": 7.0,
-            "book": "Marathon",
-            "ev": -0.0969,
+            "market": 0.1381,
+            "bet": 0.1283,
+            "best_odds": 7.1,
+            "book": "1xBet",
+            "ev": -0.0891,
             "prices": {
               "Marathon": 7.0,
               "Betano": 5.9,
               "WilliamHill": 6.0,
-              "1xBet": 7.0
+              "1xBet": 7.1
             }
           },
           "1-2": {
             "model": 0.2249,
-            "market": 0.2511,
-            "bet": 0.2481,
-            "best_odds": 3.68,
-            "book": "Marathon",
-            "ev": -0.0872,
+            "market": 0.2493,
+            "bet": 0.2461,
+            "best_odds": 3.7,
+            "book": "1xBet",
+            "ev": -0.0894,
             "prices": {
               "Marathon": 3.68,
               "Betano": 3.65,
-              "WilliamHill": 3.25,
-              "1xBet": 3.68
+              "WilliamHill": 3.3,
+              "1xBet": 3.7
             }
           },
           "0-2": {
             "model": 0.5403,
-            "market": 0.4584,
-            "bet": 0.4805,
-            "best_odds": 2.05,
+            "market": 0.4611,
+            "bet": 0.4834,
+            "best_odds": 2.0,
             "book": "WilliamHill",
-            "ev": -0.015,
+            "ev": -0.0332,
             "prices": {
               "Marathon": 1.92,
               "Betano": 1.91,
-              "WilliamHill": 2.05,
-              "1xBet": 1.92
+              "WilliamHill": 2.0,
+              "1xBet": 1.91
             }
           }
         },
@@ -14008,25 +13621,25 @@
             "line": 23.5,
             "over": {
               "model": 0.3625,
-              "market": 0.45,
-              "bet": 0.45,
-              "best_odds": 2.11,
+              "market": 0.4497,
+              "bet": 0.4497,
+              "best_odds": 2.12,
               "book": "Pncl",
-              "ev": -0.0505,
+              "ev": -0.0466,
               "prices": {
                 "Marathon": 2.05,
                 "Betano": 2.1,
-                "Pncl": 2.11,
+                "Pncl": 2.12,
                 "1xBet": 2.05
               }
             },
             "under": {
               "model": 0.6375,
-              "market": 0.55,
-              "bet": 0.55,
+              "market": 0.5503,
+              "bet": 0.5503,
               "best_odds": 1.77,
               "book": "Pncl",
-              "ev": -0.0265,
+              "ev": -0.026,
               "prices": {
                 "Marathon": 1.68,
                 "Betano": 1.67,
@@ -14171,12 +13784,12 @@
           "ticker": "KXATPMATCH-26NOV06FRIALC-FRI"
         },
         "b": {
-          "cost": 0.73,
-          "odds": 1.344,
-          "ev": -0.0006,
+          "cost": 0.74,
+          "odds": 1.327,
+          "ev": -0.0132,
           "ticker": "KXATPMATCH-26NOV06FRIALC-ALC"
         },
-        "market_a": 0.275,
+        "market_a": 0.2736,
         "event": "KXATPMATCH-26NOV06FRIALC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov06frialc"
       }
@@ -14283,7 +13896,7 @@
             "bet": 0.2085,
             "best_odds": 5.1,
             "book": "Betano",
-            "ev": 0.0635,
+            "ev": 0.0634,
             "prices": {
               "WilliamHill": 4.0,
               "Marathon": 3.88,
@@ -14295,10 +13908,10 @@
           "2-1": {
             "model": 0.1318,
             "market": 0.1764,
-            "bet": 0.1694,
+            "bet": 0.1693,
             "best_odds": 5.45,
             "book": "Marathon",
-            "ev": -0.077,
+            "ev": -0.0772,
             "prices": {
               "WilliamHill": 4.8,
               "Marathon": 5.45,
@@ -14309,13 +13922,13 @@
           },
           "1-2": {
             "model": 0.2224,
-            "market": 0.2362,
-            "bet": 0.2338,
+            "market": 0.2348,
+            "bet": 0.2322,
             "best_odds": 4.0,
             "book": "1xBet",
-            "ev": -0.0649,
+            "ev": -0.0711,
             "prices": {
-              "WilliamHill": 3.5,
+              "WilliamHill": 3.6,
               "Marathon": 3.9,
               "1xBet": 4.0,
               "Betano": 3.7,
@@ -14324,13 +13937,13 @@
           },
           "0-2": {
             "model": 0.4618,
-            "market": 0.3744,
-            "bet": 0.3883,
+            "market": 0.3758,
+            "bet": 0.3899,
             "best_odds": 2.62,
             "book": "bet365",
-            "ev": 0.0175,
+            "ev": 0.0217,
             "prices": {
-              "WilliamHill": 2.45,
+              "WilliamHill": 2.4,
               "Marathon": 2.28,
               "1xBet": 2.38,
               "Betano": 2.1,
@@ -14617,7 +14230,7 @@
       "late": false,
       "tour": "WTA",
       "tournament": "WTA 125 Cali",
-      "round": null,
+      "round": "Cali - Semi-finals",
       "start": "2026-11-06T18:30:00Z",
       "surface": "clay",
       "indoor": false,
@@ -15017,41 +14630,41 @@
         "sets": {
           "2-0": {
             "model": 0.3829,
-            "market": 0.4,
-            "bet": 0.4163,
+            "market": 0.4039,
+            "bet": 0.4206,
             "best_odds": 2.27,
             "book": "Betano",
-            "ev": -0.055,
+            "ev": -0.0453,
             "prices": {
-              "WilliamHill": 2.2,
-              "bet365": 2.25,
+              "WilliamHill": 2.15,
+              "bet365": 2.2,
               "Marathon": 2.22,
-              "1xBet": 2.22,
+              "1xBet": 2.2,
               "Betano": 2.27
             }
           },
           "2-1": {
             "model": 0.2094,
-            "market": 0.2345,
-            "bet": 0.2314,
+            "market": 0.2339,
+            "bet": 0.2308,
             "best_odds": 4.0,
             "book": "bet365",
-            "ev": -0.0743,
+            "ev": -0.0769,
             "prices": {
               "WilliamHill": 3.7,
               "bet365": 4.0,
               "Marathon": 3.8,
-              "1xBet": 3.8,
+              "1xBet": 3.82,
               "Betano": 3.75
             }
           },
           "1-2": {
             "model": 0.1625,
-            "market": 0.1689,
-            "bet": 0.1613,
+            "market": 0.1686,
+            "bet": 0.161,
             "best_odds": 5.8,
             "book": "1xBet",
-            "ev": -0.0645,
+            "ev": -0.0662,
             "prices": {
               "WilliamHill": 5.0,
               "bet365": 5.0,
@@ -15062,16 +14675,16 @@
           },
           "0-2": {
             "model": 0.2452,
-            "market": 0.1967,
-            "bet": 0.191,
-            "best_odds": 4.75,
+            "market": 0.1936,
+            "bet": 0.1877,
+            "best_odds": 4.8,
             "book": "WilliamHill",
-            "ev": -0.0929,
+            "ev": -0.0992,
             "prices": {
-              "WilliamHill": 4.75,
-              "bet365": 4.33,
-              "Marathon": 4.45,
-              "1xBet": 4.45,
+              "WilliamHill": 4.8,
+              "bet365": 4.5,
+              "Marathon": 4.5,
+              "1xBet": 4.5,
               "Betano": 4.75
             }
           }
@@ -15139,28 +14752,28 @@
             "line": 21.5,
             "over": {
               "model": 0.5823,
-              "market": 0.6068,
-              "bet": 0.6068,
-              "best_odds": 1.57,
+              "market": 0.6048,
+              "bet": 0.6048,
+              "best_odds": 1.58,
               "book": "Pncl",
-              "ev": -0.0473,
+              "ev": -0.0444,
               "prices": {
-                "Marathon": 1.51,
-                "Pncl": 1.57,
+                "Marathon": 1.52,
+                "Pncl": 1.58,
                 "1xBet": 1.51,
                 "Betano": 1.57
               }
             },
             "under": {
               "model": 0.4177,
-              "market": 0.3932,
-              "bet": 0.3932,
-              "best_odds": 2.48,
+              "market": 0.3952,
+              "bet": 0.3952,
+              "best_odds": 2.46,
               "book": "Pncl",
-              "ev": -0.0248,
+              "ev": -0.0278,
               "prices": {
-                "Marathon": 2.38,
-                "Pncl": 2.48,
+                "Marathon": 2.35,
+                "Pncl": 2.46,
                 "1xBet": 2.38,
                 "Betano": 2.27
               }
@@ -15170,15 +14783,15 @@
             "line": 22.5,
             "over": {
               "model": 0.4896,
-              "market": 0.5166,
-              "bet": 0.5166,
-              "best_odds": 1.87,
+              "market": 0.5162,
+              "bet": 0.5162,
+              "best_odds": 1.88,
               "book": "Pncl",
-              "ev": -0.0339,
+              "ev": -0.0296,
               "prices": {
                 "bet365": 1.83,
                 "Marathon": 1.8,
-                "Pncl": 1.87,
+                "Pncl": 1.88,
                 "1xBet": 1.84,
                 "Betano": 1.78,
                 "BetVictor": 1.75
@@ -15186,15 +14799,15 @@
             },
             "under": {
               "model": 0.5104,
-              "market": 0.4834,
-              "bet": 0.4834,
+              "market": 0.4838,
+              "bet": 0.4838,
               "best_odds": 2.01,
               "book": "1xBet",
-              "ev": -0.0284,
+              "ev": -0.0275,
               "prices": {
                 "bet365": 1.83,
                 "Marathon": 1.94,
-                "Pncl": 2.0,
+                "Pncl": 1.99,
                 "1xBet": 2.01,
                 "Betano": 1.93,
                 "BetVictor": 1.91
@@ -15205,28 +14818,28 @@
             "line": 23.5,
             "over": {
               "model": 0.4222,
-              "market": 0.455,
-              "bet": 0.455,
-              "best_odds": 2.17,
+              "market": 0.4541,
+              "bet": 0.4541,
+              "best_odds": 2.19,
               "book": "Pncl",
-              "ev": -0.0127,
+              "ev": -0.0056,
               "prices": {
                 "Marathon": 2.02,
-                "Pncl": 2.17,
+                "Pncl": 2.19,
                 "1xBet": 2.02,
                 "Betano": 2.0
               }
             },
             "under": {
               "model": 0.5778,
-              "market": 0.545,
-              "bet": 0.545,
-              "best_odds": 1.73,
+              "market": 0.5459,
+              "bet": 0.5459,
+              "best_odds": 1.72,
               "book": "Pncl",
-              "ev": -0.0571,
+              "ev": -0.061,
               "prices": {
                 "Marathon": 1.7,
-                "Pncl": 1.73,
+                "Pncl": 1.72,
                 "1xBet": 1.7,
                 "Betano": 1.72
               }
@@ -16094,26 +15707,26 @@
         "key": "j-p-ficovich",
         "model": 0.4228,
         "fair_odds": 2.37,
-        "market": 0.4891,
-        "best_odds": 2.02,
+        "market": 0.488,
+        "best_odds": 2.03,
         "book": "Pncl",
-        "ev": -0.018,
+        "ev": -0.0157,
         "kelly": 0.0,
-        "bet": 0.4862
+        "bet": 0.4849
       },
       "b": {
         "name": "F. Coria",
         "key": "f-coria",
         "model": 0.5772,
         "fair_odds": 1.73,
-        "market": 0.5109,
-        "best_odds": 1.84,
-        "book": "Pncl",
-        "ev": -0.0545,
+        "market": 0.512,
+        "best_odds": 1.83,
+        "book": "Betfair",
+        "ev": -0.0573,
         "kelly": 0.0,
-        "bet": 0.5138
+        "bet": 0.5151
       },
-      "books": 5,
+      "books": 6,
       "no_odds": false,
       "court": "ch-villa-maria",
       "model_version": "2026-10-19",
@@ -16137,8 +15750,8 @@
           1.8
         ],
         "Pncl": [
-          2.02,
-          1.84
+          2.03,
+          1.83
         ],
         "1xBet": [
           1.88,
@@ -16147,58 +15760,66 @@
         "BetVictor": [
           1.87,
           1.8
+        ],
+        "WilliamHill": [
+          1.91,
+          1.8
         ]
       },
       "odds_source": "api-tennis",
-      "pinnacle_a": 0.4767,
+      "pinnacle_a": 0.4741,
       "markets": {
         "sets": {
           "2-0": {
             "model": 0.2557,
-            "market": 0.2953,
-            "bet": 0.2993,
-            "best_odds": 2.98,
-            "book": "Marathon",
-            "ev": -0.108,
+            "market": 0.2869,
+            "bet": 0.2901,
+            "best_odds": 3.25,
+            "book": "WilliamHill",
+            "ev": -0.0572,
             "prices": {
               "Marathon": 2.98,
-              "1xBet": 2.98
+              "1xBet": 2.98,
+              "WilliamHill": 3.25
             }
           },
           "2-1": {
             "model": 0.1671,
-            "market": 0.1893,
-            "bet": 0.1834,
+            "market": 0.1937,
+            "bet": 0.1882,
             "best_odds": 4.65,
             "book": "Marathon",
-            "ev": -0.1472,
+            "ev": -0.1247,
             "prices": {
               "Marathon": 4.65,
-              "1xBet": 4.65
+              "1xBet": 4.65,
+              "WilliamHill": 4.33
             }
           },
           "1-2": {
             "model": 0.2065,
-            "market": 0.2,
-            "bet": 0.195,
+            "market": 0.2083,
+            "bet": 0.2041,
             "best_odds": 4.4,
             "book": "Marathon",
-            "ev": -0.1419,
+            "ev": -0.1022,
             "prices": {
               "Marathon": 4.4,
-              "1xBet": 4.4
+              "1xBet": 4.4,
+              "WilliamHill": 3.9
             }
           },
           "0-2": {
             "model": 0.3707,
-            "market": 0.3154,
-            "bet": 0.3222,
-            "best_odds": 2.79,
-            "book": "Marathon",
-            "ev": -0.1009,
+            "market": 0.3111,
+            "bet": 0.3176,
+            "best_odds": 2.9,
+            "book": "WilliamHill",
+            "ev": -0.0789,
             "prices": {
               "Marathon": 2.79,
-              "1xBet": 2.79
+              "1xBet": 2.79,
+              "WilliamHill": 2.9
             }
           }
         },
@@ -16234,24 +15855,24 @@
             "line": 21.5,
             "over": {
               "model": 0.5221,
-              "market": 0.5282,
-              "bet": 0.5282,
+              "market": 0.5297,
+              "bet": 0.5297,
               "best_odds": 1.83,
               "book": "Pncl",
-              "ev": -0.0333,
+              "ev": -0.0307,
               "prices": {
                 "Marathon": 1.71,
                 "Pncl": 1.83,
-                "1xBet": 1.74
+                "1xBet": 1.71
               }
             },
             "under": {
               "model": 0.4779,
-              "market": 0.4718,
-              "bet": 0.4718,
+              "market": 0.4703,
+              "bet": 0.4703,
               "best_odds": 2.01,
               "book": "Pncl",
-              "ev": -0.0517,
+              "ev": -0.0546,
               "prices": {
                 "Marathon": 1.95,
                 "Pncl": 2.01,
@@ -16263,11 +15884,11 @@
             "line": 22.5,
             "over": {
               "model": 0.4457,
-              "market": 0.4649,
-              "bet": 0.4649,
+              "market": 0.4663,
+              "bet": 0.4663,
               "best_odds": 2.1,
               "book": "Pncl",
-              "ev": -0.0237,
+              "ev": -0.0207,
               "prices": {
                 "Marathon": 1.95,
                 "Pncl": 2.1,
@@ -16276,15 +15897,15 @@
             },
             "under": {
               "model": 0.5543,
-              "market": 0.5351,
-              "bet": 0.5351,
+              "market": 0.5337,
+              "bet": 0.5337,
               "best_odds": 1.76,
               "book": "Pncl",
-              "ev": -0.0582,
+              "ev": -0.0608,
               "prices": {
                 "Marathon": 1.74,
                 "Pncl": 1.76,
-                "1xBet": 1.71
+                "1xBet": 1.74
               }
             }
           },
@@ -16445,6 +16066,294 @@
       }
     },
     {
+      "id": "sched-12177940",
+      "api_key": "12177940",
+      "late": false,
+      "tour": "ATP",
+      "tournament": "ATP Challenger Costa do Sauipe",
+      "round": null,
+      "start": "2026-11-06T21:00:00Z",
+      "surface": "clay",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "T. Seyboth Wild",
+        "key": "t-seyboth-wild",
+        "model": 0.6942,
+        "fair_odds": 1.44,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "b": {
+        "name": "J. Reis Da Silva",
+        "key": "j-reis-da-silva",
+        "model": 0.3058,
+        "fair_odds": 3.27,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "books": 0,
+      "no_odds": true,
+      "court": "ch-costa-do-sauipe",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.6623,
+        "serve": 0.8299,
+        "w": 0.4,
+        "pa": 0.6676,
+        "pb": 0.5918
+      },
+      "flags": [
+        [
+          "specialist",
+          "T. Seyboth Wild: clay-court specialist (92% of matches on clay)"
+        ],
+        [
+          "specialist",
+          "J. Reis Da Silva: clay-court specialist (95% of matches on clay)"
+        ]
+      ],
+      "markets": {
+        "sets": {
+          "2-0": {
+            "model": 0.471,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "2-1": {
+            "model": 0.2232,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "1-2": {
+            "model": 0.1283,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "0-2": {
+            "model": 0.1775,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          }
+        },
+        "totals": [
+          {
+            "line": 20.5,
+            "over": {
+              "model": 0.5781,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4219,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 21.5,
+            "over": {
+              "model": 0.5162,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4838,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 22.5,
+            "over": {
+              "model": 0.436,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.564,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          }
+        ],
+        "exp_games": 23.0
+      },
+      "joint": {
+        "t0": 12,
+        "p": {
+          "2-0": [
+            0.00036,
+            0.00255,
+            0.00893,
+            0.02162,
+            0.04102,
+            0.0589,
+            0.06589,
+            0.06522,
+            0.05569,
+            0.04352,
+            0.05198,
+            0.02925,
+            0.00521,
+            0.01286,
+            0.00794,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "2-1": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3e-05,
+            0.00016,
+            0.0006,
+            0.00177,
+            0.0042,
+            0.00816,
+            0.01331,
+            0.01863,
+            0.02256,
+            0.02468,
+            0.02558,
+            0.02462,
+            0.02242,
+            0.01925,
+            0.01251,
+            0.00912,
+            0.00852,
+            0.00377,
+            0.00117,
+            0.00152,
+            0.00066
+          ],
+          "1-2": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1e-05,
+            5e-05,
+            0.00022,
+            0.00069,
+            0.00174,
+            0.00362,
+            0.00631,
+            0.0094,
+            0.01199,
+            0.01367,
+            0.01463,
+            0.0145,
+            0.01375,
+            0.01239,
+            0.00819,
+            0.00598,
+            0.00593,
+            0.00275,
+            0.00082,
+            0.00112,
+            0.00051
+          ],
+          "0-2": [
+            3e-05,
+            0.00031,
+            0.00133,
+            0.00396,
+            0.00926,
+            0.01632,
+            0.02199,
+            0.02539,
+            0.02289,
+            0.01758,
+            0.02573,
+            0.01714,
+            0.0026,
+            0.00754,
+            0.00546,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
       "id": "apit-12177707",
       "api_key": "12177707",
       "late": false,
@@ -16533,46 +16442,46 @@
         "sets": {
           "2-0": {
             "model": 0.2191,
-            "market": 0.2144,
-            "bet": 0.2101,
+            "market": 0.2139,
+            "bet": 0.2096,
             "best_odds": 4.4,
             "book": "Betano",
-            "ev": -0.0754,
+            "ev": -0.0779,
             "prices": {
               "WilliamHill": 4.33,
               "bet365": 3.75,
               "Marathon": 4.1,
-              "1xBet": 4.05,
+              "1xBet": 4.1,
               "Betano": 4.4
             }
           },
           "2-1": {
             "model": 0.1501,
-            "market": 0.1748,
-            "bet": 0.1677,
-            "best_odds": 5.55,
-            "book": "1xBet",
-            "ev": -0.0691,
+            "market": 0.1751,
+            "bet": 0.168,
+            "best_odds": 5.5,
+            "book": "Marathon",
+            "ev": -0.0758,
             "prices": {
               "WilliamHill": 4.8,
               "bet365": 4.75,
               "Marathon": 5.5,
-              "1xBet": 5.55,
+              "1xBet": 5.5,
               "Betano": 4.75
             }
           },
           "1-2": {
             "model": 0.2159,
-            "market": 0.235,
-            "bet": 0.2324,
+            "market": 0.2353,
+            "bet": 0.2327,
             "best_odds": 4.0,
             "book": "bet365",
-            "ev": -0.0703,
+            "ev": -0.0693,
             "prices": {
               "WilliamHill": 3.4,
               "bet365": 4.0,
               "Marathon": 3.82,
-              "1xBet": 3.84,
+              "1xBet": 3.82,
               "Betano": 3.75
             }
           },
@@ -16889,7 +16798,7 @@
       0.0043
     ]
   },
-  "scheduled_only": 4,
+  "scheduled_only": 5,
   "diagnostics": {
     "feeds": {
       "ATP": {
@@ -16906,17 +16815,16 @@
         "upcoming": 8,
         "status": {
           "Finished": 9,
-          "(blank)": 8,
-          "1": 2
+          "(blank)": 10
         }
       },
       "ATP_CH": {
-        "events": 53,
-        "upcoming": 22,
+        "events": 55,
+        "upcoming": 23,
         "status": {
-          "Finished": 30,
-          "Set 2": 1,
-          "(blank)": 22
+          "Finished": 31,
+          "(blank)": 23,
+          "Set 2": 1
         }
       },
       "WTA_CH": {
@@ -16929,13 +16837,14 @@
       }
     },
     "dropped": {
-      "already listed from the odds feed": 4
+      "already listed from the odds feed": 4,
+      "outside the window": 1
     },
-    "schedule_upcoming": 40,
+    "schedule_upcoming": 41,
     "schedule_added": 36,
     "kept_from_last_run": 0
   },
-  "kalshi_matched": 21,
+  "kalshi_matched": 22,
   "record": {
     "settled": 1790,
     "pending": 121,

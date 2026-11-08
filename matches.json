@@ -1,10 +1,339 @@
 {
-  "updated": "2026-11-08T01:10:18Z",
+  "updated": "2026-11-08T01:46:00Z",
   "odds_feed_at": "2026-11-08T00:46:02Z",
   "window_hours": 36,
   "status": "ok",
   "requests_remaining": "474",
   "matches": [
+    {
+      "id": "apit-12178114",
+      "api_key": "12178114",
+      "late": false,
+      "tour": "ATP",
+      "tournament": "ATP Challenger Brisbane 3 (qualifying)",
+      "round": "Brisbane 3 - Semi-finals",
+      "start": "2026-11-08T02:10:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "Z. Stevens",
+        "key": "z-stevens",
+        "model": 0.4206,
+        "fair_odds": 2.38,
+        "market": 0.5119,
+        "best_odds": 1.83,
+        "book": "bet365",
+        "ev": -0.0603,
+        "kelly": 0.0,
+        "bet": 0.5135
+      },
+      "b": {
+        "name": "T. Sach",
+        "key": "t-sach",
+        "model": 0.5794,
+        "fair_odds": 1.73,
+        "market": 0.4881,
+        "best_odds": 2.0,
+        "book": "Betfair",
+        "ev": -0.027,
+        "kelly": 0.0,
+        "bet": 0.4865
+      },
+      "books": 6,
+      "no_odds": false,
+      "court": "ch-brisbane-3",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.4398,
+        "serve": 0.3926,
+        "w": 0.4,
+        "pa": 0.5962,
+        "pb": 0.6174
+      },
+      "flags": [
+        [
+          "thin",
+          "Z. Stevens: only 1 matches in 12 months"
+        ],
+        [
+          "layoff",
+          "Z. Stevens: first match in 364 days"
+        ],
+        [
+          "surface_few",
+          "Z. Stevens: few hard matches this year"
+        ],
+        [
+          "layoff",
+          "T. Sach: first match in 54 days"
+        ]
+      ],
+      "prices": {
+        "WilliamHill": [
+          1.8,
+          1.91
+        ],
+        "bet365": [
+          1.83,
+          1.83
+        ],
+        "Marathon": [
+          1.82,
+          1.86
+        ],
+        "BetVictor": [
+          1.8,
+          1.87
+        ],
+        "1xBet": [
+          1.82,
+          1.86
+        ]
+      },
+      "odds_source": "api-tennis",
+      "markets": {
+        "sets": {
+          "2-0": {
+            "model": 0.2542,
+            "market": 0.3384,
+            "bet": 0.3475,
+            "best_odds": 2.62,
+            "book": "bet365",
+            "ev": -0.0895,
+            "prices": {
+              "bet365": 2.62
+            }
+          },
+          "2-1": {
+            "model": 0.1664,
+            "market": 0.2216,
+            "bet": 0.2182,
+            "best_odds": 4.0,
+            "book": "bet365",
+            "ev": -0.1274,
+            "prices": {
+              "bet365": 4.0
+            }
+          },
+          "1-2": {
+            "model": 0.2069,
+            "market": 0.1867,
+            "bet": 0.1808,
+            "best_odds": 4.75,
+            "book": "bet365",
+            "ev": -0.141,
+            "prices": {
+              "bet365": 4.75
+            }
+          },
+          "0-2": {
+            "model": 0.3725,
+            "market": 0.2533,
+            "bet": 0.2535,
+            "best_odds": 3.5,
+            "book": "bet365",
+            "ev": -0.1128,
+            "prices": {
+              "bet365": 3.5
+            }
+          }
+        },
+        "totals": [
+          {
+            "line": 20.5,
+            "over": {
+              "model": 0.5923,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4077,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 21.5,
+            "over": {
+              "model": 0.5312,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4688,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 22.5,
+            "over": {
+              "model": 0.4525,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.5475,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          }
+        ],
+        "exp_games": 23.1
+      },
+      "joint": {
+        "t0": 12,
+        "p": {
+          "2-0": [
+            0.00012,
+            0.00087,
+            0.00322,
+            0.00841,
+            0.01738,
+            0.02721,
+            0.0335,
+            0.03586,
+            0.03229,
+            0.02485,
+            0.03269,
+            0.01939,
+            0.00379,
+            0.0091,
+            0.00547,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "2-1": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2e-05,
+            0.00012,
+            0.00046,
+            0.00133,
+            0.00308,
+            0.00591,
+            0.00961,
+            0.01349,
+            0.01648,
+            0.01826,
+            0.01906,
+            0.01844,
+            0.01683,
+            0.01465,
+            0.0096,
+            0.00711,
+            0.00651,
+            0.00282,
+            0.00101,
+            0.00119,
+            0.00047
+          ],
+          "1-2": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            4e-05,
+            0.00019,
+            0.00068,
+            0.00191,
+            0.00432,
+            0.00807,
+            0.01281,
+            0.01757,
+            0.02105,
+            0.02296,
+            0.02366,
+            0.02261,
+            0.02033,
+            0.01737,
+            0.01132,
+            0.00837,
+            0.00748,
+            0.00318,
+            0.00116,
+            0.00134,
+            0.00051
+          ],
+          "0-2": [
+            0.00029,
+            0.00195,
+            0.00667,
+            0.01609,
+            0.03076,
+            0.0445,
+            0.05107,
+            0.05173,
+            0.04542,
+            0.03512,
+            0.04276,
+            0.02374,
+            0.00492,
+            0.01114,
+            0.00631,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
     {
       "id": "apit-12178112",
       "api_key": "12178112",
@@ -12,7 +341,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Brisbane 3 (qualifying)",
       "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T01:30:00Z",
+      "start": "2026-11-08T02:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -329,7 +658,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Brisbane 3 (qualifying)",
       "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T01:30:00Z",
+      "start": "2026-11-08T02:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -630,335 +959,6 @@
             0.00307,
             0.00828,
             0.00558,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      }
-    },
-    {
-      "id": "apit-12178114",
-      "api_key": "12178114",
-      "late": false,
-      "tour": "ATP",
-      "tournament": "ATP Challenger Brisbane 3 (qualifying)",
-      "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T01:30:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "Z. Stevens",
-        "key": "z-stevens",
-        "model": 0.4206,
-        "fair_odds": 2.38,
-        "market": 0.5119,
-        "best_odds": 1.83,
-        "book": "bet365",
-        "ev": -0.0603,
-        "kelly": 0.0,
-        "bet": 0.5135
-      },
-      "b": {
-        "name": "T. Sach",
-        "key": "t-sach",
-        "model": 0.5794,
-        "fair_odds": 1.73,
-        "market": 0.4881,
-        "best_odds": 2.0,
-        "book": "Betfair",
-        "ev": -0.027,
-        "kelly": 0.0,
-        "bet": 0.4865
-      },
-      "books": 6,
-      "no_odds": false,
-      "court": "ch-brisbane-3",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.4398,
-        "serve": 0.3926,
-        "w": 0.4,
-        "pa": 0.5962,
-        "pb": 0.6174
-      },
-      "flags": [
-        [
-          "thin",
-          "Z. Stevens: only 1 matches in 12 months"
-        ],
-        [
-          "layoff",
-          "Z. Stevens: first match in 364 days"
-        ],
-        [
-          "surface_few",
-          "Z. Stevens: few hard matches this year"
-        ],
-        [
-          "layoff",
-          "T. Sach: first match in 54 days"
-        ]
-      ],
-      "prices": {
-        "WilliamHill": [
-          1.8,
-          1.91
-        ],
-        "bet365": [
-          1.83,
-          1.83
-        ],
-        "Marathon": [
-          1.82,
-          1.86
-        ],
-        "BetVictor": [
-          1.8,
-          1.87
-        ],
-        "1xBet": [
-          1.82,
-          1.86
-        ]
-      },
-      "odds_source": "api-tennis",
-      "markets": {
-        "sets": {
-          "2-0": {
-            "model": 0.2542,
-            "market": 0.3384,
-            "bet": 0.3475,
-            "best_odds": 2.62,
-            "book": "bet365",
-            "ev": -0.0895,
-            "prices": {
-              "bet365": 2.62
-            }
-          },
-          "2-1": {
-            "model": 0.1664,
-            "market": 0.2216,
-            "bet": 0.2182,
-            "best_odds": 4.0,
-            "book": "bet365",
-            "ev": -0.1274,
-            "prices": {
-              "bet365": 4.0
-            }
-          },
-          "1-2": {
-            "model": 0.2069,
-            "market": 0.1867,
-            "bet": 0.1808,
-            "best_odds": 4.75,
-            "book": "bet365",
-            "ev": -0.141,
-            "prices": {
-              "bet365": 4.75
-            }
-          },
-          "0-2": {
-            "model": 0.3725,
-            "market": 0.2533,
-            "bet": 0.2535,
-            "best_odds": 3.5,
-            "book": "bet365",
-            "ev": -0.1128,
-            "prices": {
-              "bet365": 3.5
-            }
-          }
-        },
-        "totals": [
-          {
-            "line": 20.5,
-            "over": {
-              "model": 0.5923,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            },
-            "under": {
-              "model": 0.4077,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            }
-          },
-          {
-            "line": 21.5,
-            "over": {
-              "model": 0.5312,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            },
-            "under": {
-              "model": 0.4688,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            }
-          },
-          {
-            "line": 22.5,
-            "over": {
-              "model": 0.4525,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            },
-            "under": {
-              "model": 0.5475,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            }
-          }
-        ],
-        "exp_games": 23.1
-      },
-      "joint": {
-        "t0": 12,
-        "p": {
-          "2-0": [
-            0.00012,
-            0.00087,
-            0.00322,
-            0.00841,
-            0.01738,
-            0.02721,
-            0.0335,
-            0.03586,
-            0.03229,
-            0.02485,
-            0.03269,
-            0.01939,
-            0.00379,
-            0.0091,
-            0.00547,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "2-1": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            2e-05,
-            0.00012,
-            0.00046,
-            0.00133,
-            0.00308,
-            0.00591,
-            0.00961,
-            0.01349,
-            0.01648,
-            0.01826,
-            0.01906,
-            0.01844,
-            0.01683,
-            0.01465,
-            0.0096,
-            0.00711,
-            0.00651,
-            0.00282,
-            0.00101,
-            0.00119,
-            0.00047
-          ],
-          "1-2": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            4e-05,
-            0.00019,
-            0.00068,
-            0.00191,
-            0.00432,
-            0.00807,
-            0.01281,
-            0.01757,
-            0.02105,
-            0.02296,
-            0.02366,
-            0.02261,
-            0.02033,
-            0.01737,
-            0.01132,
-            0.00837,
-            0.00748,
-            0.00318,
-            0.00116,
-            0.00134,
-            0.00051
-          ],
-          "0-2": [
-            0.00029,
-            0.00195,
-            0.00667,
-            0.01609,
-            0.03076,
-            0.0445,
-            0.05107,
-            0.05173,
-            0.04542,
-            0.03512,
-            0.04276,
-            0.02374,
-            0.00492,
-            0.01114,
-            0.00631,
             0.0,
             0.0,
             0.0,
@@ -2220,7 +2220,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Brisbane 3 (qualifying)",
       "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T03:00:00Z",
+      "start": "2026-11-08T03:40:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -2512,7 +2512,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Brisbane 3 (qualifying)",
       "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T03:00:00Z",
+      "start": "2026-11-08T03:45:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -2825,7 +2825,7 @@
       "tour": "ATP",
       "tournament": "ATP Challenger Brisbane 3 (qualifying)",
       "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T03:00:00Z",
+      "start": "2026-11-08T03:45:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -4018,18 +4018,18 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.62,
-          "odds": 1.571,
-          "ev": -0.0136,
+          "cost": 0.61,
+          "odds": 1.596,
+          "ev": 0.0021,
           "ticker": "KXATPCHALLENGERMATCH-26NOV07SAITAK-SAI"
         },
         "b": {
-          "cost": 0.38,
-          "odds": 2.522,
-          "ev": -0.0616,
+          "cost": 0.4,
+          "odds": 2.399,
+          "ev": -0.1073,
           "ticker": "KXATPCHALLENGERMATCH-26NOV07SAITAK-TAK"
         },
-        "market_a": 0.6212,
+        "market_a": 0.605,
         "event": "KXATPCHALLENGERMATCH-26NOV07SAITAK",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov07saitak"
       }
@@ -4348,13 +4348,330 @@
       }
     },
     {
+      "id": "apit-12178117",
+      "api_key": "12178117",
+      "late": false,
+      "tour": "ATP",
+      "tournament": "ATP Challenger Brisbane 3 (qualifying)",
+      "round": "Brisbane 3 - Semi-finals",
+      "start": "2026-11-08T05:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": true,
+      "best_of": 3,
+      "a": {
+        "name": "C. Langmo",
+        "key": "c-langmo",
+        "model": 0.7281,
+        "fair_odds": 1.37,
+        "market": 0.6685,
+        "best_odds": 1.4,
+        "book": "bet365",
+        "ev": -0.0191,
+        "kelly": 0.0,
+        "bet": 0.7006
+      },
+      "b": {
+        "name": "S. Vujic",
+        "key": "s-vujic",
+        "model": 0.2719,
+        "fair_odds": 3.68,
+        "market": 0.3315,
+        "best_odds": 2.88,
+        "book": "Betfair",
+        "ev": -0.1378,
+        "kelly": 0.0,
+        "bet": 0.2994
+      },
+      "books": 5,
+      "no_odds": false,
+      "court": "ch-brisbane-3",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.6035,
+        "serve": 0.7901,
+        "w": 0.4,
+        "pa": 0.6901,
+        "pb": 0.6242
+      },
+      "flags": [
+        [
+          "thin",
+          "S. Vujic: only 4 matches in 12 months"
+        ],
+        [
+          "layoff",
+          "S. Vujic: first match in 161 days"
+        ]
+      ],
+      "prices": {
+        "bet365": [
+          1.4,
+          2.75
+        ],
+        "Marathon": [
+          1.37,
+          2.8
+        ],
+        "BetVictor": [
+          1.4,
+          2.7
+        ],
+        "1xBet": [
+          1.38,
+          2.81
+        ]
+      },
+      "odds_source": "api-tennis",
+      "markets": {
+        "sets": {
+          "2-0": {
+            "model": 0.5031,
+            "market": 0.4039,
+            "bet": 0.4211,
+            "best_odds": 2.2,
+            "book": "bet365",
+            "ev": -0.0735,
+            "prices": {
+              "bet365": 2.2
+            }
+          },
+          "2-1": {
+            "model": 0.225,
+            "market": 0.237,
+            "bet": 0.2341,
+            "best_odds": 3.75,
+            "book": "bet365",
+            "ev": -0.1221,
+            "prices": {
+              "bet365": 3.75
+            }
+          },
+          "1-2": {
+            "model": 0.1159,
+            "market": 0.1616,
+            "bet": 0.1534,
+            "best_odds": 5.5,
+            "book": "bet365",
+            "ev": -0.1564,
+            "prices": {
+              "bet365": 5.5
+            }
+          },
+          "0-2": {
+            "model": 0.156,
+            "market": 0.1975,
+            "bet": 0.1914,
+            "best_odds": 4.5,
+            "book": "bet365",
+            "ev": -0.1388,
+            "prices": {
+              "bet365": 4.5
+            }
+          }
+        },
+        "totals": [
+          {
+            "line": 20.5,
+            "over": {
+              "model": 0.5904,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4096,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 21.5,
+            "over": {
+              "model": 0.5275,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4725,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 22.5,
+            "over": {
+              "model": 0.4411,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.5589,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          }
+        ],
+        "exp_games": 23.2
+      },
+      "joint": {
+        "t0": 12,
+        "p": {
+          "2-0": [
+            0.00022,
+            0.00186,
+            0.00726,
+            0.01912,
+            0.03907,
+            0.06004,
+            0.07008,
+            0.07117,
+            0.05957,
+            0.04733,
+            0.06005,
+            0.03666,
+            0.00493,
+            0.01471,
+            0.01097,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "2-1": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1e-05,
+            8e-05,
+            0.00035,
+            0.00114,
+            0.00299,
+            0.00636,
+            0.01123,
+            0.01678,
+            0.02132,
+            0.02405,
+            0.02556,
+            0.0253,
+            0.02423,
+            0.02166,
+            0.01411,
+            0.01015,
+            0.01048,
+            0.00508,
+            0.00121,
+            0.00194,
+            0.00103
+          ],
+          "1-2": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2e-05,
+            0.0001,
+            0.00035,
+            0.001,
+            0.00231,
+            0.00444,
+            0.00719,
+            0.00977,
+            0.01163,
+            0.01284,
+            0.0131,
+            0.01322,
+            0.01259,
+            0.00836,
+            0.00599,
+            0.00668,
+            0.00344,
+            0.00077,
+            0.00132,
+            0.00075
+          ],
+          "0-2": [
+            1e-05,
+            0.00013,
+            0.00067,
+            0.00227,
+            0.00608,
+            0.01203,
+            0.01786,
+            0.02235,
+            0.01969,
+            0.01512,
+            0.02489,
+            0.01858,
+            0.00203,
+            0.00746,
+            0.00686,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
       "id": "apit-12178081",
       "api_key": "12178081",
       "late": false,
       "tour": "ATP",
       "tournament": "ATP Challenger Brisbane 3 (qualifying)",
       "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T04:30:00Z",
+      "start": "2026-11-08T05:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -4673,330 +4990,13 @@
       }
     },
     {
-      "id": "apit-12178117",
-      "api_key": "12178117",
-      "late": false,
-      "tour": "ATP",
-      "tournament": "ATP Challenger Brisbane 3 (qualifying)",
-      "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T04:30:00Z",
-      "surface": "hard",
-      "indoor": false,
-      "surface_known": true,
-      "best_of": 3,
-      "a": {
-        "name": "C. Langmo",
-        "key": "c-langmo",
-        "model": 0.7281,
-        "fair_odds": 1.37,
-        "market": 0.6685,
-        "best_odds": 1.4,
-        "book": "bet365",
-        "ev": -0.0191,
-        "kelly": 0.0,
-        "bet": 0.7006
-      },
-      "b": {
-        "name": "S. Vujic",
-        "key": "s-vujic",
-        "model": 0.2719,
-        "fair_odds": 3.68,
-        "market": 0.3315,
-        "best_odds": 2.88,
-        "book": "Betfair",
-        "ev": -0.1378,
-        "kelly": 0.0,
-        "bet": 0.2994
-      },
-      "books": 5,
-      "no_odds": false,
-      "court": "ch-brisbane-3",
-      "model_version": "2026-10-19",
-      "level": "challenger",
-      "parts": {
-        "elo": 0.6035,
-        "serve": 0.7901,
-        "w": 0.4,
-        "pa": 0.6901,
-        "pb": 0.6242
-      },
-      "flags": [
-        [
-          "thin",
-          "S. Vujic: only 4 matches in 12 months"
-        ],
-        [
-          "layoff",
-          "S. Vujic: first match in 161 days"
-        ]
-      ],
-      "prices": {
-        "bet365": [
-          1.4,
-          2.75
-        ],
-        "Marathon": [
-          1.37,
-          2.8
-        ],
-        "BetVictor": [
-          1.4,
-          2.7
-        ],
-        "1xBet": [
-          1.38,
-          2.81
-        ]
-      },
-      "odds_source": "api-tennis",
-      "markets": {
-        "sets": {
-          "2-0": {
-            "model": 0.5031,
-            "market": 0.4039,
-            "bet": 0.4211,
-            "best_odds": 2.2,
-            "book": "bet365",
-            "ev": -0.0735,
-            "prices": {
-              "bet365": 2.2
-            }
-          },
-          "2-1": {
-            "model": 0.225,
-            "market": 0.237,
-            "bet": 0.2341,
-            "best_odds": 3.75,
-            "book": "bet365",
-            "ev": -0.1221,
-            "prices": {
-              "bet365": 3.75
-            }
-          },
-          "1-2": {
-            "model": 0.1159,
-            "market": 0.1616,
-            "bet": 0.1534,
-            "best_odds": 5.5,
-            "book": "bet365",
-            "ev": -0.1564,
-            "prices": {
-              "bet365": 5.5
-            }
-          },
-          "0-2": {
-            "model": 0.156,
-            "market": 0.1975,
-            "bet": 0.1914,
-            "best_odds": 4.5,
-            "book": "bet365",
-            "ev": -0.1388,
-            "prices": {
-              "bet365": 4.5
-            }
-          }
-        },
-        "totals": [
-          {
-            "line": 20.5,
-            "over": {
-              "model": 0.5904,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            },
-            "under": {
-              "model": 0.4096,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            }
-          },
-          {
-            "line": 21.5,
-            "over": {
-              "model": 0.5275,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            },
-            "under": {
-              "model": 0.4725,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            }
-          },
-          {
-            "line": 22.5,
-            "over": {
-              "model": 0.4411,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            },
-            "under": {
-              "model": 0.5589,
-              "market": null,
-              "bet": null,
-              "best_odds": null,
-              "book": null,
-              "ev": null,
-              "prices": {}
-            }
-          }
-        ],
-        "exp_games": 23.2
-      },
-      "joint": {
-        "t0": 12,
-        "p": {
-          "2-0": [
-            0.00022,
-            0.00186,
-            0.00726,
-            0.01912,
-            0.03907,
-            0.06004,
-            0.07008,
-            0.07117,
-            0.05957,
-            0.04733,
-            0.06005,
-            0.03666,
-            0.00493,
-            0.01471,
-            0.01097,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ],
-          "2-1": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1e-05,
-            8e-05,
-            0.00035,
-            0.00114,
-            0.00299,
-            0.00636,
-            0.01123,
-            0.01678,
-            0.02132,
-            0.02405,
-            0.02556,
-            0.0253,
-            0.02423,
-            0.02166,
-            0.01411,
-            0.01015,
-            0.01048,
-            0.00508,
-            0.00121,
-            0.00194,
-            0.00103
-          ],
-          "1-2": [
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            2e-05,
-            0.0001,
-            0.00035,
-            0.001,
-            0.00231,
-            0.00444,
-            0.00719,
-            0.00977,
-            0.01163,
-            0.01284,
-            0.0131,
-            0.01322,
-            0.01259,
-            0.00836,
-            0.00599,
-            0.00668,
-            0.00344,
-            0.00077,
-            0.00132,
-            0.00075
-          ],
-          "0-2": [
-            1e-05,
-            0.00013,
-            0.00067,
-            0.00227,
-            0.00608,
-            0.01203,
-            0.01786,
-            0.02235,
-            0.01969,
-            0.01512,
-            0.02489,
-            0.01858,
-            0.00203,
-            0.00746,
-            0.00686,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
-          ]
-        }
-      }
-    },
-    {
       "id": "apit-12178118",
       "api_key": "12178118",
       "late": false,
       "tour": "ATP",
       "tournament": "ATP Challenger Brisbane 3 (qualifying)",
       "round": "Brisbane 3 - Semi-finals",
-      "start": "2026-11-08T04:30:00Z",
+      "start": "2026-11-08T05:15:00Z",
       "surface": "hard",
       "indoor": false,
       "surface_known": true,
@@ -7704,9 +7704,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.76,
-          "odds": 1.294,
-          "ev": -0.2492,
+          "cost": 0.74,
+          "odds": 1.327,
+          "ev": -0.2301,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08HOUCAT-HOU"
         },
         "b": {
@@ -7715,7 +7715,7 @@
           "ev": 0.0071,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08HOUCAT-CAT"
         },
-        "market_a": 0.6814,
+        "market_a": 0.6734,
         "event": "KXATPCHALLENGERMATCH-26NOV08HOUCAT",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov08houcat"
       }
@@ -10451,7 +10451,7 @@
           "ev": -0.1733,
           "ticker": "KXWTACHALLENGERMATCH-26NOV08BLILAN-LAN"
         },
-        "market_a": 0.7387,
+        "market_a": 0.7337,
         "event": "KXWTACHALLENGERMATCH-26NOV08BLILAN",
         "url": "https://kalshi.com/markets/kxwtachallengermatch/challenger-wta/kxwtachallengermatch-26nov08blilan"
       }
@@ -11033,9 +11033,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.89,
-          "odds": 1.115,
-          "ev": -0.1371,
+          "cost": 0.85,
+          "odds": 1.164,
+          "ev": -0.0992,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08GADURS-GAD"
         },
         "b": {
@@ -11044,7 +11044,7 @@
           "ev": -0.4827,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08GADURS-URS"
         },
-        "market_a": 0.7474,
+        "market_a": 0.7333,
         "event": "KXATPCHALLENGERMATCH-26NOV08GADURS",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov08gadurs"
       }
@@ -14166,9 +14166,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.5,
-          "odds": 1.932,
-          "ev": -0.0906,
+          "cost": 0.49,
+          "odds": 1.97,
+          "ev": -0.0727,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08ROLGOM-ROL"
         },
         "b": {
@@ -14177,7 +14177,7 @@
           "ev": -0.015,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08ROLGOM-GOM"
         },
-        "market_a": 0.4949,
+        "market_a": 0.4923,
         "event": "KXATPCHALLENGERMATCH-26NOV08ROLGOM",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov08rolgom"
       }
@@ -14549,9 +14549,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.72,
-          "odds": 1.362,
-          "ev": -0.0119,
+          "cost": 0.73,
+          "odds": 1.344,
+          "ev": -0.0249,
           "ticker": "KXATPMATCH-26NOV08FEASHE-FEA"
         },
         "b": {
@@ -14560,7 +14560,7 @@
           "ev": -0.0983,
           "ticker": "KXATPMATCH-26NOV08FEASHE-SHE"
         },
-        "market_a": 0.715,
+        "market_a": 0.7164,
         "event": "KXATPMATCH-26NOV08FEASHE",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov08feashe"
       }
@@ -14911,9 +14911,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.51,
-          "odds": 1.896,
-          "ev": -0.0732,
+          "cost": 0.5,
+          "odds": 1.932,
+          "ev": -0.0556,
           "ticker": "KXATPMATCH-26NOV08MANSAM-MAN"
         },
         "b": {
@@ -14922,7 +14922,7 @@
           "ev": -0.0124,
           "ticker": "KXATPMATCH-26NOV08MANSAM-SAM"
         },
-        "market_a": 0.505,
+        "market_a": 0.5,
         "event": "KXATPMATCH-26NOV08MANSAM",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov08mansam"
       }
@@ -17325,9 +17325,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.7,
-          "odds": 1.399,
-          "ev": -0.028,
+          "cost": 0.69,
+          "odds": 1.418,
+          "ev": -0.0148,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08KYMROD-KYM"
         },
         "b": {
@@ -17336,7 +17336,7 @@
           "ev": -0.1421,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08KYMROD-ROD"
         },
-        "market_a": 0.6816,
+        "market_a": 0.6766,
         "event": "KXATPCHALLENGERMATCH-26NOV08KYMROD",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov08kymrod"
       }
@@ -17621,18 +17621,18 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.51,
-          "odds": 1.896,
-          "ev": 0.0599,
+          "cost": 0.57,
+          "odds": 1.703,
+          "ev": -0.048,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08PAVGRE-PAV"
         },
         "b": {
-          "cost": 0.51,
-          "odds": 1.896,
-          "ev": -0.1639,
+          "cost": 0.5,
+          "odds": 1.932,
+          "ev": -0.148,
           "ticker": "KXATPCHALLENGERMATCH-26NOV08PAVGRE-GRE"
         },
-        "market_a": 0.4946,
+        "market_a": 0.5441,
         "event": "KXATPCHALLENGERMATCH-26NOV08PAVGRE",
         "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov08pavgre"
       }
@@ -18392,9 +18392,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.24,
-          "odds": 3.956,
-          "ev": -0.1768,
+          "cost": 0.23,
+          "odds": 4.125,
+          "ev": -0.1416,
           "ticker": "KXATPMATCH-26NOV08SHEALC-SHE"
         },
         "b": {
@@ -18403,7 +18403,7 @@
           "ev": 0.0002,
           "ticker": "KXATPMATCH-26NOV08SHEALC-ALC"
         },
-        "market_a": 0.23,
+        "market_a": 0.225,
         "event": "KXATPMATCH-26NOV08SHEALC",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov08shealc"
       }
@@ -19723,6 +19723,23 @@
             0.0
           ]
         }
+      },
+      "kalshi": {
+        "a": {
+          "cost": 0.93,
+          "odds": 1.07,
+          "ev": -0.181,
+          "ticker": "KXATPCHALLENGERMATCH-26NOV08NARDON-NAR"
+        },
+        "b": {
+          "cost": 0.93,
+          "odds": 1.07,
+          "ev": -0.749,
+          "ticker": "KXATPCHALLENGERMATCH-26NOV08NARDON-DON"
+        },
+        "market_a": 0.5,
+        "event": "KXATPCHALLENGERMATCH-26NOV08NARDON",
+        "url": "https://kalshi.com/markets/kxatpchallengermatch/challenger-atp/kxatpchallengermatch-26nov08nardon"
       }
     },
     {
@@ -21185,6 +21202,594 @@
       }
     },
     {
+      "id": "sched-12178329",
+      "api_key": "12178329",
+      "late": false,
+      "tour": "WTA",
+      "tournament": "WTA 125 Sopo",
+      "round": null,
+      "start": "2026-11-08T15:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": false,
+      "best_of": 3,
+      "a": {
+        "name": "C. Alves",
+        "key": "c-alves",
+        "model": 0.6808,
+        "fair_odds": 1.47,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "b": {
+        "name": "S. A. Lozano Avellaneda",
+        "key": "s-a-lozano-avellaneda",
+        "model": 0.3192,
+        "fair_odds": 3.13,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "books": 0,
+      "no_odds": true,
+      "court": "ch-sopo",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.5545,
+        "serve": 0.8759,
+        "w": 0.3,
+        "pa": 0.5707,
+        "pb": 0.4844
+      },
+      "flags": [
+        [
+          "surface_few",
+          "C. Alves: few hard matches this year"
+        ],
+        [
+          "specialist",
+          "C. Alves: clay-court specialist (92% of matches on clay), now on hard"
+        ],
+        [
+          "thin",
+          "S. A. Lozano Avellaneda: only 1 matches in 12 months"
+        ],
+        [
+          "layoff",
+          "S. A. Lozano Avellaneda: first match in 224 days"
+        ],
+        [
+          "surface_few",
+          "S. A. Lozano Avellaneda: few hard matches this year"
+        ]
+      ],
+      "markets": {
+        "sets": {
+          "2-0": {
+            "model": 0.4653,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "2-1": {
+            "model": 0.2155,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "1-2": {
+            "model": 0.1288,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "0-2": {
+            "model": 0.1904,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          }
+        },
+        "totals": [
+          {
+            "line": 19.5,
+            "over": {
+              "model": 0.6257,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.3743,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 20.5,
+            "over": {
+              "model": 0.5465,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4535,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 21.5,
+            "over": {
+              "model": 0.4854,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.5146,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          }
+        ],
+        "exp_games": 22.5
+      },
+      "joint": {
+        "t0": 12,
+        "p": {
+          "2-0": [
+            0.00075,
+            0.00422,
+            0.01268,
+            0.02724,
+            0.04691,
+            0.06104,
+            0.06518,
+            0.06248,
+            0.05391,
+            0.04087,
+            0.0455,
+            0.02248,
+            0.00579,
+            0.01104,
+            0.00526,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "2-1": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1e-05,
+            7e-05,
+            0.00034,
+            0.0011,
+            0.00284,
+            0.00596,
+            0.01038,
+            0.01548,
+            0.02014,
+            0.02309,
+            0.02448,
+            0.02446,
+            0.0226,
+            0.01947,
+            0.01603,
+            0.01028,
+            0.0076,
+            0.00622,
+            0.00247,
+            0.00105,
+            0.00104,
+            0.00035
+          ],
+          "1-2": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3e-05,
+            0.00013,
+            0.00045,
+            0.00123,
+            0.00273,
+            0.00505,
+            0.00797,
+            0.01093,
+            0.0131,
+            0.01439,
+            0.01482,
+            0.01412,
+            0.01259,
+            0.0108,
+            0.00703,
+            0.00523,
+            0.00452,
+            0.00186,
+            0.00076,
+            0.00079,
+            0.00028
+          ],
+          "0-2": [
+            0.0001,
+            0.00067,
+            0.0024,
+            0.00618,
+            0.01275,
+            0.01986,
+            0.02488,
+            0.02687,
+            0.02481,
+            0.01866,
+            0.02482,
+            0.01431,
+            0.00323,
+            0.00703,
+            0.00383,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "sched-12178330",
+      "api_key": "12178330",
+      "late": false,
+      "tour": "WTA",
+      "tournament": "WTA 125 Sopo",
+      "round": null,
+      "start": "2026-11-08T15:00:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": false,
+      "best_of": 3,
+      "a": {
+        "name": "K. Scott",
+        "key": "k-scott",
+        "model": 0.7571,
+        "fair_odds": 1.32,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "b": {
+        "name": "M. C. Torres Murcia",
+        "key": "m-c-torres-murcia",
+        "model": 0.2429,
+        "fair_odds": 4.12,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "books": 0,
+      "no_odds": true,
+      "court": "ch-sopo",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.7325,
+        "serve": 0.8796,
+        "w": 0.3,
+        "pa": 0.5721,
+        "pb": 0.4844
+      },
+      "flags": [
+        [
+          "thin",
+          "M. C. Torres Murcia: only 4 matches in 12 months"
+        ],
+        [
+          "surface_few",
+          "M. C. Torres Murcia: few hard matches this year"
+        ]
+      ],
+      "markets": {
+        "sets": {
+          "2-0": {
+            "model": 0.5386,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "2-1": {
+            "model": 0.2185,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "1-2": {
+            "model": 0.1015,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "0-2": {
+            "model": 0.1414,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          }
+        },
+        "totals": [
+          {
+            "line": 19.5,
+            "over": {
+              "model": 0.5909,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4091,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 20.5,
+            "over": {
+              "model": 0.512,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.488,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 21.5,
+            "over": {
+              "model": 0.4516,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.5484,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          }
+        ],
+        "exp_games": 22.1
+      },
+      "joint": {
+        "t0": 12,
+        "p": {
+          "2-0": [
+            0.00117,
+            0.00624,
+            0.01784,
+            0.0365,
+            0.05986,
+            0.07417,
+            0.0759,
+            0.07053,
+            0.05964,
+            0.04481,
+            0.04753,
+            0.02247,
+            0.00598,
+            0.01094,
+            0.005,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "2-1": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1e-05,
+            8e-05,
+            0.00039,
+            0.00127,
+            0.00323,
+            0.00665,
+            0.01137,
+            0.01664,
+            0.02126,
+            0.02396,
+            0.02505,
+            0.02471,
+            0.02246,
+            0.01901,
+            0.01538,
+            0.00978,
+            0.00716,
+            0.00572,
+            0.00223,
+            0.00095,
+            0.00093,
+            0.0003
+          ],
+          "1-2": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            2e-05,
+            9e-05,
+            0.00033,
+            0.00093,
+            0.00209,
+            0.0039,
+            0.00622,
+            0.00858,
+            0.01033,
+            0.01138,
+            0.01175,
+            0.01119,
+            0.00996,
+            0.00856,
+            0.00556,
+            0.00412,
+            0.00356,
+            0.00146,
+            0.00059,
+            0.00062,
+            0.00021
+          ],
+          "0-2": [
+            6e-05,
+            0.0004,
+            0.00151,
+            0.00403,
+            0.00863,
+            0.01397,
+            0.01812,
+            0.02008,
+            0.01879,
+            0.01395,
+            0.01926,
+            0.01145,
+            0.0025,
+            0.00557,
+            0.0031,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
       "id": "apit-12178152",
       "api_key": "12178152",
       "late": false,
@@ -21618,7 +22223,7 @@
           "ev": -0.0065,
           "ticker": "KXATPMATCH-26NOV08TIRMUN-MUN"
         },
-        "market_a": 0.402,
+        "market_a": 0.405,
         "event": "KXATPMATCH-26NOV08TIRMUN",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov08tirmun"
       }
@@ -23654,6 +24259,618 @@
             0.00208,
             0.0048,
             0.00278,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "sched-12178331",
+      "api_key": "12178331",
+      "late": false,
+      "tour": "WTA",
+      "tournament": "WTA 125 Sopo",
+      "round": null,
+      "start": "2026-11-08T16:30:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": false,
+      "best_of": 3,
+      "a": {
+        "name": "M. Herazo Gonzalez",
+        "key": "m-herazo-gonzalez",
+        "model": 0.3489,
+        "fair_odds": 2.87,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "b": {
+        "name": "M. J. Sanchez Uribe",
+        "key": "new-m-j-sanchez-uribe-76947",
+        "model": 0.6511,
+        "fair_odds": 1.54,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null,
+        "new": true
+      },
+      "books": 0,
+      "no_odds": true,
+      "court": "ch-sopo",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.3212,
+        "serve": 0.2609,
+        "w": 0.3,
+        "pa": 0.5116,
+        "pb": 0.5595
+      },
+      "flags": [
+        [
+          "thin",
+          "M. Herazo Gonzalez: only 3 matches in 12 months"
+        ],
+        [
+          "surface_few",
+          "M. Herazo Gonzalez: few hard matches this year"
+        ],
+        [
+          "thin",
+          "M. J. Sanchez Uribe: no matches in our data yet, rated as a first-time qualifier"
+        ]
+      ],
+      "new_players": {
+        "b": {
+          "name": "M. J. Sanchez Uribe",
+          "tour": "WTA",
+          "elo": {
+            "overall": 1250
+          },
+          "n": 0,
+          "new": true,
+          "info": {
+            "m12": 0,
+            "surf12": {}
+          }
+        }
+      },
+      "markets": {
+        "sets": {
+          "2-0": {
+            "model": 0.2101,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "2-1": {
+            "model": 0.1388,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "1-2": {
+            "model": 0.2122,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "0-2": {
+            "model": 0.4389,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          }
+        },
+        "totals": [
+          {
+            "line": 19.5,
+            "over": {
+              "model": 0.6336,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.3664,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 20.5,
+            "over": {
+              "model": 0.5545,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4455,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 21.5,
+            "over": {
+              "model": 0.4934,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.5066,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          }
+        ],
+        "exp_games": 22.6
+      },
+      "joint": {
+        "t0": 12,
+        "p": {
+          "2-0": [
+            0.00013,
+            0.00082,
+            0.00289,
+            0.00728,
+            0.01472,
+            0.02246,
+            0.02771,
+            0.02956,
+            0.02718,
+            0.02048,
+            0.02675,
+            0.01513,
+            0.00352,
+            0.00749,
+            0.00398,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "2-1": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3e-05,
+            0.00015,
+            0.00051,
+            0.00139,
+            0.00305,
+            0.00558,
+            0.00873,
+            0.01189,
+            0.01418,
+            0.01552,
+            0.01594,
+            0.01515,
+            0.01345,
+            0.0115,
+            0.00747,
+            0.00558,
+            0.00478,
+            0.00195,
+            0.00082,
+            0.00084,
+            0.00029
+          ],
+          "1-2": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1e-05,
+            7e-05,
+            0.00033,
+            0.00108,
+            0.00277,
+            0.00579,
+            0.01011,
+            0.01509,
+            0.01968,
+            0.02263,
+            0.02406,
+            0.02409,
+            0.02232,
+            0.01928,
+            0.01593,
+            0.01023,
+            0.00759,
+            0.00622,
+            0.00247,
+            0.00106,
+            0.00105,
+            0.00034
+          ],
+          "0-2": [
+            0.00067,
+            0.00376,
+            0.01137,
+            0.02469,
+            0.04303,
+            0.05663,
+            0.06125,
+            0.05927,
+            0.05149,
+            0.03905,
+            0.04405,
+            0.02193,
+            0.0057,
+            0.01086,
+            0.00517,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "id": "sched-12178332",
+      "api_key": "12178332",
+      "late": false,
+      "tour": "WTA",
+      "tournament": "WTA 125 Sopo",
+      "round": null,
+      "start": "2026-11-08T16:30:00Z",
+      "surface": "hard",
+      "indoor": false,
+      "surface_known": false,
+      "best_of": 3,
+      "a": {
+        "name": "D. Jakupovic",
+        "key": "d-jakupovic",
+        "model": 0.4457,
+        "fair_odds": 2.24,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null
+      },
+      "b": {
+        "name": "I. Collazos",
+        "key": "new-i-collazos-91970",
+        "model": 0.5543,
+        "fair_odds": 1.8,
+        "market": null,
+        "best_odds": null,
+        "book": null,
+        "ev": null,
+        "kelly": null,
+        "new": true
+      },
+      "books": 0,
+      "no_odds": true,
+      "court": "ch-sopo",
+      "model_version": "2026-10-19",
+      "level": "challenger",
+      "parts": {
+        "elo": 0.3801,
+        "serve": 0.6697,
+        "w": 0.3,
+        "pa": 0.5682,
+        "pb": 0.5352
+      },
+      "flags": [
+        [
+          "specialist",
+          "D. Jakupovic: clay-court specialist (58% of matches on clay), now on hard"
+        ],
+        [
+          "thin",
+          "I. Collazos: no matches in our data yet, rated as a first-time qualifier"
+        ]
+      ],
+      "new_players": {
+        "b": {
+          "name": "I. Collazos",
+          "tour": "WTA",
+          "elo": {
+            "overall": 1250
+          },
+          "n": 0,
+          "new": true,
+          "info": {
+            "m12": 0,
+            "surf12": {}
+          }
+        }
+      },
+      "markets": {
+        "sets": {
+          "2-0": {
+            "model": 0.2772,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "2-1": {
+            "model": 0.1685,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "1-2": {
+            "model": 0.1955,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          },
+          "0-2": {
+            "model": 0.3588,
+            "market": null,
+            "bet": null,
+            "best_odds": null,
+            "book": null,
+            "ev": null,
+            "prices": {}
+          }
+        },
+        "totals": [
+          {
+            "line": 20.5,
+            "over": {
+              "model": 0.5718,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4282,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 21.5,
+            "over": {
+              "model": 0.5105,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.4895,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          },
+          {
+            "line": 22.5,
+            "over": {
+              "model": 0.434,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            },
+            "under": {
+              "model": 0.566,
+              "market": null,
+              "bet": null,
+              "best_odds": null,
+              "book": null,
+              "ev": null,
+              "prices": {}
+            }
+          }
+        ],
+        "exp_games": 22.8
+      },
+      "joint": {
+        "t0": 12,
+        "p": {
+          "2-0": [
+            0.00023,
+            0.00142,
+            0.00473,
+            0.01132,
+            0.02177,
+            0.03162,
+            0.03739,
+            0.03862,
+            0.03494,
+            0.02649,
+            0.033,
+            0.01786,
+            0.00438,
+            0.00892,
+            0.00455,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "2-1": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            4e-05,
+            0.00021,
+            0.00069,
+            0.00184,
+            0.00396,
+            0.00713,
+            0.01097,
+            0.01473,
+            0.01739,
+            0.01888,
+            0.01925,
+            0.01819,
+            0.01605,
+            0.0136,
+            0.00882,
+            0.0066,
+            0.00558,
+            0.00226,
+            0.00097,
+            0.00097,
+            0.00033
+          ],
+          "1-2": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1e-05,
+            6e-05,
+            0.00027,
+            0.0009,
+            0.00234,
+            0.00496,
+            0.00878,
+            0.0133,
+            0.01759,
+            0.02049,
+            0.02202,
+            0.02226,
+            0.02084,
+            0.01821,
+            0.01525,
+            0.00985,
+            0.00736,
+            0.00612,
+            0.00246,
+            0.00106,
+            0.00105,
+            0.00035
+          ],
+          "0-2": [
+            0.00041,
+            0.00241,
+            0.00764,
+            0.01736,
+            0.03171,
+            0.04372,
+            0.04937,
+            0.04929,
+            0.0437,
+            0.03321,
+            0.03929,
+            0.02033,
+            0.00518,
+            0.01016,
+            0.00498,
             0.0,
             0.0,
             0.0,
@@ -27762,9 +28979,9 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.45,
-          "odds": 2.14,
-          "ev": -0.0434,
+          "cost": 0.44,
+          "odds": 2.187,
+          "ev": -0.0224,
           "ticker": "KXWTAMATCH-26NOV08KOSNOS-KOS"
         },
         "b": {
@@ -28795,7 +30012,7 @@
           "ev": -0.0461,
           "ticker": "KXWTAMATCH-26NOV08GAUPEG-PEG"
         },
-        "market_a": 0.595,
+        "market_a": 0.593,
         "event": "KXWTAMATCH-26NOV08GAUPEG",
         "url": "https://kalshi.com/markets/kxwtamatch/wta-tennis-match/kxwtamatch-26nov08gaupeg"
       }
@@ -48853,7 +50070,7 @@
       0.0043
     ]
   },
-  "scheduled_only": 75,
+  "scheduled_only": 79,
   "diagnostics": {
     "feeds": {
       "ATP": {
@@ -48876,35 +50093,36 @@
         }
       },
       "ATP_CH": {
-        "events": 149,
-        "upcoming": 130,
+        "events": 169,
+        "upcoming": 150,
         "status": {
           "Finished": 10,
           "Retired": 2,
           "(blank)": 99,
-          "Set 2": 2,
-          "Set 1": 5,
-          "1": 31
+          "Set 2": 4,
+          "Set 3": 1,
+          "Set 1": 2,
+          "1": 51
         }
       },
       "WTA_CH": {
-        "events": 6,
-        "upcoming": 1,
+        "events": 10,
+        "upcoming": 5,
         "status": {
           "Finished": 5,
-          "(blank)": 1
+          "(blank)": 5
         }
       }
     },
     "dropped": {
       "already listed from the odds feed": 1,
-      "outside the window": 2
+      "outside the window": 22
     },
-    "schedule_upcoming": 150,
-    "schedule_added": 147,
+    "schedule_upcoming": 174,
+    "schedule_added": 151,
     "kept_from_last_run": 0
   },
-  "kalshi_matched": 24,
+  "kalshi_matched": 25,
   "record": {
     "settled": 1861,
     "pending": 155,

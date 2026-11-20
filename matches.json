@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-20T15:27:32Z",
+  "updated": "2026-11-20T18:59:08Z",
   "odds_feed_at": "2026-11-20T15:27:32Z",
   "window_hours": 36,
   "status": "ok",
@@ -362,18 +362,18 @@
       },
       "kalshi": {
         "a": {
-          "cost": 0.7,
-          "odds": 1.399,
-          "ev": -0.0096,
+          "cost": 0.73,
+          "odds": 1.344,
+          "ev": -0.0486,
           "ticker": "KXATPMATCH-26NOV17MEDTIA-MED"
         },
         "b": {
-          "cost": 0.31,
-          "odds": 3.077,
-          "ev": -0.1012,
+          "cost": 0.28,
+          "odds": 3.4,
+          "ev": -0.0069,
           "ticker": "KXATPMATCH-26NOV17MEDTIA-TIA"
         },
-        "market_a": 0.695,
+        "market_a": 0.725,
         "event": "KXATPMATCH-26NOV17MEDTIA",
         "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov17medtia"
       }
@@ -663,6 +663,23 @@
             0.0
           ]
         }
+      },
+      "kalshi": {
+        "a": {
+          "cost": 0.74,
+          "odds": 1.327,
+          "ev": -0.0655,
+          "ticker": "KXATPMATCH-26NOV21ALCSHE-ALC"
+        },
+        "b": {
+          "cost": 0.27,
+          "odds": 3.524,
+          "ev": 0.0424,
+          "ticker": "KXATPMATCH-26NOV21ALCSHE-SHE"
+        },
+        "market_a": 0.735,
+        "event": "KXATPMATCH-26NOV21ALCSHE",
+        "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov21alcshe"
       }
     }
   ],
@@ -718,7 +735,7 @@
     "schedule_added": 0,
     "kept_from_last_run": 0
   },
-  "kalshi_matched": 1,
+  "kalshi_matched": 2,
   "record": {
     "settled": 2438,
     "pending": 142,
@@ -874,10 +891,46 @@
       "result": ""
     }
   ],
-  "kalshi_parlays": [],
+  "kalshi_parlays": [
+    {
+      "id": "kalshi|1acdb2047defbe0439ef3b1961a60010:a+81c3faeaadd3d42734cd831b32b32597:a",
+      "book": "Kalshi",
+      "legs": [
+        {
+          "id": "1acdb2047defbe0439ef3b1961a60010",
+          "side": "a",
+          "name": "Daniil Medvedev",
+          "odds": 1.344,
+          "vs": "Frances Tiafoe",
+          "tournament": "ATP Finals",
+          "start": "2026-11-20T19:30:00Z",
+          "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov17medtia",
+          "model": 0.6973
+        },
+        {
+          "id": "81c3faeaadd3d42734cd831b32b32597",
+          "side": "a",
+          "name": "Carlos Alcaraz",
+          "odds": 1.327,
+          "vs": "Ben Shelton",
+          "tournament": "ATP Finals",
+          "start": "2026-11-21T13:00:00Z",
+          "url": "https://kalshi.com/markets/kxatpmatch/atp-tennis-match/kxatpmatch-26nov21alcshe",
+          "model": 0.7625
+        }
+      ],
+      "odds": 1.78,
+      "model": 0.4985,
+      "market": 0.5329,
+      "ev": -0.1109,
+      "kelly": 0.0,
+      "created": "2026-11-20T18:59:08Z",
+      "result": ""
+    }
+  ],
   "parlay_record": {
     "settled": 544,
-    "pending": 42,
+    "pending": 43,
     "won": 175,
     "profit_units": -100.59,
     "roi": -0.1849,
